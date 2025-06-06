@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Calendar } from 'lucide-react';
+import { MapPin, Clock, CalendarDays, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
-import { Modal } from '../../../../ui/Modal';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
 
 interface EventProps {
@@ -18,20 +17,7 @@ interface EventProps {
 }
 
 function Event({ title, date, time, location, address, placeId, className = '', variants, onRsvp }: EventProps) {
-  const [isMounted, setIsMounted] = useState(false);
   const [showCalendarOptions, setShowCalendarOptions] = useState(false);
-  
-  useEffect(() => {
-    console.log('Event component mounted');
-    setIsMounted(true);
-  }, []);
-
-  const formattedDate = new Date(date).toLocaleDateString('es-ES', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
 
   const handleOpenMaps = () => {
     if (placeId) {
@@ -39,14 +25,6 @@ function Event({ title, date, time, location, address, placeId, className = '', 
     } else if (address) {
       window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
     }
-  };
-
-  // Calculate end time (2 hours after start time)
-  const getEndTime = () => {
-    if (!time) return undefined;
-    const [hours, minutes] = time.split(':');
-    const endHours = (parseInt(hours) + 2).toString().padStart(2, '0');
-    return `${endHours}:${minutes}`;
   };
 
   const generateCalendarLink = (type: 'google' | 'apple' | 'outlook') => {
@@ -87,8 +65,6 @@ END:VCALENDAR`;
     }
   };
 
-  console.log('Rendering Event component:', { isMounted, title, date, time });
-
   return (
     <motion.div 
       className={`bg-[#1C2127] rounded-2xl shadow-lg overflow-hidden border border-[#D4B572]/20 ${className}`}
@@ -96,62 +72,92 @@ END:VCALENDAR`;
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <div className="p-8 md:p-10 flex flex-col items-center text-center">
-        <h3 className="text-4xl font-serif text-[#D4B572] mb-12">{title}</h3>
-
-        {/* Date section */}
-        <div className="mb-12 w-full">
-          <h4 className="text-2xl font-serif text-[#D4B572] mb-4">Día</h4>
-          <p className="text-lg text-[#D4B572]/80 mb-4">{formattedDate}</p>
-          {time && (
-            <p className="text-lg text-[#D4B572]/80 flex items-center justify-center mb-6">
-              <Clock className="w-5 h-5 mr-2" />
-              {time}
-            </p>
-          )}
-          <div className="relative w-full">
-            <Button
-              onClick={() => setShowCalendarOptions(!showCalendarOptions)}
-              className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full flex items-center justify-center gap-2"
-            >
-              <Calendar className="w-5 h-5" />
-              Agendar
-            </Button>
-            
-            {showCalendarOptions && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-[#1C2127] border border-[#D4B572]/20 rounded-lg shadow-lg p-2 z-10">
-                <a
-                  href={generateCalendarLink('google')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
-                >
-                  Google Calendar
-                </a>
-                <a
-                  href={generateCalendarLink('apple')}
-                  download="event.ics"
-                  className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
-                >
-                  Apple Calendar
-                </a>
-                <a
-                  href={generateCalendarLink('outlook')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
-                >
-                  Outlook
-                </a>
+      <div className="p-8 md:p-10">
+        <h3 className="text-3xl font-serif mb-8 text-[#D4B572]">{title}</h3>
+        
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
+                <CalendarDays className="w-5 h-5 text-[#D4B572]" />
               </div>
-            )}
+              <div className="ml-4">
+                <p className="text-lg font-medium text-[#D4B572]">
+                  {new Date(date).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </p>
+                {time && (
+                  <div className="flex items-center mt-2 text-[#D4B572]/80">
+                    <Clock className="w-4 h-4 mr-1" />
+                    <span>{time}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="mt-4">
+              <Button
+                onClick={() => setShowCalendarOptions(!showCalendarOptions)}
+                leftIcon={<CalendarDays className="w-5 h-5" />}
+                className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full flex items-center justify-center gap-2"
+              >
+                Agendar
+              </Button>
+              
+              {showCalendarOptions && (
+                <div className="mt-2 bg-[#1C2127] border border-[#D4B572]/20 rounded-lg shadow-lg p-2">
+                  <a
+                    href={generateCalendarLink('google')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
+                  >
+                    Google Calendar
+                  </a>
+                  <a
+                    href={generateCalendarLink('apple')}
+                    download="event.ics"
+                    className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
+                  >
+                    Apple Calendar
+                  </a>
+                  <a
+                    href={generateCalendarLink('outlook')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
+                  >
+                    Outlook
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Location section */}
-        <div className="mb-12 w-full">
-          <h4 className="text-2xl font-serif text-[#D4B572] mb-4">Lugar</h4>
-          <p className="text-lg text-[#D4B572]/80 mb-6">{location}</p>
+          <div>
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-5 h-5 text-[#D4B572]" />
+              </div>
+              <div className="ml-4">
+                <p className="text-lg font-medium text-[#D4B572]">{location}</p>
+                {address && (
+                  <p className="mt-2 text-[#D4B572]/80 leading-relaxed">{address}</p>
+                )}
+              </div>
+            </div>
+            <div className="mt-4">
+              <Button
+                onClick={handleOpenMaps}
+                className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
+              >
+                ¿Cómo llegar?
+              </Button>
+            </div>
+          </div>
+
           <Button
             onClick={onRsvp}
             className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
@@ -159,20 +165,6 @@ END:VCALENDAR`;
             Confirmar asistencia
           </Button>
         </div>
-
-        {/* Address section */}
-        {address && (
-          <div className="w-full">
-            <h4 className="text-2xl font-serif text-[#D4B572] mb-4">Dirección</h4>
-            <p className="text-lg text-[#D4B572]/80 mb-6">{address}</p>
-            <Button
-              onClick={handleOpenMaps}
-              className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
-            >
-              ¿Cómo llegar?
-            </Button>
-          </div>
-        )}
       </div>
     </motion.div>
   );
@@ -210,6 +202,22 @@ export function Events({
   className = ''
 }: EventsProps) {
   const [showRsvpModal, setShowRsvpModal] = useState(false);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowRsvpModal(false);
+      }
+    };
+
+    if (showRsvpModal) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showRsvpModal]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -283,17 +291,39 @@ export function Events({
         </motion.div>
       </section>
 
-      <Modal
-        isOpen={showRsvpModal}
-        onClose={() => setShowRsvpModal(false)}
-        title="Confirmar Asistencia"
-      >
-        <PublicRsvpForm
-          userId={userId}
-          showSongRecommendations={false}
-          onSuccess={() => setShowRsvpModal(false)}
-        />
-      </Modal>
+      {showRsvpModal && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm"
+          onClick={() => setShowRsvpModal(false)}
+        >
+          <div 
+            className="relative w-full max-w-xl px-8 py-12 text-center text-[#D4B572]"
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setShowRsvpModal(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
+            >
+              <X className="w-5 h-5 text-[#D4B572]" />
+            </button>
+
+            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30"></div>
+            <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30"></div>
+            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30"></div>
+
+            <div className="space-y-8">
+              <h2 className="text-3xl font-serif">Confirmar Asistencia</h2>
+              <PublicRsvpForm
+                userId={userId}
+                showSongRecommendations={showSongRecommendations}
+                onSuccess={() => setShowRsvpModal(false)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

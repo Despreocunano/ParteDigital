@@ -13,11 +13,11 @@ export function MobileNav() {
 
   const navigation = [
     { name: 'Panel', href: '/', icon: Heart },
-    { name: 'Invitados', href: '/attendees', icon: UserPlus },
-    { name: 'Confirmaciones', href: '/rsvps', icon: ListChecks },
-    { name: 'Recordatorios', href: '/reminders', icon: Send },
-    { name: 'Mesas', href: '/tables', icon: Grid },
     { name: 'Invitación Digital', href: '/landing', icon: Globe },
+    { name: 'Confirmaciones', href: '/rsvps', icon: ListChecks },
+    { name: 'Invitados', href: '/attendees', icon: UserPlus },
+    { name: 'Mesas', href: '/tables', icon: Grid },
+    { name: 'Recordatorios', href: '/reminders', icon: Send },
     { name: 'Canciones', href: '/songs', icon: Music },
     { name: 'Ajustes', href: '/settings', icon: Settings },
   ];

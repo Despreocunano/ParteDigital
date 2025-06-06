@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { Globe, EyeOff } from 'lucide-react';
+import { Globe, EyeOff, Copy, Check, Share2, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 interface PublishSectionProps {
   previewUrl: string;
@@ -24,6 +25,42 @@ export function PublishSection({
   onPublish,
   onUnpublish
 }: PublishSectionProps) {
+  const [copied, setCopied] = React.useState(false);
+
+  const handleShare = async (platform: 'whatsapp' | 'instagram' | 'copy') => {
+    if (!publishedUrl) return;
+
+    const text = `¡Te invitamos a nuestra boda! 💍\n\nPuedes confirmar tu asistencia en:`;
+    const encodedText = encodeURIComponent(text);
+    const encodedUrl = encodeURIComponent(publishedUrl);
+
+    switch (platform) {
+      case 'whatsapp':
+        window.open(`https://wa.me/?text=${encodedText}%0A${encodedUrl}`, '_blank');
+        break;
+      case 'instagram':
+        // For Instagram, we'll copy the text to clipboard since direct story sharing isn't possible
+        try {
+          await navigator.clipboard.writeText(`${text}\n\n${publishedUrl}`);
+          toast.success('Texto copiado para compartir en Instagram');
+        } catch (err) {
+          toast.error('Error al copiar el texto');
+        }
+        window.open('https://instagram.com', '_blank');
+        break;
+      case 'copy':
+        try {
+          await navigator.clipboard.writeText(publishedUrl);
+          setCopied(true);
+          toast.success('URL copiada al portapapeles');
+          setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+          toast.error('Error al copiar la URL');
+        }
+        break;
+    }
+  };
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -45,7 +82,7 @@ export function PublishSection({
             {publishedStatus.isPublished ? (
               <Button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 onClick={onUnpublish}
                 leftIcon={<EyeOff className="h-4 w-4" />}
                 className="w-full sm:w-auto justify-center"
@@ -66,18 +103,54 @@ export function PublishSection({
           </div>
         </div>
         {publishedStatus.isPublished && publishedUrl && (
-          <div className="mt-4 p-4 bg-gray-50 rounded-md">
-            <p className="text-sm text-gray-600">
-              Tu página está publicada en:
-            </p>
-            <a 
-              href={publishedUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 text-sm font-medium text-rose-600 hover:text-rose-700 break-all"
-            >
-              {publishedUrl}
-            </a>
+          <div className="mt-6 space-y-4">
+            <div className="p-4 bg-gray-50 rounded-md">
+              <p className="text-sm text-gray-600 mb-2">
+                Tu página está publicada en:
+              </p>
+              <div className="flex items-center gap-2">
+                <a 
+                  href={publishedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-rose-600 hover:text-rose-700 break-all flex-1"
+                >
+                  {publishedUrl}
+                </a>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleShare('copy')}
+                  leftIcon={copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                >
+                  {copied ? 'Copiado' : 'Copiar'}
+                </Button>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-200 pt-4">
+              <p className="text-sm font-medium text-gray-700 mb-3">
+                Compartir invitación:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleShare('whatsapp')}
+                  leftIcon={<Share2 className="h-4 w-4" />}
+                >
+                  WhatsApp
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleShare('instagram')}
+                  leftIcon={<Instagram className="h-4 w-4" />}
+                >
+                  Instagram
+                </Button>
+              </div>
+            </div>
           </div>
         )}
       </CardContent>

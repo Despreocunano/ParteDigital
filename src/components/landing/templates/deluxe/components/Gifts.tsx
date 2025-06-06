@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Gift, Copy, Check } from 'lucide-react';
+import { Gift, Copy, Check, X } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { toast } from 'react-hot-toast';
 
@@ -68,39 +68,61 @@ ${bankInfo.email}`;
 
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg mx-4 bg-[#1C2127] border border-[#D4B572]/20 rounded-xl shadow-xl p-6">
-            <div className="space-y-6">
-              <div className="text-center">
-                <h2 className="text-3xl font-serif text-[#D4B572] mb-2">Datos Bancarios</h2>
-              </div>
+          <div className="relative w-full max-w-2xl px-8 py-12 text-center text-[#D4B572]">
+            {/* Corner decorations */}
+            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30"></div>
+            <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30"></div>
+            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30"></div>
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
+            >
+              <X className="w-5 h-5 text-[#D4B572]" />
+            </button>
+
+            <div className="space-y-8">
+              <h2 className="text-3xl font-serif">Datos Bancarios</h2>
 
               {bankInfo ? (
-                <div className="space-y-4">
-                  <div className="bg-[#1C2127]/50 rounded-lg border border-[#D4B572]/10 p-4">
-                    <div className="space-y-2">
-                      <p className="text-[#D4B572]">{bankInfo.accountHolder}</p>
-                      <p className="text-[#D4B572]">{bankInfo.rut}</p>
-                      <p className="text-[#D4B572]">{bankInfo.accountType}</p>
-                      <p className="text-[#D4B572]">{bankInfo.accountNumber}</p>
-                      <p className="text-[#D4B572]">{bankInfo.bank}</p>
-                      <p className="text-[#D4B572]">{bankInfo.email}</p>
+                <div className="space-y-6">
+                  <div className="bg-[#1C2127]/50 rounded-lg border border-[#D4B572]/10 p-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-sm text-[#D4B572]/60">Titular</p>
+                        <p className="text-[#D4B572]">{bankInfo.accountHolder}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-[#D4B572]/60">RUT</p>
+                        <p className="text-[#D4B572]">{bankInfo.rut}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-[#D4B572]/60">Banco</p>
+                        <p className="text-[#D4B572]">{bankInfo.bank}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-[#D4B572]/60">Tipo de Cuenta</p>
+                        <p className="text-[#D4B572]">{bankInfo.accountType}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-[#D4B572]/60">Número de Cuenta</p>
+                        <p className="text-[#D4B572]">{bankInfo.accountNumber}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-[#D4B572]/60">Email</p>
+                        <p className="text-[#D4B572]">{bankInfo.email}</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="flex justify-center gap-3">
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button
                       onClick={handleCopyAll}
                       className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3"
                       leftIcon={copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
                     >
                       {copied ? 'Copiado' : 'Copiar Datos'}
-                    </Button>
-                    <Button
-                      onClick={() => setShowModal(false)}
-                      variant="outline"
-                      className="border-[#D4B572]/20 text-[#D4B572] hover:bg-[#D4B572]/10"
-                    >
-                      Cerrar
                     </Button>
                   </div>
                 </div>

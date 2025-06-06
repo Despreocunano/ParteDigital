@@ -43,11 +43,15 @@ serve(async (req) => {
       throw new Error("Unauthorized");
     }
 
+    // Generate unique slug with user ID
+    const userIdSuffix = user.id.substring(0, 3);
+    const uniqueSlug = `${slug}-${userIdSuffix}`;
+
     // Check if slug is already in use
     const { data: existingPage, error: checkError } = await supabase
       .from('landing_pages')
       .select('id')
-      .eq('slug', slug)
+      .eq('slug', uniqueSlug)
       .neq('user_id', userId)
       .single();
 
@@ -64,7 +68,7 @@ serve(async (req) => {
       .from('landing_pages')
       .update({ 
         published_at: new Date().toISOString(),
-        slug: slug
+        slug: uniqueSlug
       })
       .eq('user_id', userId)
       .select()

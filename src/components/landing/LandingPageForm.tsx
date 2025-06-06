@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/Button';
@@ -14,7 +14,6 @@ import { PublishSection } from './PublishSection';
 import { FloatingSaveButton } from './FloatingSaveButton';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
-import { toast } from 'react-hot-toast';
 import { templates } from './templates';
 import { PlacesAutocomplete } from '../ui/PlacesAutocomplete';
 
@@ -38,6 +37,11 @@ interface LandingPageFormData {
   
   music_enabled: boolean;
   selected_track: string;
+  hashtag: string;
+
+  // Additional Info
+  dress_code: string;
+  additional_info: string;
 
   bank_info: {
     accountHolder: string;
@@ -54,7 +58,7 @@ interface LandingPageFormProps {
     published_at?: string | null; 
     slug?: string | null;
     cover_image?: string;
-    gallery_images?: GalleryImage[];
+    gallery_images?: { url: string; caption?: string }[];
     template_id?: string;
   };
   onSuccess?: () => void;
@@ -78,7 +82,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [publishedUrl, setPublishedUrl] = useState<string>('');
   const [coverImage, setCoverImage] = useState<string>(initialData?.cover_image || '');
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(initialData?.gallery_images || []);
+  const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
   const [publishedStatus, setPublishedStatus] = useState<PublishStatus>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
@@ -94,6 +98,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     defaultValues: {
       music_enabled: false,
       selected_track: '',
+      dress_code: initialData?.dress_code || 'Formal',
+      additional_info: initialData?.additional_info || 'La celebración será al aire libre',
       bank_info: {
         accountHolder: '',
         rut: '',
@@ -109,13 +115,13 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const groomName = watch('groom_name');
   const brideName = watch('bride_name');
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (user) {
       setPreviewUrl(`${window.location.origin}/preview/${user.id}`);
     }
   }, [user]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (groomName && brideName && publishedStatus.slug) {
       setPublishedUrl(`https://tuparte.digital/invitacion/${publishedStatus.slug}`);
     }
@@ -151,7 +157,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       if (error) throw error;
 
-      toast.success('Cambios guardados correctamente');
+      onSuccess?.();
     } catch (error) {
       console.error('Error saving landing page:', error);
       toast.error('Error al guardar los cambios');
@@ -302,6 +308,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             {...register('welcome_message')}
             placeholder="Escribe un mensaje de bienvenida para tus invitados..."
           />
+
+          <Input
+            label="Hashtag"
+            {...register('hashtag')}
+            placeholder={`${groomName.replace(/\s+/g, '')}Y${brideName.replace(/\s+/g, '')}2024`}
+          />
         </CardContent>
       </Card>
 
@@ -371,6 +383,27 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               setValue('party_place_id', placeId);
             }}
             placeholder="Buscar dirección..."
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Información Adicional</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Input
+            label="Código de Vestimenta"
+            {...register('dress_code', { required: 'El código de vestimenta es requerido' })}
+            error={errors.dress_code?.message}
+            placeholder="Ej: Formal, Black Tie, Cocktail..."
+          />
+          
+          <Textarea
+            label="Información Adicional"
+            {...register('additional_info', { required: 'La información adicional es requerida' })}
+            error={errors.additional_info?.message}
+            placeholder="Ej: La celebración será al aire libre, se recomienda traer abrigo..."
           />
         </CardContent>
       </Card>

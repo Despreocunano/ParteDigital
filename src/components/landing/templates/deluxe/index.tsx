@@ -16,21 +16,26 @@ export function DeluxeTemplate({
   brideName,
   weddingDate,
   welcomeMessage,
+  hashtag,
   ceremonyDate,
   ceremonyTime,
   ceremonyLocation,
   ceremonyAddress,
+  ceremonyPlaceId,
   partyDate,
   partyTime,
   partyLocation,
   partyAddress,
+  partyPlaceId,
   musicEnabled = false,
   musicUrl,
   onMusicToggle,
   coverImage,
   galleryImages = [],
   userId,
-  bankInfo
+  bankInfo,
+  dress_code,
+  additional_info
 }: TemplateProps) {
   const [showWelcomeModal, setShowWelcomeModal] = useState(musicEnabled);
   const [autoplayMusic, setAutoplayMusic] = useState(false);
@@ -46,6 +51,9 @@ export function DeluxeTemplate({
     onMusicToggle?.(false);
     setShowWelcomeModal(false);
   };
+
+  // Generate default hashtag if none provided
+  const defaultHashtag = `${groomName.replace(/\s+/g, '')}Y${brideName.replace(/\s+/g, '')}2024`;
 
   return (
     <BaseTemplate
@@ -67,13 +75,13 @@ export function DeluxeTemplate({
       )}
 
       <main className="font-['Cormorant_Garamond'] bg-[#1C2127]">
-        <div className="container mx-auto max-w-6xl shadow-2xl/30">
+        <div className="container mx-auto max-w-7xl">
           <Hero
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
             welcomeMessage={welcomeMessage}
-            backgroundImage={coverImage || "https://images.pexels.com/photos/931796/pexels-photo-931796.jpeg"}
+            backgroundImage={coverImage}
             className="bg-[#2F3E46]"
           />
 
@@ -88,18 +96,20 @@ export function DeluxeTemplate({
             ceremonyTime={ceremonyTime}
             ceremonyLocation={ceremonyLocation}
             ceremonyAddress={ceremonyAddress}
+            ceremonyPlaceId={ceremonyPlaceId}
             partyDate={partyDate}
             partyTime={partyTime}
             partyLocation={partyLocation}
             partyAddress={partyAddress}
+            partyPlaceId={partyPlaceId}
             showSongRecommendations={musicEnabled}
             className="bg-[#2F3E46]"
           />
 
           <PartyInfo
-            dresscode="Black Tie"
-            musicInfo={musicEnabled ? "Ayúdanos a crear la playlist perfecta sugiriendo tus canciones favoritas" : undefined}
-            tips="La elegancia será nuestra mejor compañía"
+            dresscode={dress_code}
+            musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
+            tips={additional_info}
             className="bg-[#253238] border-y border-[#D4B572]/20"
             userId={userId}
           />
@@ -115,7 +125,7 @@ export function DeluxeTemplate({
           />
 
           <Social
-            instagramHashtag={`${groomName}Y${brideName}2024`}
+            hashtag={hashtag || defaultHashtag}
             className="bg-[#253238] border-y border-[#D4B572]/20"
           />
 

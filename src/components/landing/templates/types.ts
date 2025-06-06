@@ -3,6 +3,7 @@ export interface TemplateProps {
   brideName: string;
   weddingDate: string;
   welcomeMessage?: string;
+  hashtag?: string;
   ceremonyDate?: string;
   ceremonyTime?: string;
   ceremonyLocation?: string;
@@ -27,4 +28,6 @@ export interface TemplateProps {
     accountNumber: string;
     email: string;
   };
+  dress_code?: string;
+  additional_info?: string;
 }

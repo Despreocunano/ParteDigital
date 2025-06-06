@@ -70,21 +70,99 @@ export interface Database {
           updated_at?: string
         }
       }
-      users: {
+      landing_pages: {
         Row: {
           id: string
-          wedding_name: string
-          created_at: string
+          user_id: string
+          groom_name: string
+          bride_name: string
+          wedding_date: string
+          welcome_message: string | null
+          ceremony_date: string | null
+          ceremony_time: string | null
+          ceremony_location: string | null
+          ceremony_address: string | null
+          ceremony_place_id: string | null
+          party_date: string | null
+          party_time: string | null
+          party_location: string | null
+          party_address: string | null
+          party_place_id: string | null
+          music_enabled: boolean
+          selected_track: string | null
+          template_id: string | null
+          slug: string | null
+          published_at: string | null
+          cover_image: string | null
+          gallery_images: GalleryImage[] | null
+          bank_info: BankInfo | null
+          hashtag: string | null
+          dress_code: string
+          additional_info: string
+          created_at: string | null
+          updated_at: string | null
         }
         Insert: {
-          id: string
-          wedding_name?: string
-          created_at?: string
+          id?: string
+          user_id: string
+          groom_name: string
+          bride_name: string
+          wedding_date: string
+          welcome_message?: string | null
+          ceremony_date?: string | null
+          ceremony_time?: string | null
+          ceremony_location?: string | null
+          ceremony_address?: string | null
+          ceremony_place_id?: string | null
+          party_date?: string | null
+          party_time?: string | null
+          party_location?: string | null
+          party_address?: string | null
+          party_place_id?: string | null
+          music_enabled?: boolean
+          selected_track?: string | null
+          template_id?: string | null
+          slug?: string | null
+          published_at?: string | null
+          cover_image?: string | null
+          gallery_images?: GalleryImage[] | null
+          bank_info?: BankInfo | null
+          hashtag?: string | null
+          dress_code?: string
+          additional_info?: string
+          created_at?: string | null
+          updated_at?: string | null
         }
         Update: {
           id?: string
-          wedding_name?: string
-          created_at?: string
+          user_id?: string
+          groom_name?: string
+          bride_name?: string
+          wedding_date?: string
+          welcome_message?: string | null
+          ceremony_date?: string | null
+          ceremony_time?: string | null
+          ceremony_location?: string | null
+          ceremony_address?: string | null
+          ceremony_place_id?: string | null
+          party_date?: string | null
+          party_time?: string | null
+          party_location?: string | null
+          party_address?: string | null
+          party_place_id?: string | null
+          music_enabled?: boolean
+          selected_track?: string | null
+          template_id?: string | null
+          slug?: string | null
+          published_at?: string | null
+          cover_image?: string | null
+          gallery_images?: GalleryImage[] | null
+          bank_info?: BankInfo | null
+          hashtag?: string | null
+          dress_code?: string
+          additional_info?: string
+          created_at?: string | null
+          updated_at?: string | null
         }
       }
       tables: Table
@@ -93,50 +171,18 @@ export interface Database {
   }
 }
 
-interface Table {
-  Row: {
-    id: string
-    user_id: string
-    name: string
-    capacity: number
-    created_at: string
-    updated_at: string
-  }
-  Insert: {
-    id?: string
-    user_id: string
-    name: string
-    capacity?: number
-    created_at?: string
-    updated_at?: string
-  }
-  Update: {
-    id?: string
-    user_id?: string
-    name?: string
-    capacity?: number
-    created_at?: string
-    updated_at?: string
-  }
+interface GalleryImage {
+  url: string;
+  caption?: string;
 }
 
-interface EmailLog {
-  Row: {
-    id: string
-    user_id: string
-    guest_id: string
-    subject: string
-    content: string
-    sent_at: string
-  }
-  Insert: {
-    id?: string
-    user_id: string
-    guest_id: string
-    subject: string
-    content: string
-    sent_at?: string
-  }
+interface BankInfo {
+  accountHolder: string;
+  rut: string;
+  bank: string;
+  accountType: string;
+  accountNumber: string;
+  email: string;
 }
 
 export type Attendee = Database['public']['Tables']['attendees']['Row']
@@ -147,3 +193,6 @@ export type TableInsert = Database['public']['Tables']['tables']['Insert']
 export type TableUpdate = Database['public']['Tables']['tables']['Update']
 export type User = Database['public']['Tables']['users']['Row']
 export type UserUpdate = Database['public']['Tables']['users']['Update']
+export type LandingPage = Database['public']['Tables']['landing_pages']['Row']
+export type LandingPageInsert = Database['public']['Tables']['landing_pages']['Insert']
+export type LandingPageUpdate = Database['public']['Tables']['landing_pages']['Update']

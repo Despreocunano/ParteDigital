@@ -1,8 +1,9 @@
 import React from 'react';
 import { Instagram } from 'lucide-react';
+import { Button } from '../../../../ui/Button';
 
 interface SocialProps {
-  instagramHashtag?: string;
+  hashtag?: string;
   instagramPosts?: Array<{
     id: string;
     imageUrl: string;
@@ -11,8 +12,10 @@ interface SocialProps {
   className?: string;
 }
 
-export function Social({ instagramHashtag, instagramPosts, className = '' }: SocialProps) {
-  if (!instagramHashtag && !instagramPosts?.length) return null;
+export function Social({ hashtag, instagramPosts = [], className = '' }: SocialProps) {
+  const handleInstagramClick = () => {
+    window.open(`https://www.instagram.com/explore/tags/${hashtag?.toLowerCase()}`, '_blank');
+  };
 
   return (
     <section className={`py-24 px-4 ${className}`}>
@@ -23,18 +26,30 @@ export function Social({ instagramHashtag, instagramPosts, className = '' }: Soc
         
         <h2 className="text-3xl md:text-4xl font-serif mb-8 text-[#D4B572]">Comparte tus Fotos</h2>
         
-        {instagramHashtag && (
-          <p className="text-2xl font-light text-[#D4B572]/80 mb-12">
-            #{instagramHashtag}
-          </p>
-        )}
+        <div className="max-w-xl mx-auto mb-12 space-y-6">
+          <div className="inline-block bg-[#1C2127] border border-[#D4B572]/20 rounded-full px-6 py-3">
+            <p className="text-2xl font-light text-[#D4B572]">
+              #{hashtag}
+            </p>
+          </div>
+
+          <div>
+            <Button
+              onClick={handleInstagramClick}
+              className="bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#F77737] hover:opacity-90 text-white"
+              leftIcon={<Instagram className="w-5 h-5" />}
+            >
+              Ver en Instagram
+            </Button>
+          </div>
+        </div>
         
-        {instagramPosts?.length > 0 && (
+        {instagramPosts.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {instagramPosts.map((post) => (
               <div 
                 key={post.id}
-                className="aspect-square overflow-hidden rounded-xl border border-[#D4B572]/20"
+                className="aspect-square overflow-hidden rounded-xl border border-[#D4B572]/10"
               >
                 <img
                   src={post.imageUrl}

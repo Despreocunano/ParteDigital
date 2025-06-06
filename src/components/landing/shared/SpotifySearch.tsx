@@ -94,7 +94,7 @@ export function SpotifySearch({
         {selectedTracks.map((track) => (
           <div 
             key={track.id} 
-            className="flex items-center gap-4 p-4 rounded-lg bg-gray-50 border border-gray-200"
+            className="flex items-center gap-4 p-4 rounded-lg bg-[#1C2127] border border-[#D4B572]/20"
           >
             {track.albumCover ? (
               <img 
@@ -103,19 +103,19 @@ export function SpotifySearch({
                 className="w-12 h-12 rounded-md"
               />
             ) : (
-              <div className="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center">
-                <Music className="w-6 h-6 text-gray-400" />
+              <div className="w-12 h-12 bg-[#D4B572]/10 rounded-md flex items-center justify-center">
+                <Music className="w-6 h-6 text-[#D4B572]" />
               </div>
             )}
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-900 truncate">{track.name}</p>
-              <p className="text-sm text-gray-500 truncate">{track.artist}</p>
+              <p className="font-medium text-[#D4B572] truncate">{track.name}</p>
+              <p className="text-sm text-[#D4B572]/80 truncate">{track.artist}</p>
             </div>
             <Button
-              variant="ghost"
+              variant="secondary"
               size="sm"
               onClick={() => onRemove(track.id)}
-              className="text-gray-400 hover:text-red-500"
+              className="text-[#D4B572]/60 hover:text-[#D4B572]"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
@@ -132,9 +132,9 @@ export function SpotifySearch({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && searchTracks()}
-              className="pl-10"
+              className="pl-10 bg-[#1C2127] border-[#D4B572]/20 text-[#D4B572] placeholder-[#D4B572]/60"
             />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#D4B572]/60" />
             {searchTerm && (
               <Button
                 className="absolute right-2 top-1/2 -translate-y-1/2"
@@ -149,11 +149,11 @@ export function SpotifySearch({
 
           {/* Results */}
           {results.length > 0 && (
-            <div className="max-h-64 overflow-y-auto border rounded-lg divide-y">
+            <div className="max-h-64 overflow-y-auto border border-[#D4B572]/20 rounded-lg divide-y divide-[#D4B572]/20">
               {results.map((track) => (
                 <button
                   key={track.id}
-                  className="w-full flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center gap-4 p-4 hover:bg-[#D4B572]/10 transition-colors"
                   onClick={() => handleSelect(track)}
                 >
                   {track.albumCover ? (
@@ -163,15 +163,15 @@ export function SpotifySearch({
                       className="w-12 h-12 rounded-md"
                     />
                   ) : (
-                    <div className="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center">
-                      <Music className="w-6 h-6 text-gray-400" />
+                    <div className="w-12 h-12 bg-[#D4B572]/10 rounded-md flex items-center justify-center">
+                      <Music className="w-6 h-6 text-[#D4B572]" />
                     </div>
                   )}
                   <div className="flex-1 text-left min-w-0">
-                    <p className="font-medium text-gray-900 truncate">{track.name}</p>
-                    <p className="text-sm text-gray-500 truncate">{track.artist}</p>
+                    <p className="font-medium text-[#D4B572] truncate">{track.name}</p>
+                    <p className="text-sm text-[#D4B572]/80 truncate">{track.artist}</p>
                   </div>
-                  <Plus className="h-4 w-4 text-gray-400" />
+                  <Plus className="h-4 w-4 text-[#D4B572]/60" />
                 </button>
               ))}
             </div>
