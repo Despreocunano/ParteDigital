@@ -1,11 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
-  Heart, Calendar, Users, Globe, Check, ArrowRight,
+  Heart, Users, Globe, Check,
   Music2, Clock, MapPin, Gift, CalendarDays, Image,
-  UserCheck, Instagram, Shirt, Lock, Settings, Link as LinkIcon,
-  Home, UtensilsCrossed, Bus, LayoutDashboard, Send, Table2
+  UserCheck, Instagram, Shirt, Lock, Settings, Link as LinkIcon, UtensilsCrossed, LayoutDashboard, Send, Table2
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
@@ -104,22 +101,10 @@ const features = [
     color: "purple"
   },
   {
-    icon: Home,
-    title: "Alojamiento",
-    description: "Recomendaciones de alojamientos para tus invitados lejanos",
-    color: "amber"
-  },
-  {
     icon: UtensilsCrossed,
     title: "Menú",
     description: "Da a conocer las opciones de menú de tu fiesta",
     color: "rose"
-  },
-  {
-    icon: Bus,
-    title: "Transporte",
-    description: "Da a conocer las opciones de trasporte hasta el lugar",
-    color: "emerald"
   }
 ];
 
@@ -138,8 +123,8 @@ const colorVariants = {
 
 const featureSections = [
   {
-    title: "Panel Principal Intuitivo",
-    description: "Tu centro de control completo para una boda perfecta. Visualiza estadísticas en tiempo real, gestiona todos los aspectos de tu evento y mantén todo organizado en un solo lugar. Con nuestro dashboard intuitivo, tendrás el poder de crear una experiencia única para ti y tus invitados.",
+    title: "Panel Intuitivo",
+    description: "Tu centro de control completo para una boda perfecta. Visualiza estadísticas en tiempo real, gestiona todos los aspectos de tu evento y mantén todo organizado en un solo lugar.",
     image: app1,
     icon: LayoutDashboard,
     features: [
@@ -150,7 +135,18 @@ const featureSections = [
     ]
   },
   {
-    title: "Gestión de Invitados Simplificada",
+    title: "Invitación digital",
+    description: "Crea una invitación digital única que refleje tu estilo. Con diseños elegantes y personalizables, música de fondo, galería de fotos y toda la información importante de tu evento, tus invitados tendrán una experiencia inolvidable desde el primer momento.",
+    image: app6,
+    icon: Globe,
+    features: [
+      "Música de fondo",
+      "Galería de fotos",
+      "Información interactiva"
+    ]
+  },
+  {
+    title: "Gestión de invitados",
     description: "Olvídate de las hojas de cálculo y las listas en papel. Nuestra gestión de invitados te permite mantener toda la información organizada, actualizada y accesible. Añade, edita y gestiona tu lista de invitados con facilidad, incluyendo detalles importantes como preferencias alimentarias y acompañantes.",
     image: app2,
     icon: Users,
@@ -162,7 +158,7 @@ const featureSections = [
     ]
   },
   {
-    title: "Confirmaciones en Tiempo Real",
+    title: "Confirmaciones en tiempo real",
     description: "Mantente al día con las confirmaciones de asistencia de forma automática. Nuestro sistema RSVP digital permite a tus invitados confirmar su asistencia de manera sencilla, mientras tú recibes actualizaciones instantáneas y mantienes un control total sobre la lista final de asistentes.",
     image: app3,
     icon: Check,
@@ -174,7 +170,7 @@ const featureSections = [
     ]
   },
   {
-    title: "Sistema de Recordatorios Inteligente",
+    title: "Recordatorios inteligentes",
     description: "Mantén a tus invitados informados sin esfuerzo. Nuestro sistema de recordatorios te permite enviar mensajes personalizados a tus invitados, asegurando que nadie se pierda los detalles importantes de tu gran día. Programa recordatorios automáticos y mantén a todos actualizados.",
     image: app4,
     icon: Send,
@@ -186,8 +182,8 @@ const featureSections = [
     ]
   },
   {
-    title: "Organizador de Mesas Digital",
-    description: "Diseña la distribución perfecta para tu evento con nuestro organizador de mesas digital. Arrastra y suelta invitados, gestiona capacidades y visualiza la disposición completa de tu evento. Una herramienta poderosa que hace que la organización de mesas sea un juego de niños.",
+    title: "Organizador de mesas digitales",
+    description: "Diseña la distribución perfecta para tu evento con nuestro organizador de mesas digital. Agrega y elimina invitados, gestiona capacidades y visualiza la disposición completa de tu evento. Una herramienta poderosa que hace que la organización de mesas sea un juego de niños.",
     image: app5,
     icon: Table2,
     features: [
@@ -198,19 +194,7 @@ const featureSections = [
     ]
   },
   {
-    title: "Invitación Digital Elegante",
-    description: "Crea una invitación digital única que refleje tu estilo. Con diseños elegantes y personalizables, música de fondo, galería de fotos y toda la información importante de tu evento, tus invitados tendrán una experiencia inolvidable desde el primer momento.",
-    image: app6,
-    icon: Globe,
-    features: [
-      "Diseños personalizables",
-      "Música de fondo",
-      "Galería de fotos",
-      "Información interactiva"
-    ]
-  },
-  {
-    title: "Playlist Colaborativa",
+    title: "Playlist colaborativa",
     description: "Haz que tu fiesta sea inolvidable con la música perfecta. Permite que tus invitados sugieran sus canciones favoritas y crea la banda sonora perfecta para tu celebración. Una forma única de hacer que todos sean parte de la fiesta incluso antes de que comience.",
     image: app7,
     icon: Music2,
@@ -278,11 +262,11 @@ export function PublicSite() {
               >
                 <Button
                   size="lg"
-                  variant="outline"
+                  variant="secondary"
                   onClick={() => window.location.href = 'https://panel.tuparte.digital/register'}
                   className="bg-white/10 text-white border-white/20 hover:bg-white/20 px-8"
                 >
-                  Ver Modelos
+                  Ver características
                 </Button>
               </motion.div>
             </div>
@@ -314,7 +298,7 @@ export function PublicSite() {
                       transition={{ delay: 1.2, duration: 0.5 }}
                     >
                       <h3 className="text-2xl font-serif mb-4">Juan & María</h3>
-                      <p className="text-sm mb-8">12 de Octubre, 2024</p>
+                      <p className="text-sm mb-8">12 de Octubre, 2026</p>
                     </motion.div>
                     <div className="space-y-3 w-full">
                       <motion.button
