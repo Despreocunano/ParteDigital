@@ -20,15 +20,12 @@ export function AuthPage() {
               <Heart className="h-8 w-8 text-white" />
             </div>
           </div>
-          <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <h1 className="mt-4 text-center text-3xl font-extrabold text-gray-900">
             Panel de boda
           </h1>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Bienvenido de nuevo
-          </p>
         </div>
 
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="px-4 sm:px-0">
             {showLogin ? (
               <LoginForm onToggleForm={toggleForm} />
