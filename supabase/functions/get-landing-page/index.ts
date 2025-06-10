@@ -29,7 +29,7 @@ serve(async (req) => {
       .select('*, landing_templates(*)')
       .eq('slug', slug)
       .not('published_at', 'is', null)
-      .not('unpublished_at', 'is', null)
+      .is('unpublished_at', null)
       .single();
 
     if (error) throw error;
@@ -37,11 +37,10 @@ serve(async (req) => {
 
     // Check if the page is currently published
     const publishedAt = new Date(data.published_at);
-    const unpublishedAt = data.unpublished_at ? new Date(data.unpublished_at) : null;
     const now = new Date();
 
-    if (unpublishedAt && now > unpublishedAt) {
-      throw new Error("Landing page is no longer published");
+    if (now < publishedAt) {
+      throw new Error("Landing page is not yet published");
     }
 
     return new Response(
