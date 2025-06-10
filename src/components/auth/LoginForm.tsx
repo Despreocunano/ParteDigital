@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
+import { Mail, Lock } from 'lucide-react';
 
 type FormData = {
   email: string;
@@ -44,11 +45,14 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
+    <Card className="w-full max-w-md mx-auto border-0 shadow-xl">
+      <CardHeader className="space-y-1">
         <CardTitle className="text-center text-2xl font-bold text-gray-900">
           Bienvenido de nuevo
         </CardTitle>
+        <p className="text-center text-sm text-gray-500">
+          Ingresa tus credenciales para acceder a tu panel
+        </p>
       </CardHeader>
       <CardContent>
         {errorMessage && (
@@ -57,44 +61,52 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
           </div>
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input
-            label="Correo electrónico"
-            type="email"
-            placeholder="tu@ejemplo.com"
-            error={errors.email?.message}
-            {...register('email', {
-              required: 'El correo electrónico es requerido',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Correo electrónico inválido',
-              },
-            })}
-          />
-          <Input
-            label="Contraseña"
-            type="password"
-            placeholder="••••••••"
-            error={errors.password?.message}
-            {...register('password', {
-              required: 'La contraseña es requerida',
-              minLength: {
-                value: 6,
-                message: 'La contraseña debe tener al menos 6 caracteres',
-              },
-            })}
-          />
-          <Button type="submit" isLoading={isLoading} className="w-full">
+          <div className="space-y-2">
+            <Input
+              label="Correo electrónico"
+              type="email"
+              placeholder="tu@ejemplo.com"
+              error={errors.email?.message}
+              leftIcon={<Mail className="h-4 w-4 text-gray-400" />}
+              {...register('email', {
+                required: 'El correo electrónico es requerido',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Correo electrónico inválido',
+                },
+              })}
+            />
+            <Input
+              label="Contraseña"
+              type="password"
+              placeholder="••••••••"
+              error={errors.password?.message}
+              leftIcon={<Lock className="h-4 w-4 text-gray-400" />}
+              {...register('password', {
+                required: 'La contraseña es requerida',
+                minLength: {
+                  value: 6,
+                  message: 'La contraseña debe tener al menos 6 caracteres',
+                },
+              })}
+            />
+          </div>
+          <Button 
+            type="submit" 
+            isLoading={isLoading} 
+            className="w-full bg-rose-500 hover:bg-rose-600 text-white h-11"
+          >
             Iniciar sesión
           </Button>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-center">
+      <CardFooter className="flex justify-center border-t pt-6">
         <p className="text-sm text-gray-600">
           ¿No tienes una cuenta?{' '}
           <button
             type="button"
             onClick={onToggleForm}
-            className="text-rose-600 hover:text-rose-800 font-medium"
+            className="text-rose-600 hover:text-rose-800 font-medium transition-colors"
           >
             Regístrate
           </button>

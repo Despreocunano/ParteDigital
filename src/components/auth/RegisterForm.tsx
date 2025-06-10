@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
+import { Mail, Lock, User } from 'lucide-react';
 
 type FormData = {
   email: string;
@@ -51,11 +52,14 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
-      <CardHeader>
+    <Card className="w-full max-w-md mx-auto border-0 shadow-xl">
+      <CardHeader className="space-y-1">
         <CardTitle className="text-center text-2xl font-bold text-gray-900">
           Crear una cuenta
         </CardTitle>
+        <p className="text-center text-sm text-gray-500">
+          Ingresa los datos para crear tu cuenta
+        </p>
       </CardHeader>
       <CardContent>
         {errorMessage && (
@@ -74,6 +78,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
               label="Nombre del Novio"
               placeholder="Juan"
               error={errors.groomName?.message}
+              leftIcon={<User className="h-4 w-4 text-gray-400" />}
               {...register('groomName', {
                 required: 'El nombre del novio es requerido',
               })}
@@ -82,6 +87,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
               label="Nombre de la Novia"
               placeholder="María"
               error={errors.brideName?.message}
+              leftIcon={<User className="h-4 w-4 text-gray-400" />}
               {...register('brideName', {
                 required: 'El nombre de la novia es requerido',
               })}
@@ -92,6 +98,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
             type="email"
             placeholder="tu@ejemplo.com"
             error={errors.email?.message}
+            leftIcon={<Mail className="h-4 w-4 text-gray-400" />}
             {...register('email', {
               required: 'El correo electrónico es requerido',
               pattern: {
@@ -105,6 +112,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
             type="password"
             placeholder="••••••••"
             error={errors.password?.message}
+            leftIcon={<Lock className="h-4 w-4 text-gray-400" />}
             {...register('password', {
               required: 'La contraseña es requerida',
               minLength: {
@@ -118,23 +126,28 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
             type="password"
             placeholder="••••••••"
             error={errors.confirmPassword?.message}
+            leftIcon={<Lock className="h-4 w-4 text-gray-400" />}
             {...register('confirmPassword', {
               required: 'Por favor, confirma tu contraseña',
               validate: (value) => value === password || 'Las contraseñas no coinciden',
             })}
           />
-          <Button type="submit" isLoading={isLoading} className="w-full">
+          <Button 
+            type="submit" 
+            isLoading={isLoading} 
+            className="w-full bg-rose-500 hover:bg-rose-600 text-white h-11"
+          >
             Registrarse
           </Button>
         </form>
       </CardContent>
-      <CardFooter className="flex justify-center">
+      <CardFooter className="flex justify-center border-t pt-6">
         <p className="text-sm text-gray-600">
           ¿Ya tienes una cuenta?{' '}
           <button
             type="button"
             onClick={onToggleForm}
-            className="text-rose-600 hover:text-rose-800 font-medium"
+            className="text-rose-600 hover:text-rose-800 font-medium transition-colors"
           >
             Inicia sesión
           </button>
