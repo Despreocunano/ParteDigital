@@ -68,7 +68,6 @@ serve(async (req) => {
       .from('landing_pages')
       .update({ 
         published_at: new Date().toISOString(),
-        unpublished_at: null,
         slug: uniqueSlug
       })
       .eq('user_id', userId)

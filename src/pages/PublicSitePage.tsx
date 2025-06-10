@@ -49,35 +49,15 @@ export function PublicSitePage() {
           throw new Error('Slug is required');
         }
 
-        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-landing-page`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-          },
-          body: JSON.stringify({ slug }),
-        });
-
-        console.log('Response status:', response.status);
-        const responseText = await response.text();
-        console.log('Response text:', responseText);
-
-        let responseData;
-        try {
-          responseData = JSON.parse(responseText);
-        } catch (e) {
-          console.error('Error parsing response:', e);
-          throw new Error('Invalid response from server');
-        }
-
-        if (!response.ok) {
-          throw new Error(responseData.error || 'Failed to fetch landing page');
-        }
-
-        const { data, error } = responseData;
+        const { data, error } = await supabase
+          .from('landing_pages')
+          .select('*')
+          .eq('slug', slug)
+          .not('published_at', 'is', null)
+          .single();
 
         if (error) {
-          throw new Error(error);
+          throw error;
         }
         if (!data) {
           throw new Error('Page not found');
@@ -101,8 +81,7 @@ export function PublicSitePage() {
           );
         }
       } catch (error) {
-        console.error('Error fetching landing page:', error);
-        setError(error instanceof Error ? error.message : 'Page not found');
+        setError('Page not found');
       } finally {
         setLoading(false);
       }
@@ -125,7 +104,6 @@ export function PublicSitePage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Error</h1>
           <p className="text-gray-600">{error || 'Page not found'}</p>
-          <pre className="mt-4 text-sm text-gray-500">{JSON.stringify(error, null, 2)}</pre>
         </div>
       </div>
     );

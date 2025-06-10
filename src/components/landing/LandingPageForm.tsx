@@ -222,7 +222,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       const { error } = await supabase
         .from('landing_pages')
         .update({ 
-          unpublished_at: new Date().toISOString()
+          published_at: null,
+          slug: null
         })
         .eq('user_id', user?.id);
 
