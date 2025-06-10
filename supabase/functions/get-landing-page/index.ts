@@ -8,22 +8,27 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
+    // Create Supabase client
     const supabase = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_ANON_KEY") ?? ""
     );
 
+    // Get slug from request body
     const { slug } = await req.json();
+    console.log('Received slug:', slug);
 
     if (!slug) {
       throw new Error("Slug is required");
     }
 
+    // Query the database
     const { data, error } = await supabase
       .from('landing_pages')
       .select('*, landing_templates(*)')
@@ -31,6 +36,8 @@ serve(async (req) => {
       .not('published_at', 'is', null)
       .is('unpublished_at', null)
       .single();
+
+    console.log('Query result:', { data, error });
 
     if (error) {
       console.error('Database error:', error);
