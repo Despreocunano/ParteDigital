@@ -54,6 +54,7 @@ export function PublicSitePage() {
           .select('*')
           .eq('slug', slug)
           .not('published_at', 'is', null)
+          .is('unpublished_at', null)
           .single();
 
         if (error) {
