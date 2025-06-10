@@ -84,7 +84,8 @@ export function PublicSitePage() {
           );
         }
       } catch (error) {
-        setError('Page not found');
+        console.error('Error fetching landing page:', error);
+        setError(error instanceof Error ? error.message : 'Page not found');
       } finally {
         setLoading(false);
       }
@@ -107,6 +108,7 @@ export function PublicSitePage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">Error</h1>
           <p className="text-gray-600">{error || 'Page not found'}</p>
+          <pre className="mt-4 text-sm text-gray-500">{JSON.stringify(error, null, 2)}</pre>
         </div>
       </div>
     );

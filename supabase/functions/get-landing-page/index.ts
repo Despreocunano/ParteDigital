@@ -32,8 +32,13 @@ serve(async (req) => {
       .is('unpublished_at', null)
       .single();
 
-    if (error) throw error;
-    if (!data) throw new Error("Landing page not found");
+    if (error) {
+      console.error('Database error:', error);
+      throw new Error(`Database error: ${error.message}`);
+    }
+    if (!data) {
+      throw new Error("Landing page not found");
+    }
 
     // Check if the page is currently published
     const publishedAt = new Date(data.published_at);
