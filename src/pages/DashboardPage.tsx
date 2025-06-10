@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { useAttendees } from '../hooks/useAttendees';
 import { useTables } from '../hooks/useTables';

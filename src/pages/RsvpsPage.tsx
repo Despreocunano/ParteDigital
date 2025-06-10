@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useAttendees } from '../hooks/useAttendees';
 import { useTables } from '../hooks/useTables';
-import { Check, X, Clock, Send, CheckCircle, XCircle, Table2, Search, Download } from 'lucide-react';
+import { X, Clock, Send, CheckCircle, XCircle, Table2, Search, Download } from 'lucide-react';
 import { Attendee } from '../types/supabase';
 import { AttendeeStatus } from '../components/attendees/AttendeeStatus';
 import { sendEmail } from '../lib/api';

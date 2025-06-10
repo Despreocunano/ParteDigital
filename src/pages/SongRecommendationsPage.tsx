@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Music2, Calendar, Search, Download } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -106,7 +106,7 @@ export function SongRecommendationsPage() {
               </div>
               {filteredSongs.length > 0 && (
                 <Button
-                  variant="outline"
+                  variant="primary"
                   onClick={exportToExcel}
                   leftIcon={<Download className="h-4 w-4" />}
                 >

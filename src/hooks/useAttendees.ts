@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase';
 import type { Attendee, RsvpStatus } from '../types/supabase';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import { sendEmail } from '../lib/api';
 
 export function useAttendees() {
   const [attendees, setAttendees] = useState<Attendee[]>([]);
@@ -165,6 +166,28 @@ export function useAttendees() {
     }
   };
 
+  const sendReminder = async (id: string) => {
+    if (!user) return { success: false };
+
+    try {
+      const attendee = attendees.find(a => a.id === id);
+      if (!attendee) throw new Error('Attendee not found');
+
+      await sendEmail(
+        id,
+        'Recordatorio de invitación',
+        `Hola ${attendee.first_name},\n\nTe recordamos que aún no has confirmado tu asistencia a nuestra boda. Por favor, confirma tu asistencia lo antes posible.\n\n¡Gracias!`
+      );
+
+      toast.success('Recordatorio enviado correctamente');
+      return { success: true };
+    } catch (err) {
+      console.error('Error sending reminder:', err);
+      toast.error('Error al enviar recordatorio');
+      return { success: false };
+    }
+  };
+
   return {
     attendees,
     loading,
@@ -173,6 +196,7 @@ export function useAttendees() {
     updateAttendee,
     updateRsvpStatus,
     deleteAttendee,
+    sendReminder,
     refreshAttendees: fetchAttendees
   };
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { TableManager } from '../components/tables/TableManager';
 import { useAttendees } from '../hooks/useAttendees';
 import { useTables } from '../hooks/useTables';

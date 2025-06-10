@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAttendees } from '../hooks/useAttendees';
 import { useTables } from '../hooks/useTables';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
@@ -55,6 +55,7 @@ export function AttendeesPage() {
         plus_one_name: data.plus_one_name || null,
         plus_one_dietary_restrictions: data.plus_one_dietary_restrictions || null,
         plus_one_rsvp_status: data.plus_one_rsvp_status || null,
+        table_id: null,
       });
       
       if (result.success) {

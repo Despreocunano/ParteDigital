@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
 
-type ButtonVariant = 'primary' | 'secondary';
+type ButtonVariant = 'primary' | 'secondary' | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -31,6 +31,7 @@ export function Button({
         {
           'bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127]': variant === 'primary',
           'border border-[#D4B572] text-[#D4B572] hover:bg-[#D4B572]/10': variant === 'secondary',
+          'bg-red-600 hover:bg-red-700 text-white': variant === 'danger',
           'px-3 py-1.5 text-sm rounded-md': size === 'sm',
           'px-6 py-2 text-base rounded-md': size === 'md',
           'px-8 py-3 text-lg rounded-md': size === 'lg',

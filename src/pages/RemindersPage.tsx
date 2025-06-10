@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
@@ -67,7 +67,13 @@ export function RemindersPage() {
         if (!data?.party_address) missingFields.push('dirección de la fiesta');
 
         if (missingFields.length > 0) {
-          toast.warning(`Algunos datos de la invitación no están definidos: ${missingFields.join(', ')}. Los recordatorios mostrarán valores por defecto para estos campos.`);
+          toast(`Algunos datos de la invitación no están definidos: ${missingFields.join(', ')}. Los recordatorios mostrarán valores por defecto para estos campos.`, {
+            icon: '⚠️',
+            style: {
+              background: '#FEF3C7',
+              color: '#92400E',
+            },
+          });
         }
       } catch (error) {
         console.error('Error fetching landing page:', error);
