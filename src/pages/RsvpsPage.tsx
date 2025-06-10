@@ -329,7 +329,7 @@ export function RsvpsPage() {
                 {pendingAttendees.length > 0 && (
                   <div className="mt-2">
                     <Button
-                      variant="outline"
+                      variant="secondary"
                       size="sm"
                       onClick={selectAllPending}
                     >
@@ -360,7 +360,7 @@ export function RsvpsPage() {
               
               <div className="flex justify-end space-x-3">
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   onClick={() => {
                     setBulkReminderMode(false);
                     setSelectedAttendees([]);
@@ -401,7 +401,7 @@ export function RsvpsPage() {
                 <div className="flex gap-2">
                   {filteredAttendees.length > 0 && (
                     <Button
-                      variant="outline"
+                      variant="secondary"
                       onClick={exportToExcel}
                       leftIcon={<Download className="h-4 w-4" />}
                     >

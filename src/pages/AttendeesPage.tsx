@@ -8,12 +8,14 @@ import { Plus, Search } from 'lucide-react';
 import { AttendeeCard } from '../components/attendees/AttendeeCard';
 import { AttendeeForm } from '../components/attendees/AttendeeForm';
 import type { Attendee } from '../types/supabase';
+import { toast } from 'react-hot-toast';
 
 export function AttendeesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingAttendee, setEditingAttendee] = useState<Attendee | null>(null);
   const [formLoading, setFormLoading] = useState(false);
+  const [sendingReminder, setSendingReminder] = useState<string | null>(null);
   
   const { 
     attendees, 
@@ -21,7 +23,8 @@ export function AttendeesPage() {
     addAttendee,
     updateAttendee,
     deleteAttendee,
-    updateRsvpStatus
+    updateRsvpStatus,
+    sendReminder
   } = useAttendees();
   
   const {
@@ -94,9 +97,16 @@ export function AttendeesPage() {
     }
   };
 
-  const handleSendReminder = (attendee: Attendee) => {
-    // Implement reminder functionality
-    console.log('Send reminder to:', attendee);
+  const handleSendReminder = async (attendee: Attendee) => {
+    try {
+      setSendingReminder(attendee.id);
+      await sendReminder(attendee.id);
+      toast.success('Recordatorio enviado');
+    } catch (error) {
+      toast.error('Error al enviar el recordatorio');
+    } finally {
+      setSendingReminder(null);
+    }
   };
 
   return (

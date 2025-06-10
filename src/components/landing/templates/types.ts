@@ -28,6 +28,6 @@ export interface TemplateProps {
     accountNumber: string;
     email: string;
   };
-  dress_code?: string;
-  additional_info?: string;
+  dress_code: string;
+  additional_info: string;
 }

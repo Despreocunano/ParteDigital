@@ -59,8 +59,7 @@ ${bankInfo.email}`;
       toast.success('Datos copiados al portapapeles');
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
-      toast.error('Error al copiar los datos');
+      toast.error('Error al copiar al portapapeles');
     }
   };
 

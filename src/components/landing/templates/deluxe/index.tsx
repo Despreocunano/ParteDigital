@@ -37,6 +37,7 @@ export function DeluxeTemplate({
   dress_code,
   additional_info
 }: TemplateProps) {
+
   const [showWelcomeModal, setShowWelcomeModal] = useState(musicEnabled);
   const [autoplayMusic, setAutoplayMusic] = useState(false);
 
@@ -107,9 +108,9 @@ export function DeluxeTemplate({
           />
 
           <PartyInfo
-            dresscode={dress_code || ''}
+            dresscode={dress_code || 'Formal'}
             musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
-            tips={additional_info || ''}
+            tips={additional_info || 'La celebración será al aire libre'}
             className="bg-[#253238] border-y border-[#D4B572]/20"
             userId={userId}
           />

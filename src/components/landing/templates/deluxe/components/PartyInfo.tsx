@@ -23,9 +23,9 @@ interface PartyInfoProps {
 }
 
 export function PartyInfo({
-  dresscode = 'Formal',
+  dresscode,
   musicInfo,
-  tips = 'La celebración será al aire libre',
+  tips,
   className = '',
   userId
 }: PartyInfoProps) {
@@ -78,8 +78,7 @@ export function PartyInfo({
       setShowMusicModal(false);
       setSelectedTracks([]);
     } catch (error) {
-      console.error('Error saving songs:', error);
-      toast.error('Error al guardar las canciones');
+      toast.error('Error al guardar la canción');
     } finally {
       setIsSubmitting(false);
     }
@@ -288,7 +287,7 @@ export function PartyInfo({
         isOpen={showDressCodeModal}
         onClose={() => setShowDressCodeModal(false)}
         title="Código de Vestimenta"
-        content={dresscode}
+        content={dresscode || 'Formal'}
         icon={Shirt}
       />
 
@@ -297,7 +296,7 @@ export function PartyInfo({
         isOpen={showTipsModal}
         onClose={() => setShowTipsModal(false)}
         title="Información Adicional"
-        content={tips}
+        content={tips || 'La celebración será al aire libre'}
         icon={Lightbulb}
       />
     </>

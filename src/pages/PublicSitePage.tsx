@@ -22,6 +22,8 @@ interface LandingPageData {
   music_enabled: boolean;
   selected_track: string;
   template_id: string;
+  dress_code: string;
+  additional_info: string;
   cover_image?: string;
   gallery_images?: any[];
   bank_info?: {
@@ -54,8 +56,12 @@ export function PublicSitePage() {
           .not('published_at', 'is', null)
           .single();
 
-        if (error) throw error;
-        if (!data) throw new Error('Page not found');
+        if (error) {
+          throw error;
+        }
+        if (!data) {
+          throw new Error('Page not found');
+        }
 
         setLandingData(data);
 
@@ -75,7 +81,6 @@ export function PublicSitePage() {
           );
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
         setError('Page not found');
       } finally {
         setLoading(false);
@@ -125,7 +130,9 @@ export function PublicSitePage() {
     coverImage: landingData.cover_image,
     galleryImages: landingData.gallery_images?.map(img => img.url),
     userId: landingData.user_id,
-    bankInfo: landingData.bank_info
+    bankInfo: landingData.bank_info,
+    dress_code: landingData.dress_code,
+    additional_info: landingData.additional_info
   };
 
   return <TemplateComponent {...templateProps} />;

@@ -23,6 +23,8 @@ interface LandingPageData {
   music_enabled: boolean;
   selected_track: string;
   template_id: string;
+  dress_code: string;
+  additional_info: string;
   cover_image?: string;
   gallery_images?: any[];
   bank_info?: {
@@ -77,7 +79,6 @@ export function PreviewPage() {
 
         setLandingData(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
         setError('Error loading preview');
       } finally {
         setLoading(false);
@@ -127,7 +128,9 @@ export function PreviewPage() {
     coverImage: landingData.cover_image,
     galleryImages: landingData.gallery_images?.map(img => img.url),
     userId: userId,
-    bankInfo: landingData.bank_info
+    bankInfo: landingData.bank_info,
+    dress_code: landingData.dress_code,
+    additional_info: landingData.additional_info
   };
 
   return <TemplateComponent {...templateProps} />;
