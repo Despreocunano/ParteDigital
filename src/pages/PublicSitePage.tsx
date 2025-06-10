@@ -49,16 +49,18 @@ export function PublicSitePage() {
           throw new Error('Slug is required');
         }
 
-        const { data, error } = await supabase
-          .from('landing_pages')
-          .select('*')
-          .eq('slug', slug)
-          .not('published_at', 'is', null)
-          .is('unpublished_at', null)
-          .single();
+        const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/get-landing-page`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ slug }),
+        });
+
+        const { data, error } = await response.json();
 
         if (error) {
-          throw error;
+          throw new Error(error);
         }
         if (!data) {
           throw new Error('Page not found');
