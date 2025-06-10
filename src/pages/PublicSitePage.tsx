@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { getTemplate } from '../components/landing/templates';
 import type { TemplateProps } from '../components/landing/templates/types';
+import { Heart } from 'lucide-react';
+import { Button } from '../components/ui/Button';
 
 interface LandingPageData {
   id: string;
@@ -100,10 +102,25 @@ export function PublicSitePage() {
 
   if (error || !landingData) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Error</h1>
-          <p className="text-gray-600">{error || 'Page not found'}</p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-slate-50">
+        <div className="max-w-md w-full mx-auto p-8 text-center">
+          <div className="mb-8">
+            <Heart className="h-16 w-16 text-rose-500 mx-auto" />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            ¡Ups! Esta invitación ya no está disponible
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Lo sentimos, pero parece que esta invitación ya no está activa o ha sido eliminada.
+          </p>
+          <Button
+            onClick={() => window.location.href = 'https://tuparte.digital'}
+            size="lg"
+            className="bg-rose-500 hover:bg-rose-600 text-white px-8 group"
+          >
+            <span>Ir al inicio</span>
+            <Heart className="ml-2 h-5 w-5 group-hover:text-white transition-transform group-hover:scale-125" />
+          </Button>
         </div>
       </div>
     );
