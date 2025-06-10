@@ -58,12 +58,23 @@ export function PublicSitePage() {
           body: JSON.stringify({ slug }),
         });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch landing page');
+        console.log('Response status:', response.status);
+        const responseText = await response.text();
+        console.log('Response text:', responseText);
+
+        let responseData;
+        try {
+          responseData = JSON.parse(responseText);
+        } catch (e) {
+          console.error('Error parsing response:', e);
+          throw new Error('Invalid response from server');
         }
 
-        const { data, error } = await response.json();
+        if (!response.ok) {
+          throw new Error(responseData.error || 'Failed to fetch landing page');
+        }
+
+        const { data, error } = responseData;
 
         if (error) {
           throw new Error(error);

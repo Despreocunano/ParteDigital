@@ -25,7 +25,16 @@ serve(async (req) => {
     console.log('Received slug:', slug);
 
     if (!slug) {
-      throw new Error("Slug is required");
+      return new Response(
+        JSON.stringify({ error: "Slug is required" }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
 
     // Query the database
@@ -40,11 +49,29 @@ serve(async (req) => {
     console.log('Query result:', { data, error });
 
     if (error) {
-      console.error('Database error:', error);
-      throw new Error(`Database error: ${error.message}`);
+      return new Response(
+        JSON.stringify({ error: `Database error: ${error.message}` }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
+
     if (!data) {
-      throw new Error("Landing page not found");
+      return new Response(
+        JSON.stringify({ error: "Landing page not found" }),
+        {
+          status: 404,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
 
     // Check if the page is currently published
@@ -52,7 +79,16 @@ serve(async (req) => {
     const now = new Date();
 
     if (now < publishedAt) {
-      throw new Error("Landing page is not yet published");
+      return new Response(
+        JSON.stringify({ error: "Landing page is not yet published" }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
 
     return new Response(
@@ -72,7 +108,7 @@ serve(async (req) => {
         error: error instanceof Error ? error.message : "Failed to fetch landing page",
       }),
       {
-        status: 400,
+        status: 500,
         headers: {
           ...corsHeaders,
           "Content-Type": "application/json",
