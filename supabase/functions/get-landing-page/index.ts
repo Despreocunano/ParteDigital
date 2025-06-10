@@ -28,11 +28,21 @@ serve(async (req) => {
       .from('landing_pages')
       .select('*, landing_templates(*)')
       .eq('slug', slug)
-      .neq('published_at', null)
+      .not('published_at', 'is', null)
+      .not('unpublished_at', 'is', null)
       .single();
 
     if (error) throw error;
     if (!data) throw new Error("Landing page not found");
+
+    // Check if the page is currently published
+    const publishedAt = new Date(data.published_at);
+    const unpublishedAt = data.unpublished_at ? new Date(data.unpublished_at) : null;
+    const now = new Date();
+
+    if (unpublishedAt && now > unpublishedAt) {
+      throw new Error("Landing page is no longer published");
+    }
 
     return new Response(
       JSON.stringify({ data }),
