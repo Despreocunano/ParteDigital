@@ -256,7 +256,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       <Card>
         <CardHeader>
-          <CardTitle>Plantilla</CardTitle>
+          <CardTitle>Selecciona el diseño de tu invitación</CardTitle>
         </CardHeader>
         <CardContent>
           <TemplateSelector

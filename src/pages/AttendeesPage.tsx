@@ -101,8 +101,10 @@ export function AttendeesPage() {
   const handleSendReminder = async (attendee: Attendee) => {
     try {
       setSendingReminder(attendee.id);
-      await sendReminder(attendee.id);
-      toast.success('Recordatorio enviado');
+      const result = await sendReminder(attendee.id);
+      if (result.success) {
+        toast.success('Recordatorio enviado');
+      }
     } catch (error) {
       toast.error('Error al enviar el recordatorio');
     } finally {
@@ -187,6 +189,7 @@ export function AttendeesPage() {
               onDelete={deleteAttendee}
               onSendReminder={handleSendReminder}
               onAssignTable={assignGuestToTable}
+              sendingReminder={sendingReminder}
             />
           ))}
         </div>

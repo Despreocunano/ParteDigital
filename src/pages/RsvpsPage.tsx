@@ -9,15 +9,21 @@ import { Attendee } from '../types/supabase';
 import { AttendeeStatus } from '../components/attendees/AttendeeStatus';
 import { sendEmail } from '../lib/api';
 import toast from 'react-hot-toast';
+import { supabase } from '../lib/supabase';
+import { useWedding } from '../hooks/useWedding';
+import { useAuth } from '../context/AuthContext';
+import { getReminderTemplate, getSignatureTemplate } from '../templates/emailTemplates';
 
 export function RsvpsPage() {
   const { attendees, loading: attendeesLoading } = useAttendees();
   const { tables, loading: tablesLoading } = useTables();
+  const { user } = useAuth();
+  const { groomName, brideName, profileImage } = useWedding();
   const [selectedAttendees, setSelectedAttendees] = useState<string[]>([]);
   const [bulkReminderMode, setBulkReminderMode] = useState(false);
   const [reminderSubject, setReminderSubject] = useState('Confirma tu asistencia');
   const [reminderMessage, setReminderMessage] = useState('');
-  const [isSending, setIsSending] = useState(false);
+  const [sendingReminder, setSendingReminder] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   
   const filteredAttendees = attendees.filter((attendee) => {
@@ -58,7 +64,7 @@ export function RsvpsPage() {
   const handleSendBulkReminders = async () => {
     if (selectedAttendees.length === 0 || !reminderMessage.trim()) return;
     
-    setIsSending(true);
+    setSendingReminder(null);
     
     try {
       let successCount = 0;
@@ -93,24 +99,33 @@ export function RsvpsPage() {
       console.error('Error sending reminders:', error);
       toast.error('Error al enviar los recordatorios');
     } finally {
-      setIsSending(false);
+      setSendingReminder(null);
     }
   };
 
   const handleSendSingleReminder = async (attendee: Attendee) => {
     try {
-      setIsSending(true);
+      setSendingReminder(attendee.id);
       
-      const message = `
-        <p>Hola ${attendee.first_name},</p>
-        <p>Este es un recordatorio para confirmar tu asistencia a nuestra boda.</p>
-        <p>Por favor, háznoslo saber lo antes posible.</p>
-        <p>¡Gracias!</p>
-      `;
+      // Get landing page data
+      const { data: landingPage, error: landingError } = await supabase
+        .from('landing_pages')
+        .select('*')
+        .eq('user_id', user?.id)
+        .single();
+
+      if (landingError) throw new Error('Error fetching landing page');
+
+      const landingUrl = landingPage?.slug 
+        ? `https://tuparte.digital/invitacion/${landingPage.slug}`
+        : '';
+
+      const signature = getSignatureTemplate(groomName, brideName, profileImage);
+      const message = getReminderTemplate({ attendee, landingUrl, signature });
 
       await sendEmail(
         attendee.id,
-        'Recordatorio de Confirmación de Asistencia',
+        'Recordatorio de invitación',
         message
       );
 
@@ -119,7 +134,7 @@ export function RsvpsPage() {
       console.error('Error sending reminder:', error);
       toast.error('Error al enviar el recordatorio');
     } finally {
-      setIsSending(false);
+      setSendingReminder(null);
     }
   };
 
@@ -161,12 +176,12 @@ export function RsvpsPage() {
     }
   };
 
-  const AttendeeRow = ({ attendee }: { attendee: Attendee }) => {
+  const renderAttendeeRow = (attendee: Attendee) => {
     const isSelected = selectedAttendees.includes(attendee.id);
     const currentTable = tables.find(t => t.id === attendee.table_id);
     
     return (
-      <tr className="border-b border-gray-200">
+      <tr key={attendee.id} className="border-b border-gray-200 hover:bg-gray-50">
         {bulkReminderMode && (
           <td className="px-4 py-3">
             <input
@@ -219,7 +234,7 @@ export function RsvpsPage() {
               size="sm"
               leftIcon={<Send className="h-3 w-3" />}
               onClick={() => handleSendSingleReminder(attendee)}
-              isLoading={isSending}
+              isLoading={sendingReminder === attendee.id}
             >
               Recordar
             </Button>
@@ -370,7 +385,7 @@ export function RsvpsPage() {
                 </Button>
                 <Button
                   onClick={handleSendBulkReminders}
-                  isLoading={isSending}
+                  isLoading={sendingReminder !== null}
                   disabled={selectedAttendees.length === 0 || !reminderMessage.trim()}
                   leftIcon={<Send className="h-4 w-4" />}
                 >
@@ -472,15 +487,15 @@ export function RsvpsPage() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {pendingAttendees.map((attendee) => (
-                      <AttendeeRow key={attendee.id} attendee={attendee} />
-                    ))}
-                    {confirmedAttendees.map((attendee) => (
-                      <AttendeeRow key={attendee.id} attendee={attendee} />
-                    ))}
-                    {declinedAttendees.map((attendee) => (
-                      <AttendeeRow key={attendee.id} attendee={attendee} />
-                    ))}
+                    {pendingAttendees.map((attendee) => 
+                      renderAttendeeRow(attendee)
+                    )}
+                    {confirmedAttendees.map((attendee) => 
+                      renderAttendeeRow(attendee)
+                    )}
+                    {declinedAttendees.map((attendee) => 
+                      renderAttendeeRow(attendee)
+                    )}
                   </tbody>
                 </table>
               </div>

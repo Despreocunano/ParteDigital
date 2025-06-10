@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useWedding } from '../hooks/useWedding';
 import toast from 'react-hot-toast';
 import { sendEmail } from '../lib/api';
+import { getReminderTemplate, getSignatureTemplate } from '../templates/emailTemplates';
 
 export function useAttendees() {
   const [attendees, setAttendees] = useState<Attendee[]>([]);
@@ -188,34 +189,8 @@ export function useAttendees() {
         ? `https://tuparte.digital/invitacion/${landingPage.slug}`
         : '';
 
-      const signature = `
-<br><br>
-<div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-  <table cellpadding="0" cellspacing="0" style="border: none;">
-    <tr>
-      <td style="vertical-align: middle; padding-right: 15px;">
-        <img src="${profileImage || 'https://images.pexels.com/photos/931158/pexels-photo-931158.jpeg?w=50&h=50'}" alt="Logo" style="width: 50px; height: 50px; border-radius: 50%;">
-      </td>
-      <td style="vertical-align: middle;">
-        <div style="font-family: 'Playfair Display', serif; color: #B76E79; font-size: 18px;">
-          ${groomName} & ${brideName}
-        </div>
-        <div style="font-family: Arial, sans-serif; color: #666; font-size: 14px; margin-top: 4px;">
-          ¡Gracias por ser parte de nuestra historia!
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>`;
-
-      const message = `
-Hola ${attendee.first_name},
-
-Te recordamos que aún no has confirmado tu asistencia a nuestra boda. Por favor, confirma tu asistencia lo antes posible.
-
-${landingUrl ? `Puedes ver todos los detalles y confirmar tu asistencia en nuestra invitación digital: ${landingUrl}` : ''}
-
-¡Gracias!${signature}`;
+      const signature = getSignatureTemplate(groomName, brideName, profileImage);
+      const message = getReminderTemplate({ attendee, landingUrl, signature });
 
       await sendEmail(
         id,
@@ -223,11 +198,9 @@ ${landingUrl ? `Puedes ver todos los detalles y confirmar tu asistencia en nuest
         message
       );
 
-      toast.success('Recordatorio enviado correctamente');
       return { success: true };
     } catch (err) {
       console.error('Error sending reminder:', err);
-      toast.error('Error al enviar recordatorio');
       return { success: false };
     }
   };

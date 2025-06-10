@@ -108,24 +108,14 @@ export function PublishSection({
               <p className="text-sm text-gray-600 mb-2">
                 Tu página está publicada en:
               </p>
-              <div className="flex items-center gap-2">
-                <a 
-                  href={publishedUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-rose-600 hover:text-rose-700 break-all flex-1"
-                >
-                  {publishedUrl}
-                </a>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => handleShare('copy')}
-                  leftIcon={copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                >
-                  {copied ? 'Copiado' : 'Copiar'}
-                </Button>
-              </div>
+              <a 
+                href={publishedUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-rose-600 hover:text-rose-700 break-all block"
+              >
+                {publishedUrl}
+              </a>
             </div>
 
             <div className="border-t border-gray-200 pt-4">
@@ -148,6 +138,14 @@ export function PublishSection({
                   leftIcon={<Instagram className="h-4 w-4" />}
                 >
                   Instagram
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => handleShare('copy')}
+                  leftIcon={copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                >
+                  {copied ? 'Copiado' : 'Copiar'}
                 </Button>
               </div>
             </div>

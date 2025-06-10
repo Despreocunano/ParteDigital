@@ -16,6 +16,7 @@ interface AttendeeCardProps {
   onDelete: (id: string) => void;
   onSendReminder: (attendee: Attendee) => void;
   onAssignTable: (attendeeId: string, tableId: string | null) => Promise<{ success: boolean }>;
+  sendingReminder: string | null;
 }
 
 export function AttendeeCard({ 
@@ -25,7 +26,8 @@ export function AttendeeCard({
   onEdit, 
   onDelete, 
   onSendReminder,
-  onAssignTable 
+  onAssignTable,
+  sendingReminder
 }: AttendeeCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showTableModal, setShowTableModal] = useState(false);
@@ -80,6 +82,7 @@ export function AttendeeCard({
                 size="sm"
                 onClick={() => onSendReminder(attendee)}
                 className="text-gray-600 hover:text-gray-900"
+                isLoading={sendingReminder === attendee.id}
               >
                 <Send className="h-4 w-4" />
               </Button>
