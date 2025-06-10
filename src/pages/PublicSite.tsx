@@ -14,6 +14,7 @@ import app4 from '../assets/images/app_00004.png';
 import app5 from '../assets/images/app_00005.png';
 import app6 from '../assets/images/app_00006.png';
 import app7 from '../assets/images/app_00007.png';
+import herobg from '../assets/images/hero_public.webp';
 
 const features = [
   {
@@ -220,7 +221,7 @@ export function PublicSite() {
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent z-10"></div>
           <img 
-            src="https://images.pexels.com/photos/1589820/pexels-photo-1589820.jpeg"
+            src={herobg}
             alt="Wedding background"
             className="w-full h-full object-cover"
           />
