@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoadScript, Autocomplete } from '@react-google-maps/api';
+import { useLoadScript } from '@react-google-maps/api';
 import { Input } from './Input';
 
 const libraries: ("places")[] = ["places"];
@@ -24,27 +24,48 @@ export function PlacesAutocomplete({
     libraries
   });
 
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const [autocomplete, setAutocomplete] = React.useState<google.maps.places.Autocomplete | null>(null);
 
-  const onLoad = (autocomplete: google.maps.places.Autocomplete) => {
-    setAutocomplete(autocomplete);
-  };
+  React.useEffect(() => {
+    if (!isLoaded || !inputRef.current || !window.google) return;
 
-  const onPlaceChanged = () => {
-    if (autocomplete) {
-      const place = autocomplete.getPlace();
-      if (place.formatted_address) {
-        onChange(place.formatted_address, place.place_id);
-      }
+    try {
+      const autocompleteInstance = new window.google.maps.places.Autocomplete(inputRef.current, {
+        types: ['address'],
+        componentRestrictions: { country: 'cl' }
+      });
+
+      autocompleteInstance.addListener('place_changed', () => {
+        const place = autocompleteInstance.getPlace();
+        if (place.formatted_address) {
+          onChange(place.formatted_address, place.place_id);
+        }
+      });
+
+      setAutocomplete(autocompleteInstance);
+
+      return () => {
+        if (autocompleteInstance) {
+          window.google.maps.event.clearInstanceListeners(autocompleteInstance);
+        }
+      };
+    } catch (err) {
+      console.error('Error initializing Google Places Autocomplete:', err);
     }
+  }, [isLoaded, onChange]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
   };
 
   if (loadError) {
+    console.error('Error loading Google Maps:', loadError);
     return (
       <Input
         label={label}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleInputChange}
         error={error || "Error loading Google Maps"}
         placeholder={placeholder}
       />
@@ -56,7 +77,7 @@ export function PlacesAutocomplete({
       <Input
         label={label}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleInputChange}
         error={error}
         placeholder={placeholder}
       />
@@ -70,18 +91,14 @@ export function PlacesAutocomplete({
           {label}
         </label>
       )}
-      <Autocomplete
-        onLoad={onLoad}
-        onPlaceChanged={onPlaceChanged}
-      >
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className={`flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${error ? 'border-red-500 focus:ring-red-500' : ''}`}
-          placeholder={placeholder}
-        />
-      </Autocomplete>
+      <input
+        ref={inputRef}
+        type="text"
+        value={value}
+        onChange={handleInputChange}
+        className={`flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 ${error ? 'border-red-500 focus:ring-red-500' : ''}`}
+        placeholder={placeholder}
+      />
       {error && (
         <p className="mt-1 text-sm text-red-600">{error}</p>
       )}
