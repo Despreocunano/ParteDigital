@@ -50,11 +50,11 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
     >
       <div className="max-w-6xl mx-auto text-center">
         <motion.div variants={item}>
-          <div className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Instagram className="w-8 h-8 text-[#D4B572]" />
+          <div className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Instagram className="w-8 h-8 text-[#2D1B69]" />
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-serif mb-8 text-[#D4B572]">Comparte tus Fotos</h2>
+          <h2 className="text-3xl md:text-4xl font-serif mb-8 text-[#2D1B69]">Comparte tus Fotos</h2>
           
           <Divider className="mb-8" />
         </motion.div>
@@ -63,8 +63,18 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
           className="max-w-xl mx-auto mb-12 space-y-6"
           variants={item}
         >
-          <div className="inline-block bg-[#1C2127] border border-[#D4B572]/20 rounded-full px-6 py-3">
-            <p className="text-2xl font-light text-[#D4B572]">
+          <div className="inline-block bg-white/90 backdrop-blur-sm border border-[#F8BBD9]/50 rounded-full px-6 py-3 relative">
+            {/* Cherry blossom decoration */}
+            <div className="absolute -top-2 -right-2">
+              <svg width="20" height="20" viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="2" fill="#F8BBD9" opacity="0.6"/>
+                <circle cx="8" cy="8" r="1.5" fill="#FCE4EC"/>
+                <circle cx="12" cy="8" r="1.5" fill="#FCE4EC"/>
+                <circle cx="8" cy="12" r="1.5" fill="#FCE4EC"/>
+                <circle cx="12" cy="12" r="1.5" fill="#FCE4EC"/>
+              </svg>
+            </div>
+            <p className="text-2xl font-light text-[#2D1B69]">
               #{hashtag}
             </p>
           </div>
@@ -88,7 +98,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
             {instagramPosts.map((post, index) => (
               <motion.div 
                 key={post.id}
-                className="aspect-square overflow-hidden rounded-xl border border-[#D4B572]/10"
+                className="aspect-square overflow-hidden rounded-xl border border-[#F8BBD9]/30"
                 variants={item}
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}

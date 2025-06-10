@@ -42,7 +42,7 @@ export function GallerySection({ images, className = '' }: GallerySectionProps) 
     >
       <div className="max-w-6xl mx-auto">
         <motion.div className="text-center mb-12" variants={item}>
-          <h2 className="text-3xl md:text-4xl font-serif text-[#D4B572]">
+          <h2 className="text-3xl md:text-4xl font-serif text-[#FAB765]">
             Nuestra Historia
           </h2>
           <Divider className="mt-8" />
@@ -50,7 +50,7 @@ export function GallerySection({ images, className = '' }: GallerySectionProps) 
 
         <Gallery 
           images={images}
-          frameColor="#D4B572"
+          frameColor="#DF9434"
         />
       </div>
     </motion.section>

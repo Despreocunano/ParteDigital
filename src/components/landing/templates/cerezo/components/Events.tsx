@@ -5,7 +5,6 @@ import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
 import { Divider } from './Divider';
 
-
 interface EventProps {
   title: string;
   date: string;
@@ -69,45 +68,66 @@ END:VCALENDAR`;
 
   return (
     <motion.div 
-      className={`bg-[#1C2127] rounded-2xl shadow-lg overflow-hidden border border-[#D4B572]/20 ${className}`}
+      className={`relative group ${className}`}
       variants={variants}
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ y: -5 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <div className="p-8 md:p-10">
-        <div className="flex items-center mb-6">
-          <h3 className="text-3xl font-serif text-[#D4B572]">{title}</h3>
+      {/* Unique card design with layered effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#E91E63] to-[#C2185B] rounded-3xl transform rotate-2 opacity-20"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] rounded-3xl transform -rotate-1 opacity-40"></div>
+      
+      <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-[#F8BBD9]/50">
+        {/* Decorative header */}
+        <div className="h-2 bg-gradient-to-r from-[#E91E63] via-[#F8BBD9] to-[#E91E63]"></div>
+        
+        {/* Cherry blossom corner decoration */}
+        <div className="absolute top-6 right-6 opacity-20">
+          <svg width="40" height="40" viewBox="0 0 40 40">
+            <circle cx="20" cy="20" r="6" fill="#F8BBD9"/>
+            <circle cx="14" cy="14" r="4" fill="#FCE4EC"/>
+            <circle cx="26" cy="14" r="4" fill="#FCE4EC"/>
+            <circle cx="14" cy="26" r="4" fill="#FCE4EC"/>
+            <circle cx="26" cy="26" r="4" fill="#FCE4EC"/>
+            <circle cx="20" cy="20" r="2" fill="#E91E63"/>
+          </svg>
         </div>
         
-        <div className="space-y-6">
-          <div>
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
-                <CalendarDays className="w-5 h-5 text-[#D4B572]" />
+        <div className="p-8 md:p-10">
+          <h3 className="text-4xl font-serif mb-8 text-[#2D1B69] relative">
+            {title}
+            <div className="absolute -bottom-2 left-0 w-16 h-1 bg-gradient-to-r from-[#E91E63] to-transparent rounded-full"></div>
+          </h3>
+          
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <CalendarDays className="w-6 h-6 text-[#2D1B69]" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-xl font-medium text-[#2D1B69]">
+                    {new Date(date).toLocaleDateString('es-ES', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                  {time && (
+                    <div className="flex items-center mt-2 text-[#8D6E63]">
+                      <Clock className="w-4 h-4 mr-2" />
+                      <span className="font-medium">{time}</span>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="ml-4">
-                <p className="text-lg font-medium text-[#D4B572]">
-                  {new Date(date).toLocaleDateString('es-ES', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </p>
-                {time && (
-                  <div className="flex items-center mt-2 text-[#D4B572]/80">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>{time}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="mt-4">
+              
               <Button
                 onClick={() => setShowCalendarOptions(!showCalendarOptions)}
                 leftIcon={<CalendarDays className="w-5 h-5" />}
-                className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full flex items-center justify-center gap-2"
+                className="bg-gradient-to-r from-[#E91E63] to-[#C2185B] hover:from-[#C2185B] hover:to-[#AD1457] text-white px-8 py-3 w-full rounded-2xl shadow-lg transform transition-all hover:scale-105"
               >
-                Agendar
+                Agendar Evento
               </Button>
               
               <AnimatePresence>
@@ -116,68 +136,67 @@ END:VCALENDAR`;
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mt-2 bg-[#1C2127] border border-[#D4B572]/20 rounded-lg shadow-lg p-2"
+                    className="bg-white/90 backdrop-blur-sm border border-[#F8BBD9]/30 rounded-2xl shadow-lg p-4"
                   >
                     <motion.a
                       href={generateCalendarLink('google')}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
+                      className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      Google Calendar
+                      📅 Google Calendar
                     </motion.a>
                     <motion.a
                       href={generateCalendarLink('apple')}
                       download="event.ics"
-                      className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
+                      className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      Apple Calendar
+                      🍎 Apple Calendar
                     </motion.a>
                     <motion.a
                       href={generateCalendarLink('outlook')}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full text-left px-4 py-2 text-[#D4B572] hover:bg-[#D4B572]/10 rounded-md"
+                      className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      Outlook
+                      📧 Outlook
                     </motion.a>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-          </div>
 
-          <div>
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-[#D4B572]" />
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <MapPin className="w-6 h-6 text-[#2D1B69]" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-xl font-medium text-[#2D1B69]">{location}</p>
+                  {address && (
+                    <p className="mt-2 text-[#8D6E63] leading-relaxed">{address}</p>
+                  )}
+                </div>
               </div>
-              <div className="ml-4">
-                <p className="text-lg font-medium text-[#D4B572]">{location}</p>
-                {address && (
-                  <p className="mt-2 text-[#D4B572]/80 leading-relaxed">{address}</p>
-                )}
-              </div>
-            </div>
-            <div className="mt-4">
+              
               <Button
                 onClick={handleOpenMaps}
-                className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
+                className="bg-gradient-to-r from-[#8D6E63] to-[#6D4C41] hover:from-[#6D4C41] hover:to-[#5D4037] text-white px-8 py-3 w-full rounded-2xl shadow-lg transform transition-all hover:scale-105"
               >
-                ¿Cómo llegar?
+                🗺️ ¿Cómo llegar?
               </Button>
             </div>
-          </div>
 
-          <Button
-            onClick={onRsvp}
-            className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
-          >
-            Confirmar asistencia
-          </Button>
+            <Button
+              onClick={onRsvp}
+              className="bg-gradient-to-r from-[#2D1B69] to-[#1A237E] hover:from-[#1A237E] hover:to-[#0D47A1] text-white px-8 py-4 w-full rounded-2xl shadow-lg transform transition-all hover:scale-105 text-lg font-medium"
+            >
+              💌 Confirmar Asistencia
+            </Button>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -196,7 +215,6 @@ interface EventsProps {
   partyLocation?: string;
   partyAddress?: string;
   partyPlaceId?: string;
-  showSongRecommendations?: boolean;
   className?: string;
 }
 
@@ -212,7 +230,6 @@ export function Events({
   partyLocation,
   partyAddress,
   partyPlaceId,
-  showSongRecommendations = false,
   className = ''
 }: EventsProps) {
   const [showRsvpModal, setShowRsvpModal] = useState(false);
@@ -244,7 +261,7 @@ export function Events({
   };
 
   const item = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     show: { 
       y: 0, 
       opacity: 1,
@@ -259,23 +276,23 @@ export function Events({
 
   return (
     <>
-      <section className={`py-32 px-4 ${className}`}>
+      <section className={`py-32 px-4 w-full ${className}`}>
         <motion.div 
-          className="max-w-5xl mx-auto"
+          className="w-full max-w-none mx-auto"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           variants={container}
         >
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-20"
             variants={item}
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#D4B572]">¿Cuándo y Dónde?</h2>
-            <Divider className="mt-8" />
+            <h2 className="text-3xl md:text-4xl font-serif text-[#2D1B69] mb-6">¿Cuándo y Dónde?</h2>
+            <Divider />
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 max-w-7xl mx-auto px-4">
             {ceremonyLocation && ceremonyDate && (
               <Event
                 title="Ceremonia"
@@ -308,38 +325,54 @@ export function Events({
       <AnimatePresence>
         {showRsvpModal && (
           <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#2D1B69]/90 backdrop-blur-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowRsvpModal(false)}
           >
             <motion.div 
-              className="relative w-full max-w-xl px-8 py-12 text-center text-[#D4B572]"
+              className="relative w-full max-w-2xl mx-4"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={e => e.stopPropagation()}
             >
-              <button
-                type="button"
-                onClick={() => setShowRsvpModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
-              >
-                <X className="w-5 h-5 text-[#D4B572]" />
-              </button>
-
-              <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30"></div>
-              <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30"></div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30"></div>
-
-              <div className="space-y-8">
-                <h2 className="text-3xl font-serif">Confirmar Asistencia</h2>
-                <PublicRsvpForm
-                  userId={userId}
-                  onSuccess={() => setShowRsvpModal(false)}
-                />
+              {/* Unique modal design */}
+              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+                {/* Header with gradient */}
+                <div className="bg-gradient-to-r from-[#E91E63] to-[#F8BBD9] p-8 text-center relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowRsvpModal(false)}
+                    className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors z-10"
+                  >
+                    <X className="w-6 h-6 text-white" />
+                  </button>
+                  
+                  <h2 className="text-4xl font-serif text-white">Confirmar Asistencia</h2>
+                  <p className="text-white/90 mt-2">Nos encantaría tenerte en nuestro día especial</p>
+                </div>
+                
+                {/* Form content */}
+                <div className="p-8">
+                  <PublicRsvpForm
+                    userId={userId}
+                    onSuccess={() => setShowRsvpModal(false)}
+                    theme={{
+                      backgroundColor: '#FFFFFF',
+                      textColor: '#2D1B69',
+                      borderColor: '#F8BBD9',
+                      inputBackground: '#FFFFFF',
+                      placeholderColor: '#8D6E63',
+                      accentColor: '#C2185B',
+                      successBackground: '#FFFFFF',
+                      successText: '#2D1B69',
+                      errorBackground: 'rgba(220, 38, 38, 0.1)',
+                      errorText: '#ef4444'
+                    }}
+                  />
+                </div>
               </div>
             </motion.div>
           </motion.div>

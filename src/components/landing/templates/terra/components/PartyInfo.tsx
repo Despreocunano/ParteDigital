@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Music2, Shirt, Lightbulb, X, LucideIcon } from 'lucide-react';
+import { Music2, Shirt, Lightbulb, X } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { SpotifySearch } from '../../../shared/SpotifySearch';
 import { supabase } from '../../../../../lib/supabase';
@@ -96,36 +96,36 @@ export function PartyInfo({
     onClose: () => void; 
     title: string; 
     content: string;
-    icon: LucideIcon;
+    icon: any;
   }) => {
     if (!isOpen) return null;
 
     return (
       <div 
-        className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-[#47261F]/95 backdrop-blur-sm"
       >
         <div 
-          className="relative w-full max-w-2xl px-8 py-12 text-center text-[#D4B572]"
+          className="relative w-full max-w-2xl px-8 py-12 text-center text-[#FAB765]"
         >
           {/* Corner decorations */}
-          <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30" />
-          <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30" />
-          <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30" />
+          <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#DF9434]/30" />
+          <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#DF9434]/30" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#DF9434]/30" />
+          <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#DF9434]/30" />
 
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
+            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#DF9434]/10 hover:bg-[#DF9434]/20 transition-colors z-10"
           >
-            <X className="w-5 h-5 text-[#D4B572]" />
+            <X className="w-5 h-5 text-[#FAB765]" />
           </button>
 
           <div className="space-y-8">
-            <div className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icon className="w-8 h-8 text-[#D4B572]" />
+            <div className="w-16 h-16 bg-[#DF9434]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Icon className="w-8 h-8 text-[#FAB765]" />
             </div>
             <h2 className="text-3xl font-serif">{title}</h2>
-            <p className="text-[#D4B572]/80 text-lg leading-relaxed whitespace-pre-wrap">
+            <p className="text-[#FAB765]/80 text-lg leading-relaxed whitespace-pre-wrap">
               {content}
             </p>
           </div>
@@ -148,7 +148,7 @@ export function PartyInfo({
             className="text-center mb-16"
             variants={item}
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#D4B572]">
+            <h2 className="text-3xl md:text-4xl font-serif text-[#FAB765]">
               Información de la Fiesta
             </h2>
             <Divider className="mt-8" />
@@ -156,23 +156,23 @@ export function PartyInfo({
           
           <div className="grid md:grid-cols-3 gap-8">
             <motion.div 
-              className="bg-[#1C2127] rounded-xl p-8 text-center border border-[#D4B572]/20"
+              className="bg-[#47261F] rounded-xl p-8 text-center border border-[#DF9434]/30 shadow-lg"
               variants={item}
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               <motion.div 
-                className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-16 h-16 bg-[#DF9434]/20 rounded-full flex items-center justify-center mx-auto mb-6"
                 whileHover={{ rotate: 15 }}
               >
-                <Shirt className="w-8 h-8 text-[#D4B572]" />
+                <Shirt className="w-8 h-8 text-[#FAB765]" />
               </motion.div>
-              <h3 className="text-xl font-serif mb-4 text-[#D4B572]">Una orientación para tu vestuario</h3>
+              <h3 className="text-xl font-serif mb-4 text-[#FAB765]">Una orientación para tu vestuario</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   onClick={() => setShowDressCodeModal(true)}
                   variant="secondary"
-                  className="w-full"
+                  className="w-full border-[#DF9434] text-[#FAB765] hover:bg-[#DF9434] hover:text-[#47261F]"
                 >
                   Ver más
                 </Button>
@@ -181,23 +181,23 @@ export function PartyInfo({
             
             {musicInfo && (
               <motion.div 
-                className="bg-[#1C2127] rounded-xl p-8 text-center border border-[#D4B572]/20"
+                className="bg-[#47261F] rounded-xl p-8 text-center border border-[#DF9434]/30 shadow-lg"
                 variants={item}
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <motion.div 
-                  className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                  className="w-16 h-16 bg-[#DF9434]/20 rounded-full flex items-center justify-center mx-auto mb-6"
                   whileHover={{ rotate: 15 }}
                 >
-                  <Music2 className="w-8 h-8 text-[#D4B572]" />
+                  <Music2 className="w-8 h-8 text-[#FAB765]" />
                 </motion.div>
-                <h3 className="text-xl font-serif mb-4 text-[#D4B572]">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
+                <h3 className="text-xl font-serif mb-4 text-[#FAB765]">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => setShowMusicModal(true)}
                     variant="secondary"
-                    className="w-full"
+                    className="w-full border-[#DF9434] text-[#FAB765] hover:bg-[#DF9434] hover:text-[#47261F]"
                   >
                     Sugerir Canciones
                   </Button>
@@ -206,23 +206,23 @@ export function PartyInfo({
             )}
             
             <motion.div 
-              className="bg-[#1C2127] rounded-xl p-8 text-center border border-[#D4B572]/20"
+              className="bg-[#47261F] rounded-xl p-8 text-center border border-[#DF9434]/30 shadow-lg"
               variants={item}
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
               <motion.div 
-                className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-16 h-16 bg-[#DF9434]/20 rounded-full flex items-center justify-center mx-auto mb-6"
                 whileHover={{ rotate: 15 }}
               >
-                <Lightbulb className="w-8 h-8 text-[#D4B572]" />
+                <Lightbulb className="w-8 h-8 text-[#FAB765]" />
               </motion.div>
-              <h3 className="text-xl font-serif mb-4 text-[#D4B572]">Información adicional para tener en cuenta</h3>
+              <h3 className="text-xl font-serif mb-4 text-[#FAB765]">Información adicional para tener en cuenta</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   onClick={() => setShowTipsModal(true)}
                   variant="secondary"
-                  className="w-full"
+                  className="w-full border-[#DF9434] text-[#FAB765] hover:bg-[#DF9434] hover:text-[#47261F]"
                 >
                   Ver más
                 </Button>
@@ -235,30 +235,30 @@ export function PartyInfo({
       {/* Music Modal */}
       {showMusicModal && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#47261F]/95 backdrop-blur-sm"
         >
           <div 
-            className="relative w-full max-w-2xl px-8 py-12 text-center text-[#D4B572]"
+            className="relative w-full max-w-2xl px-8 py-12 text-center text-[#FAB765]"
           >
             {/* Corner decorations */}
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30" />
-            <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30" />
+            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#DF9434]/30" />
+            <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#DF9434]/30" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#DF9434]/30" />
+            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#DF9434]/30" />
 
             <button
               onClick={() => setShowMusicModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#DF9434]/10 hover:bg-[#DF9434]/20 transition-colors z-10"
             >
-              <X className="w-5 h-5 text-[#D4B572]" />
+              <X className="w-5 h-5 text-[#FAB765]" />
             </button>
 
             <div className="space-y-8">
-              <div className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Music2 className="w-8 h-8 text-[#D4B572]" />
+              <div className="w-16 h-16 bg-[#DF9434]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Music2 className="w-8 h-8 text-[#FAB765]" />
               </div>
               <h2 className="text-3xl font-serif">Sugerir Canciones</h2>
-              <p className="text-[#D4B572]/80">
+              <p className="text-[#FAB765]/80">
                 Ayúdanos a crear la playlist perfecta para nuestra fiesta
               </p>
 
@@ -274,6 +274,7 @@ export function PartyInfo({
                   onClick={handleSubmit}
                   isLoading={isSubmitting}
                   disabled={selectedTracks.length === 0}
+                  className="bg-[#DF9434] hover:bg-[#C8851F] text-[#47261F]"
                 >
                   Guardar Canciones
                 </Button>

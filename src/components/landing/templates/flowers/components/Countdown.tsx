@@ -79,54 +79,54 @@ export function Countdown({ date, className = '' }: CountdownProps) {
           className="text-center mb-12"
           variants={item}
         >
-          <h2 className="text-4xl font-serif text-[#D4B572]">Faltan</h2>
+          <h2 className="text-4xl font-serif text-[#8B4513]">Faltan</h2>
         </motion.div>
 
         <div className="grid grid-cols-4 gap-4">
           <motion.div 
-            className="bg-[#1C2127] rounded-xl p-6 text-center border border-[#D4B572]/20"
+            className="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-[#E8A87C]/30 shadow-lg"
             variants={item}
           >
-            <div className="text-5xl font-light text-[#D4B572] mb-2">
+            <div className="text-5xl font-light text-[#8B4513] mb-2">
               {timeLeft.days}
             </div>
-            <div className="text-[#D4B572]/80 text-sm uppercase tracking-wide">
+            <div className="text-[#8B4513]/80 text-sm uppercase tracking-wide">
               días
             </div>
           </motion.div>
           
           <motion.div 
-            className="bg-[#1C2127] rounded-xl p-6 text-center border border-[#D4B572]/20"
+            className="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-[#E8A87C]/30 shadow-lg"
             variants={item}
           >
-            <div className="text-5xl font-light text-[#D4B572] mb-2">
+            <div className="text-5xl font-light text-[#8B4513] mb-2">
               {timeLeft.hours}
             </div>
-            <div className="text-[#D4B572]/80 text-sm uppercase tracking-wide">
+            <div className="text-[#8B4513]/80 text-sm uppercase tracking-wide">
               hs
             </div>
           </motion.div>
           
           <motion.div 
-            className="bg-[#1C2127] rounded-xl p-6 text-center border border-[#D4B572]/20"
+            className="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-[#E8A87C]/30 shadow-lg"
             variants={item}
           >
-            <div className="text-5xl font-light text-[#D4B572] mb-2">
+            <div className="text-5xl font-light text-[#8B4513] mb-2">
               {timeLeft.minutes}
             </div>
-            <div className="text-[#D4B572]/80 text-sm uppercase tracking-wide">
+            <div className="text-[#8B4513]/80 text-sm uppercase tracking-wide">
               min
             </div>
           </motion.div>
           
           <motion.div 
-            className="bg-[#1C2127] rounded-xl p-6 text-center border border-[#D4B572]/20"
+            className="bg-white/80 backdrop-blur-sm rounded-xl p-6 text-center border border-[#E8A87C]/30 shadow-lg"
             variants={item}
           >
-            <div className="text-5xl font-light text-[#D4B572] mb-2">
+            <div className="text-5xl font-light text-[#8B4513] mb-2">
               {timeLeft.seconds}
             </div>
-            <div className="text-[#D4B572]/80 text-sm uppercase tracking-wide">
+            <div className="text-[#8B4513]/80 text-sm uppercase tracking-wide">
               seg
             </div>
           </motion.div>

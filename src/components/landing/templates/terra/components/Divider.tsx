@@ -5,7 +5,7 @@ interface DividerProps {
   color?: string;
 }
 
-export function Divider({ className = '', color = '#D4B572' }: DividerProps) {
+export function Divider({ className = '', color = '#DF9434' }: DividerProps) {
   return (
     <div className={`flex items-center justify-center ${className}`}>
       <motion.div 

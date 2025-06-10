@@ -11,7 +11,7 @@ import { Footer } from './components/Footer';
 import { WelcomeModal } from './components/WelcomeModal';
 import type { TemplateProps } from '../types';
 
-export function DeluxeTemplate({
+export function FlowersTemplate({
   groomName,
   brideName,
   weddingDate,
@@ -74,7 +74,7 @@ export function DeluxeTemplate({
         />
       )}
 
-      <main className="font-['Cormorant_Garamond'] bg-[#1C2127]">
+      <main className="font-['Playfair_Display'] bg-[#FDF8F5]">
         <div className="container mx-auto max-w-7xl">
           <Hero
             groomName={groomName}
@@ -82,12 +82,12 @@ export function DeluxeTemplate({
             weddingDate={weddingDate}
             welcomeMessage={welcomeMessage}
             backgroundImage={coverImage}
-            className="bg-[#2F3E46]"
+            className="bg-[#F7F1ED]"
           />
 
           <Countdown 
             date={weddingDate}
-            className="bg-[#253238]"
+            className="bg-[#FEFCFA]"
           />
 
           <Events
@@ -103,37 +103,37 @@ export function DeluxeTemplate({
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
             showSongRecommendations={musicEnabled}
-            className="bg-[#2F3E46]"
+            className="bg-[#F7F1ED]"
           />
 
           <PartyInfo
             dresscode={dress_code || ''}
             musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
             tips={additional_info || ''}
-            className="bg-[#253238] border-y border-[#D4B572]/20"
+            className="bg-[#FEFCFA] border-y border-[#E8A87C]/20"
             userId={userId}
           />
 
           <GallerySection
             images={galleryImages}
-            className="bg-[#2F3E46]"
+            className="bg-[#F7F1ED]"
           />
 
           <Gifts
             bankInfo={bankInfo}
-            className="bg-[#253238] border-y border-[#D4B572]/20"
+            className="bg-[#FEFCFA] border-y border-[#E8A87C]/20"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-[#253238] border-y border-[#D4B572]/20"
+            className="bg-[#FEFCFA] border-y border-[#E8A87C]/20"
           />
 
           <Footer
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-[#2F3E46] border-t border-[#D4B572]/20"
+            className="bg-[#F7F1ED] border-t border-[#E8A87C]/20"
           />
         </div>
       </main>
