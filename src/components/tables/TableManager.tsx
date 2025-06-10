@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '../ui/Button';
-import { TableForm } from './TableForm';
 import { TableCard } from './TableCard';
 import { UnassignedGuests } from './UnassignedGuests';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Plus, RefreshCw } from 'lucide-react';
-import { Guest, Table, Attendee } from '../../types/supabase';
+import { Table, Attendee } from '../../types/supabase';
 import { TableAssignmentModal } from './TableAssignmentModal';
+import { TableForm } from './TableForm';
+import { Modal } from '../ui/Modal';
 
 interface TableManagerProps {
   tables: Table[];
-  guests: Guest[];
   attendees: Attendee[];
   isLoading: boolean;
   onAddTable: (data: any) => Promise<{ success: boolean }>;
@@ -22,7 +21,6 @@ interface TableManagerProps {
 
 export function TableManager({
   tables,
-  guests,
   attendees,
   isLoading,
   onAddTable,
@@ -62,7 +60,7 @@ export function TableManager({
         <h2 className="text-2xl font-bold text-gray-900">Mesas</h2>
         <div className="flex items-center gap-3">
           <Button
-            variant="outline"
+            variant="secondary"
             onClick={handleRefresh}
             isLoading={isRefreshing}
             leftIcon={<RefreshCw className={`h-4 w-4 ${isRefreshing ? '' : 'hover:animate-spin'}`} />}
@@ -86,7 +84,6 @@ export function TableManager({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="h-[400px]">
             <UnassignedGuests 
-              guests={guests}
               tables={tables}
               attendees={attendees}
               onAssignTable={onAssignGuest}
@@ -97,8 +94,6 @@ export function TableManager({
             <div key={table.id} className="h-[400px]">
               <TableCard
                 table={table}
-                tables={tables}
-                guests={guests}
                 attendees={attendees}
                 onEdit={handleUpdateTable}
                 onDelete={onDeleteTable}
@@ -121,11 +116,17 @@ export function TableManager({
       )}
 
       {showAddModal && (
-        <TableAssignmentModal
+        <Modal
           isOpen={true}
           onClose={() => setShowAddModal(false)}
-          onSave={handleAddTable}
-        />
+          title="Agregar Mesa"
+        >
+          <TableForm
+            onSubmit={handleAddTable}
+            onCancel={() => setShowAddModal(false)}
+            isLoading={false}
+          />
+        </Modal>
       )}
     </div>
   );

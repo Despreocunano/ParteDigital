@@ -1,4 +1,3 @@
-import React from 'react';
 import { Music as MusicIcon } from 'lucide-react';
 
 interface Track {

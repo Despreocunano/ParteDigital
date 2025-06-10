@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Modal } from '../ui/Modal';
 import { Edit, Trash2, Users, X, Plus, Search } from 'lucide-react';
-import { Guest, Table, Attendee } from '../../types/supabase';
+import { Table, Attendee } from '../../types/supabase';
 import { getInitials } from '../../lib/utils';
 import { TableAssignmentModal } from './TableAssignmentModal';
 import { Input } from '../ui/Input';
 
 interface TableCardProps {
   table: Table;
-  tables: Table[];
-  guests: Guest[];
   attendees: Attendee[];
   onEdit: (table: Table) => void;
   onDelete: (id: string) => void;
@@ -20,8 +18,6 @@ interface TableCardProps {
 
 export function TableCard({ 
   table, 
-  tables, 
-  guests, 
   attendees,
   onEdit, 
   onDelete, 

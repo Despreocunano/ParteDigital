@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
-import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 import { Switch } from '../ui/Switch';
-import { MusicSelector } from './MusicSelector';
 import { MusicUpload } from '../ui/MusicUpload';
 import { TemplateSelector } from './TemplateSelector';
 import { CoverImageUpload } from '../ui/CoverImageUpload';
@@ -16,6 +14,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import { templates } from './templates';
 import { PlacesAutocomplete } from '../ui/PlacesAutocomplete';
+import { toast } from 'react-hot-toast';
 
 interface LandingPageFormData {
   groom_name: string;

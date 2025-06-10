@@ -1,19 +1,18 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
-import { Guest, Table, Attendee } from '../../types/supabase';
+import { Table, Attendee } from '../../types/supabase';
 import { getInitials } from '../../lib/utils';
 import { Users, Grid } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { TableAssignmentModal } from './TableAssignmentModal';
 
 interface UnassignedGuestsProps {
-  guests: Guest[];
-  tables: Table[];
   attendees: Attendee[];
+  tables: Table[];
   onAssignTable: (guestId: string, tableId: string | null) => Promise<{ success: boolean }>;
 }
 
-export function UnassignedGuests({ guests, tables, attendees, onAssignTable }: UnassignedGuestsProps) {
+export function UnassignedGuests({ attendees, tables, onAssignTable }: UnassignedGuestsProps) {
   const [selectedGuest, setSelectedGuest] = React.useState<Attendee | null>(null);
   const unassignedAttendees = attendees.filter(attendee => 
     !attendee.table_id && 

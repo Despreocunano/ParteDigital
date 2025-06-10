@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface HeroProps {
   groomName: string;
   brideName: string;

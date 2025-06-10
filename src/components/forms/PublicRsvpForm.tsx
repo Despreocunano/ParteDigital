@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { supabase } from '../../lib/supabase';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Switch } from '../ui/Switch';
-import { toast } from 'react-hot-toast';
 
 interface ThemeStyles {
   backgroundColor?: string;
@@ -34,6 +33,7 @@ interface PublicRsvpFormProps {
   userId: string;
   onSuccess?: () => void;
   onError?: (error: Error) => void;
+  showSongRecommendations?: boolean;
   theme?: ThemeStyles;
 }
 
@@ -41,6 +41,7 @@ export function PublicRsvpForm({
   userId, 
   onSuccess, 
   onError,
+  showSongRecommendations = false,
   theme = {
     backgroundColor: '#1C2127',
     textColor: '#D4B572',

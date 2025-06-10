@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Music, Plus, Trash2 } from 'lucide-react';
 import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import type { Attendee, RsvpStatus } from '../types/supabase';
 import { useAuth } from '../context/AuthContext';
+import { useWedding } from '../hooks/useWedding';
 import toast from 'react-hot-toast';
 import { sendEmail } from '../lib/api';
 
@@ -10,6 +11,7 @@ export function useAttendees() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const { user } = useAuth();
+  const { groomName, brideName, profileImage } = useWedding();
 
   const fetchAttendees = async () => {
     if (!user) return;
@@ -173,10 +175,52 @@ export function useAttendees() {
       const attendee = attendees.find(a => a.id === id);
       if (!attendee) throw new Error('Attendee not found');
 
+      // Get landing page data
+      const { data: landingPage, error: landingError } = await supabase
+        .from('landing_pages')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
+
+      if (landingError) throw new Error('Error fetching landing page');
+
+      const landingUrl = landingPage?.slug 
+        ? `https://tuparte.digital/invitacion/${landingPage.slug}`
+        : '';
+
+      const signature = `
+<br><br>
+<div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+  <table cellpadding="0" cellspacing="0" style="border: none;">
+    <tr>
+      <td style="vertical-align: middle; padding-right: 15px;">
+        <img src="${profileImage || 'https://images.pexels.com/photos/931158/pexels-photo-931158.jpeg?w=50&h=50'}" alt="Logo" style="width: 50px; height: 50px; border-radius: 50%;">
+      </td>
+      <td style="vertical-align: middle;">
+        <div style="font-family: 'Playfair Display', serif; color: #B76E79; font-size: 18px;">
+          ${groomName} & ${brideName}
+        </div>
+        <div style="font-family: Arial, sans-serif; color: #666; font-size: 14px; margin-top: 4px;">
+          ¡Gracias por ser parte de nuestra historia!
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>`;
+
+      const message = `
+Hola ${attendee.first_name},
+
+Te recordamos que aún no has confirmado tu asistencia a nuestra boda. Por favor, confirma tu asistencia lo antes posible.
+
+${landingUrl ? `Puedes ver todos los detalles y confirmar tu asistencia en nuestra invitación digital: ${landingUrl}` : ''}
+
+¡Gracias!${signature}`;
+
       await sendEmail(
         id,
         'Recordatorio de invitación',
-        `Hola ${attendee.first_name},\n\nTe recordamos que aún no has confirmado tu asistencia a nuestra boda. Por favor, confirma tu asistencia lo antes posible.\n\n¡Gracias!`
+        message
       );
 
       toast.success('Recordatorio enviado correctamente');

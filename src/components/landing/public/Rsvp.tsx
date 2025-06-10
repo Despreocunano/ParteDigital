@@ -1,4 +1,3 @@
-import React from 'react';
 import { PublicRsvpForm } from '../../forms/PublicRsvpForm';
 
 interface RsvpProps {

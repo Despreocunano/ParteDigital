@@ -1,14 +1,14 @@
 import { create } from 'zustand';
-import { Guest, Table } from '../types/supabase';
+import { Attendee, Table } from '../types/supabase';
 
 interface AppState {
-  guests: Guest[];
+  guests: Attendee[];
   tables: Table[];
-  setGuests: (guests: Guest[]) => void;
+  setGuests: (guests: Attendee[]) => void;
   setTables: (tables: Table[]) => void;
-  updateGuest: (id: string, updates: Partial<Guest>) => void;
+  updateGuest: (id: string, updates: Partial<Attendee>) => void;
   removeGuest: (id: string) => void;
-  addGuest: (guest: Guest) => void;
+  addGuest: (guest: Attendee) => void;
   updateTable: (id: string, updates: Partial<Table>) => void;
   removeTable: (id: string) => void;
   addTable: (table: Table) => void;

@@ -51,7 +51,7 @@ export function TableForm({ onSubmit, onCancel, isLoading, table }: TableFormPro
       <div className="flex justify-end space-x-3">
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           onClick={onCancel}
           disabled={isLoading}
         >

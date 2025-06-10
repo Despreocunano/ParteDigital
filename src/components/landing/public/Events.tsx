@@ -1,4 +1,3 @@
-import React from 'react';
 import { MapPin, Clock, CalendarDays } from 'lucide-react';
 
 interface EventProps {
@@ -7,11 +6,12 @@ interface EventProps {
   time?: string;
   location: string;
   details?: string;
+  className?: string;
 }
 
-function Event({ title, date, time, location, details }: EventProps) {
+function Event({ title, date, time, location, details, className }: EventProps) {
   return (
- <div className={`rounded-2xl shadow-lg overflow-hidden border border-gray-100 ${className}`}>
+    <div className={`rounded-2xl shadow-lg overflow-hidden border border-gray-100 ${className || ''}`}>
       <div className="p-8 md:p-10">
         <h3 className="text-3xl font-serif mb-8 text-gray-900">{title}</h3>
         
