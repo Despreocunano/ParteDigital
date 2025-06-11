@@ -248,14 +248,15 @@ export function PublicSite() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button
-                  size="lg"
-                  onClick={() => window.location.href = 'https://panel.tuparte.digital/register'}
-                  className="bg-rose-500 hover:bg-rose-600 text-white px-8 group"
+                <a
+                  href="https://panel.tuparte.digital/register"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-md bg-rose-500 hover:bg-rose-600 text-white transition-colors group"
                 >
                   <span>Crear mi invitación</span>
                   <Heart className="ml-2 h-5 w-5 group-hover:text-white transition-transform group-hover:scale-125" />
-                </Button>
+                </a>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
