@@ -5,7 +5,7 @@ import { SpotifySearch } from '../../../shared/SpotifySearch';
 import { supabase } from '../../../../../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import divider from '../assets/divider.svg'
+import divider from '../assets/divider_2.svg'
 import rosas from '../assets/Grupo03.webp'
 import modal from '../assets/modal.svg'
 
@@ -128,8 +128,8 @@ export function PartyInfo({
           </button>
 
           <div className="space-y-8">
-            <div className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icon className="w-8 h-8 text-[#2D1B69]" />
+            <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Icon className="w-16 h-16 text-[#BC913B]" />
             </div>
             <h2 className="text-3xl font-serif">{title}</h2>
             <p className="text-[#8D6E63] text-lg leading-relaxed whitespace-pre-wrap">
@@ -155,10 +155,13 @@ export function PartyInfo({
             className="text-center mb-16"
             variants={item}
           >
-            <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">
+            <img src={divider} alt="Divider" className="mx-auto mb-4" />
+            <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-2">
               Información de la Fiesta
             </h2>
-            <img src={divider} alt="Divider" className="mx-auto" />
+            <p className="text-xl text-center text-[#8D6E63]">
+            Hagamos juntos una fiesta épica. Aquí algunos detalles a tener en cuenta.
+            </p>
           </motion.div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -194,14 +197,14 @@ export function PartyInfo({
                 className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
                 whileHover={{ rotate: 15 }}
               >
-                <Shirt className="w-16 h-16 text-[#2D1B69]" />
+                <Shirt className="w-16 h-16 text-[#BC913B]" />
               </motion.div>
               <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Una orientación para tu vestuario</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   onClick={() => setShowDressCodeModal(true)}
                   variant="secondary"
-                  className="w-full border-[#E91E63] text-[#E91E63] hover:bg-[#E91E63] hover:text-white"
+                  className="w-full border-[#BF0D78] text-[#BF0D78] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
                 >
                   Ver más
                 </Button>
@@ -228,14 +231,14 @@ export function PartyInfo({
                   className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
                   whileHover={{ rotate: 15 }}
                 >
-                  <Music2 className="w-16 h-16 text-[#2D1B69]" />
+                  <Music2 className="w-16 h-16 text-[#BC913B]" />
                 </motion.div>
                 <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => setShowMusicModal(true)}
                     variant="secondary"
-                    className="w-full border-[#E91E63] text-[#E91E63] hover:bg-[#E91E63] hover:text-white"
+                    className="w-full border-[#BF0D78] text-[#BF0D78] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
                   >
                     Sugerir Canciones
                   </Button>
@@ -262,14 +265,14 @@ export function PartyInfo({
                 className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
                 whileHover={{ rotate: 15 }}
               >
-                <Lightbulb className="w-16 h-16 text-[#2D1B69]" />
+                <Lightbulb className="w-16 h-16 text-[#BC913B]" />
               </motion.div>
               <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Información adicional para tener en cuenta</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   onClick={() => setShowTipsModal(true)}
                   variant="secondary"
-                  className="w-full border-[#E91E63] text-[#E91E63] hover:bg-[#E91E63] hover:text-white"
+                  className="w-full border-[#BF0D78] text-[#BF0D78] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
                 >
                   Ver más
                 </Button>
@@ -309,8 +312,8 @@ export function PartyInfo({
             </button>
 
             <div className="space-y-8">
-              <div className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Music2 className="w-8 h-8 text-[#2D1B69]" />
+              <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Music2 className="w-16 h-16 text-[#BC913B]" />
               </div>
               <h2 className="text-3xl font-serif">Sugerir Canciones</h2>
               <p className="text-[#8D6E63]">

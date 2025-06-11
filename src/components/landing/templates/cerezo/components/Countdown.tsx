@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import divider from '../assets/divider.svg'
+import divider from '../assets/divider_2.svg'
 
 
 interface TimeLeft {
@@ -79,9 +79,9 @@ export function Countdown({ date, className = '' }: CountdownProps) {
           className="text-center mb-12"
           variants={item}
         >
+          <img src={divider} alt="Divider" className="mx-auto mb-4" />
           <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Faltan</h2>
         </motion.div>
-        <img src={divider} alt="Divider" className="mx-auto mb-8" />
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
           <motion.div 

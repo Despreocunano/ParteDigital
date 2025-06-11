@@ -115,7 +115,7 @@ ${bankInfo.email}`;
             whileHover={{ rotate: 15, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Gift className="w-16 h-16 text-[#2D1B69]" />
+            <Gift className="w-16 h-16 text-[#BC913B]" />
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Mesa de Regalos</h2>
@@ -123,7 +123,7 @@ ${bankInfo.email}`;
           <img src={divider} alt="Divider" className="mx-auto mb-8" />
           
           <motion.p 
-            className="text-[#8D6E63] mb-8 max-w-2xl mx-auto"
+            className="text-xl text-[#8D6E63] mb-4 max-w-2xl mx-auto"
             variants={item}
           >
             Tu presencia es nuestro mejor regalo. Sin embargo, si deseas hacernos un obsequio, aquí tienes la información necesaria.
@@ -185,8 +185,8 @@ ${bankInfo.email}`;
               </button>
 
               <div className="space-y-8">
-                <div className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Gift className="w-8 h-8 text-[#2D1B69]" />
+                <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Gift className="w-16 h-16 text-[#BC913B]" />
                 </div>
                 <h2 className="text-3xl font-serif">Datos Bancarios</h2>
 
@@ -230,7 +230,7 @@ ${bankInfo.email}`;
                     </Button>
                   </div>
                 ) : (
-                  <p className="text-center text-[#8D6E63] py-8">
+                  <p className="text-xl text-center text-[#8D6E63]">
                     Pronto encontrarás aquí la información bancaria para realizar tu regalo.
                   </p>
                 )}

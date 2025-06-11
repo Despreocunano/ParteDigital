@@ -3,7 +3,7 @@ import { MapPin, Clock, CalendarDays, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
-import divider from '../assets/divider.svg'
+import divider from '../assets/divider_2.svg'
 import modal from '../assets/modal.svg'
 
 
@@ -290,8 +290,8 @@ export function Events({
             className="text-center mb-20"
             variants={item}
           >
+            <img src={divider} alt="Divider" className="mx-auto mb-4" />
             <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">¿Cuándo y Dónde?</h2>
-            <img src={divider} alt="Divider" className="mx-auto" />
 
           </motion.div>
 

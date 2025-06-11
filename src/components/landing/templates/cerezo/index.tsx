@@ -133,7 +133,7 @@ export function CerezoTemplate({
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-[#FFFFFF]"
+            className="bg-[#995B71]"
           />
         </div>
       </main>
