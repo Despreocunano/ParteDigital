@@ -358,6 +358,27 @@ export function PublicSite() {
       </section>
 
       {/* Feature Sections */}
+      <div className="text-center mb-16 pt-24">
+        <motion.h2 
+          className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          Partes digitales con carácteristicas increíbles
+        </motion.h2>
+        <motion.p 
+          className="text-xl text-gray-600 max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          Todo lo que necesitas para gestionar las invitaciones a tus invitados en un solo lugar.
+        </motion.p>
+      </div>
+
       {featureSections.map((section, index) => {
         const isEven = index % 2 === 0;
         const Icon = section.icon;
@@ -431,23 +452,67 @@ export function PublicSite() {
         );
       })}
 
-      {/* Features Grid */}
-      <section className="py-24 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
+            className="bg-gradient-to-r from-rose-500 to-rose-600 rounded-2xl p-8 md:p-12 shadow-xl"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-gray-900 mb-4">
-              Características que harán tu invitación única
-            </h2>
-            <p className="text-lg text-gray-600">
-              Todo lo que necesitas para crear una experiencia inolvidable
-            </p>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="text-center md:text-left">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                  Crea tu invitación en menos de 5 minutos
+                </h2>
+                <p className="text-white/90 text-lg">
+                  Regístrate ahora, ingresa los datos de tu evento y visualiza tu invitación digital.
+                </p>
+              </div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <a
+                  href="https://panel.tuparte.digital/register"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 text-lg rounded-lg bg-white text-rose-600 hover:bg-gray-50 transition-colors group font-medium"
+                >
+                  <span>Crear mi cuenta</span>
+                  <Heart className="ml-2 h-5 w-5 group-hover:text-rose-500 transition-transform group-hover:scale-125" />
+                </a>
+              </motion.div>
+            </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Features Grid */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              Características que harán tu invitación única
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-gray-600 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Todo lo que necesitas para crear una experiencia inolvidable
+            </motion.p>
+          </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => {
