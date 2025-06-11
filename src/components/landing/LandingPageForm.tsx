@@ -77,20 +77,26 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
-  const [showAllTemplates, setShowAllTemplates] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialData?.template_id || templates.deluxe.id);
-  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled || false);
-  const [selectedTrack, setSelectedTrack] = useState(initialData?.selected_track || '');
-  const [coverImage, setCoverImage] = useState(initialData?.cover_image || '');
+  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled ?? false);
+  const [selectedTrack, setSelectedTrack] = useState<string>(initialData?.selected_track || '');
+  const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [publishedUrl, setPublishedUrl] = useState<string>('');
+  const [coverImage, setCoverImage] = useState<string>(initialData?.cover_image || '');
   const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
-  const [previewUrl, setPreviewUrl] = useState('');
-  const [publishedUrl, setPublishedUrl] = useState('');
-  const [publishedStatus, setPublishedStatus] = useState({
-    isPublished: !!initialData?.published_at,
-    slug: initialData?.slug || null
+  const [publishedStatus, setPublishedStatus] = useState<PublishStatus>(() => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    return {
+      isPublished: !!initialData?.published_at,
+      slug: initialData?.slug || null
+    };
   });
+  const [showAllTemplates, setShowAllTemplates] = useState(false);
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<LandingPageFormData>({
+  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
       groom_name: initialData?.groom_name || '',
       bride_name: initialData?.bride_name || '',
@@ -147,32 +153,31 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No authenticated session');
 
-      // Format dates properly
-      const formattedData = {
-        ...data,
-        wedding_date: data.wedding_date ? new Date(data.wedding_date).toISOString() : null,
-        ceremony_date: data.ceremony_date ? new Date(data.ceremony_date).toISOString() : null,
-        party_date: data.party_date ? new Date(data.party_date).toISOString() : null,
-      };
+      // First, get the existing landing page if it exists
+      const { data: existingPage } = await supabase
+        .from('landing_pages')
+        .select('id')
+        .eq('user_id', user?.id)
+        .single();
 
-      // First, create or update the landing page
-      const { data: landingPage, error: upsertError } = await supabase
+      const { error } = await supabase
         .from('landing_pages')
         .upsert({
+          id: existingPage?.id, // Include the id if it exists
           user_id: user?.id,
-          ...formattedData,
+          ...data,
           template_id: selectedTemplateId,
+          wedding_date: data.wedding_date ? new Date(data.wedding_date).toISOString() : null,
+          ceremony_date: data.ceremony_date ? new Date(data.ceremony_date).toISOString() : null,
+          party_date: data.party_date ? new Date(data.party_date).toISOString() : null,
           music_enabled: musicEnabled,
           selected_track: selectedTrack,
           cover_image: coverImage,
           gallery_images: galleryImages,
           bank_info: data.bank_info
-        })
-        .select()
-        .single();
+        });
 
-      if (upsertError) throw upsertError;
-      if (!landingPage) throw new Error('Error creating landing page');
+      if (error) throw error;
 
       onSuccess?.();
     } catch (error) {
@@ -194,21 +199,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No authenticated session');
-
-      // First, ensure the landing page exists
-      const { data: existingPage, error: checkError } = await supabase
-        .from('landing_pages')
-        .select('id')
-        .eq('user_id', user?.id)
-        .single();
-
-      if (checkError && checkError.code !== 'PGRST116') {
-        throw new Error('Error checking landing page');
-      }
-
-      if (!existingPage) {
-        throw new Error('Por favor guarda los cambios antes de publicar');
-      }
 
       const slug = `${groomName.toLowerCase()}-y-${brideName.toLowerCase()}`
         .normalize("NFD")
@@ -277,7 +267,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <PublishSection
         previewUrl={previewUrl}
         publishedUrl={publishedUrl}
@@ -390,7 +380,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           />
           
           <PlacesAutocomplete
-            label="Dirección"
             value={watch('ceremony_address')}
             onChange={(address, placeId) => {
               setValue('ceremony_address', address);
@@ -425,7 +414,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           />
           
           <PlacesAutocomplete
-            label="Dirección"
             value={watch('party_address')}
             onChange={(address, placeId) => {
               setValue('party_address', address);

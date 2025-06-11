@@ -29,7 +29,7 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   return <>{children}</>;
@@ -44,7 +44,7 @@ function AppRoutes() {
         {isPanel ? (
           // Panel routes
           <>
-            <Route path="/login" element={<AuthPage />} />
+            <Route path="/auth" element={<AuthPage />} />
             <Route
               path="/"
               element={

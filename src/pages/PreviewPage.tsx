@@ -46,7 +46,7 @@ export function PreviewPage() {
 
   // If user is not authenticated, redirect to login
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   // If user is trying to access someone else's preview

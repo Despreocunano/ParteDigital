@@ -9,7 +9,6 @@ export function LandingPage() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [landingData, setLandingData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -22,15 +21,11 @@ export function LandingPage() {
           .eq('user_id', user.id)
           .single();
 
-        if (error) {
-          if (error.code === 'PGRST116') {
-            // No landing page found, this is normal for new users
-            setLandingData(null);
-            setError(null);
-          } else {
-            throw error;
-          }
-        } else if (data) {
+        if (error && error.code !== 'PGRST116') {
+          throw error;
+        }
+
+        if (data) {
           // Format dates for form inputs
           const formattedData = {
             ...data,
@@ -39,11 +34,39 @@ export function LandingPage() {
             party_date: data.party_date?.split('T')[0] || '',
           };
           setLandingData(formattedData);
-          setError(null);
+        } else {
+          // If no data exists, set empty landing data
+          setLandingData({
+            groom_name: '',
+            bride_name: '',
+            wedding_date: '',
+            welcome_message: '',
+            ceremony_date: '',
+            ceremony_location: '',
+            ceremony_time: '',
+            ceremony_address: '',
+            party_date: '',
+            party_location: '',
+            party_time: '',
+            party_address: '',
+            music_enabled: false,
+            selected_track: '',
+            hashtag: '',
+            dress_code: '',
+            additional_info: '',
+            bank_info: {
+              accountHolder: '',
+              rut: '',
+              bank: '',
+              accountType: '',
+              accountNumber: '',
+              email: ''
+            }
+          });
         }
       } catch (error) {
         console.error('Error fetching landing page:', error);
-        setError('Error al cargar la página de invitación');
+        toast.error('Error al cargar los datos de la invitación');
       } finally {
         setLoading(false);
       }
@@ -60,50 +83,15 @@ export function LandingPage() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="max-w-4xl mx-auto pb-12">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">Error</h1>
-          <p className="text-gray-500 mt-1">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="max-w-4xl mx-auto pb-12">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Invitación Digital</h1>
-        <p className="text-gray-500 mt-1">
-          Personaliza tu invitación digital con toda la información importante para tus invitados
-        </p>
-      </div>
-
-      {landingData ? (
-        <LandingPageForm
-          initialData={landingData}
+    <div className="container mx-auto px-4 py-8">
+      <Card className="p-6">
+        <LandingPageForm 
+          initialData={landingData} 
           onSuccess={() => toast.success('Cambios guardados correctamente')}
-          onError={() => toast.error('Error al guardar los cambios')}
+          onError={(error) => toast.error('Error al guardar los cambios')}
         />
-      ) : (
-        <Card>
-          <div className="p-6">
-            <div className="text-center">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Crea tu Página de Invitación
-              </h3>
-              <p className="text-gray-500 mb-4">
-                Aún no has creado tu invitación digital. Completa el formulario para comenzar.
-              </p>
-              <LandingPageForm
-                onSuccess={() => toast.success('Página creada correctamente')}
-                onError={() => toast.error('Error al crear la página')}
-              />
-            </div>
-          </div>
-        </Card>
-      )}
+      </Card>
     </div>
   );
 }
