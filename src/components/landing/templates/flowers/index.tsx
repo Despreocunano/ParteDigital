@@ -108,7 +108,7 @@ export function FlowersTemplate({
 
           <PartyInfo
             dresscode={dress_code || ''}
-            musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
+            musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || ''}
             className="bg-[#FEFCFA] border-y border-[#E8A87C]/20"
             userId={userId}

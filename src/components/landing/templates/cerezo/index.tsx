@@ -108,7 +108,7 @@ export function CerezoTemplate({
 
           <PartyInfo
             dresscode={dress_code || ''}
-            musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
+            musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || ''}
             className="bg-[#FFFFFF]"
             userId={userId}

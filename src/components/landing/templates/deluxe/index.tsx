@@ -109,7 +109,7 @@ export function DeluxeTemplate({
 
           <PartyInfo
             dresscode={dress_code || 'Formal'}
-            musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
+            musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || 'La celebración será al aire libre'}
             className="bg-[#253238] border-y border-[#D4B572]/20"
             userId={userId}

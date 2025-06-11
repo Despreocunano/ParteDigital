@@ -107,9 +107,9 @@ export function TerraTemplate({
 
           <PartyInfo
             dresscode={dress_code || ''}
-            musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
+            musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || ''}
-            className="bg-[#5C3229] border-y border-[#DF9434]/20"
+            className="bg-[#47261F]"
             userId={userId}
           />
 
