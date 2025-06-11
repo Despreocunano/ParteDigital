@@ -345,7 +345,7 @@ export function Events({
               <button
                 type="button"
                 onClick={() => setShowRsvpModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
+                className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
               >
                 <X className="w-5 h-5 text-[#2D1B69]" />
               </button>
