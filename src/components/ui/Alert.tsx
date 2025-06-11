@@ -21,14 +21,14 @@ export function Alert({ message, action, onClose }: AlertProps) {
         <div className="ml-3 flex-1 md:flex md:justify-between items-center">
           <p className="text-sm text-amber-700">{message}</p>
           <div className="flex items-center gap-4">
-            {action && (
-              <Link
-                to={action.to}
+          {action && (
+            <Link
+              to={action.to}
                 className="whitespace-nowrap text-sm font-medium text-amber-700 hover:text-amber-600"
-              >
-                {action.text} <span aria-hidden="true">&rarr;</span>
-              </Link>
-            )}
+            >
+              {action.text} <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
             {onClose && (
               <button
                 onClick={onClose}

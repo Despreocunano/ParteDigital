@@ -185,7 +185,7 @@ export function Hero({
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: baseDelay + 0.4 }}
           >
-            <h1 className="text-6xl md:text-8xl font-serif leading-tight">
+            <h1 className="text-6xl md:text-7xl font-serif font-black leading-tight">
               {groomName} 
               <span className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-white/20 backdrop-blur-sm rounded-full mx-4 md:mx-8 text-3xl md:text-4xl font-light">
                 &

@@ -62,34 +62,34 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
         )}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Input
-              label="Correo electrónico"
-              type="email"
-              placeholder="tu@ejemplo.com"
-              error={errors.email?.message}
+          <Input
+            label="Correo electrónico"
+            type="email"
+            placeholder="tu@ejemplo.com"
+            error={errors.email?.message}
               leftIcon={<Mail className="h-4 w-4 text-gray-400" />}
-              {...register('email', {
-                required: 'El correo electrónico es requerido',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Correo electrónico inválido',
-                },
-              })}
-            />
-            <Input
-              label="Contraseña"
-              type="password"
-              placeholder="••••••••"
-              error={errors.password?.message}
+            {...register('email', {
+              required: 'El correo electrónico es requerido',
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: 'Correo electrónico inválido',
+              },
+            })}
+          />
+          <Input
+            label="Contraseña"
+            type="password"
+            placeholder="••••••••"
+            error={errors.password?.message}
               leftIcon={<Lock className="h-4 w-4 text-gray-400" />}
-              {...register('password', {
-                required: 'La contraseña es requerida',
-                minLength: {
-                  value: 6,
-                  message: 'La contraseña debe tener al menos 6 caracteres',
-                },
-              })}
-            />
+            {...register('password', {
+              required: 'La contraseña es requerida',
+              minLength: {
+                value: 6,
+                message: 'La contraseña debe tener al menos 6 caracteres',
+              },
+            })}
+          />
           </div>
           <Button 
             type="submit" 

@@ -104,7 +104,7 @@ export function AttendeesPage() {
       setSendingReminder(attendee.id);
       const result = await sendReminder(attendee.id);
       if (result.success) {
-        toast.success('Recordatorio enviado');
+      toast.success('Recordatorio enviado');
       }
     } catch (error) {
       toast.error('Error al enviar el recordatorio');
@@ -125,14 +125,14 @@ export function AttendeesPage() {
       <div className="mb-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input 
-                placeholder="Buscar invitados..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Input 
+              placeholder="Buscar invitados..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
             </div>
             <select
               className="w-full sm:w-40 rounded-md border border-gray-300 text-sm py-2 px-3 bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent"

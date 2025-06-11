@@ -5,7 +5,9 @@ import { SpotifySearch } from '../../../shared/SpotifySearch';
 import { supabase } from '../../../../../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import { Divider } from './Divider';
+import divider from '../assets/divider.svg'
+import rosas from '../assets/Grupo03.webp'
+
 
 interface Track {
   id: string;
@@ -172,10 +174,10 @@ export function PartyInfo({
             className="text-center mb-16"
             variants={item}
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#2D1B69]">
+            <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">
               Información de la Fiesta
             </h2>
-            <Divider className="mt-8" />
+            <img src={divider} alt="Divider" className="mx-auto" />
           </motion.div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -185,6 +187,19 @@ export function PartyInfo({
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
+              <motion.img 
+                src={rosas} 
+                alt="Rosas decorativas" 
+                className="absolute -top-12 -left-28 w-48 h-48 object-contain"
+                initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  delay: 0.2
+                }}
+              />
               <div className="absolute top-4 right-4">
                 <svg width="20" height="20" viewBox="0 0 20 20">
                   <circle cx="10" cy="10" r="2" fill="#F8BBD9" opacity="0.6"/>

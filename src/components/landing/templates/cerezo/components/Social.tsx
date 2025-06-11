@@ -1,7 +1,8 @@
 import { Instagram } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { motion } from 'framer-motion';
-import { Divider } from './Divider';
+import divider from '../assets/divider.svg'
+
 
 interface SocialProps {
   hashtag?: string;
@@ -54,9 +55,10 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
             <Instagram className="w-8 h-8 text-[#2D1B69]" />
           </div>
           
-          <h2 className="text-3xl md:text-4xl font-serif mb-8 text-[#2D1B69]">Comparte tus Fotos</h2>
+          <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Comparte tus Fotos</h2>
           
-          <Divider className="mb-8" />
+          <img src={divider} alt="Divider" className="mx-auto mb-8" />
+
         </motion.div>
         
         <motion.div 

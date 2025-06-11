@@ -54,7 +54,7 @@ export function AttendeeCard({
               <div className="ml-3 flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-medium truncate">
-                    {attendee.first_name} {attendee.last_name}
+                  {attendee.first_name} {attendee.last_name}
                   </p>
                   {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && (
                     <span className="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full">
@@ -64,12 +64,12 @@ export function AttendeeCard({
                 </div>
                 <div className="flex items-center gap-2 text-xs text-gray-500">
                   <span className="truncate">{attendee.email}</span>
-                  {attendee.phone && (
+                {attendee.phone && (
                     <>
                       <span>•</span>
                       <span className="truncate">{attendee.phone}</span>
                     </>
-                  )}
+                )}
                 </div>
               </div>
             </div>

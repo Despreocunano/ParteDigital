@@ -1,6 +1,7 @@
 import { Gallery } from '../../../shared/Gallery';
 import { motion } from 'framer-motion';
-import { Divider } from './Divider';
+import divider from '../assets/divider.svg'
+
 
 interface GallerySectionProps {
   images: string[];
@@ -42,10 +43,11 @@ export function GallerySection({ images, className = '' }: GallerySectionProps) 
     >
       <div className="max-w-6xl mx-auto">
         <motion.div className="text-center mb-12" variants={item}>
-          <h2 className="text-3xl md:text-4xl font-serif text-[#2D1B69]">
+          <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">
             Nuestra Historia
           </h2>
-          <Divider className="mt-8" />
+          <img src={divider} alt="Divider" className="mx-auto" />
+
         </motion.div>
 
         <Gallery 

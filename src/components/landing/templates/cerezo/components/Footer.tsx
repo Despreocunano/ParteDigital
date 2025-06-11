@@ -20,7 +20,7 @@ export function Footer({
           <Heart className="w-6 h-6 text-[#2D1B69]" />
         </div>
         
-        <h2 className="text-3xl font-serif mb-4 text-[#2D1B69]">
+        <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">
           {groomName} & {brideName}
         </h2>
         

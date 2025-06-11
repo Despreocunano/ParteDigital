@@ -74,7 +74,7 @@ export function CerezoTemplate({
         />
       )}
 
-      <main className="font-['Playfair_Display'] bg-gradient-to-b from-[#FCE4EC] via-[#F8BBD9] to-[#FCE4EC] w-full">
+      <main className="font-['Playfair_Display'] bg-white w-full">
         <div className="w-full">
           <Hero
             groomName={groomName}
@@ -88,7 +88,7 @@ export function CerezoTemplate({
 
           <Countdown 
             date={weddingDate}
-            className="bg-gradient-to-r from-[#FCE4EC] to-[#F8BBD9]"
+            className="bg-[#FFFFFF]"
           />
 
           <Events
@@ -103,37 +103,37 @@ export function CerezoTemplate({
             partyLocation={partyLocation}
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
-            className="bg-gradient-to-l from-[#F8BBD9] to-[#FCE4EC]"
+            className="bg-[#FFFFFF]"
           />
 
           <PartyInfo
             dresscode={dress_code || ''}
             musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
             tips={additional_info || ''}
-            className="bg-gradient-to-r from-[#FCE4EC] to-[#F8BBD9] border-y border-[#F8BBD9]/30"
+            className="bg-[#FFFFFF]"
             userId={userId}
           />
 
           <GallerySection
             images={galleryImages}
-            className="bg-gradient-to-l from-[#F8BBD9] to-[#FCE4EC]"
+            className="bg-[#FFFFFF]"
           />
 
           <Gifts
             bankInfo={bankInfo}
-            className="bg-gradient-to-r from-[#FCE4EC] to-[#F8BBD9] border-y border-[#F8BBD9]/30"
+            className="bg-[#FFFFFF]"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-gradient-to-l from-[#F8BBD9] to-[#FCE4EC] border-y border-[#F8BBD9]/30"
+            className="bg-[#FFFFFF]"
           />
 
           <Footer
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-gradient-to-r from-[#2D1B69] to-[#E91E63] border-t border-[#F8BBD9]/30"
+            className="bg-[#FFFFFF]"
           />
         </div>
       </main>

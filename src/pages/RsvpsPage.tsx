@@ -235,76 +235,76 @@ export function RsvpsPage() {
         </div>
       )}
       
-      <Card>
-        <CardHeader className="px-6 py-4 border-b border-gray-200">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <CardTitle>Respuestas</CardTitle>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-400" />
+        <Card>
+          <CardHeader className="px-6 py-4 border-b border-gray-200">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <CardTitle>Respuestas</CardTitle>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Search className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Buscar invitados..."
+                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent sm:text-sm"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
                 </div>
-                <input
-                  type="text"
-                  placeholder="Buscar invitados..."
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent sm:text-sm"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-              <div className="flex gap-2">
-                {filteredAttendees.length > 0 && (
-                  <Button
-                    variant="secondary"
-                    onClick={exportToExcel}
-                    leftIcon={<Download className="h-4 w-4" />}
-                  >
-                    Exportar
-                  </Button>
-                )}
-                {pendingAttendees.length > 0 && (
-                  <Button
+                <div className="flex gap-2">
+                  {filteredAttendees.length > 0 && (
+                    <Button
+                      variant="secondary"
+                      onClick={exportToExcel}
+                      leftIcon={<Download className="h-4 w-4" />}
+                    >
+                      Exportar
+                    </Button>
+                  )}
+                  {pendingAttendees.length > 0 && (
+                    <Button
                     onClick={() => window.location.href = '/reminders'}
-                    leftIcon={<Send className="h-4 w-4" />}
-                  >
-                    Enviar Recordatorios
-                  </Button>
-                )}
+                      leftIcon={<Send className="h-4 w-4" />}
+                    >
+                      Enviar Recordatorios
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </CardHeader>
-        <CardContent className="px-0 py-0">
-          {attendeesLoading || tablesLoading ? (
-            <div className="flex justify-center items-center h-40">
-              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
-            </div>
-          ) : filteredAttendees.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Nombre
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Estado
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Restricciones Alimentarias
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Mesa
-                    </th>
-                    <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+          </CardHeader>
+          <CardContent className="px-0 py-0">
+            {attendeesLoading || tablesLoading ? (
+              <div className="flex justify-center items-center h-40">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
+              </div>
+            ) : filteredAttendees.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Nombre
+                      </th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Estado
+                      </th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Restricciones Alimentarias
+                      </th>
+                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Mesa
+                      </th>
+                        <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Acciones
+                        </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
                   {pendingAttendees.map((attendee) => 
                     renderAttendeeRow(attendee)
                   )}
@@ -314,18 +314,18 @@ export function RsvpsPage() {
                   {declinedAttendees.map((attendee) => 
                     renderAttendeeRow(attendee)
                   )}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-gray-500">
-                {searchTerm ? 'No se encontraron invitados' : 'No hay invitados aún'}
-              </p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-500">
+                  {searchTerm ? 'No se encontraron invitados' : 'No hay invitados aún'}
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
     </div>
   );
 }

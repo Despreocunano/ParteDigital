@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Divider } from './Divider';
+import divider from '../assets/divider.svg'
+
 
 interface TimeLeft {
   days: number;
@@ -65,7 +66,7 @@ export function Countdown({ date, className = '' }: CountdownProps) {
   };
 
   return (
-    <section className={`py-24 px-4 w-full ${className}`}>
+    <section className={`py-12 px-0 w-full ${className}`}>
       <motion.div 
         className="w-full max-w-none mx-auto"
         initial="hidden"
@@ -73,12 +74,28 @@ export function Countdown({ date, className = '' }: CountdownProps) {
         viewport={{ once: true }}
         variants={container}
       >
+        {/* Top divider */}
+        <div className="flex justify-center mb-8">
+          <div className="flex w-full">
+            {[...Array(16)].map((_, i) => (
+              <motion.img
+                key={`top-${i}`}
+                src={divider}
+                alt="Divider"
+                className="w-12 flex-1"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+              />
+            ))}
+          </div>
+        </div>
+
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-12"
           variants={item}
         >
-          <h2 className="text-3xl md:text-4xl font-serif text-[#2D1B69] mb-4">Faltan</h2>
-          <Divider />
+          <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Faltan</h2>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
@@ -88,30 +105,8 @@ export function Countdown({ date, className = '' }: CountdownProps) {
             whileHover={{ scale: 1.05 }}
           >
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 text-center shadow-xl border border-[#F8BBD9]/30 relative overflow-hidden">
-              {/* Decorative background pattern */}
-              <div className="absolute inset-0 opacity-5">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <pattern id="cherry-pattern-days" patternUnits="userSpaceOnUse" width="20" height="20">
-                    <circle cx="10" cy="10" r="2" fill="#E91E63"/>
-                  </pattern>
-                  <rect width="100%" height="100%" fill="url(#cherry-pattern-days)"/>
-                </svg>
-              </div>
-              
-              {/* Cherry blossom decoration */}
-              <div className="absolute top-4 right-4 opacity-30">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="3" fill="#F8BBD9"/>
-                  <circle cx="9" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="9" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="12" cy="12" r="1" fill="#E91E63"/>
-                </svg>
-              </div>
-              
               <div className="relative z-10">
-                <div className="text-6xl font-light text-[#2D1B69] mb-3 font-serif">
+                <div className="text-6xl font-bold text-[#BC913B] mb-3 font-serif">
                   {timeLeft.days}
                 </div>
                 <div className="text-[#8D6E63] text-sm uppercase tracking-wider font-medium">
@@ -127,28 +122,8 @@ export function Countdown({ date, className = '' }: CountdownProps) {
             whileHover={{ scale: 1.05 }}
           >
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 text-center shadow-xl border border-[#F8BBD9]/30 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <pattern id="cherry-pattern-hours" patternUnits="userSpaceOnUse" width="20" height="20">
-                    <circle cx="10" cy="10" r="2" fill="#E91E63"/>
-                  </pattern>
-                  <rect width="100%" height="100%" fill="url(#cherry-pattern-hours)"/>
-                </svg>
-              </div>
-              
-              <div className="absolute top-4 right-4 opacity-30">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="3" fill="#F8BBD9"/>
-                  <circle cx="9" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="9" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="12" cy="12" r="1" fill="#E91E63"/>
-                </svg>
-              </div>
-              
               <div className="relative z-10">
-                <div className="text-6xl font-light text-[#2D1B69] mb-3 font-serif">
+                <div className="text-6xl font-bold text-[#BC913B] mb-3 font-serif">
                   {timeLeft.hours}
                 </div>
                 <div className="text-[#8D6E63] text-sm uppercase tracking-wider font-medium">
@@ -164,28 +139,8 @@ export function Countdown({ date, className = '' }: CountdownProps) {
             whileHover={{ scale: 1.05 }}
           >
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 text-center shadow-xl border border-[#F8BBD9]/30 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <pattern id="cherry-pattern-minutes" patternUnits="userSpaceOnUse" width="20" height="20">
-                    <circle cx="10" cy="10" r="2" fill="#E91E63"/>
-                  </pattern>
-                  <rect width="100%" height="100%" fill="url(#cherry-pattern-minutes)"/>
-                </svg>
-              </div>
-              
-              <div className="absolute top-4 right-4 opacity-30">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="3" fill="#F8BBD9"/>
-                  <circle cx="9" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="9" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="12" cy="12" r="1" fill="#E91E63"/>
-                </svg>
-              </div>
-              
               <div className="relative z-10">
-                <div className="text-6xl font-light text-[#2D1B69] mb-3 font-serif">
+                <div className="text-6xl font-bold text-[#BC913B] mb-3 font-serif">
                   {timeLeft.minutes}
                 </div>
                 <div className="text-[#8D6E63] text-sm uppercase tracking-wider font-medium">
@@ -201,28 +156,8 @@ export function Countdown({ date, className = '' }: CountdownProps) {
             whileHover={{ scale: 1.05 }}
           >
             <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 text-center shadow-xl border border-[#F8BBD9]/30 relative overflow-hidden">
-              <div className="absolute inset-0 opacity-5">
-                <svg width="100%" height="100%" viewBox="0 0 100 100">
-                  <pattern id="cherry-pattern-seconds" patternUnits="userSpaceOnUse" width="20" height="20">
-                    <circle cx="10" cy="10" r="2" fill="#E91E63"/>
-                  </pattern>
-                  <rect width="100%" height="100%" fill="url(#cherry-pattern-seconds)"/>
-                </svg>
-              </div>
-              
-              <div className="absolute top-4 right-4 opacity-30">
-                <svg width="24" height="24" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="3" fill="#F8BBD9"/>
-                  <circle cx="9" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="9" r="2" fill="#FCE4EC"/>
-                  <circle cx="9" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="15" cy="15" r="2" fill="#FCE4EC"/>
-                  <circle cx="12" cy="12" r="1" fill="#E91E63"/>
-                </svg>
-              </div>
-              
               <div className="relative z-10">
-                <div className="text-6xl font-light text-[#2D1B69] mb-3 font-serif">
+                <div className="text-6xl font-bold text-[#BC913B] mb-3 font-serif">
                   {timeLeft.seconds}
                 </div>
                 <div className="text-[#8D6E63] text-sm uppercase tracking-wider font-medium">
@@ -231,6 +166,23 @@ export function Countdown({ date, className = '' }: CountdownProps) {
               </div>
             </div>
           </motion.div>
+        </div>
+
+        {/* Bottom divider */}
+        <div className="flex justify-center mt-8">
+          <div className="flex w-full">
+            {[...Array(16)].map((_, i) => (
+              <motion.img
+                key={`bottom-${i}`}
+                src={divider}
+                alt="Divider"
+                className="w-12 flex-1"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05 }}
+              />
+            ))}
+          </div>
         </div>
       </motion.div>
     </section>

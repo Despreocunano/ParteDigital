@@ -108,14 +108,14 @@ export function PublishSection({
               <p className="text-sm text-gray-600 mb-2">
                 Tu página está publicada en:
               </p>
-              <a 
-                href={publishedUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+                <a 
+                  href={publishedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 className="text-sm font-medium text-rose-600 hover:text-rose-700 break-all block"
-              >
-                {publishedUrl}
-              </a>
+                >
+                  {publishedUrl}
+                </a>
             </div>
 
             <div className="border-t border-gray-200 pt-4">

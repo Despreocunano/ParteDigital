@@ -3,7 +3,8 @@ import { MapPin, Clock, CalendarDays, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
-import { Divider } from './Divider';
+import divider from '../assets/divider.svg'
+
 
 interface EventProps {
   title: string;
@@ -94,9 +95,9 @@ END:VCALENDAR`;
         </div>
         
         <div className="p-8 md:p-10">
-          <h3 className="text-4xl font-serif mb-8 text-[#2D1B69] relative">
+          <h3 className="text-4xl font-serif font-black mb-8 text-[#BC913B] relative">
             {title}
-            <div className="absolute -bottom-2 left-0 w-16 h-1 bg-gradient-to-r from-[#E91E63] to-transparent rounded-full"></div>
+            <div className="absolute -bottom-2 left-0 w-16 h-1 bg-gradient-to-r from-[#BC913B] to-transparent rounded-full"></div>
           </h3>
           
           <div className="space-y-8">
@@ -125,7 +126,7 @@ END:VCALENDAR`;
               <Button
                 onClick={() => setShowCalendarOptions(!showCalendarOptions)}
                 leftIcon={<CalendarDays className="w-5 h-5" />}
-                className="bg-gradient-to-r from-[#E91E63] to-[#C2185B] hover:from-[#C2185B] hover:to-[#AD1457] text-white px-8 py-3 w-full rounded-2xl shadow-lg transform transition-all hover:scale-105"
+                className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
               >
                 Agendar Evento
               </Button>
@@ -145,7 +146,7 @@ END:VCALENDAR`;
                       className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      📅 Google Calendar
+                      Google Calendar
                     </motion.a>
                     <motion.a
                       href={generateCalendarLink('apple')}
@@ -153,7 +154,7 @@ END:VCALENDAR`;
                       className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      🍎 Apple Calendar
+                      Apple Calendar
                     </motion.a>
                     <motion.a
                       href={generateCalendarLink('outlook')}
@@ -162,7 +163,7 @@ END:VCALENDAR`;
                       className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
                       whileHover={{ x: 5 }}
                     >
-                      📧 Outlook
+                      Outlook
                     </motion.a>
                   </motion.div>
                 )}
@@ -184,17 +185,17 @@ END:VCALENDAR`;
               
               <Button
                 onClick={handleOpenMaps}
-                className="bg-gradient-to-r from-[#8D6E63] to-[#6D4C41] hover:from-[#6D4C41] hover:to-[#5D4037] text-white px-8 py-3 w-full rounded-2xl shadow-lg transform transition-all hover:scale-105"
+                className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
               >
-                🗺️ ¿Cómo llegar?
+                ¿Cómo llegar?
               </Button>
             </div>
 
             <Button
               onClick={onRsvp}
-              className="bg-gradient-to-r from-[#2D1B69] to-[#1A237E] hover:from-[#1A237E] hover:to-[#0D47A1] text-white px-8 py-4 w-full rounded-2xl shadow-lg transform transition-all hover:scale-105 text-lg font-medium"
+              className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
             >
-              💌 Confirmar Asistencia
+              Confirmar Asistencia
             </Button>
           </div>
         </div>
@@ -288,8 +289,9 @@ export function Events({
             className="text-center mb-20"
             variants={item}
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#2D1B69] mb-6">¿Cuándo y Dónde?</h2>
-            <Divider />
+            <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">¿Cuándo y Dónde?</h2>
+            <img src={divider} alt="Divider" className="mx-auto" />
+
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 max-w-7xl mx-auto px-4">
