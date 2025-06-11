@@ -4,7 +4,7 @@ import { RegisterForm } from './RegisterForm';
 import { Heart } from 'lucide-react';
 
 export function AuthPage() {
-  const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
 
   const toggleForm = () => {
     setShowLogin(!showLogin);
