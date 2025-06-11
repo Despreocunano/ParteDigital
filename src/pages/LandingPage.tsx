@@ -9,6 +9,7 @@ export function LandingPage() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [landingData, setLandingData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -21,20 +22,28 @@ export function LandingPage() {
           .eq('user_id', user.id)
           .single();
 
-        if (error) throw error;
-
-        if (data) {
+        if (error) {
+          if (error.code === 'PGRST116') {
+            // No landing page found, this is normal for new users
+            setLandingData(null);
+            setError(null);
+          } else {
+            throw error;
+          }
+        } else if (data) {
           // Format dates for form inputs
           const formattedData = {
             ...data,
-            wedding_date: data.wedding_date?.split('T')[0],
-            ceremony_date: data.ceremony_date?.split('T')[0],
-            party_date: data.party_date?.split('T')[0],
+            wedding_date: data.wedding_date?.split('T')[0] || '',
+            ceremony_date: data.ceremony_date?.split('T')[0] || '',
+            party_date: data.party_date?.split('T')[0] || '',
           };
           setLandingData(formattedData);
+          setError(null);
         }
       } catch (error) {
         console.error('Error fetching landing page:', error);
+        setError('Error al cargar la página de invitación');
       } finally {
         setLoading(false);
       }
@@ -47,6 +56,17 @@ export function LandingPage() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto pb-12">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">Error</h1>
+          <p className="text-gray-500 mt-1">{error}</p>
+        </div>
       </div>
     );
   }
