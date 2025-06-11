@@ -141,7 +141,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No authenticated session');
 
-      const { error } = await supabase
+      // First, create or update the landing page
+      const { data: landingPage, error: upsertError } = await supabase
         .from('landing_pages')
         .upsert({
           user_id: user?.id,
@@ -155,9 +156,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           cover_image: coverImage,
           gallery_images: galleryImages,
           bank_info: data.bank_info
-        });
+        })
+        .select()
+        .single();
 
-      if (error) throw error;
+      if (upsertError) throw upsertError;
+      if (!landingPage) throw new Error('Error creating landing page');
 
       onSuccess?.();
     } catch (error) {
@@ -179,6 +183,21 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No authenticated session');
+
+      // First, ensure the landing page exists
+      const { data: existingPage, error: checkError } = await supabase
+        .from('landing_pages')
+        .select('id')
+        .eq('user_id', user?.id)
+        .single();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        throw new Error('Error checking landing page');
+      }
+
+      if (!existingPage) {
+        throw new Error('Por favor guarda los cambios antes de publicar');
+      }
 
       const slug = `${groomName.toLowerCase()}-y-${brideName.toLowerCase()}`
         .normalize("NFD")

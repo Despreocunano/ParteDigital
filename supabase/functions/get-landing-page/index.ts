@@ -31,8 +31,38 @@ serve(async (req) => {
       .neq('published_at', null)
       .single();
 
-    if (error) throw error;
-    if (!data) throw new Error("Landing page not found");
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return new Response(
+          JSON.stringify({
+            error: "Landing page not found",
+          }),
+          {
+            status: 404,
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      }
+      throw error;
+    }
+
+    if (!data) {
+      return new Response(
+        JSON.stringify({
+          error: "Landing page not found",
+        }),
+        {
+          status: 404,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
 
     return new Response(
       JSON.stringify({ data }),
