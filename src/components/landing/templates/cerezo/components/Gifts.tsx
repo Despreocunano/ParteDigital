@@ -4,7 +4,9 @@ import { Button } from '../../../../ui/Button';
 import { toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import divider from '../assets/divider.svg'
-import rosaLeft from '../assets/Grupo02.webp'
+import rosa_a from '../assets/Grupo02_a.webp'
+import rosa_b from '../assets/Grupo02_b.webp'
+import rosa_c from '../assets/Grupo02_c.webp'
 
 interface GiftsProps {
   bankInfo?: {
@@ -74,13 +76,33 @@ ${bankInfo.email}`;
         viewport={{ once: true }}
         variants={container}
       >
+        {/* Rosas decorativas */}
         <motion.img
-          src={rosaLeft}
+          src={rosa_c}
           alt="Rosa decorativa"
-          className="absolute left-0 top-1/2 -translate-y-1/2 w-32 md:w-96"
+          className="absolute -left-8 md:-left-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
           initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+        />
+        <motion.img
+          src={rosa_b}
+          alt="Rosa decorativa"
+          className="absolute -left-8 md:-left-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        />
+        <motion.img
+          src={rosa_a}
+          alt="Rosa decorativa"
+          className="absolute -left-8 md:-left-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
         />
 
         <motion.div 

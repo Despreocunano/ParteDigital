@@ -190,14 +190,14 @@ export function PartyInfo({
               <motion.img 
                 src={rosas} 
                 alt="Rosas decorativas" 
-                className="absolute -top-12 -left-28 w-48 h-48 object-contain"
-                initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                className="absolute -top-16 -left-32 w-64 h-64 object-contain"
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false }}
                 transition={{ 
                   type: "spring",
                   stiffness: 200,
-                  damping: 15,
-                  delay: 0.2
+                  damping: 15
                 }}
               />
               <div className="absolute top-4 right-4">

@@ -74,22 +74,6 @@ export function Countdown({ date, className = '' }: CountdownProps) {
         viewport={{ once: true }}
         variants={container}
       >
-        {/* Top divider */}
-        <div className="flex justify-center mb-8">
-          <div className="flex w-full">
-            {[...Array(16)].map((_, i) => (
-              <motion.img
-                key={`top-${i}`}
-                src={divider}
-                alt="Divider"
-                className="w-12 flex-1"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-              />
-            ))}
-          </div>
-        </div>
 
         <motion.div 
           className="text-center mb-12"
@@ -97,6 +81,7 @@ export function Countdown({ date, className = '' }: CountdownProps) {
         >
           <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Faltan</h2>
         </motion.div>
+        <img src={divider} alt="Divider" className="mx-auto mb-8" />
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto px-4">
           <motion.div 
@@ -166,23 +151,6 @@ export function Countdown({ date, className = '' }: CountdownProps) {
               </div>
             </div>
           </motion.div>
-        </div>
-
-        {/* Bottom divider */}
-        <div className="flex justify-center mt-8">
-          <div className="flex w-full">
-            {[...Array(16)].map((_, i) => (
-              <motion.img
-                key={`bottom-${i}`}
-                src={divider}
-                alt="Divider"
-                className="w-12 flex-1"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-              />
-            ))}
-          </div>
         </div>
       </motion.div>
     </section>

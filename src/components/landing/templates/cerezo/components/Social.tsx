@@ -2,6 +2,9 @@ import { Instagram } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { motion } from 'framer-motion';
 import divider from '../assets/divider.svg'
+import rosa_c from '../assets/Grupo02_d.webp'
+import rosa_b from '../assets/Grupo02_e.webp'
+import rosa_a from '../assets/Grupo02_f.webp'
 
 
 interface SocialProps {
@@ -43,13 +46,47 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
 
   return (
     <motion.section 
-      className={`py-24 px-4 ${className}`}
+      className={`py-24 px-4 ${className} relative overflow-hidden`}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}
       variants={container}
     >
-      <div className="max-w-6xl mx-auto text-center">
+      {/* Rosas decorativas */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.img
+          src={rosa_c}
+          alt="Rosa decorativa"
+          className="absolute -right-8 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
+        <motion.img
+          src={rosa_b}
+          alt="Rosa decorativa"
+          className="absolute -right-8 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        />
+        <motion.img
+          src={rosa_a}
+          alt="Rosa decorativa"
+          className="absolute -right-8 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          initial={{ opacity: 0, x: 100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+        />
+      </div>
+
+      <motion.div 
+        className="max-w-4xl mx-auto text-center relative z-10"
+        variants={item}
+      >
         <motion.div variants={item}>
           <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
             <Instagram className="w-16 h-16 text-[#2D1B69]" />
@@ -114,7 +151,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
             ))}
           </motion.div>
         )}
-      </div>
+      </motion.div>
     </motion.section>
   );
 }
