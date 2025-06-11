@@ -4,6 +4,7 @@ import { Button } from '../../../../ui/Button';
 import { toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import divider from '../assets/divider.svg'
+import rosaLeft from '../assets/Grupo02.webp'
 
 interface GiftsProps {
   bankInfo?: {
@@ -67,22 +68,31 @@ ${bankInfo.email}`;
   return (
     <>
       <motion.section 
-        className={`py-24 px-4 ${className}`}
+        className={`py-24 px-4 ${className} relative`}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
         variants={container}
       >
+        <motion.img
+          src={rosaLeft}
+          alt="Rosa decorativa"
+          className="absolute left-0 top-1/2 -translate-y-1/2 w-32 md:w-96"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        />
+
         <motion.div 
           className="max-w-4xl mx-auto text-center"
           variants={item}
         >
           <motion.div 
-            className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
+            className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
             whileHover={{ rotate: 15, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Gift className="w-8 h-8 text-[#2D1B69]" />
+            <Gift className="w-16 h-16 text-[#2D1B69]" />
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Mesa de Regalos</h2>

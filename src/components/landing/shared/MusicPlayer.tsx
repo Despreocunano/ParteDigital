@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause } from 'lucide-react';
 import useSound from 'use-sound';
 
@@ -14,14 +14,17 @@ export function MusicPlayer({ url, color = '#D4B572', autoplay = false, classNam
   const [play, { pause, sound }] = useSound(url || '', {
     volume: 0.5,
     interrupt: true,
-    autoplay: false
+    autoplay: false,
+    loop: true
   });
+  const hasPlayed = useRef(false);
 
   useEffect(() => {
-    if (autoplay && !isPlaying && url) {
+    if (autoplay && !isPlaying && url && !hasPlayed.current) {
       const timer = setTimeout(() => {
         setIsPlaying(true);
         play();
+        hasPlayed.current = true;
       }, 100);
       return () => clearTimeout(timer);
     }
@@ -31,6 +34,7 @@ export function MusicPlayer({ url, color = '#D4B572', autoplay = false, classNam
     return () => {
       pause();
       setIsPlaying(false);
+      hasPlayed.current = false;
     };
   }, [pause]);
 
@@ -41,7 +45,12 @@ export function MusicPlayer({ url, color = '#D4B572', autoplay = false, classNam
       pause();
       setIsPlaying(false);
     } else {
-      play();
+      if (!hasPlayed.current) {
+        play();
+        hasPlayed.current = true;
+      } else {
+        sound?.play();
+      }
       setIsPlaying(true);
     }
   };

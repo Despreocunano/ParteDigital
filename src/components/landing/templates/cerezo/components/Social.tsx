@@ -51,8 +51,8 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
     >
       <div className="max-w-6xl mx-auto text-center">
         <motion.div variants={item}>
-          <div className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Instagram className="w-8 h-8 text-[#2D1B69]" />
+          <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Instagram className="w-16 h-16 text-[#2D1B69]" />
           </div>
           
           <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Comparte tus Fotos</h2>

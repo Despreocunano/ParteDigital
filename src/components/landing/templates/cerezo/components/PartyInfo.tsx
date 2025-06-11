@@ -210,10 +210,10 @@ export function PartyInfo({
                 </svg>
               </div>
               <motion.div 
-                className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
                 whileHover={{ rotate: 15 }}
               >
-                <Shirt className="w-8 h-8 text-[#2D1B69]" />
+                <Shirt className="w-16 h-16 text-[#2D1B69]" />
               </motion.div>
               <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Una orientación para tu vestuario</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -244,10 +244,10 @@ export function PartyInfo({
                   </svg>
                 </div>
                 <motion.div 
-                  className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
+                  className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
                   whileHover={{ rotate: 15 }}
                 >
-                  <Music2 className="w-8 h-8 text-[#2D1B69]" />
+                  <Music2 className="w-16 h-16 text-[#2D1B69]" />
                 </motion.div>
                 <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -278,10 +278,10 @@ export function PartyInfo({
                 </svg>
               </div>
               <motion.div 
-                className="w-16 h-16 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6"
                 whileHover={{ rotate: 15 }}
               >
-                <Lightbulb className="w-8 h-8 text-[#2D1B69]" />
+                <Lightbulb className="w-16 h-16 text-[#2D1B69]" />
               </motion.div>
               <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Información adicional para tener en cuenta</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
