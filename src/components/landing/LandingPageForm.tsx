@@ -77,40 +77,46 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialData?.template_id || templates.deluxe.id);
-  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled ?? false);
-  const [selectedTrack, setSelectedTrack] = useState<string>(initialData?.selected_track || '');
-  const [previewUrl, setPreviewUrl] = useState<string>('');
-  const [publishedUrl, setPublishedUrl] = useState<string>('');
-  const [coverImage, setCoverImage] = useState<string>(initialData?.cover_image || '');
-  const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
-  const [publishedStatus, setPublishedStatus] = useState<PublishStatus>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      return JSON.parse(stored);
-    }
-    return {
-      isPublished: !!initialData?.published_at,
-      slug: initialData?.slug || null
-    };
-  });
   const [showAllTemplates, setShowAllTemplates] = useState(false);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialData?.template_id || templates.deluxe.id);
+  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled || false);
+  const [selectedTrack, setSelectedTrack] = useState(initialData?.selected_track || '');
+  const [coverImage, setCoverImage] = useState(initialData?.cover_image || '');
+  const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [publishedUrl, setPublishedUrl] = useState('');
+  const [publishedStatus, setPublishedStatus] = useState({
+    isPublished: !!initialData?.published_at,
+    slug: initialData?.slug || null
+  });
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<LandingPageFormData>({
     defaultValues: {
-      music_enabled: false,
-      selected_track: '',
-      dress_code: initialData?.dress_code || 'Formal',
-      additional_info: initialData?.additional_info || 'La celebración será al aire libre',
-      bank_info: {
+      groom_name: initialData?.groom_name || '',
+      bride_name: initialData?.bride_name || '',
+      wedding_date: initialData?.wedding_date || '',
+      welcome_message: initialData?.welcome_message || '',
+      ceremony_date: initialData?.ceremony_date || '',
+      ceremony_location: initialData?.ceremony_location || '',
+      ceremony_time: initialData?.ceremony_time || '',
+      ceremony_address: initialData?.ceremony_address || '',
+      party_date: initialData?.party_date || '',
+      party_location: initialData?.party_location || '',
+      party_time: initialData?.party_time || '',
+      party_address: initialData?.party_address || '',
+      music_enabled: initialData?.music_enabled || false,
+      selected_track: initialData?.selected_track || '',
+      hashtag: initialData?.hashtag || '',
+      dress_code: initialData?.dress_code || '',
+      additional_info: initialData?.additional_info || '',
+      bank_info: initialData?.bank_info || {
         accountHolder: '',
         rut: '',
         bank: '',
         accountType: '',
         accountNumber: '',
         email: ''
-      },
-      ...initialData
+      }
     }
   });
 
@@ -141,16 +147,21 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No authenticated session');
 
+      // Format dates properly
+      const formattedData = {
+        ...data,
+        wedding_date: data.wedding_date ? new Date(data.wedding_date).toISOString() : null,
+        ceremony_date: data.ceremony_date ? new Date(data.ceremony_date).toISOString() : null,
+        party_date: data.party_date ? new Date(data.party_date).toISOString() : null,
+      };
+
       // First, create or update the landing page
       const { data: landingPage, error: upsertError } = await supabase
         .from('landing_pages')
         .upsert({
           user_id: user?.id,
-          ...data,
+          ...formattedData,
           template_id: selectedTemplateId,
-          wedding_date: new Date(data.wedding_date).toISOString(),
-          ceremony_date: data.ceremony_date ? new Date(data.ceremony_date).toISOString() : null,
-          party_date: data.party_date ? new Date(data.party_date).toISOString() : null,
           music_enabled: musicEnabled,
           selected_track: selectedTrack,
           cover_image: coverImage,
