@@ -7,6 +7,7 @@ import { AttendeeAvatar } from './AttendeeAvatar';
 import { AttendeeStatus } from './AttendeeStatus';
 import { Edit2, Trash2, Send, Table2 } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { getInitials } from '../../lib/utils';
 
 interface AttendeeCardProps {
   attendee: Attendee;
@@ -47,20 +48,29 @@ export function AttendeeCard({
         <CardContent className="p-4">
           <div className="space-y-4">
             <div className="flex items-center">
-              <AttendeeAvatar 
-                firstName={attendee.first_name}
-                lastName={attendee.last_name}
-                size="lg"
-              />
-              <div className="ml-3">
-                <h3 className="text-base font-medium text-gray-900">
-                  {attendee.first_name} {attendee.last_name}
-                  {attendee.has_plus_one && attendee.plus_one_name && ` (+ ${attendee.plus_one_name})`}
-                </h3>
-                <p className="text-sm text-gray-500">{attendee.email}</p>
-                {attendee.phone && (
-                  <p className="text-sm text-gray-500">{attendee.phone}</p>
-                )}
+              <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-700 text-sm font-medium">
+                {getInitials(attendee.first_name, attendee.last_name)}
+              </div>
+              <div className="ml-3 flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-medium truncate">
+                    {attendee.first_name} {attendee.last_name}
+                  </p>
+                  {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && (
+                    <span className="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full">
+                      +1
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <span className="truncate">{attendee.email}</span>
+                  {attendee.phone && (
+                    <>
+                      <span>•</span>
+                      <span className="truncate">{attendee.phone}</span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 

@@ -36,12 +36,21 @@ export function DashboardPage() {
                   <div>
                     <p className="text-sm text-gray-500">Total de Invitados</p>
                     <h3 className="text-3xl font-bold text-gray-900 mt-1">{stats.total}</h3>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {stats.plusOnes} con acompañante
-                    </p>
+                    <div className="text-xs text-gray-500 mt-1 space-y-1">
+                      <p>{stats.total - stats.plusOnes} invitados principales</p>
+                      <p>{stats.plusOnes} acompañantes</p>
+                    </div>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                     <Users className="h-6 w-6 text-blue-600" />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-blue-600 h-2 rounded-full" 
+                      style={{ width: '100%' }}
+                    ></div>
                   </div>
                 </div>
               </CardContent>
@@ -84,6 +93,14 @@ export function DashboardPage() {
                   </div>
                   <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
                     <XCircle className="h-6 w-6 text-red-600" />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="bg-red-600 h-2 rounded-full" 
+                      style={{ width: `${stats.total ? (stats.declined / stats.total) * 100 : 0}%` }}
+                    ></div>
                   </div>
                 </div>
               </CardContent>
@@ -183,10 +200,6 @@ export function DashboardPage() {
                         <p className="text-xl font-bold">
                           {tables.reduce((sum, table) => sum + table.capacity, 0)}
                         </p>
-                      </div>
-                      <div className="bg-gray-50 p-3 rounded-md col-span-2">
-                        <p className="text-xs text-gray-500">Con Acompañante</p>
-                        <p className="text-xl font-bold">{stats.plusOnes}</p>
                       </div>
                     </div>
                   </div>

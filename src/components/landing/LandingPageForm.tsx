@@ -15,6 +15,8 @@ import { useAuth } from '../../context/AuthContext';
 import { templates } from './templates';
 import { PlacesAutocomplete } from '../ui/PlacesAutocomplete';
 import { toast } from 'react-hot-toast';
+import { Button } from '../ui/Button';
+import { Grid } from 'lucide-react';
 
 interface LandingPageFormData {
   groom_name: string;
@@ -92,6 +94,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       slug: initialData?.slug || null
     };
   });
+  const [showAllTemplates, setShowAllTemplates] = useState(false);
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -256,12 +259,29 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       <Card>
         <CardHeader>
-          <CardTitle>Selecciona el diseño de tu invitación</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Selecciona el diseño de tu invitación</CardTitle>
+            <Button
+              variant="secondary"
+              size="sm"
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowAllTemplates(true);
+              }}
+              leftIcon={<Grid className="h-4 w-4" />}
+            >
+              Ver todas las plantillas
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <TemplateSelector
             selectedTemplateId={selectedTemplateId}
             onSelect={setSelectedTemplateId}
+            showAllTemplates={showAllTemplates}
+            setShowAllTemplates={setShowAllTemplates}
           />
         </CardContent>
       </Card>
