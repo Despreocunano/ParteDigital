@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import divider from '../assets/divider.svg'
 import rosas from '../assets/Grupo03.webp'
+import modal from '../assets/modal.svg'
 
 
 interface Track {
@@ -103,45 +104,25 @@ export function PartyInfo({
     if (!isOpen) return null;
 
     return (
-      <div 
-        className="fixed inset-0 z-50 flex items-center justify-center bg-[#FCE4EC]/95 backdrop-blur-sm"
-      >
-        <div 
-          className="relative w-full max-w-2xl px-8 py-12 text-center text-[#2D1B69]"
-        >
-          {/* Cherry blossom corner decorations */}
-          <div className="absolute top-0 left-0 w-16 h-16">
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-              <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-              <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-            </svg>
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]">
+        <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]">
+          {/* Corner decorations */}
+          <div className="absolute top-0 left-0 w-24 h-24">
+            <img src={modal} />
           </div>
-          <div className="absolute top-0 right-0 w-16 h-16 scale-x-[-1]">
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-              <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-              <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-            </svg>
+          <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
+            <img src={modal} />
           </div>
-          <div className="absolute bottom-0 left-0 w-16 h-16 scale-y-[-1]">
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-              <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-              <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-            </svg>
+          <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
+            <img src={modal} />
           </div>
-          <div className="absolute bottom-0 right-0 w-16 h-16 scale-[-1]">
-            <svg viewBox="0 0 100 100" className="w-full h-full">
-              <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-              <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-              <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-            </svg>
+          <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
+            <img src={modal} />
           </div>
 
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-10"
+            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
           >
             <X className="w-5 h-5 text-[#2D1B69]" />
           </button>
@@ -301,44 +282,28 @@ export function PartyInfo({
       {/* Music Modal */}
       {showMusicModal && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#FCE4EC]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]"
         >
           <div 
-            className="relative w-full max-w-2xl px-8 py-12 text-center text-[#2D1B69]"
+            className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]"
           >
-            {/* Cherry blossom corner decorations */}
-            <div className="absolute top-0 left-0 w-16 h-16">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-                <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-                <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-              </svg>
+            {/* Corner decorations */}
+            <div className="absolute top-0 left-0 w-24 h-24">
+              <img src={modal} />
             </div>
-            <div className="absolute top-0 right-0 w-16 h-16 scale-x-[-1]">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-                <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-                <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-              </svg>
+            <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
+              <img src={modal} />
             </div>
-            <div className="absolute bottom-0 left-0 w-16 h-16 scale-y-[-1]">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-                <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-                <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-              </svg>
+            <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
+              <img src={modal} />
             </div>
-            <div className="absolute bottom-0 right-0 w-16 h-16 scale-[-1]">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <path d="M10 90 Q30 70, 50 50" stroke="#E91E63" strokeWidth="2" fill="none" opacity="0.3"/>
-                <circle cx="25" cy="75" r="4" fill="#F8BBD9" opacity="0.6"/>
-                <circle cx="40" cy="60" r="3" fill="#FCE4EC"/>
-              </svg>
+            <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
+              <img src={modal} />
             </div>
 
             <button
               onClick={() => setShowMusicModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-10"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
             >
               <X className="w-5 h-5 text-[#2D1B69]" />
             </button>

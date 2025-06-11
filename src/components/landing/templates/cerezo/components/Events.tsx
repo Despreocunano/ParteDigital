@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
 import divider from '../assets/divider.svg'
+import modal from '../assets/modal.svg'
 
 
 interface EventProps {
@@ -326,38 +327,32 @@ export function Events({
 
       <AnimatePresence>
         {showRsvpModal && (
-          <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#2D1B69]/90 backdrop-blur-lg"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowRsvpModal(false)}
-          >
-            <motion.div 
-              className="relative w-full max-w-2xl mx-4"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={e => e.stopPropagation()}
-            >
-              {/* Unique modal design */}
-              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-                {/* Header with gradient */}
-                <div className="bg-gradient-to-r from-[#E91E63] to-[#F8BBD9] p-8 text-center relative">
-                  <button
-                    type="button"
-                    onClick={() => setShowRsvpModal(false)}
-                    className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors z-10"
-                  >
-                    <X className="w-6 h-6 text-white" />
-                  </button>
-                  
-                  <h2 className="text-4xl font-serif text-white">Confirmar Asistencia</h2>
-                  <p className="text-white/90 mt-2">Nos encantaría tenerte en nuestro día especial</p>
-                </div>
-                
-                {/* Form content */}
-                <div className="p-8">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]">
+            <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]">
+              {/* Corner decorations */}
+              <div className="absolute top-0 left-0 w-24 h-24">
+                <img src={modal} />
+              </div>
+              <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
+                <img src={modal} />
+              </div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
+                <img src={modal} />
+              </div>
+              <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
+                <img src={modal} />
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowRsvpModal(false)}
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
+              >
+                <X className="w-5 h-5 text-[#2D1B69]" />
+              </button>
+              <div className="space-y-8">
+                <h2 className="text-3xl font-serif">Confirmar Asistencia</h2>
+                <p className="text-[#8D6E63] text-lg">Nos encantaría tenerte en nuestro día especial</p>
+                <div>
                   <PublicRsvpForm
                     userId={userId}
                     onSuccess={() => setShowRsvpModal(false)}
@@ -376,8 +371,8 @@ export function Events({
                   />
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
     </>
