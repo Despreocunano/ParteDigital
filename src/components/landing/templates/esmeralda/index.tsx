@@ -11,7 +11,7 @@ import { Footer } from './components/Footer';
 import { WelcomeModal } from './components/WelcomeModal';
 import type { TemplateProps } from '../types';
 
-export function CerezoTemplate({
+export function EsmeraldaTemplate({
   groomName,
   brideName,
   weddingDate,
@@ -74,7 +74,7 @@ export function CerezoTemplate({
         />
       )}
 
-      <main className="font-['Playfair_Display'] bg-white w-full">
+      <main className="font-['Playfair_Display'] bg-[#012D27] w-full">
         <div className="w-full">
           <Hero
             groomName={groomName}
@@ -88,7 +88,7 @@ export function CerezoTemplate({
 
           <Countdown 
             date={weddingDate}
-            className="bg-[#FFFFFF]"
+            className="bg-[#012D27]"
           />
 
           <Events
@@ -103,37 +103,37 @@ export function CerezoTemplate({
             partyLocation={partyLocation}
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
-            className="bg-[#FFFFFF]"
+            className="bg-[#012D27]"
           />
 
           <PartyInfo
             dresscode={dress_code || ''}
             musicInfo={musicEnabled ? "¿Cuál es la canción que no debe faltar en la playlist de la fiesta?" : undefined}
             tips={additional_info || ''}
-            className="bg-[#FFFFFF]"
+            className="bg-[#012D27]"
             userId={userId}
           />
 
           <GallerySection
             images={galleryImages}
-            className="bg-[#FFFFFF]"
+            className="bg-[#012D27]"
           />
 
           <Gifts
             bankInfo={bankInfo}
-            className="bg-[#FFFFFF]"
+            className="bg-[#012D27]"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-[#FFFFFF]"
+            className="bg-[#012D27]"
           />
 
           <Footer
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-[#995B71]"
+            className="bg-[#00534E]"
           />
         </div>
       </main>

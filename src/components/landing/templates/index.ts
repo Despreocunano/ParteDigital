@@ -2,6 +2,7 @@ import { DeluxeTemplate } from './deluxe';
 import { FlowersTemplate } from './flowers';
 import { TerraTemplate } from './terra';
 import { CerezoTemplate } from './cerezo';
+import { EsmeraldaTemplate } from './esmeralda';
 import type { TemplateProps } from './types';
 
 export const templates = {
@@ -32,6 +33,13 @@ export const templates = {
     component: CerezoTemplate,
     preview: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg',
     description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
+  },
+  esmeralda: {
+    id: '550e8400-e29b-41d4-a716-446655440005',
+    name: 'Esmeralda',
+    component: EsmeraldaTemplate,
+    preview: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg',
+    description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
   }
 };
 
@@ -40,7 +48,8 @@ const templateIdMap = {
   '550e8400-e29b-41d4-a716-446655440000': 'deluxe',
   '550e8400-e29b-41d4-a716-446655440002': 'flowers',
   '550e8400-e29b-41d4-a716-446655440003': 'terra',
-  '550e8400-e29b-41d4-a716-446655440004': 'cerezo'
+  '550e8400-e29b-41d4-a716-446655440004': 'cerezo',
+  '550e8400-e29b-41d4-a716-446655440005': 'esmeralda'
 };
 
 export function getTemplate(templateId: string) {

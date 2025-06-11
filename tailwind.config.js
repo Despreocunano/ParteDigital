@@ -5,6 +5,8 @@ export default {
     extend: {
       fontFamily: {
         serif: ['PT Serif', 'serif'],
+        lora: ['Lora', 'serif'],
+        parisienne: ['Parisienne', 'cursive'],
       },
     },
   },

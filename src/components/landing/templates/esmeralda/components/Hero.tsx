@@ -1,7 +1,9 @@
-import { motion } from 'framer-motion';
-import topFlor1 from '../assets/top_flor_00001.png';
-import topFlor2 from '../assets/top_flor_00002.png';
-import topFlor3 from '../assets/top_flor_00003.png';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import backgroundImage from '../assets/fondo_esmeralda.webp'
+import topFlowers_a from '../assets/Grupo01_a.webp'
+import topFlowers_b from '../assets/Grupo01_b.webp'
+import topFlowers_c from '../assets/Grupo01_c.webp'
+
 
 interface HeroProps {
   groomName: string;
@@ -18,10 +20,12 @@ export function Hero({
   brideName,
   weddingDate,
   welcomeMessage,
-  backgroundImage = 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg',
   className = '',
   showWelcomeModal = false
 }: HeroProps) {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, 100]);
+
   const formattedDate = new Date(weddingDate).toLocaleDateString('es-ES', {
     day: '2-digit',
     month: '2-digit',
@@ -47,61 +51,46 @@ export function Hero({
     })
   };
 
-  const bottomImagesVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 50
-    },
-    visible: (i: number) => ({
-      opacity: [0.9, 0.8, 0.7][i] || 0.9,
-      y: 0,
-      transition: {
-        delay: baseDelay + 1 + (i * 0.2),
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
-
   return (
     <section className={`relative w-full min-h-screen overflow-hidden ${className}`}>
       {/* Background Image */}
-      <div 
+      <motion.div 
         className="absolute inset-0 w-full h-full bg-cover bg-center"
         style={{ 
-          backgroundImage: `url(${backgroundImage})`
+          backgroundImage: `url(${backgroundImage})`,
+          y
         }}
       >
         <div className="absolute inset-0 bg-black/40"></div>
-      </div>
+      </motion.div>
 
-      {/* Top Floral Bouquet - Left side */}
-      <div className="absolute top-0 left-24 z-20 w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
+      {/* Top Floral Bouquet - Centered */}
+      <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 z-20 w-48 h-48 md:w-56 md:h-56 lg:w-96 lg:h-96">
         <motion.div
           className="relative w-full h-full"
           initial="hidden"
           animate="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false, amount: 0.1 }}
         >
           <motion.img
-            src={topFlor1}
-            alt="Cherry blossom decoration 1"
+            src={topFlowers_a}
+            alt="Floral decoration 1"
             className="absolute top-0 left-0 w-full h-full object-contain opacity-90"
             custom={0}
             variants={topImagesVariants}
           />
           
           <motion.img
-            src={topFlor2}
-            alt="Cherry blossom decoration 2"
+            src={topFlowers_b}
+            alt="Floral decoration 2"
             className="absolute top-0 left-0 w-full h-full object-contain opacity-80"
             custom={1}
             variants={topImagesVariants}
           />
           
           <motion.img
-            src={topFlor3}
-            alt="Cherry blossom decoration 3"
+            src={topFlowers_c}
+            alt="Floral decoration 3"
             className="absolute top-0 left-0 w-full h-full object-contain opacity-70"
             custom={2}
             variants={topImagesVariants}
@@ -121,7 +110,7 @@ export function Hero({
           >
             <div className="inline-block">
               <div className="w-32 h-px bg-white mb-4"></div>
-              <p className="text-xl font-light tracking-wider">
+              <p className="text-3xl font-light tracking-wider">
                 {formattedDate}
               </p>
               <div className="w-32 h-px bg-white mt-4"></div>
@@ -135,9 +124,9 @@ export function Hero({
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: baseDelay + 0.4 }}
           >
-            <h1 className="text-6xl md:text-7xl font-serif font-black leading-tight">
-              {groomName} 
-              <span className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-white/20 backdrop-blur-sm rounded-full mx-4 md:mx-8 text-3xl md:text-4xl font-light">
+            <h1 className="text-7xl md:text-8xl font-light font-parisienne font-light">
+              {groomName}
+              <span className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-[#CFD6BA]/30 backdrop-blur-sm rounded-full mx-4 md:mx-8 text-3xl md:text-4xl font-lora">
                 &
               </span> 
               {brideName}

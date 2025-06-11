@@ -1,10 +1,8 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { cn } from '../../lib/utils';
 import { templates } from './templates';
-import { Button } from '../ui/Button';
 import { Modal } from '../ui/Modal';
-import { Grid } from 'lucide-react';
 
 interface TemplateSelectorProps {
   selectedTemplateId: string;
@@ -78,7 +76,6 @@ export function TemplateSelector({
         isOpen={showAllTemplates}
         onClose={() => setShowAllTemplates(false)}
         title="Todas las plantillas"
-        className="max-w-[90vw]"
       >
         <div className="w-full">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
