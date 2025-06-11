@@ -19,10 +19,6 @@ export function RsvpsPage() {
   const { tables, loading: tablesLoading } = useTables();
   const { user } = useAuth();
   const { groomName, brideName, profileImage } = useWedding();
-  const [selectedAttendees, setSelectedAttendees] = useState<string[]>([]);
-  const [bulkReminderMode, setBulkReminderMode] = useState(false);
-  const [reminderSubject, setReminderSubject] = useState('Confirma tu asistencia');
-  const [reminderMessage, setReminderMessage] = useState('');
   const [sendingReminder, setSendingReminder] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   
@@ -44,64 +40,6 @@ export function RsvpsPage() {
   const pendingAttendees = filteredAttendees.filter(attendee => attendee.rsvp_status === 'pending');
   const confirmedAttendees = filteredAttendees.filter(attendee => attendee.rsvp_status === 'confirmed');
   const declinedAttendees = filteredAttendees.filter(attendee => attendee.rsvp_status === 'declined');
-
-  const toggleAttendeeSelection = (attendeeId: string) => {
-    if (selectedAttendees.includes(attendeeId)) {
-      setSelectedAttendees(selectedAttendees.filter(id => id !== attendeeId));
-    } else {
-      setSelectedAttendees([...selectedAttendees, attendeeId]);
-    }
-  };
-
-  const selectAllPending = () => {
-    setSelectedAttendees(pendingAttendees.map(attendee => attendee.id));
-  };
-
-  const clearSelection = () => {
-    setSelectedAttendees([]);
-  };
-
-  const handleSendBulkReminders = async () => {
-    if (selectedAttendees.length === 0 || !reminderMessage.trim()) return;
-    
-    setSendingReminder(null);
-    
-    try {
-      let successCount = 0;
-      let errorCount = 0;
-
-      for (const attendeeId of selectedAttendees) {
-        try {
-          await sendEmail(
-            attendeeId,
-            reminderSubject,
-            reminderMessage
-          );
-          successCount++;
-        } catch (error) {
-          console.error('Error sending reminder:', error);
-          errorCount++;
-        }
-      }
-
-      if (successCount > 0) {
-        toast.success(`Recordatorios enviados a ${successCount} invitados`);
-      }
-      
-      if (errorCount > 0) {
-        toast.error(`Error al enviar ${errorCount} recordatorios`);
-      }
-
-      setBulkReminderMode(false);
-      setSelectedAttendees([]);
-      setReminderMessage('');
-    } catch (error) {
-      console.error('Error sending reminders:', error);
-      toast.error('Error al enviar los recordatorios');
-    } finally {
-      setSendingReminder(null);
-    }
-  };
 
   const handleSendSingleReminder = async (attendee: Attendee) => {
     try {
@@ -177,21 +115,10 @@ export function RsvpsPage() {
   };
 
   const renderAttendeeRow = (attendee: Attendee) => {
-    const isSelected = selectedAttendees.includes(attendee.id);
     const currentTable = tables.find(t => t.id === attendee.table_id);
     
     return (
       <tr key={attendee.id} className="border-b border-gray-200 hover:bg-gray-50">
-        {bulkReminderMode && (
-          <td className="px-4 py-3">
-            <input
-              type="checkbox"
-              checked={isSelected}
-              onChange={() => toggleAttendeeSelection(attendee.id)}
-              className="w-4 h-4 text-rose-600 border-gray-300 rounded focus:ring-rose-500"
-            />
-          </td>
-        )}
         <td className="px-4 py-3">
           <div className="flex flex-col">
             <div className="text-sm font-medium text-gray-900">
@@ -228,7 +155,7 @@ export function RsvpsPage() {
             {currentTable ? currentTable.name : 'Sin mesa asignada'}
           </div>
         </td>
-        {!bulkReminderMode && attendee.rsvp_status === 'pending' && (
+        {attendee.rsvp_status === 'pending' && (
           <td className="px-4 py-3 text-right">
             <Button
               size="sm"
@@ -253,7 +180,7 @@ export function RsvpsPage() {
         </p>
       </div>
       
-      {!attendeesLoading && !tablesLoading && !bulkReminderMode && (
+      {!attendeesLoading && !tablesLoading && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <Card>
             <CardContent className="p-6">
@@ -308,207 +235,97 @@ export function RsvpsPage() {
         </div>
       )}
       
-      {bulkReminderMode ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>Enviar Recordatorios</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Invitados</p>
-                <div className="flex flex-wrap gap-2">
-                  {selectedAttendees.length > 0 ? (
-                    selectedAttendees.map(id => {
-                      const attendee = attendees.find(a => a.id === id);
-                      return attendee ? (
-                        <div
-                          key={id}
-                          className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"
-                        >
-                          {attendee.first_name} {attendee.last_name}
-                          <button
-                            type="button"
-                            className="ml-1 text-gray-400 hover:text-gray-600"
-                            onClick={() => toggleAttendeeSelection(id)}
-                          >
-                            <X className="h-3 w-3" />
-                          </button>
-                        </div>
-                      ) : null;
-                    })
-                  ) : (
-                    <p className="text-sm text-gray-500">No hay invitados seleccionados</p>
-                  )}
+      <Card>
+        <CardHeader className="px-6 py-4 border-b border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <CardTitle>Respuestas</CardTitle>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Search className="h-5 w-5 text-gray-400" />
                 </div>
+                <input
+                  type="text"
+                  placeholder="Buscar invitados..."
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent sm:text-sm"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <div className="flex gap-2">
+                {filteredAttendees.length > 0 && (
+                  <Button
+                    variant="secondary"
+                    onClick={exportToExcel}
+                    leftIcon={<Download className="h-4 w-4" />}
+                  >
+                    Exportar
+                  </Button>
+                )}
                 {pendingAttendees.length > 0 && (
-                  <div className="mt-2">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={selectAllPending}
-                    >
-                      Seleccionar Todos ({pendingAttendees.length})
-                    </Button>
-                  </div>
+                  <Button
+                    onClick={() => window.location.href = '/reminders'}
+                    leftIcon={<Send className="h-4 w-4" />}
+                  >
+                    Enviar Recordatorios
+                  </Button>
                 )}
               </div>
-              
-              <Input
-                label="Asunto"
-                value={reminderSubject}
-                onChange={(e) => setReminderSubject(e.target.value)}
-              />
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Mensaje
-                </label>
-                <textarea
-                  rows={5}
-                  className="w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent p-3"
-                  placeholder="Escribe tu mensaje..."
-                  value={reminderMessage}
-                  onChange={(e) => setReminderMessage(e.target.value)}
-                ></textarea>
-              </div>
-              
-              <div className="flex justify-end space-x-3">
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    setBulkReminderMode(false);
-                    setSelectedAttendees([]);
-                  }}
-                >
-                  Cancelar
-                </Button>
-                <Button
-                  onClick={handleSendBulkReminders}
-                  isLoading={sendingReminder !== null}
-                  disabled={selectedAttendees.length === 0 || !reminderMessage.trim()}
-                  leftIcon={<Send className="h-4 w-4" />}
-                >
-                  Enviar
-                </Button>
-              </div>
             </div>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card>
-          <CardHeader className="px-6 py-4 border-b border-gray-200">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle>Respuestas</CardTitle>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Buscar invitados..."
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent sm:text-sm"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
-                </div>
-                <div className="flex gap-2">
-                  {filteredAttendees.length > 0 && (
-                    <Button
-                      variant="secondary"
-                      onClick={exportToExcel}
-                      leftIcon={<Download className="h-4 w-4" />}
-                    >
-                      Exportar
-                    </Button>
-                  )}
-                  {pendingAttendees.length > 0 && (
-                    <Button
-                      onClick={() => {
-                        selectAllPending();
-                        setBulkReminderMode(true);
-                      }}
-                      leftIcon={<Send className="h-4 w-4" />}
-                    >
-                      Enviar Recordatorios
-                    </Button>
-                  )}
-                </div>
-              </div>
+          </div>
+        </CardHeader>
+        <CardContent className="px-0 py-0">
+          {attendeesLoading || tablesLoading ? (
+            <div className="flex justify-center items-center h-40">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
             </div>
-          </CardHeader>
-          <CardContent className="px-0 py-0">
-            {attendeesLoading || tablesLoading ? (
-              <div className="flex justify-center items-center h-40">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
-              </div>
-            ) : filteredAttendees.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      {bulkReminderMode && (
-                        <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          <input
-                            type="checkbox"
-                            checked={selectedAttendees.length === pendingAttendees.length && pendingAttendees.length > 0}
-                            onChange={() => {
-                              if (selectedAttendees.length === pendingAttendees.length) {
-                                clearSelection();
-                              } else {
-                                selectAllPending();
-                              }
-                            }}
-                            className="w-4 h-4 text-rose-600 border-gray-300 rounded focus:ring-rose-500"
-                          />
-                        </th>
-                      )}
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Nombre
-                      </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Email
-                      </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Estado
-                      </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Restricciones Alimentarias
-                      </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Mesa
-                      </th>
-                      {!bulkReminderMode && (
-                        <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Acciones
-                        </th>
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {pendingAttendees.map((attendee) => 
-                      renderAttendeeRow(attendee)
-                    )}
-                    {confirmedAttendees.map((attendee) => 
-                      renderAttendeeRow(attendee)
-                    )}
-                    {declinedAttendees.map((attendee) => 
-                      renderAttendeeRow(attendee)
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-gray-500">
-                  {searchTerm ? 'No se encontraron invitados' : 'No hay invitados aún'}
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
+          ) : filteredAttendees.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Nombre
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Estado
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Restricciones Alimentarias
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Mesa
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {pendingAttendees.map((attendee) => 
+                    renderAttendeeRow(attendee)
+                  )}
+                  {confirmedAttendees.map((attendee) => 
+                    renderAttendeeRow(attendee)
+                  )}
+                  {declinedAttendees.map((attendee) => 
+                    renderAttendeeRow(attendee)
+                  )}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">
+                {searchTerm ? 'No se encontraron invitados' : 'No hay invitados aún'}
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

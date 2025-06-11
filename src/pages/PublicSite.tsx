@@ -234,25 +234,26 @@ export function PublicSite() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
               Tu historia de amor merece una invitación única
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8">
+            <p className="text-lg md:text-2xl text-white/90 mb-6 md:mb-8">
               Crea una experiencia digital mágica para tu boda
             </p>
-            <p className="text-2xl md:text-3xl text-white font-light mb-12">
+            <p className="text-xl md:text-3xl text-white font-light mb-8 md:mb-12">
               ¡Comienza tu historia hoy!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
               >
                 <a
                   href="https://panel.tuparte.digital/register"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-3 text-lg rounded-md bg-rose-500 hover:bg-rose-600 text-white transition-colors group"
+                  className="inline-flex items-center justify-center w-full px-8 py-4 text-lg rounded-md bg-rose-500 hover:bg-rose-600 text-white transition-colors group"
                 >
                   <span>Crear mi invitación</span>
                   <Heart className="ml-2 h-5 w-5 group-hover:text-white transition-transform group-hover:scale-125" />
@@ -261,12 +262,18 @@ export function PublicSite() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                className="w-full sm:w-auto"
               >
                 <Button
                   size="lg"
                   variant="secondary"
-                  onClick={() => window.location.href = 'https://panel.tuparte.digital/register'}
-                  className="bg-white/10 text-white border-white/20 hover:bg-white/20 px-8"
+                  onClick={() => {
+                    const featuresSection = document.querySelector('.feature-sections');
+                    if (featuresSection) {
+                      featuresSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-full bg-white/10 text-white border-white/20 hover:bg-white/20 px-8 py-4"
                 >
                   Ver características
                 </Button>
@@ -275,7 +282,7 @@ export function PublicSite() {
           </motion.div>
 
           <motion.div 
-            className="flex-1 max-w-[280px]"
+            className="flex-1 max-w-[280px] hidden md:block"
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.8, duration: 0.8 }}
@@ -339,8 +346,13 @@ export function PublicSite() {
           transition={{ delay: 1.5, duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
         >
           <div className="flex flex-col items-center text-white/80">
-            <p className="text-sm mb-2">Descubre más</p>
-            <div className="w-[2px] h-8 bg-white/50"></div>
+            <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+              <motion.div
+                className="w-1.5 h-1.5 bg-white/80 rounded-full mt-2"
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </div>
           </div>
         </motion.div>
       </section>
@@ -353,7 +365,7 @@ export function PublicSite() {
         return (
           <motion.section 
             key={index} 
-            className={`py-24 px-4 ${isEven ? 'bg-white' : 'bg-gray-50'}`}
+            className={`py-24 px-4 feature-sections ${isEven ? 'bg-white' : 'bg-gray-50'}`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
