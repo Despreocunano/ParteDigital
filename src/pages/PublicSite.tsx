@@ -250,7 +250,7 @@ export function PublicSite() {
                 className="w-full sm:w-auto"
               >
                 <a
-                  href="https://panel.tuparte.digital/register"
+                  href="https://panel.tuparte.digital/auth"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center w-full px-8 py-4 text-lg rounded-md bg-rose-500 hover:bg-rose-600 text-white transition-colors group"
