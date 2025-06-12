@@ -84,12 +84,12 @@ export function LandingPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Card className="p-6">
+    <div className="container mx-auto px-4 py-8 max-w-full overflow-x-hidden">
+      <Card className="p-4 sm:p-6">
         <LandingPageForm 
           initialData={landingData} 
           onSuccess={() => toast.success('Cambios guardados correctamente')}
-          onError={(error) => toast.error('Error al guardar los cambios')}
+          onError={() => toast.error('Error al guardar los cambios')}
         />
       </Card>
     </div>
