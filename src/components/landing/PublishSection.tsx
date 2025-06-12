@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 interface PublishSectionProps {
