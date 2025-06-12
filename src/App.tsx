@@ -16,6 +16,7 @@ import { PublicSitePage } from './pages/PublicSitePage';
 import { PublicSite } from './pages/PublicSite';
 import { SongRecommendationsPage } from './pages/SongRecommendationsPage';
 import { RemindersPage } from './pages/RemindersPage';
+import { RequireLandingPage } from './components/auth/RequireLandingPage';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -49,9 +50,11 @@ function AppRoutes() {
               path="/"
               element={
                 <RequireAuth>
-                  <Layout>
-                    <DashboardPage />
-                  </Layout>
+                  <RequireLandingPage>
+                    <Layout>
+                      <DashboardPage />
+                    </Layout>
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />
@@ -59,9 +62,11 @@ function AppRoutes() {
               path="/guests"
               element={
                 <RequireAuth>
-                  <Layout>
-                    <GuestsPage />
-                  </Layout>
+                  <RequireLandingPage>
+                    <Layout>
+                      <GuestsPage />
+                    </Layout>
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />
@@ -69,9 +74,11 @@ function AppRoutes() {
               path="/attendees"
               element={
                 <RequireAuth>
-                  <Layout>
-                    <AttendeesPage />
-                  </Layout>
+                  <RequireLandingPage>
+                    <Layout>
+                      <AttendeesPage />
+                    </Layout>
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />
@@ -79,9 +86,11 @@ function AppRoutes() {
               path="/rsvps"
               element={
                 <RequireAuth>
-                  <Layout>
-                    <RsvpsPage />
-                  </Layout>
+                  <RequireLandingPage>
+                    <Layout>
+                      <RsvpsPage />
+                    </Layout>
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />
@@ -89,9 +98,11 @@ function AppRoutes() {
               path="/reminders"
               element={
                 <RequireAuth>
-                  <Layout>
-                    <RemindersPage />
-                  </Layout>
+                  <RequireLandingPage>
+                    <Layout>
+                      <RemindersPage />
+                    </Layout>
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />
@@ -99,9 +110,11 @@ function AppRoutes() {
               path="/tables"
               element={
                 <RequireAuth>
-                  <Layout>
-                    <TablesPage />
-                  </Layout>
+                  <RequireLandingPage>
+                    <Layout>
+                      <TablesPage />
+                    </Layout>
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />
@@ -129,9 +142,11 @@ function AppRoutes() {
               path="/songs"
               element={
                 <RequireAuth>
-                  <Layout>
-                    <SongRecommendationsPage />
-                  </Layout>
+                  <RequireLandingPage>
+                    <Layout>
+                      <SongRecommendationsPage />
+                    </Layout>
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />
@@ -139,7 +154,9 @@ function AppRoutes() {
               path="/preview/:userId"
               element={
                 <RequireAuth>
-                  <PreviewPage />
+                  <RequireLandingPage>
+                    <PreviewPage />
+                  </RequireLandingPage>
                 </RequireAuth>
               }
             />

@@ -11,7 +11,7 @@ export interface InputProps
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, description, leftIcon, rightIcon, type, ...props }, ref) => {
+  ({ className, label, error, description, leftIcon, rightIcon, type, autoComplete, ...props }, ref) => {
     return (
       <div className="w-full">
         {label && (
@@ -38,6 +38,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               className
             )}
             ref={ref}
+            autoComplete={autoComplete}
             {...props}
           />
           {rightIcon && (

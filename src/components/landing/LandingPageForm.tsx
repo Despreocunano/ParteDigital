@@ -302,6 +302,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       if (error) throw error;
 
       toast.success('Cambios guardados correctamente');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
       console.error('Error saving landing page:', error);
       toast.error('Error al guardar los cambios');
@@ -561,6 +562,9 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               {...register('ceremony_location', { required: 'El lugar es requerido' })}
               error={errors.ceremony_location?.message}
               placeholder="Iglesia San Sebastián"
+              autoComplete="off"
+              role="textbox"
+              aria-autocomplete="none"
             />
             <Input
               label="Hora de la Ceremonia"
@@ -612,16 +616,14 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               error={errors.party_time?.message}
             />
             <div className="md:col-span-2">
-              <PlacesAutocomplete
+              <Input
                 label="Lugar de la Fiesta"
-                value={watch('party_location')}
-                onChange={(address, placeId) => {
-                  setValue('party_location', address);
-                  setValue('party_place_id', placeId);
-                  setValue('party_address', address);
-                }}
+                {...register('party_location', { required: 'El lugar es requerido' })}
                 error={errors.party_location?.message}
                 placeholder="Estadio Español"
+                autoComplete="off"
+                role="textbox"
+                aria-autocomplete="none"
               />
             </div>
             <div className="md:col-span-2">

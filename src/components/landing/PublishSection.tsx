@@ -76,9 +76,9 @@ export function PublishSection({
               <Globe className="w-8 h-8 text-rose-600" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-xl font-medium text-gray-900">¡Crea tu invitación digital!</h3>
+              <h3 className="text-xl font-medium text-gray-900">Crea tu invitación digital</h3>
               <p className="text-gray-500 max-w-md mx-auto">
-                Personaliza tu invitación con los detalles de tu celebración. Una vez que completes la información básica, podrás previsualizarla y compartirla con tus invitados.
+                Completa el formulario con la información requerida y podrás previsualizarla y compartirla con tus invitados en minutos. ¡Vamos a ello!
               </p>
             </div>
           </div>
