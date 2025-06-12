@@ -36,7 +36,7 @@ export function Sidebar() {
     },
     {
       name: 'Música',
-      href: '/music',
+      href: '/songs',
       icon: Music
     },
     {

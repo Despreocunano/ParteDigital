@@ -20,7 +20,7 @@ interface RegisterFormProps {
 }
 
 export function RegisterForm({ onToggleForm }: RegisterFormProps) {
-  const { signUp } = useAuth();
+  const { signUp, signIn } = useAuth();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -38,8 +38,18 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
       const { success, error } = await signUp(data.email, data.password, data.groomName, data.brideName);
       
       if (success) {
-        window.scrollTo(0, 0);
-        navigate('/', { replace: true });
+        // Intentar hacer login automático después del registro exitoso
+        const { success: loginSuccess, error: loginError } = await signIn(data.email, data.password);
+        
+        if (loginSuccess) {
+          window.scrollTo(0, 0);
+          navigate('/', { replace: true });
+        } else {
+          setSuccessMessage('¡Registro exitoso! Ahora puedes iniciar sesión.');
+          setTimeout(() => {
+            onToggleForm();
+          }, 2000);
+        }
       } else if (error) {
         setErrorMessage(error.message);
       }

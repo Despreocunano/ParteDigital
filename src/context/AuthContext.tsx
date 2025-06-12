@@ -102,19 +102,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
-      // Sign in the user after successful registration
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (signInError) {
-        return {
-          success: false,
-          error: signInError,
-        };
-      }
-
       return {
         success: true,
         error: null,
