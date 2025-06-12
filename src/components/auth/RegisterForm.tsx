@@ -5,6 +5,7 @@ import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
 import { Mail, Lock, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 type FormData = {
   email: string;
@@ -20,6 +21,7 @@ interface RegisterFormProps {
 
 export function RegisterForm({ onToggleForm }: RegisterFormProps) {
   const { signUp } = useAuth();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -36,10 +38,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
       const { success, error } = await signUp(data.email, data.password, data.groomName, data.brideName);
       
       if (success) {
-        setSuccessMessage('¡Registro exitoso! Ahora puedes iniciar sesión.');
-        setTimeout(() => {
-          onToggleForm();
-        }, 2000);
+        navigate('/', { replace: true });
       } else if (error) {
         setErrorMessage(error.message);
       }
