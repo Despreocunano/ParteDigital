@@ -23,15 +23,7 @@ export function AuthPage() {
         </Button>
         <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl border border-white/20">
           <div className="text-center mb-8">
-            <Heart className="w-12 h-12 text-white mx-auto mb-4" />
-            <h1 className="text-3xl font-bold text-white mb-2">
-              {showLogin ? 'Bienvenido de nuevo' : 'Crear cuenta'}
-            </h1>
-            <p className="text-white/80">
-              {showLogin 
-                ? 'Ingresa tus datos para continuar' 
-                : 'Completa el formulario para registrarte'}
-            </p>
+            <Heart className="w-12 h-12 text-white mx-auto" />
           </div>
 
           {showLogin ? (
