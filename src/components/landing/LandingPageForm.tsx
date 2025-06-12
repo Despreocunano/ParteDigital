@@ -173,7 +173,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     fetchUserNames();
   }, [user?.id]);
 
-  const { register, handleSubmit, formState: { errors }, watch, setValue, setError } = useForm<LandingPageFormData>({
+  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
       groom_name: initialData?.groom_name || userNames?.groom_name || '',
       bride_name: initialData?.bride_name || userNames?.bride_name || '',
@@ -221,39 +221,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const partyTime = watch('party_time');
   const partyAddress = watch('party_address');
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const todayString = today.toISOString().split('T')[0];
-
-  const validateDate = (value: string) => {
-    if (!value) return true;
-    const selectedDate = new Date(value);
-    selectedDate.setHours(0, 0, 0, 0);
-    return selectedDate >= today || 'La fecha debe ser futura';
-  };
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>, field: 'ceremony_date' | 'party_date') => {
-    const value = e.target.value;
-    if (!value) return;
-
-    const selectedDate = new Date(value);
-    selectedDate.setHours(0, 0, 0, 0);
-
-    if (selectedDate >= today) {
-      setValue(field, value);
-      if (field === 'ceremony_date') {
-        const currentPartyDate = watch('party_date');
-        if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
-          setValue('party_date', value);
-        }
-      }
-    } else {
-      setError(field, {
-        type: 'manual',
-        message: 'La fecha debe ser futura'
-      });
-    }
-  };
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
 
   React.useEffect(() => {
     if (user) {
@@ -567,12 +536,23 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             label="Fecha de la Ceremonia"
             {...register('ceremony_date', {
               required: 'La fecha de la ceremonia es requerida',
-              validate: validateDate
+              validate: (value) => {
+                if (new Date(value) < new Date(today)) {
+                  return 'La fecha debe ser futura';
+                }
+                return true;
+              }
             })}
             error={errors.ceremony_date?.message}
-            min={todayString}
-            className="[&::-webkit-calendar-picker-indicator]:opacity-100"
-            onChange={(e) => handleDateChange(e, 'ceremony_date')}
+            min={today}
+            onChange={(e) => {
+              const ceremonyDate = e.target.value;
+              setValue('ceremony_date', ceremonyDate);
+              const currentPartyDate = watch('party_date');
+              if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
+                setValue('party_date', ceremonyDate);
+              }
+            }}
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -586,7 +566,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               label="Hora de la Ceremonia"
               type="time"
               {...register('ceremony_time')}
-              className="[&::-webkit-calendar-picker-indicator]:opacity-100"
             />
           </div>
           
@@ -616,21 +595,21 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             <Input
               label="Fecha de la Fiesta"
               type="date"
-              min={todayString}
-              className="[&::-webkit-calendar-picker-indicator]:opacity-100"
+              min={today}
               {...register('party_date', { 
                 required: 'La fecha es requerida',
-                validate: validateDate
+                validate: value => {
+                  const date = new Date(value);
+                  return date >= new Date() || 'La fecha debe ser futura';
+                }
               })}
               error={errors.party_date?.message}
-              onChange={(e) => handleDateChange(e, 'party_date')}
             />
             <Input
               label="Hora de la Fiesta"
               type="time"
               {...register('party_time', { required: 'La hora es requerida' })}
               error={errors.party_time?.message}
-              className="[&::-webkit-calendar-picker-indicator]:opacity-100"
             />
             <div className="md:col-span-2">
               <PlacesAutocomplete
