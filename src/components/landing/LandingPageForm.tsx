@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Input } from '../ui/Input';
@@ -76,12 +76,13 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
+  const [showAllTemplates, setShowAllTemplates] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialData?.template_id || templates.deluxe.id);
-  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled ?? false);
-  const [selectedTrack, setSelectedTrack] = useState<string>(initialData?.selected_track || '');
+  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled || false);
+  const [selectedTrack, setSelectedTrack] = useState(initialData?.selected_track || '');
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [publishedUrl, setPublishedUrl] = useState<string>('');
-  const [coverImage, setCoverImage] = useState<string>(initialData?.cover_image || '');
+  const [coverImage, setCoverImage] = useState(initialData?.cover_image || '');
   const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
   const [publishedStatus, setPublishedStatus] = useState<PublishStatus>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -93,7 +94,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       slug: initialData?.slug || null
     };
   });
-  const [showAllTemplates, setShowAllTemplates] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -104,15 +105,15 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       ceremony_location: initialData?.ceremony_location || '',
       ceremony_time: initialData?.ceremony_time || '',
       ceremony_address: initialData?.ceremony_address || '',
+      ceremony_place_id: initialData?.ceremony_place_id,
       party_date: initialData?.party_date || '',
       party_location: initialData?.party_location || '',
       party_time: initialData?.party_time || '',
       party_address: initialData?.party_address || '',
-      music_enabled: initialData?.music_enabled || false,
-      selected_track: initialData?.selected_track || '',
-      hashtag: initialData?.hashtag || '',
+      party_place_id: initialData?.party_place_id,
       dress_code: initialData?.dress_code || '',
       additional_info: initialData?.additional_info || '',
+      hashtag: initialData?.hashtag || '',
       bank_info: initialData?.bank_info || {
         accountHolder: '',
         rut: '',
@@ -141,6 +142,25 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       setPublishedUrl(`https://tuparte.digital/invitacion/${publishedStatus.slug}`);
     }
   }, [groomName, brideName, publishedStatus.slug]);
+
+  // Watch for changes in form values
+  const formValues = watch();
+  useEffect(() => {
+    const hasFormChanges = Object.keys(formValues).some(key => {
+      const value = formValues[key as keyof typeof formValues];
+      const initialValue = initialData?.[key as keyof typeof initialData];
+      return JSON.stringify(value) !== JSON.stringify(initialValue);
+    });
+
+    const hasOtherChanges = 
+      musicEnabled !== (initialData?.music_enabled || false) ||
+      selectedTrack !== (initialData?.selected_track || '') ||
+      coverImage !== (initialData?.cover_image || '') ||
+      JSON.stringify(galleryImages) !== JSON.stringify(initialData?.gallery_images || []) ||
+      selectedTemplateId !== (initialData?.template_id || templates.deluxe.id);
+
+    setHasChanges(hasFormChanges || hasOtherChanges);
+  }, [formValues, musicEnabled, selectedTrack, coverImage, galleryImages, selectedTemplateId, initialData]);
 
   const onSubmit = async (data: LandingPageFormData) => {
     if (!selectedTemplateId) {
@@ -574,7 +594,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         </CardContent>
       </Card>
 
-      <FloatingSaveButton isLoading={isLoading} />
+      {hasChanges && <FloatingSaveButton isLoading={isLoading} />}
     </form>
   );
 }

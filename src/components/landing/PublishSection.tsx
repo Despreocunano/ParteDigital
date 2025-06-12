@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { Globe, EyeOff, Copy, Check, Share2 } from 'lucide-react';
+import { Globe, EyeOff, Copy, Check, Share2, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
@@ -55,75 +55,71 @@ export function PublishSection({
     <Card>
       <CardContent className="pt-6">
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-lg font-medium">Vista Previa</h3>
               <p className="text-sm text-gray-500">
                 Puedes ver cómo se verá tu invitación antes de publicarla
               </p>
             </div>
-            <Link
-              to={previewUrl}
-              target="_blank"
-              className="text-sm font-medium text-rose-600 hover:text-rose-700"
-            >
-              Ver vista previa
-            </Link>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => window.open(previewUrl, '_blank')}
+                className="min-w-[120px] text-xs sm:text-sm"
+                leftIcon={<Eye className="h-4 w-4" />}
+              >
+                Vista Previa
+              </Button>
+              {!publishedStatus.isPublished ? (
+                <Button
+                  type="button"
+                  onClick={onPublish}
+                  disabled={isPublishing}
+                  className="min-w-[120px] text-xs sm:text-sm"
+                  leftIcon={<Globe className="h-4 w-4" />}
+                >
+                  {isPublishing ? 'Publicando...' : 'Publicar'}
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  onClick={onUnpublish}
+                  variant="secondary"
+                  className="min-w-[120px] text-xs sm:text-sm"
+                  leftIcon={<EyeOff className="h-4 w-4" />}
+                >
+                  Despublicar
+                </Button>
+              )}
+            </div>
           </div>
 
-          {!publishedStatus.isPublished ? (
-            <Button
-              onClick={onPublish}
-              disabled={isPublishing}
-              className="w-full"
-              leftIcon={<Globe className="h-4 w-4" />}
-            >
-              {isPublishing ? 'Publicando...' : 'Publicar Invitación'}
-            </Button>
-          ) : (
-            <Button
-              onClick={onUnpublish}
-              variant="secondary"
-              className="w-full"
-              leftIcon={<EyeOff className="h-4 w-4" />}
-            >
-              Despublicar Invitación
-            </Button>
-          )}
-
           {publishedStatus.isPublished && publishedUrl && (
-            <div className="mt-6 space-y-4">
-              <div className="p-4 bg-gray-50 rounded-md">
-                <p className="text-sm text-gray-600 mb-2">
-                  Tu página está publicada en:
-                </p>
-                <a 
-                  href={publishedUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-rose-600 hover:text-rose-700 break-all block"
-                >
-                  {publishedUrl}
-                </a>
-              </div>
-
-              <div className="border-t border-gray-200 pt-4">
-                <p className="text-sm font-medium text-gray-700 mb-3">
-                  Compartir invitación:
-                </p>
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <h3 className="text-lg font-medium">Compartir Invitación</h3>
+                  <p className="text-sm text-gray-500">
+                    Comparte el enlace de tu invitación con tus invitados
+                  </p>
+                </div>
                 <div className="flex flex-wrap gap-2">
                   <Button
+                    type="button"
                     variant="secondary"
-                    size="sm"
                     onClick={() => handleShare('whatsapp')}
+                    className="min-w-[120px] text-xs sm:text-sm"
                     leftIcon={<Share2 className="h-4 w-4" />}
                   >
                     WhatsApp
                   </Button>
                   <Button
+                    type="button"
                     variant="secondary"
-                    size="sm"
                     onClick={() => handleShare('copy')}
+                    className="min-w-[120px] text-xs sm:text-sm"
                     leftIcon={copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   >
                     {copied ? 'Copiado' : 'Copiar'}
