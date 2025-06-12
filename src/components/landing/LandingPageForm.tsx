@@ -531,57 +531,59 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             <CardTitle>Ceremonia</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="p-0 pt-6 space-y-4">
-          <Input
-            type="date"
-            label="Fecha de la Ceremonia"
-            {...register('ceremony_date', {
-              required: 'La fecha de la ceremonia es requerida',
-              validate: (value) => {
-                if (new Date(value) < new Date(today)) {
-                  return 'La fecha debe ser futura';
-                }
-                return true;
-              }
-            })}
-            error={errors.ceremony_date?.message}
-            min={today}
-            onChange={(e) => {
-              const ceremonyDate = e.target.value;
-              setValue('ceremony_date', ceremonyDate);
-              const currentPartyDate = watch('party_date');
-              if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
-                setValue('party_date', ceremonyDate);
-              }
-            }}
-          />
-
+        <CardContent className="p-0 pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Lugar de la Ceremonia"
-              {...register('ceremony_location', { required: 'El lugar es requerido' })}
-              error={errors.ceremony_location?.message}
-              placeholder="Iglesia San Sebastián"
-              autoComplete="off"
-              role="textbox"
-              aria-autocomplete="none"
+              type="date"
+              label="Fecha de la Ceremonia"
+              {...register('ceremony_date', {
+                required: 'La fecha de la ceremonia es requerida',
+                validate: (value) => {
+                  if (new Date(value) < new Date(today)) {
+                    return 'La fecha debe ser futura';
+                  }
+                  return true;
+                }
+              })}
+              error={errors.ceremony_date?.message}
+              min={today}
+              onChange={(e) => {
+                const ceremonyDate = e.target.value;
+                setValue('ceremony_date', ceremonyDate);
+                const currentPartyDate = watch('party_date');
+                if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
+                  setValue('party_date', ceremonyDate);
+                }
+              }}
             />
             <Input
               label="Hora de la Ceremonia"
               type="time"
               {...register('ceremony_time')}
             />
+            <div className="md:col-span-2">
+              <Input
+                label="Lugar de la Ceremonia"
+                {...register('ceremony_location', { required: 'El lugar es requerido' })}
+                error={errors.ceremony_location?.message}
+                placeholder="Iglesia San Sebastián"
+                autoComplete="off"
+                role="textbox"
+                aria-autocomplete="none"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <PlacesAutocomplete
+                label="Dirección de la Ceremonia"
+                value={watch('ceremony_address')}
+                onChange={(address, placeId) => {
+                  setValue('ceremony_address', address);
+                  setValue('ceremony_place_id', placeId);
+                }}
+                placeholder="Buscar dirección..."
+              />
+            </div>
           </div>
-          
-          <PlacesAutocomplete
-            label="Dirección de la Ceremonia"
-            value={watch('ceremony_address')}
-            onChange={(address, placeId) => {
-              setValue('ceremony_address', address);
-              setValue('ceremony_place_id', placeId);
-            }}
-            placeholder="Buscar dirección..."
-          />
         </CardContent>
       </div>
 
