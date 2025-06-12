@@ -80,7 +80,7 @@ ${bankInfo.email}`;
         <motion.img
           src={rosa_c}
           alt="Rosa decorativa"
-          className="absolute -left-8 md:-left-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          className="absolute -left-6 md:-left-16 top-1/6 -translate-y-1/2 w-32 md:w-64"
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}
@@ -89,7 +89,7 @@ ${bankInfo.email}`;
         <motion.img
           src={rosa_b}
           alt="Rosa decorativa"
-          className="absolute -left-8 md:-left-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          className="absolute -left-6 md:-left-16 top-1/6 -translate-y-1/2 w-32 md:w-64"
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}
@@ -98,7 +98,7 @@ ${bankInfo.email}`;
         <motion.img
           src={rosa_a}
           alt="Rosa decorativa"
-          className="absolute -left-8 md:-left-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          className="absolute -left-6 md:-left-16 top-1/6 -translate-y-1/2 w-32 md:w-64"
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}

@@ -56,7 +56,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
         <motion.img
           src={rosa_c}
           alt="Rosa decorativa"
-          className="absolute -right-8 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          className="absolute -right-6 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}
@@ -65,7 +65,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
         <motion.img
           src={rosa_b}
           alt="Rosa decorativa"
-          className="absolute -right-8 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          className="absolute -right-6 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}
@@ -74,7 +74,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
         <motion.img
           src={rosa_a}
           alt="Rosa decorativa"
-          className="absolute -right-8 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
+          className="absolute -right-6 md:-right-16 top-1/4 -translate-y-1/2 w-32 md:w-64"
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: false }}

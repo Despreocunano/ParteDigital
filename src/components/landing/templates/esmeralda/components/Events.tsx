@@ -3,7 +3,6 @@ import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
-import modal from '../assets/modal.svg'
 import lineas from '../assets/lineas01.svg'
 
 

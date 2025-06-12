@@ -65,7 +65,7 @@ export function Hero({
       </motion.div>
 
       {/* Top Floral Bouquet - Centered */}
-      <div className="absolute -top-32 left-1/2 transform -translate-x-1/2 z-20 w-48 h-48 md:w-56 md:h-56 lg:w-96 lg:h-96">
+      <div className="absolute -top-16 md:-top-32 left-1/2 transform -translate-x-1/2 z-20 w-48 h-48 md:w-56 md:h-56 lg:w-96 lg:h-96">
         <motion.div
           className="relative w-full h-full"
           initial="hidden"
