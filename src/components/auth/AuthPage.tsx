@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 import { Heart } from 'lucide-react';
+import { Button } from '../ui/Button';
 
 export function AuthPage() {
   const [showLogin, setShowLogin] = useState(false);
@@ -11,39 +12,34 @@ export function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left side - Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md mb-4">
-          <div className="flex justify-center">
-            <div className="w-16 h-16 bg-rose-600 rounded-full flex items-center justify-center">
-              <Heart className="h-8 w-8 text-white" />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-[#2D1B69] to-[#E91E63] flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <Button
+          variant="ghost"
+          onClick={() => window.location.href = 'https://tuparte.digital'}
+          className="absolute top-4 left-4 text-white hover:text-white/80"
+        >
+          ← Volver al inicio
+        </Button>
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-xl border border-white/20">
+          <div className="text-center mb-8">
+            <Heart className="w-12 h-12 text-white mx-auto mb-4" />
+            <h1 className="text-3xl font-bold text-white mb-2">
+              {showLogin ? 'Bienvenido de nuevo' : 'Crear cuenta'}
+            </h1>
+            <p className="text-white/80">
+              {showLogin 
+                ? 'Ingresa tus datos para continuar' 
+                : 'Completa el formulario para registrarte'}
+            </p>
           </div>
-          <h1 className="mt-4 text-center text-2xl font-extrabold text-gray-900">
-            Tu Parte Digital
-          </h1>
-        </div>
 
-        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="px-4 sm:px-0">
-            {showLogin ? (
-              <LoginForm onToggleForm={toggleForm} />
-            ) : (
-              <RegisterForm onToggleForm={toggleForm} />
-            )}
-          </div>
+          {showLogin ? (
+            <LoginForm onToggleForm={toggleForm} />
+          ) : (
+            <RegisterForm onToggleForm={toggleForm} />
+          )}
         </div>
-      </div>
-
-      {/* Right side - Image */}
-      <div className="hidden lg:block lg:w-1/2 relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-rose-500/20 to-rose-600/20 z-10"></div>
-        <img
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop"
-          alt="Wedding decoration"
-          className="w-full h-full object-cover"
-        />
       </div>
     </div>
   );
