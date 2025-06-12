@@ -545,6 +545,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             })}
             error={errors.ceremony_date?.message}
             min={today}
+            className="[&::-webkit-calendar-picker-indicator]:bg-none [&::-webkit-calendar-picker-indicator]:bg-[url('/calendar.svg')] [&::-webkit-calendar-picker-indicator]:bg-contain [&::-webkit-calendar-picker-indicator]:bg-no-repeat [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:opacity-100"
             onChange={(e) => {
               const ceremonyDate = e.target.value;
               setValue('ceremony_date', ceremonyDate);
@@ -566,6 +567,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               label="Hora de la Ceremonia"
               type="time"
               {...register('ceremony_time')}
+              className="[&::-webkit-calendar-picker-indicator]:bg-none [&::-webkit-calendar-picker-indicator]:bg-[url('/clock.svg')] [&::-webkit-calendar-picker-indicator]:bg-contain [&::-webkit-calendar-picker-indicator]:bg-no-repeat [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:opacity-100"
             />
           </div>
           
@@ -596,6 +598,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               label="Fecha de la Fiesta"
               type="date"
               min={today}
+              className="[&::-webkit-calendar-picker-indicator]:bg-none [&::-webkit-calendar-picker-indicator]:bg-[url('/calendar.svg')] [&::-webkit-calendar-picker-indicator]:bg-contain [&::-webkit-calendar-picker-indicator]:bg-no-repeat [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:opacity-100"
               {...register('party_date', { 
                 required: 'La fecha es requerida',
                 validate: value => {
@@ -610,6 +613,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               type="time"
               {...register('party_time', { required: 'La hora es requerida' })}
               error={errors.party_time?.message}
+              className="[&::-webkit-calendar-picker-indicator]:bg-none [&::-webkit-calendar-picker-indicator]:bg-[url('/clock.svg')] [&::-webkit-calendar-picker-indicator]:bg-contain [&::-webkit-calendar-picker-indicator]:bg-no-repeat [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:opacity-100"
             />
             <div className="md:col-span-2">
               <PlacesAutocomplete
