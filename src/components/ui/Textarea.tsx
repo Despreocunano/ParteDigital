@@ -6,10 +6,14 @@ export interface TextareaProps
   label?: string;
   error?: string;
   description?: string;
+  showCharacterCount?: boolean;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, label, error, description, ...props }, ref) => {
+  ({ className, label, error, description, showCharacterCount, maxLength, value, ...props }, ref) => {
+    const characterCount = typeof value === 'string' ? value.length : 0;
+    const remainingCharacters = maxLength ? maxLength - characterCount : 0;
+
     return (
       <div className="w-full">
         {label && (
@@ -27,13 +31,22 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             className
           )}
           ref={ref}
+          maxLength={maxLength}
+          value={value}
           {...props}
         />
-        {error ? (
-          <p className="mt-1 text-sm text-red-600">{error}</p>
-        ) : description ? (
-          <p className="mt-1 text-sm text-gray-500">{description}</p>
-        ) : null}
+        <div className="flex justify-between mt-1">
+          {error ? (
+            <p className="text-sm text-red-600">{error}</p>
+          ) : description ? (
+            <p className="text-sm text-gray-500">{description}</p>
+          ) : null}
+          {showCharacterCount && maxLength && (
+            <p className="text-sm text-gray-500">
+              {remainingCharacters} caracteres restantes
+            </p>
+          )}
+        </div>
       </div>
     );
   }

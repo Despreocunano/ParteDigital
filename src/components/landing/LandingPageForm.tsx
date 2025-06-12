@@ -21,7 +21,6 @@ import { Grid } from 'lucide-react';
 interface LandingPageFormData {
   groom_name: string;
   bride_name: string;
-  wedding_date: string;
   welcome_message: string;
   
   ceremony_date: string;
@@ -100,7 +99,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     defaultValues: {
       groom_name: initialData?.groom_name || '',
       bride_name: initialData?.bride_name || '',
-      wedding_date: initialData?.wedding_date || '',
       welcome_message: initialData?.welcome_message || '',
       ceremony_date: initialData?.ceremony_date || '',
       ceremony_location: initialData?.ceremony_location || '',
@@ -128,6 +126,9 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
   const groomName = watch('groom_name');
   const brideName = watch('bride_name');
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
 
   React.useEffect(() => {
     if (user) {
@@ -160,6 +161,14 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         .eq('user_id', user?.id)
         .single();
 
+      // Adjust dates to prevent timezone issues
+      const adjustDate = (dateStr: string) => {
+        if (!dateStr) return null;
+        const date = new Date(dateStr);
+        date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+        return date.toISOString();
+      };
+
       const { error } = await supabase
         .from('landing_pages')
         .upsert({
@@ -167,9 +176,9 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           user_id: user?.id,
           ...data,
           template_id: selectedTemplateId,
-          wedding_date: data.wedding_date ? new Date(data.wedding_date).toISOString() : null,
-          ceremony_date: data.ceremony_date ? new Date(data.ceremony_date).toISOString() : null,
-          party_date: data.party_date ? new Date(data.party_date).toISOString() : null,
+          wedding_date: adjustDate(data.ceremony_date),
+          ceremony_date: adjustDate(data.ceremony_date),
+          party_date: adjustDate(data.party_date),
           music_enabled: musicEnabled,
           selected_track: selectedTrack,
           cover_image: coverImage,
@@ -179,7 +188,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       if (error) throw error;
 
-      onSuccess?.();
+      toast.success('Cambios guardados correctamente');
     } catch (error) {
       console.error('Error saving landing page:', error);
       toast.error('Error al guardar los cambios');
@@ -279,8 +288,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Selecciona el diseño de tu invitación</CardTitle>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <CardTitle>Selecciona el diseño</CardTitle>
             <Button
               variant="secondary"
               size="sm"
@@ -335,17 +344,19 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             />
           </div>
           
-          <Input
-            type="date"
-            label="Fecha de la Boda"
-            {...register('wedding_date', { required: 'La fecha es requerida' })}
-            error={errors.wedding_date?.message}
-          />
-          
           <Textarea
             label="Mensaje de Bienvenida"
-            {...register('welcome_message')}
+            {...register('welcome_message', {
+              maxLength: {
+                value: 120,
+                message: 'El mensaje no puede tener más de 200 caracteres'
+              }
+            })}
             placeholder="Escribe un mensaje de bienvenida para tus invitados..."
+            error={errors.welcome_message?.message}
+            maxLength={120}
+            showCharacterCount
+            value={watch('welcome_message')}
           />
 
           <Input
@@ -363,23 +374,45 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardContent className="space-y-4">
           <Input
             type="date"
-            label="Fecha"
-            {...register('ceremony_date')}
+            label="Fecha de la Ceremonia"
+            {...register('ceremony_date', {
+              required: 'La fecha de la ceremonia es requerida',
+              validate: (value) => {
+                if (new Date(value) < new Date(today)) {
+                  return 'La fecha debe ser futura';
+                }
+                return true;
+              }
+            })}
+            error={errors.ceremony_date?.message}
+            min={today}
+            onChange={(e) => {
+              const ceremonyDate = e.target.value;
+              setValue('ceremony_date', ceremonyDate);
+              // Si la fecha de la fiesta está vacía o es igual a la fecha anterior de la ceremonia,
+              // actualizamos la fecha de la fiesta
+              const currentPartyDate = watch('party_date');
+              if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
+                setValue('party_date', ceremonyDate);
+              }
+            }}
           />
-          
-          <Input
-            label="Lugar"
-            {...register('ceremony_location')}
-            placeholder="Ej: Iglesia San Francisco"
-          />
-          
-          <Input
-            type="time"
-            label="Hora"
-            {...register('ceremony_time')}
-          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label="Lugar"
+              {...register('ceremony_location', { required: 'El lugar es requerido' })}
+              error={errors.ceremony_location?.message}
+            />
+            <Input
+              label="Hora"
+              type="time"
+              {...register('ceremony_time')}
+            />
+          </div>
           
           <PlacesAutocomplete
+            label="Dirección"
             value={watch('ceremony_address')}
             onChange={(address, placeId) => {
               setValue('ceremony_address', address);
@@ -397,21 +430,32 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardContent className="space-y-4">
           <Input
             type="date"
-            label="Fecha"
-            {...register('party_date')}
+            label="Fecha de la Fiesta"
+            {...register('party_date', {
+              required: 'La fecha de la fiesta es requerida',
+              validate: (value) => {
+                if (new Date(value) < new Date(today)) {
+                  return 'La fecha debe ser futura';
+                }
+                return true;
+              }
+            })}
+            error={errors.party_date?.message}
+            min={today}
           />
-          
-          <Input
-            label="Lugar"
-            {...register('party_location')}
-            placeholder="Ej: Salón de Eventos El Jardín"
-          />
-          
-          <Input
-            type="time"
-            label="Hora"
-            {...register('party_time')}
-          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label="Lugar"
+              {...register('party_location', { required: 'El lugar es requerido' })}
+              error={errors.party_location?.message}
+            />
+            <Input
+              label="Hora"
+              type="time"
+              {...register('party_time')}
+            />
+          </div>
           
           <PlacesAutocomplete
             value={watch('party_address')}

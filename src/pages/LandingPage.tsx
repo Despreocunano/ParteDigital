@@ -88,7 +88,6 @@ export function LandingPage() {
       <Card className="p-4 sm:p-6">
         <LandingPageForm 
           initialData={landingData} 
-          onSuccess={() => toast.success('Cambios guardados correctamente')}
           onError={() => toast.error('Error al guardar los cambios')}
         />
       </Card>
