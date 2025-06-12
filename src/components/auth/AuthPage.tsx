@@ -22,7 +22,7 @@ export function AuthPage() {
         <Button
           variant="ghost"
           onClick={() => window.location.href = 'https://tuparte.digital'}
-          className="absolute top-4 left-4 text-white hover:text-white/80"
+          className="absolute top-4 left-4 text-white/90 hover:text-white hover:bg-white/10 rounded-full px-4 transition-all duration-200"
         >
           ← Volver al inicio
         </Button>

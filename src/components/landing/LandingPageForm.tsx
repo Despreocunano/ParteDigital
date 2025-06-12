@@ -17,6 +17,7 @@ import { PlacesAutocomplete } from '../ui/PlacesAutocomplete';
 import { toast } from 'react-hot-toast';
 import { Button } from '../ui/Button';
 import { Grid } from 'lucide-react';
+import { Select } from '../ui/Select';
 
 interface LandingPageFormData {
   groom_name: string;
@@ -72,6 +73,43 @@ interface PublishStatus {
 
 const STORAGE_KEY = 'landing_page_status';
 
+// Función para validar RUT chileno
+const validateRut = (rut: string): boolean => {
+  // Eliminar puntos y guión
+  const cleanRut = rut.replace(/[.-]/g, '');
+  
+  // Verificar formato básico
+  if (!/^[0-9]{7,8}[0-9kK]{1}$/.test(cleanRut)) {
+    return false;
+  }
+
+  // Separar número y dígito verificador
+  const rutNumber = cleanRut.slice(0, -1);
+  const dv = cleanRut.slice(-1).toUpperCase();
+
+  // 1. Invertir el número
+  const rutReversed = rutNumber.split('').reverse().join('');
+
+  // 2. Multiplicar por la serie 2,3,4,5,6,7
+  let sum = 0;
+  const serie = [2, 3, 4, 5, 6, 7];
+  
+  for (let i = 0; i < rutReversed.length; i++) {
+    const digit = parseInt(rutReversed[i]);
+    const multiplier = serie[i % serie.length];
+    sum += digit * multiplier;
+  }
+
+  // 3. Dividir por 11 y obtener el resto
+  const remainder = sum % 11;
+
+  // 4. Calcular el dígito verificador
+  const calculatedDv = 11 - remainder;
+  const finalDv = calculatedDv === 11 ? '0' : calculatedDv === 10 ? 'K' : calculatedDv.toString();
+
+  return finalDv === dv;
+};
+
 export function LandingPageForm({ initialData, onSuccess, onError }: LandingPageFormProps) {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -90,6 +128,26 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   });
   const [userNames, setUserNames] = useState<{ groom_name: string; bride_name: string } | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
+  const [showCustomDressCode, setShowCustomDressCode] = useState(false);
+  const [selectedDressCode, setSelectedDressCode] = useState(initialData?.dress_code || 'formal');
+  const [selectedAccountType, setSelectedAccountType] = useState(initialData?.bank_info?.accountType || '');
+  const [rutError, setRutError] = useState<string | null>(null);
+  const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
+
+  const dressCodeOptions = [
+    { value: 'formal', label: 'Formal' },
+    { value: 'black_tie', label: 'Black Tie' },
+    { value: 'cocktail', label: 'Cocktail' },
+    { value: 'semi_formal', label: 'Semi Formal' },
+    { value: 'casual_elegante', label: 'Casual Elegante' },
+    { value: 'custom', label: 'Otro' }
+  ];
+
+  const accountTypeOptions = [
+    { value: 'cuenta_corriente', label: 'Cuenta Corriente' },
+    { value: 'cuenta_vista', label: 'Cuenta Vista' },
+    { value: 'cuenta_rut', label: 'Cuenta RUT' }
+  ];
 
   // Fetch user names from users table
   useEffect(() => {
@@ -346,6 +404,40 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     selectedTemplateId
   );
 
+  const formatRut = (value: string) => {
+    // Eliminar todo excepto números y k
+    const cleanValue = value.replace(/[^0-9kK]/g, '');
+    
+    // Si está vacío, retornar vacío
+    if (!cleanValue) return '';
+    
+    // Separar número y dígito verificador
+    const rutNumber = cleanValue.slice(0, -1);
+    const dv = cleanValue.slice(-1).toUpperCase();
+    
+    // Formatear número con guión
+    return `${rutNumber}-${dv}`;
+  };
+
+  const handleRutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatRut(e.target.value);
+    setRutValue(formattedValue);
+    setValue('bank_info.rut', formattedValue);
+
+    // Validar en tiempo real
+    if (formattedValue) {
+      if (!/^[0-9]{7,8}-[0-9kK]{1}$/.test(formattedValue)) {
+        setRutError('Formato de RUT inválido (ej: 12345678-9)');
+      } else if (!validateRut(formattedValue)) {
+        setRutError('RUT inválido');
+      } else {
+        setRutError(null);
+      }
+    } else {
+      setRutError(null);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <PublishSection
@@ -361,7 +453,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       <Card>
         <CardHeader>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <CardTitle>Selecciona el diseño</CardTitle>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+                <span className="text-rose-600 font-medium">1</span>
+              </div>
+              <CardTitle>Selecciona el diseño</CardTitle>
+            </div>
             <Button
               variant="secondary"
               size="sm"
@@ -387,20 +484,49 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         </CardContent>
       </Card>
 
-      <CoverImageUpload
-        value={coverImage}
-        onChange={setCoverImage}
-        onRemove={() => setCoverImage('')}
-      />
-
-      <GalleryUpload
-        images={galleryImages}
-        onChange={setGalleryImages}
-      />
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">2</span>
+            </div>
+            <CardTitle>Imagen de portada</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <CoverImageUpload
+            value={coverImage}
+            onChange={setCoverImage}
+            onRemove={() => setCoverImage('')}
+          />
+        </CardContent>
+      </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle>Información Principal</CardTitle>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">3</span>
+            </div>
+            <CardTitle>Galería de fotos</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <GalleryUpload
+            images={galleryImages}
+            onChange={setGalleryImages}
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">4</span>
+            </div>
+            <CardTitle>Información de la celebración</CardTitle>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -441,138 +567,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       <Card>
         <CardHeader>
-          <CardTitle>Ceremonia</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            type="date"
-            label="Fecha de la Ceremonia"
-            {...register('ceremony_date', {
-              required: 'La fecha de la ceremonia es requerida',
-              validate: (value) => {
-                if (new Date(value) < new Date(today)) {
-                  return 'La fecha debe ser futura';
-                }
-                return true;
-              }
-            })}
-            error={errors.ceremony_date?.message}
-            min={today}
-            onChange={(e) => {
-              const ceremonyDate = e.target.value;
-              setValue('ceremony_date', ceremonyDate);
-              // Si la fecha de la fiesta está vacía o es igual a la fecha anterior de la ceremonia,
-              // actualizamos la fecha de la fiesta
-              const currentPartyDate = watch('party_date');
-              if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
-                setValue('party_date', ceremonyDate);
-              }
-            }}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              label="Lugar de la Ceremonia"
-              {...register('ceremony_location', { required: 'El lugar es requerido' })}
-              error={errors.ceremony_location?.message}
-              placeholder="Iglesia San Sebastián"
-            />
-            <Input
-              label="Hora de la Ceremonia"
-              type="time"
-              {...register('ceremony_time')}
-            />
-          </div>
-          
-          <PlacesAutocomplete
-            label="Dirección de la Ceremonia"
-            value={watch('ceremony_address')}
-            onChange={(address, placeId) => {
-              setValue('ceremony_address', address);
-              setValue('ceremony_place_id', placeId);
-            }}
-            placeholder="Buscar dirección..."
-          />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Fiesta</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              label="Fecha de la Fiesta"
-              type="date"
-              min={today}
-              {...register('party_date', { 
-                required: 'La fecha es requerida',
-                validate: value => {
-                  const date = new Date(value);
-                  return date >= new Date() || 'La fecha debe ser futura';
-                }
-              })}
-              error={errors.party_date?.message}
-            />
-            <Input
-              label="Hora de la Fiesta"
-              type="time"
-              {...register('party_time', { required: 'La hora es requerida' })}
-              error={errors.party_time?.message}
-            />
-            <div className="md:col-span-2">
-              <PlacesAutocomplete
-                label="Lugar de la Fiesta"
-                value={watch('party_location')}
-                onChange={(address, placeId) => {
-                  setValue('party_location', address);
-                  setValue('party_place_id', placeId);
-                  setValue('party_address', address);
-                }}
-                error={errors.party_location?.message}
-                placeholder="Estadio Español"
-              />
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">5</span>
             </div>
-            <div className="md:col-span-2">
-              <Input
-                label="Dirección de la Fiesta"
-                {...register('party_address', { required: 'La dirección es requerida' })}
-                error={errors.party_address?.message}
-                placeholder="Buscar dirección..."
-              />
-            </div>
+            <CardTitle>Información bancaria</CardTitle>
           </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Información Adicional</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            label="Código de Vestimenta"
-            {...register('dress_code', { required: 'El código de vestimenta es requerido' })}
-            error={errors.dress_code?.message}
-            placeholder="Ej: Formal, Black Tie, Cocktail..."
-          />
-          
-          <Textarea
-            label="Información Adicional"
-            {...register('additional_info', { required: 'La información adicional es requerida' })}
-            error={errors.additional_info?.message}
-            placeholder="Ej: La celebración será al aire libre, se recomienda traer abrigo..."
-          />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Datos Bancarios</CardTitle>
-          <p className="text-sm text-gray-500 mt-1">
-            Estos son los datos bancarios que tus invitados verán al momento de hacer un regalo. Asegúrate de que la información sea correcta.
-          </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -580,26 +580,47 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               label="Titular de la Cuenta"
               {...register('bank_info.accountHolder', { required: 'El titular es requerido' })}
               error={errors.bank_info?.accountHolder?.message}
+              placeholder="Nombre completo del titular"
             />
             <Input
               label="RUT"
-              {...register('bank_info.rut', { required: 'El RUT es requerido' })}
-              error={errors.bank_info?.rut?.message}
+              value={rutValue}
+              onChange={handleRutChange}
+              error={rutError || undefined}
+              placeholder="12345678-9"
+              maxLength={10}
             />
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Tipo de Cuenta</label>
+              <Select
+                value={selectedAccountType}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  const value = e.target.value;
+                  setSelectedAccountType(value);
+                  setValue('bank_info.accountType', value);
+                  if (value === 'cuenta_rut') {
+                    setValue('bank_info.bank', 'Banco Estado');
+                  } else {
+                    setValue('bank_info.bank', '');
+                  }
+                }}
+                options={accountTypeOptions}
+                error={errors.bank_info?.accountType?.message}
+              />
+            </div>
             <Input
               label="Banco"
               {...register('bank_info.bank', { required: 'El banco es requerido' })}
               error={errors.bank_info?.bank?.message}
-            />
-            <Input
-              label="Tipo de Cuenta"
-              {...register('bank_info.accountType', { required: 'El tipo de cuenta es requerido' })}
-              error={errors.bank_info?.accountType?.message}
+              disabled={selectedAccountType === 'cuenta_rut'}
+              value={selectedAccountType === 'cuenta_rut' ? 'Banco Estado' : watch('bank_info.bank')}
+              placeholder="Nombre del banco"
             />
             <Input
               label="Número de Cuenta"
               {...register('bank_info.accountNumber', { required: 'El número de cuenta es requerido' })}
               error={errors.bank_info?.accountNumber?.message}
+              placeholder="Número de cuenta sin guiones ni espacios"
             />
             <Input
               label="Email"
@@ -612,6 +633,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
                 }
               })}
               error={errors.bank_info?.email?.message}
+              placeholder="correo@ejemplo.com"
             />
           </div>
         </CardContent>
@@ -619,7 +641,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       <Card>
         <CardHeader>
-          <CardTitle>Música</CardTitle>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">6</span>
+            </div>
+            <CardTitle>Música</CardTitle>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
