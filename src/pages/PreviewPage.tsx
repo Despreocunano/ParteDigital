@@ -35,6 +35,7 @@ interface LandingPageData {
     accountNumber: string;
     email: string;
   };
+  hashtag: string;
 }
 
 export function PreviewPage() {
@@ -115,6 +116,7 @@ export function PreviewPage() {
     brideName: landingData.bride_name,
     weddingDate: landingData.wedding_date,
     welcomeMessage: landingData.welcome_message,
+    hashtag: landingData.hashtag,
     ceremonyDate: landingData.ceremony_date,
     ceremonyTime: landingData.ceremony_time,
     ceremonyLocation: landingData.ceremony_location,

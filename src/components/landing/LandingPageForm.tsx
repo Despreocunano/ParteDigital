@@ -78,28 +78,47 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [isPublishing, setIsPublishing] = useState(false);
   const [showAllTemplates, setShowAllTemplates] = useState(false);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialData?.template_id || templates.deluxe.id);
-  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled || false);
-  const [selectedTrack, setSelectedTrack] = useState(initialData?.selected_track || '');
+  const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled ?? false);
+  const [selectedTrack, setSelectedTrack] = useState<string>(initialData?.selected_track || '');
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [publishedUrl, setPublishedUrl] = useState<string>('');
-  const [coverImage, setCoverImage] = useState(initialData?.cover_image || '');
+  const [coverImage, setCoverImage] = useState<string>(initialData?.cover_image || '');
   const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
   const [publishedStatus, setPublishedStatus] = useState<PublishStatus>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      return JSON.parse(stored);
-    }
-    return {
-      isPublished: !!initialData?.published_at,
-      slug: initialData?.slug || null
-    };
+    return stored ? JSON.parse(stored) : { isPublished: false, slug: null };
   });
+  const [userNames, setUserNames] = useState<{ groom_name: string; bride_name: string } | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
+
+  // Fetch user names from users table
+  useEffect(() => {
+    const fetchUserNames = async () => {
+      if (!user?.id) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('users')
+          .select('groom_name, bride_name')
+          .eq('id', user.id)
+          .single();
+
+        if (error) throw error;
+        if (data) {
+          setUserNames(data);
+        }
+      } catch (error) {
+        console.error('Error fetching user names:', error);
+      }
+    };
+
+    fetchUserNames();
+  }, [user?.id]);
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
-      groom_name: initialData?.groom_name || '',
-      bride_name: initialData?.bride_name || '',
+      groom_name: initialData?.groom_name || userNames?.groom_name || '',
+      bride_name: initialData?.bride_name || userNames?.bride_name || '',
       welcome_message: initialData?.welcome_message || '',
       ceremony_date: initialData?.ceremony_date || '',
       ceremony_location: initialData?.ceremony_location || '',
@@ -125,8 +144,24 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     }
   });
 
+  // Update form values when userNames are loaded
+  useEffect(() => {
+    if (userNames && !initialData?.groom_name && !initialData?.bride_name) {
+      setValue('groom_name', userNames.groom_name);
+      setValue('bride_name', userNames.bride_name);
+    }
+  }, [userNames, initialData, setValue]);
+
   const groomName = watch('groom_name');
   const brideName = watch('bride_name');
+  const ceremonyDate = watch('ceremony_date');
+  const ceremonyLocation = watch('ceremony_location');
+  const ceremonyTime = watch('ceremony_time');
+  const ceremonyAddress = watch('ceremony_address');
+  const partyDate = watch('party_date');
+  const partyLocation = watch('party_location');
+  const partyTime = watch('party_time');
+  const partyAddress = watch('party_address');
 
   // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split('T')[0];
@@ -226,8 +261,10 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
     setIsPublishing(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('No authenticated session');
+      // Refresh the session first
+      const { data: { session: refreshedSession }, error: refreshError } = await supabase.auth.refreshSession();
+      if (refreshError) throw refreshError;
+      if (!refreshedSession) throw new Error('No authenticated session');
 
       const slug = `${groomName.toLowerCase()}-y-${brideName.toLowerCase()}`
         .normalize("NFD")
@@ -238,7 +275,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/publish-landing`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${session.access_token}`,
+          'Authorization': `Bearer ${refreshedSession.access_token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -295,6 +332,20 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     }
   };
 
+  const hasRequiredInfo = Boolean(
+    groomName &&
+    brideName &&
+    ceremonyDate &&
+    ceremonyLocation &&
+    ceremonyTime &&
+    ceremonyAddress &&
+    partyDate &&
+    partyLocation &&
+    partyTime &&
+    partyAddress &&
+    selectedTemplateId
+  );
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <PublishSection
@@ -304,6 +355,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         isPublishing={isPublishing}
         onPublish={handlePublish}
         onUnpublish={handleUnpublish}
+        hasRequiredInfo={hasRequiredInfo}
       />
 
       <Card>
@@ -420,19 +472,20 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Lugar"
+              label="Lugar de la Ceremonia"
               {...register('ceremony_location', { required: 'El lugar es requerido' })}
               error={errors.ceremony_location?.message}
+              placeholder="Iglesia San Sebastián"
             />
             <Input
-              label="Hora"
+              label="Hora de la Ceremonia"
               type="time"
               {...register('ceremony_time')}
             />
           </div>
           
           <PlacesAutocomplete
-            label="Dirección"
+            label="Dirección de la Ceremonia"
             value={watch('ceremony_address')}
             onChange={(address, placeId) => {
               setValue('ceremony_address', address);
@@ -447,44 +500,49 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardHeader>
           <CardTitle>Fiesta</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            type="date"
-            label="Fecha de la Fiesta"
-            {...register('party_date', {
-              required: 'La fecha de la fiesta es requerida',
-              validate: (value) => {
-                if (new Date(value) < new Date(today)) {
-                  return 'La fecha debe ser futura';
-                }
-                return true;
-              }
-            })}
-            error={errors.party_date?.message}
-            min={today}
-          />
-
+        <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Lugar"
-              {...register('party_location', { required: 'El lugar es requerido' })}
-              error={errors.party_location?.message}
+              label="Fecha de la Fiesta"
+              type="date"
+              min={today}
+              {...register('party_date', { 
+                required: 'La fecha es requerida',
+                validate: value => {
+                  const date = new Date(value);
+                  return date >= new Date() || 'La fecha debe ser futura';
+                }
+              })}
+              error={errors.party_date?.message}
             />
             <Input
-              label="Hora"
+              label="Hora de la Fiesta"
               type="time"
-              {...register('party_time')}
+              {...register('party_time', { required: 'La hora es requerida' })}
+              error={errors.party_time?.message}
             />
+            <div className="md:col-span-2">
+              <PlacesAutocomplete
+                label="Lugar de la Fiesta"
+                value={watch('party_location')}
+                onChange={(address, placeId) => {
+                  setValue('party_location', address);
+                  setValue('party_place_id', placeId);
+                  setValue('party_address', address);
+                }}
+                error={errors.party_location?.message}
+                placeholder="Estadio Español"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <Input
+                label="Dirección de la Fiesta"
+                {...register('party_address', { required: 'La dirección es requerida' })}
+                error={errors.party_address?.message}
+                placeholder="Buscar dirección..."
+              />
+            </div>
           </div>
-          
-          <PlacesAutocomplete
-            value={watch('party_address')}
-            onChange={(address, placeId) => {
-              setValue('party_address', address);
-              setValue('party_place_id', placeId);
-            }}
-            placeholder="Buscar dirección..."
-          />
         </CardContent>
       </Card>
 
@@ -512,58 +570,50 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       <Card>
         <CardHeader>
           <CardTitle>Datos Bancarios</CardTitle>
+          <p className="text-sm text-gray-500 mt-1">
+            Estos son los datos bancarios que tus invitados verán al momento de hacer un regalo. Asegúrate de que la información sea correcta.
+          </p>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            label="Nombre del Titular"
-            {...register('bank_info.accountHolder', { required: 'El nombre del titular es requerido' })}
-            error={errors.bank_info?.accountHolder?.message}
-          />
-
-          <Input
-            label="RUT"
-            {...register('bank_info.rut', { 
-              required: 'El RUT es requerido',
-              pattern: {
-                value: /^[0-9]{7,8}-[0-9kK]{1}$/,
-                message: 'RUT inválido (formato: 12345678-9)'
-              }
-            })}
-            placeholder="12345678-9"
-            error={errors.bank_info?.rut?.message}
-          />
-
-          <Input
-            label="Banco"
-            {...register('bank_info.bank', { required: 'El banco es requerido' })}
-            error={errors.bank_info?.bank?.message}
-          />
-
-          <Input
-            label="Tipo de Cuenta"
-            {...register('bank_info.accountType', { required: 'El tipo de cuenta es requerido' })}
-            placeholder="Cuenta Corriente, Cuenta Vista, etc."
-            error={errors.bank_info?.accountType?.message}
-          />
-
-          <Input
-            label="Número de Cuenta"
-            {...register('bank_info.accountNumber', { required: 'El número de cuenta es requerido' })}
-            error={errors.bank_info?.accountNumber?.message}
-          />
-
-          <Input
-            label="Correo Electrónico"
-            type="email"
-            {...register('bank_info.email', {
-              required: 'El correo electrónico es requerido',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'Correo electrónico inválido'
-              }
-            })}
-            error={errors.bank_info?.email?.message}
-          />
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label="Titular de la Cuenta"
+              {...register('bank_info.accountHolder', { required: 'El titular es requerido' })}
+              error={errors.bank_info?.accountHolder?.message}
+            />
+            <Input
+              label="RUT"
+              {...register('bank_info.rut', { required: 'El RUT es requerido' })}
+              error={errors.bank_info?.rut?.message}
+            />
+            <Input
+              label="Banco"
+              {...register('bank_info.bank', { required: 'El banco es requerido' })}
+              error={errors.bank_info?.bank?.message}
+            />
+            <Input
+              label="Tipo de Cuenta"
+              {...register('bank_info.accountType', { required: 'El tipo de cuenta es requerido' })}
+              error={errors.bank_info?.accountType?.message}
+            />
+            <Input
+              label="Número de Cuenta"
+              {...register('bank_info.accountNumber', { required: 'El número de cuenta es requerido' })}
+              error={errors.bank_info?.accountNumber?.message}
+            />
+            <Input
+              label="Email"
+              type="email"
+              {...register('bank_info.email', { 
+                required: 'El email es requerido',
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: 'Email inválido'
+                }
+              })}
+              error={errors.bank_info?.email?.message}
+            />
+          </div>
         </CardContent>
       </Card>
 

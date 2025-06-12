@@ -13,6 +13,7 @@ interface LandingPageData {
   bride_name: string;
   wedding_date: string;
   welcome_message: string;
+  hashtag: string;
   ceremony_date: string;
   ceremony_location: string;
   ceremony_time: string;
@@ -134,6 +135,7 @@ export function PublicSitePage() {
     brideName: landingData.bride_name,
     weddingDate: landingData.wedding_date,
     welcomeMessage: landingData.welcome_message,
+    hashtag: landingData.hashtag,
     ceremonyDate: landingData.ceremony_date,
     ceremonyTime: landingData.ceremony_time,
     ceremonyLocation: landingData.ceremony_location,

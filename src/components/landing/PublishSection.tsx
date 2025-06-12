@@ -15,6 +15,7 @@ interface PublishSectionProps {
   isPublishing: boolean;
   onPublish: () => void;
   onUnpublish: () => void;
+  hasRequiredInfo?: boolean;
 }
 
 export function PublishSection({
@@ -23,9 +24,23 @@ export function PublishSection({
   publishedStatus,
   isPublishing,
   onPublish,
-  onUnpublish
+  onUnpublish,
+  hasRequiredInfo = true
 }: PublishSectionProps) {
   const [copied, setCopied] = React.useState(false);
+
+  const handleCopy = async () => {
+    if (!publishedUrl) return;
+
+    try {
+      await navigator.clipboard.writeText(publishedUrl);
+      setCopied(true);
+      toast.success('URL copiada al portapapeles');
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      toast.error('Error al copiar la URL');
+    }
+  };
 
   const handleShare = async (platform: 'whatsapp' | 'copy') => {
     if (!publishedUrl) return;
@@ -59,7 +74,9 @@ export function PublishSection({
             <div>
               <h3 className="text-lg font-medium">Vista Previa</h3>
               <p className="text-sm text-gray-500">
-                Puedes ver cómo se verá tu invitación antes de publicarla
+                {hasRequiredInfo 
+                  ? 'Puedes ver cómo se verá tu invitación antes de publicarla'
+                  : 'Completa la información básica para ver la vista previa'}
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -69,6 +86,7 @@ export function PublishSection({
                 onClick={() => window.open(previewUrl, '_blank')}
                 className="min-w-[120px] text-xs sm:text-sm"
                 leftIcon={<Eye className="h-4 w-4" />}
+                disabled={!hasRequiredInfo}
               >
                 Vista Previa
               </Button>
@@ -76,7 +94,7 @@ export function PublishSection({
                 <Button
                   type="button"
                   onClick={onPublish}
-                  disabled={isPublishing}
+                  disabled={isPublishing || !hasRequiredInfo}
                   className="min-w-[120px] text-xs sm:text-sm"
                   leftIcon={<Globe className="h-4 w-4" />}
                 >
