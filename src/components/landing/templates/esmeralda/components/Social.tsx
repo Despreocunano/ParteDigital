@@ -1,7 +1,6 @@
 import { Instagram } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { motion } from 'framer-motion';
-import divider from '../assets/divider.svg'
 import rosa_c from '../assets/Grupo02_d.webp'
 import rosa_b from '../assets/Grupo02_e.webp'
 import rosa_a from '../assets/Grupo02_f.webp'
@@ -88,14 +87,12 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
         variants={item}
       >
         <motion.div variants={item}>
-          <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-[#CFD6BA]/30 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-6">
             <Instagram className="w-16 h-16 text-[#BC913B]" />
           </div>
           
           <h2 className="text-5xl md:text-6xl font-parisienne text-white mb-6">Comparte tus Fotos</h2>
           
-          <img src={divider} alt="Divider" className="mx-auto mb-8" />
-
         </motion.div>
         
         <motion.div 
@@ -103,16 +100,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
           variants={item}
         >
           <div className="inline-block bg-white/90 backdrop-blur-sm border border-[#F8BBD9]/50 rounded-full px-6 py-3 relative">
-            {/* Cherry blossom decoration */}
-            <div className="absolute -top-2 -right-2">
-              <svg width="20" height="20" viewBox="0 0 20 20">
-                <circle cx="10" cy="10" r="2" fill="#F8BBD9" opacity="0.6"/>
-                <circle cx="8" cy="8" r="1.5" fill="#FCE4EC"/>
-                <circle cx="12" cy="8" r="1.5" fill="#FCE4EC"/>
-                <circle cx="8" cy="12" r="1.5" fill="#FCE4EC"/>
-                <circle cx="12" cy="12" r="1.5" fill="#FCE4EC"/>
-              </svg>
-            </div>
+
             <p className="text-2xl font-light text-[#2D1B69]">
               #{hashtag}
             </p>

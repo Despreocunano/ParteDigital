@@ -5,7 +5,6 @@ import { SpotifySearch } from '../../../shared/SpotifySearch';
 import { supabase } from '../../../../../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import divider from '../assets/divider_2.svg'
 import rosas from '../assets/Grupo03.webp'
 import modal from '../assets/modal.svg'
 
@@ -104,37 +103,46 @@ export function PartyInfo({
     if (!isOpen) return null;
 
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]">
-        <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#012D27]">
+        <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#CFD6BA]">
           {/* Corner decorations */}
           <div className="absolute top-0 left-0 w-24 h-24">
-            <img src={modal} />
           </div>
           <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
-            <img src={modal} />
           </div>
           <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
-            <img src={modal} />
           </div>
           <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
-            <img src={modal} />
           </div>
 
           <button
             onClick={onClose}
-            className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
+            className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#CFD6BA]/20 hover:bg-[#CFD6BA]/40 transition-colors z-20"
           >
-            <X className="w-5 h-5 text-[#2D1B69]" />
+            <X className="w-5 h-5 text-[#CFD6BA]" />
           </button>
 
           <div className="space-y-8">
-            <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icon className="w-16 h-16 text-[#BC913B]" />
+            <div className="w-24 h-24 bg-[#CFD6BA]/30 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Icon className="w-16 h-16 text-[#CFD6BA]" />
             </div>
-            <h2 className="text-3xl font-serif">{title}</h2>
-            <p className="text-[#8D6E63] text-lg leading-relaxed whitespace-pre-wrap">
-              {content}
-            </p>
+
+            <div className="space-y-4">
+              <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#CFD6BA]">
+                {title}
+              </p>
+              <div className="space-y-4">
+                <h1 className="text-6xl font-parisienne text-[#CFD6BA]">
+                  {content}
+                </h1>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#CFD6BA]/30"></div>
+              <div className="w-2 h-2 rounded-full bg-[#CFD6BA]/30"></div>
+              <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#CFD6BA]/30"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -155,7 +163,6 @@ export function PartyInfo({
             className="text-center mb-16"
             variants={item}
           >
-            <img src={divider} alt="Divider" className="mx-auto mb-4" />
             <h2 className="text-5xl md:text-6xl font-parisienne text-white mb-2">
               Información de la Fiesta
             </h2>
@@ -258,40 +265,45 @@ export function PartyInfo({
       {/* Music Modal */}
       {showMusicModal && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#012D27]"
         >
           <div 
-            className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]"
+            className="relative w-full max-w-2xl px-12 py-12 text-center text-[#CFD6BA]"
           >
             {/* Corner decorations */}
             <div className="absolute top-0 left-0 w-24 h-24">
-              <img src={modal} />
             </div>
             <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
-              <img src={modal} />
             </div>
             <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
-              <img src={modal} />
             </div>
             <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
-              <img src={modal} />
             </div>
 
             <button
               onClick={() => setShowMusicModal(false)}
-              className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
+              className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#CFD6BA]/20 hover:bg-[#CFD6BA]/40 transition-colors z-20"
             >
-              <X className="w-5 h-5 text-[#2D1B69]" />
+              <X className="w-5 h-5 text-[#CFD6BA]" />
             </button>
 
             <div className="space-y-8">
-              <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Music2 className="w-16 h-16 text-[#BC913B]" />
+              <div className="space-y-4">
+                <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#CFD6BA]">
+                  Sugerir Canciones
+                </p>
+                <div className="space-y-4">
+                  <h1 className="text-6xl font-parisienne text-[#CFD6BA]">
+                    Ayúdanos a crear la playlist perfecta
+                  </h1>
+                </div>
               </div>
-              <h2 className="text-3xl font-serif">Sugerir Canciones</h2>
-              <p className="text-[#8D6E63]">
-                Ayúdanos a crear la playlist perfecta para nuestra fiesta
-              </p>
+
+              <div className="flex items-center justify-center gap-4">
+                <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#CFD6BA]/30"></div>
+                <div className="w-2 h-2 rounded-full bg-[#CFD6BA]/30"></div>
+                <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#CFD6BA]/30"></div>
+              </div>
 
               <div className="space-y-6">
                 <SpotifySearch
@@ -305,7 +317,7 @@ export function PartyInfo({
                   onClick={handleSubmit}
                   isLoading={isSubmitting}
                   disabled={selectedTracks.length === 0}
-                  className="bg-[#E91E63] hover:bg-[#C2185B] text-white"
+                  className="bg-[#CFD6BA] text-[#012D27] hover:bg-[#012D27] hover:text-[#CFD6BA] rounded-full border hover:border-[#CFD6BA]"
                 >
                   Guardar Canciones
                 </Button>
