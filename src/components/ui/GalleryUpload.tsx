@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './Card';
+import { Card, CardContent } from './Card';
 import { Plus, X, Upload } from 'lucide-react';
 import { Button } from './Button';
 import { toast } from 'react-hot-toast';
@@ -123,74 +123,69 @@ export function GalleryUpload({
   };
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle>Galería de Fotos</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <p className="text-sm text-gray-500">
-            Agrega entre 6 y 9 fotos a tu galería para compartir momentos especiales con tus invitados.
-          </p>
+    <div className={className}>
+      <div className="space-y-4">
+        <p className="text-sm text-gray-500">
+          Agrega entre 6 y 9 fotos a tu galería para compartir momentos especiales con tus invitados.
+        </p>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {images.map((image, index) => (
+            <div key={index} className="relative group aspect-square">
+              <img
+                src={image.url}
+                alt={`Gallery image ${index + 1}`}
+                className="w-full h-full object-cover rounded-lg"
+              />
+              <button
+                type="button"
+                onClick={() => handleImageRemove(index)}
+                className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
           
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {images.map((image, index) => (
-              <div key={index} className="relative group aspect-square">
-                <img
-                  src={image.url}
-                  alt={`Gallery image ${index + 1}`}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-                <button
-                  type="button"
-                  onClick={() => handleImageRemove(index)}
-                  className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
-            ))}
-            
-            {images.length < 9 && (
-              <div className="aspect-square">
-                <input
-                  ref={inputRef}
-                  type="file"
-                  accept="image/*"
-                  multiple
-                  onChange={handleFileSelect}
-                  className="hidden"
-                />
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => inputRef.current?.click()}
-                  className="w-full h-full flex flex-col items-center justify-center gap-2 border-2 border-dashed"
-                  disabled={isUploading}
-                >
-                  {isUploading ? (
-                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-gray-300 border-t-gray-600" />
-                  ) : (
-                    <>
-                      <Upload className="h-6 w-6 text-gray-400" />
-                      <span className="text-sm text-gray-600">
-                        {images.length === 0 ? 'Subir fotos' : 'Agregar más fotos'}
-                      </span>
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
-          </div>
-
-          <div className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-            <span className={images.length < 6 ? 'text-red-500' : 'text-green-500'}>
-              {images.length}/9
-            </span>
-            fotos seleccionadas (mínimo 6)
-          </div>
+          {images.length < 9 && (
+            <div className="aspect-square">
+              <input
+                ref={inputRef}
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => inputRef.current?.click()}
+                className="w-full h-full flex flex-col items-center justify-center gap-2 border-2 border-dashed"
+                disabled={isUploading}
+              >
+                {isUploading ? (
+                  <div className="animate-spin rounded-full h-6 w-6 border-2 border-gray-300 border-t-gray-600" />
+                ) : (
+                  <>
+                    <Upload className="h-6 w-6 text-gray-400" />
+                    <span className="text-sm text-gray-600">
+                      {images.length === 0 ? 'Subir fotos' : 'Agregar más fotos'}
+                    </span>
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
         </div>
-      </CardContent>
-    </Card>
+
+        <div className="mt-2 text-sm text-gray-500 flex items-center gap-2">
+          <span className={images.length < 6 ? 'text-red-500' : 'text-green-500'}>
+            {images.length}/9
+          </span>
+          fotos seleccionadas (mínimo 6)
+        </div>
+      </div>
+    </div>
   );
 }

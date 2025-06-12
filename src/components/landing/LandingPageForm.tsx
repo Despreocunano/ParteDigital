@@ -450,8 +450,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         hasRequiredInfo={hasRequiredInfo}
       />
 
-      <Card>
-        <CardHeader>
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
@@ -474,7 +474,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 pt-6">
           <TemplateSelector
             selectedTemplateId={selectedTemplateId}
             onSelect={setSelectedTemplateId}
@@ -482,10 +482,10 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             setShowAllTemplates={setShowAllTemplates}
           />
         </CardContent>
-      </Card>
+      </div>
 
-      <Card>
-        <CardHeader>
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
               <span className="text-rose-600 font-medium">2</span>
@@ -493,17 +493,17 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             <CardTitle>Imagen de portada</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 pt-6">
           <CoverImageUpload
             value={coverImage}
             onChange={setCoverImage}
             onRemove={() => setCoverImage('')}
           />
         </CardContent>
-      </Card>
+      </div>
 
-      <Card>
-        <CardHeader>
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
               <span className="text-rose-600 font-medium">3</span>
@@ -511,70 +511,189 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             <CardTitle>Galería de fotos</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 pt-6">
           <GalleryUpload
             images={galleryImages}
             onChange={setGalleryImages}
           />
         </CardContent>
-      </Card>
+      </div>
 
-      <Card>
-        <CardHeader>
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
               <span className="text-rose-600 font-medium">4</span>
             </div>
-            <CardTitle>Información de la celebración</CardTitle>
+            <CardTitle>Ceremonia</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="p-0 pt-6 space-y-4">
+          <Input
+            type="date"
+            label="Fecha de la Ceremonia"
+            {...register('ceremony_date', {
+              required: 'La fecha de la ceremonia es requerida',
+              validate: (value) => {
+                if (new Date(value) < new Date(today)) {
+                  return 'La fecha debe ser futura';
+                }
+                return true;
+              }
+            })}
+            error={errors.ceremony_date?.message}
+            min={today}
+            onChange={(e) => {
+              const ceremonyDate = e.target.value;
+              setValue('ceremony_date', ceremonyDate);
+              const currentPartyDate = watch('party_date');
+              if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
+                setValue('party_date', ceremonyDate);
+              }
+            }}
+          />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Nombre del Novio"
-              {...register('groom_name', { required: 'El nombre del novio es requerido' })}
-              error={errors.groom_name?.message}
+              label="Lugar de la Ceremonia"
+              {...register('ceremony_location', { required: 'El lugar es requerido' })}
+              error={errors.ceremony_location?.message}
+              placeholder="Iglesia San Sebastián"
             />
             <Input
-              label="Nombre de la Novia"
-              {...register('bride_name', { required: 'El nombre de la novia es requerido' })}
-              error={errors.bride_name?.message}
+              label="Hora de la Ceremonia"
+              type="time"
+              {...register('ceremony_time')}
             />
           </div>
           
-          <Textarea
-            label="Mensaje de Bienvenida"
-            {...register('welcome_message', {
-              maxLength: {
-                value: 120,
-                message: 'El mensaje no puede tener más de 200 caracteres'
-              }
-            })}
-            placeholder="Escribe un mensaje de bienvenida para tus invitados..."
-            error={errors.welcome_message?.message}
-            maxLength={120}
-            showCharacterCount
-            value={watch('welcome_message')}
-          />
-
-          <Input
-            label="Hashtag"
-            {...register('hashtag')}
-            placeholder={`${groomName.replace(/\s+/g, '')}Y${brideName.replace(/\s+/g, '')}2024`}
+          <PlacesAutocomplete
+            label="Dirección de la Ceremonia"
+            value={watch('ceremony_address')}
+            onChange={(address, placeId) => {
+              setValue('ceremony_address', address);
+              setValue('ceremony_place_id', placeId);
+            }}
+            placeholder="Buscar dirección..."
           />
         </CardContent>
-      </Card>
+      </div>
 
-      <Card>
-        <CardHeader>
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
               <span className="text-rose-600 font-medium">5</span>
             </div>
-            <CardTitle>Información bancaria</CardTitle>
+            <CardTitle>Fiesta</CardTitle>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0 pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label="Fecha de la Fiesta"
+              type="date"
+              min={today}
+              {...register('party_date', { 
+                required: 'La fecha es requerida',
+                validate: value => {
+                  const date = new Date(value);
+                  return date >= new Date() || 'La fecha debe ser futura';
+                }
+              })}
+              error={errors.party_date?.message}
+            />
+            <Input
+              label="Hora de la Fiesta"
+              type="time"
+              {...register('party_time', { required: 'La hora es requerida' })}
+              error={errors.party_time?.message}
+            />
+            <div className="md:col-span-2">
+              <PlacesAutocomplete
+                label="Lugar de la Fiesta"
+                value={watch('party_location')}
+                onChange={(address, placeId) => {
+                  setValue('party_location', address);
+                  setValue('party_place_id', placeId);
+                  setValue('party_address', address);
+                }}
+                error={errors.party_location?.message}
+                placeholder="Estadio Español"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <PlacesAutocomplete
+                label="Dirección de la Fiesta"
+                value={watch('party_address')}
+                onChange={(address, placeId) => {
+                  setValue('party_address', address);
+                  setValue('party_place_id', placeId);
+                }}
+                error={errors.party_address?.message}
+                placeholder="Buscar dirección..."
+              />
+            </div>
+          </div>
+        </CardContent>
+      </div>
+
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">6</span>
+            </div>
+            <CardTitle>Información Adicional</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 pt-6 space-y-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Código de Vestimenta</label>
+            <Select
+              value={selectedDressCode === 'custom' ? 'custom' : watch('dress_code')}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                const value = e.target.value;
+                setSelectedDressCode(value);
+                if (value === 'custom') {
+                  setShowCustomDressCode(true);
+                  setValue('dress_code', '');
+                } else {
+                  setShowCustomDressCode(false);
+                  setValue('dress_code', value);
+                }
+              }}
+              options={dressCodeOptions}
+              error={errors.dress_code?.message}
+            />
+            {showCustomDressCode && (
+              <Input
+                {...register('dress_code', { required: 'El código de vestimenta es requerido' })}
+                placeholder="Especifica el código de vestimenta"
+                error={errors.dress_code?.message}
+              />
+            )}
+          </div>
+          
+          <Textarea
+            label="Información Adicional"
+            {...register('additional_info', { required: 'La información adicional es requerida' })}
+            error={errors.additional_info?.message}
+            placeholder="Ej: La celebración será al aire libre, se recomienda traer abrigo..."
+          />
+        </CardContent>
+      </div>
+
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">7</span>
+            </div>
+            <CardTitle>Información Bancaria</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               label="Titular de la Cuenta"
@@ -588,11 +707,10 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               onChange={handleRutChange}
               error={rutError || undefined}
               placeholder="12345678-9"
-              maxLength={10}
             />
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">Tipo de Cuenta</label>
+            <div className="md:col-span-2">
               <Select
+                label="Tipo de Cuenta"
                 value={selectedAccountType}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   const value = e.target.value;
@@ -612,9 +730,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               label="Banco"
               {...register('bank_info.bank', { required: 'El banco es requerido' })}
               error={errors.bank_info?.bank?.message}
-              disabled={selectedAccountType === 'cuenta_rut'}
-              value={selectedAccountType === 'cuenta_rut' ? 'Banco Estado' : watch('bank_info.bank')}
               placeholder="Nombre del banco"
+              disabled={selectedAccountType === 'cuenta_rut'}
             />
             <Input
               label="Número de Cuenta"
@@ -622,33 +739,35 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               error={errors.bank_info?.accountNumber?.message}
               placeholder="Número de cuenta sin guiones ni espacios"
             />
-            <Input
-              label="Email"
-              type="email"
-              {...register('bank_info.email', { 
-                required: 'El email es requerido',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: 'Email inválido'
-                }
-              })}
-              error={errors.bank_info?.email?.message}
-              placeholder="correo@ejemplo.com"
-            />
+            <div className="md:col-span-2">
+              <Input
+                label="Email"
+                type="email"
+                {...register('bank_info.email', { 
+                  required: 'El email es requerido',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Email inválido'
+                  }
+                })}
+                error={errors.bank_info?.email?.message}
+                placeholder="correo@ejemplo.com"
+              />
+            </div>
           </div>
         </CardContent>
-      </Card>
+      </div>
 
-      <Card>
-        <CardHeader>
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">6</span>
+              <span className="text-rose-600 font-medium">8</span>
             </div>
             <CardTitle>Música</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="p-0 pt-6 space-y-4">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-medium text-gray-700">Habilitar música de fondo</h3>
@@ -669,7 +788,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             />
           )}
         </CardContent>
-      </Card>
+      </div>
 
       {hasChanges && <FloatingSaveButton isLoading={isLoading} />}
     </form>
