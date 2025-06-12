@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidebar } from './Sidebar';
 import { MobileNav } from './MobileNav';
 import { Alert } from '../ui/Alert';
@@ -10,6 +10,10 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const { profileImage } = useWedding();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 overflow-x-hidden">

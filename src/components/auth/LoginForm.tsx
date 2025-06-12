@@ -32,6 +32,7 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
       const { success, error } = await signIn(data.email, data.password);
       
       if (success) {
+        window.scrollTo(0, 0);
         navigate('/', { replace: true });
       } else if (error) {
         setErrorMessage(error.message);

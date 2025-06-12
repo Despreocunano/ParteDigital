@@ -38,6 +38,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
       const { success, error } = await signUp(data.email, data.password, data.groomName, data.brideName);
       
       if (success) {
+        window.scrollTo(0, 0);
         navigate('/', { replace: true });
       } else if (error) {
         setErrorMessage(error.message);
