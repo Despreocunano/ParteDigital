@@ -6,8 +6,6 @@ import { supabase } from '../../../../../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import rosas from '../assets/Grupo03.webp'
-import modal from '../assets/modal.svg'
-
 
 interface Track {
   id: string;
@@ -26,7 +24,6 @@ interface PartyInfoProps {
 
 export function PartyInfo({
   dresscode = 'Formal',
-  musicInfo,
   tips = 'La celebración será al aire libre',
   className = '',
   userId
@@ -105,15 +102,6 @@ export function PartyInfo({
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#012D27]">
         <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#CFD6BA]">
-          {/* Corner decorations */}
-          <div className="absolute top-0 left-0 w-24 h-24">
-          </div>
-          <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
-          </div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
-          </div>
-          <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
-          </div>
 
           <button
             onClick={onClose}
@@ -131,18 +119,19 @@ export function PartyInfo({
               <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#CFD6BA]">
                 {title}
               </p>
+              <div className="flex items-center justify-center gap-4">
+              <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#CFD6BA]/30"></div>
+              <div className="w-2 h-2 rounded-full bg-[#CFD6BA]/30"></div>
+              <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#CFD6BA]/30"></div>
+            </div>
               <div className="space-y-4">
-                <h1 className="text-6xl font-parisienne text-[#CFD6BA]">
+                <h1 className="text-2xl font-lora text-[#CFD6BA]">
                   {content}
                 </h1>
               </div>
             </div>
 
-            <div className="flex items-center justify-center gap-4">
-              <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#CFD6BA]/30"></div>
-              <div className="w-2 h-2 rounded-full bg-[#CFD6BA]/30"></div>
-              <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#CFD6BA]/30"></div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -293,7 +282,7 @@ export function PartyInfo({
                   Sugerir Canciones
                 </p>
                 <div className="space-y-4">
-                  <h1 className="text-6xl font-parisienne text-[#CFD6BA]">
+                  <h1 className="text-3xl font-lora text-[#CFD6BA]">
                     Ayúdanos a crear la playlist perfecta
                   </h1>
                 </div>

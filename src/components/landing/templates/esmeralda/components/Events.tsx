@@ -310,8 +310,8 @@ export function Events({
                     Confirmar Asistencia
                   </p>
                   <div className="space-y-4">
-                    <h1 className="text-6xl font-parisienne text-[#CFD6BA]">
-                      Nos encantaría tenerte
+                    <h1 className="text-3xl font-lora text-[#CFD6BA]">
+                      Nos encantaría contar con tu presencia
                     </h1>
                   </div>
                 </div>

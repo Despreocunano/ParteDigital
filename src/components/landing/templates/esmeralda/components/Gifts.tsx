@@ -183,7 +183,7 @@ ${bankInfo.email}`;
                     Datos Bancarios
                   </p>
                   <div className="space-y-4">
-                    <h1 className="text-6xl font-parisienne text-[#CFD6BA]">
+                    <h1 className="text-3xl font-lora text-[#CFD6BA]">
                       Información de Transferencia
                     </h1>
                   </div>
