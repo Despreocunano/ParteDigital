@@ -484,39 +484,41 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         </CardContent>
       </div>
 
-      <div className="bg-white rounded-lg border p-6">
-        <CardHeader className="px-0 pt-0 pb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">2</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-lg border p-6">
+          <CardHeader className="px-0 pt-0 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+                <span className="text-rose-600 font-medium">2</span>
+              </div>
+              <CardTitle>Imagen de portada</CardTitle>
             </div>
-            <CardTitle>Imagen de portada</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0 pt-6">
-          <CoverImageUpload
-            value={coverImage}
-            onChange={setCoverImage}
-            onRemove={() => setCoverImage('')}
-          />
-        </CardContent>
-      </div>
+          </CardHeader>
+          <CardContent className="p-0 pt-6">
+            <CoverImageUpload
+              value={coverImage}
+              onChange={setCoverImage}
+              onRemove={() => setCoverImage('')}
+            />
+          </CardContent>
+        </div>
 
-      <div className="bg-white rounded-lg border p-6">
-        <CardHeader className="px-0 pt-0 pb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">3</span>
+        <div className="bg-white rounded-lg border p-6">
+          <CardHeader className="px-0 pt-0 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+                <span className="text-rose-600 font-medium">3</span>
+              </div>
+              <CardTitle>Galería de fotos</CardTitle>
             </div>
-            <CardTitle>Galería de fotos</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0 pt-6">
-          <GalleryUpload
-            images={galleryImages}
-            onChange={setGalleryImages}
-          />
-        </CardContent>
+          </CardHeader>
+          <CardContent className="p-0 pt-6">
+            <GalleryUpload
+              images={galleryImages}
+              onChange={setGalleryImages}
+            />
+          </CardContent>
+        </div>
       </div>
 
       <div className="bg-white rounded-lg border p-6">
@@ -694,6 +696,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           </div>
         </CardHeader>
         <CardContent className="p-0 pt-6">
+          <div className="mb-6">
+            <p className="text-sm text-gray-600">
+              Esta información se mostrará en la invitación para que tus invitados puedan realizar transferencias bancarias. 
+              Asegúrate de que los datos sean correctos.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
               label="Titular de la Cuenta"
