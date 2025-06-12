@@ -37,7 +37,7 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
       } else if (error) {
         setErrorMessage(error.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage('Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.');
       console.error(error);
     } finally {

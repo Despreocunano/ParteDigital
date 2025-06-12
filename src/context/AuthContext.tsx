@@ -6,8 +6,8 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<{ success: boolean; error: Error | null }>;
+  signUp: (email: string, password: string, groomName?: string, brideName?: string) => Promise<{ success: boolean; error: Error | null }>;
   signOut: () => Promise<void>;
   hasLandingPage: boolean;
   setHasLandingPage: (hasLandingPage: boolean) => void;
@@ -70,13 +70,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        return { success: false, error };
+      }
+      return { success: true, error: null };
+    } catch (error: any) {
+      return { success: false, error };
+    }
   };
 
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
-    if (error) throw error;
+  const signUp = async (email: string, password: string, groomName?: string, brideName?: string) => {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            groom_name: groomName,
+            bride_name: brideName,
+          },
+        },
+      });
+      if (error) {
+        return { success: false, error };
+      }
+      return { success: true, error: null };
+    } catch (error: any) {
+      return { success: false, error };
+    }
   };
 
   const signOut = async () => {

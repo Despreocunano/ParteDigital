@@ -39,7 +39,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
       
       if (success) {
         // Intentar hacer login automático después del registro exitoso
-        const { success: loginSuccess, error: loginError } = await signIn(data.email, data.password);
+        const { success: loginSuccess } = await signIn(data.email, data.password);
         
         if (loginSuccess) {
           window.scrollTo(0, 0);
@@ -53,7 +53,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
       } else if (error) {
         setErrorMessage(error.message);
       }
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessage('Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.');
       console.error(error);
     } finally {
