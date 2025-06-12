@@ -5,6 +5,7 @@ import {
   UserCheck, Instagram, Shirt, Lock, Settings, Link as LinkIcon, UtensilsCrossed, LayoutDashboard, Send, Table2
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { useState, useEffect } from 'react';
 
 // Import local images
 import app1 from '../assets/images/app_00001.png';
@@ -209,10 +210,43 @@ const featureSections = [
 ];
 
 export function PublicSite() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen">
+      {/* Header */}
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-gray-900/60 backdrop-blur-md shadow-sm' : ''
+      }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center">
+              <Heart className="h-8 w-8 text-rose-500" />
+              <span className="ml-2 text-xl font-semibold text-white">Tu Parte Digital</span>
+            </div>
+            <div>
+              <a
+                href="https://panel.tuparte.digital/auth?showLogin=true"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300 backdrop-blur-sm"
+              >
+                Iniciar sesión
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
         <motion.div 
           className="absolute inset-0 z-0"
           initial={{ scale: 1.1, opacity: 0 }}
@@ -268,9 +302,9 @@ export function PublicSite() {
                   size="lg"
                   variant="secondary"
                   onClick={() => {
-                    const featuresSection = document.querySelector('.feature-sections');
-                    if (featuresSection) {
-                      featuresSection.scrollIntoView({ behavior: 'smooth' });
+                    const featuresTitle = document.querySelector('.features-title');
+                    if (featuresTitle) {
+                      featuresTitle.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
                   className="w-full bg-white/10 text-white border-white/20 hover:bg-white/20 px-8 py-4"
@@ -358,7 +392,7 @@ export function PublicSite() {
       </section>
 
       {/* Feature Sections */}
-      <div className="text-center mb-16 pt-24">
+      <div className="text-center mb-16 pt-24 features-title">
         <motion.h2 
           className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
           initial={{ opacity: 0, y: 20 }}

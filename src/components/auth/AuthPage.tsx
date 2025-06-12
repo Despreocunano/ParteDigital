@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
 import { Heart } from 'lucide-react';
@@ -6,6 +6,11 @@ import { Button } from '../ui/Button';
 
 export function AuthPage() {
   const [showLogin, setShowLogin] = useState(false);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    setShowLogin(searchParams.get('showLogin') === 'true');
+  }, []);
 
   const toggleForm = () => {
     setShowLogin(!showLogin);
