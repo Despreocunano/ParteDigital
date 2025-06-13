@@ -56,7 +56,7 @@ export function TemplateSelector({
               className="object-cover w-full h-full"
             />
             {selectedTemplateId === template.id && (
-              <div className="absolute inset-0 bg-rose-500 bg-opacity-20 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white text-rose-600 px-4 py-2 rounded-full text-sm font-medium">
                   Seleccionado
                 </div>
@@ -87,22 +87,22 @@ export function TemplateSelector({
                 )}
                 onClick={() => handleTemplateSelect(template.id)}
               >
-                <div className="aspect-[3/5] max-h-[300px] relative overflow-hidden rounded-t-lg mx-auto">
+                <div className="aspect-[3/5] max-h-[200px] relative overflow-hidden rounded-t-lg mx-auto p-2">
                   <img
                     src={template.preview}
                     alt={template.name}
                     className="object-cover w-full h-full"
                   />
                   {selectedTemplateId === template.id && (
-                    <div className="absolute inset-0 bg-rose-500 bg-opacity-20 flex items-center justify-center">
-                      <div className="bg-white text-rose-600 px-4 py-2 rounded-full text-sm font-medium">
+                    <div className="absolute inset-0 bg-opacity-20 flex items-center justify-center">
+                      <div className="bg-primary text-white px-4 py-2 rounded-full text-sm font-medium">
                         Seleccionado
                       </div>
                     </div>
                   )}
                 </div>
                 <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-900">{template.name}</h3>
+                  <h3 className="font-medium text-gray-900 text-center">{template.name}</h3>
                 </CardContent>
               </Card>
             ))}
