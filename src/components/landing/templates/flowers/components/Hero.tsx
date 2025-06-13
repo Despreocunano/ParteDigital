@@ -22,22 +22,20 @@ export function Hero({
   });
 
   return (
-    <section className={`relative h-[90vh] ${className}`}>
-      <div className="grid lg:grid-cols-2 h-full">
-        {/* Left side - Image */}
-        <div className="relative h-full lg:block">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ 
-              backgroundImage: `url(${backgroundImage})`
-            }}
-          >
-            <div className="absolute inset-0 bg-black/20"></div>
-          </div>
+    <section className={`relative h-auto ${className}`}>
+    <div className="grid grid-rows-[auto_auto] lg:grid-cols-2 h-full">
+      {/* Imagen arriba en mobile, a la izquierda en desktop */}
+      <div className="relative h-[40vh] lg:h-full order-1">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        >
+          <div className="absolute inset-0 bg-black/30"></div>
         </div>
-
-        {/* Right side - Content */}
-        <div className="relative flex items-center justify-center p-4 lg:p-6 z-10">
+      </div>
+  
+      {/* Contenido debajo en mobile, a la derecha en desktop */}
+        <div className="relative flex items-center justify-center p-4 lg:p-6 z-10 lg:bg-transparent order-2">
           <div className="relative text-center text-[#8B4513] w-full max-w-2xl mx-auto">
             {/* Floral decorations */}
             <div className="absolute top-0 left-0 w-32 h-32 -translate-x-4 -translate-y-4">
@@ -77,52 +75,32 @@ export function Hero({
               </svg>
             </div>
 
-            {/* Content */}
-            <div className="py-20 px-2">
-              <p className="text-lg mb-6 font-light tracking-[0.2em] uppercase">
-                {formattedDate}
+          {/* Texto principal */}
+          <div className="py-20 px-2">
+            <p className="text-lg mb-6 font-light tracking-[0.2em] uppercase">
+              {formattedDate}
+            </p>
+            <div className="space-y-4 mb-8">
+              <h1 className="text-8xl md:text-9xl font-serif">
+                {groomName.charAt(0)} <span className="font-light text-[#9B774D] text-7xl md:text-8xl">&</span> {brideName.charAt(0)}
+              </h1>
+              <p className="text-3xl md:text-4xl font-light tracking-widest uppercase">
+                {groomName} & {brideName}
               </p>
-              
-              <div className="space-y-4 mb-8">
-                <h1 className="text-8xl md:text-9xl font-serif">
-                  {groomName.charAt(0)} <span className="font-light text-[#CD853F] text-7xl md:text-8xl">&</span> {brideName.charAt(0)}
-                </h1>
-                <p className="text-3xl md:text-4xl font-light tracking-widest uppercase">
-                  {groomName} & {brideName}
-                </p>
-              </div>
-
-              {welcomeMessage && (
-                <>
-                  <p className="text-xl font-light leading-relaxed mb-6">
-                    {welcomeMessage}
-                  </p>
-                  <div className="flex justify-center">
-                    <svg viewBox="0 0 200 20" className="h-8 opacity-50">
-                      <path d="M10 10 Q50 5, 100 10 T190 10" stroke="#E8A87C" strokeWidth="2" fill="none"/>
-                      <circle cx="10" cy="10" r="3" fill="#E8A87C"/>
-                      <circle cx="100" cy="10" r="3" fill="#E8A87C"/>
-                      <circle cx="190" cy="10" r="3" fill="#E8A87C"/>
-                    </svg>
-                  </div>
-                </>
-              )}
             </div>
-          </div>
-        </div>
-
-        {/* Mobile background overlay */}
-        <div className="absolute inset-0 lg:hidden">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ 
-              backgroundImage: `url(${backgroundImage})`
-            }}
-          >
-            <div className="absolute inset-0 bg-black/40"></div>
+            {welcomeMessage && (
+              <>
+                <p className="text-xl font-light leading-relaxed mb-6">
+                  {welcomeMessage}
+                </p>
+                <div className="flex justify-center">
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
   );
 }
