@@ -430,7 +430,6 @@ export function PublicSite() {
           </motion.section>
         );
       })}
-
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -494,37 +493,53 @@ export function PublicSite() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              const colorClasses = colorVariants[feature.color as keyof typeof colorVariants];
-              
-              return (
-                <motion.div 
-                  key={index} 
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -5 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/0 to-gray-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex items-start gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorClasses} transition-all duration-300 group-hover:scale-110`}>
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-gray-800">
-                        {feature.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed group-hover:text-gray-700">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+          {features.map((feature, index) => {
+  const Icon = feature.icon;
+  const colorClasses = colorVariants[feature.color as keyof typeof colorVariants];
+  
+  return (
+    <motion.div 
+      key={index} 
+      className="group relative bg-white rounded-2xl p-6 shadow-lg border border-gray-100 overflow-hidden"
+      initial={{ opacity: 0, rotateX: 15 }}
+      whileInView={{ 
+        opacity: 1,
+        rotateX: 0,
+        transformPerspective: 1000,
+        transformStyle: "preserve-3d"
+      }}
+      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+      transition={{ 
+        delay: index * 0.1, 
+        duration: 0.6,
+        type: "spring",
+        damping: 10
+      }}
+      whileHover={{
+        y: -10,
+        rotateX: 5,
+        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+      }}
+    >
+      <div className="relative flex items-start gap-4">
+        <motion.div
+          className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorClasses}`}
+          whileHover={{ rotate: 10, scale: 1.1 }}
+        >
+          <Icon className="h-6 w-6" />
+        </motion.div>
+        <div className="flex-1">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            {feature.title}
+          </h3>
+          <p className="text-gray-600 text-sm leading-relaxed">
+            {feature.description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+})}
           </div>
 
           <motion.div 
