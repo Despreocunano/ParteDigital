@@ -38,18 +38,18 @@ export function TemplateSelector({
   return (
     <div className="relative">
       <div className="overflow-x-auto pb-4 -mx-6 px-6" ref={scrollContainerRef}>
-        <div className="flex gap-6 min-w-max">
+        <div className="flex gap-6 min-w-max py-4">
       {Object.values(templates).map((template) => (
         <Card
           key={template.id}
               data-template-id={template.id}
           className={cn(
-                'cursor-pointer transition-all hover:shadow-lg w-[280px] flex-shrink-0',
+                'cursor-pointer transition-all hover:shadow-lg w-[200px] flex-shrink-0',
             selectedTemplateId === template.id && 'ring-2 ring-rose-500'
           )}
           onClick={() => onSelect(template.id)}
         >
-          <div className="aspect-video relative overflow-hidden rounded-t-lg">
+          <div className="aspect-[3/5] max-h-[300px] relative overflow-hidden mx-auto p-1">
             <img
               src={template.preview}
               alt={template.name}
@@ -64,8 +64,7 @@ export function TemplateSelector({
             )}
           </div>
           <CardContent className="p-4">
-            <h3 className="font-semibold text-gray-900">{template.name}</h3>
-            <p className="text-sm text-gray-500 mt-1">{template.description}</p>
+            <h3 className="font-semibold text-gray-900 text-center">{template.name}</h3>
           </CardContent>
         </Card>
       ))}
@@ -88,7 +87,7 @@ export function TemplateSelector({
                 )}
                 onClick={() => handleTemplateSelect(template.id)}
               >
-                <div className="aspect-[4/3] relative overflow-hidden rounded-t-lg">
+                <div className="aspect-[3/5] max-h-[300px] relative overflow-hidden rounded-t-lg mx-auto">
                   <img
                     src={template.preview}
                     alt={template.name}

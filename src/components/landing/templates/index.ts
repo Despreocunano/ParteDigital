@@ -10,35 +10,35 @@ export const templates = {
     id: '550e8400-e29b-41d4-a716-446655440000',
     name: 'Deluxe',
     component: DeluxeTemplate,
-    preview: 'https://images.pexels.com/photos/931796/pexels-photo-931796.jpeg',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749836790/deluxe_ixlksa.png',
     description: 'Un diseño lujoso y sofisticado con detalles dorados'
+  },
+  esmeralda: {
+    id: '550e8400-e29b-41d4-a716-446655440005',
+    name: 'Esmeralda',
+    component: EsmeraldaTemplate,
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837919/esmeralda_pn3bwa.png',
+    description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
   },
   flowers: {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Flowers',
     component: FlowersTemplate,
-    preview: 'https://images.pexels.com/photos/1070850/pexels-photo-1070850.jpeg',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837920/cerezo_vni4m5.png',
     description: 'Un diseño floral y natural con tonos cálidos y terrosos'
   },
   terra: {
     id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Terra',
     component: TerraTemplate,
-    preview: 'https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837920/cerezo_vni4m5.png',
     description: 'Un diseño terroso y elegante con tonos tierra y dorados'
   },
   cerezo: {
     id: '550e8400-e29b-41d4-a716-446655440004',
     name: 'Cerezo',
     component: CerezoTemplate,
-    preview: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg',
-    description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
-  },
-  esmeralda: {
-    id: '550e8400-e29b-41d4-a716-446655440005',
-    name: 'Esmeralda',
-    component: EsmeraldaTemplate,
-    preview: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837920/cerezo_vni4m5.png',
     description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
   }
 };
