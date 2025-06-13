@@ -137,7 +137,7 @@ export function SettingsPage() {
                   required
                 />
               </div>
-              <Button type="submit" isLoading={isLoading}>
+              <Button type="submit" className='bg-primary hover:bg-primary-dark text-primary-contrast' isLoading={isLoading}>
                 Guardar cambios
               </Button>
             </form>

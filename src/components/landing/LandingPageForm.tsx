@@ -470,6 +470,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
                 setShowAllTemplates(true);
               }}
               leftIcon={<Grid className="h-4 w-4" />}
+              className='border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast'
             >
               Ver todas las plantillas
             </Button>

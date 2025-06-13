@@ -173,15 +173,17 @@ export function AttendeeForm({ onSubmit, onCancel, isLoading, attendee }: Attend
       <div className="flex justify-end space-x-3">
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           onClick={onCancel}
           disabled={isLoading}
+          className='border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast'
         >
           Cancelar
         </Button>
         <Button
           type="submit"
           isLoading={isLoading}
+          className='bg-primary hover:bg-primary-dark text-primary-contrast'
         >
           {attendee ? 'Guardar Cambios' : 'Agregar Asistente'}
         </Button>

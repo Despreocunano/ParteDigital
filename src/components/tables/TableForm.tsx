@@ -1,4 +1,3 @@
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -54,10 +53,12 @@ export function TableForm({ onSubmit, onCancel, isLoading, table }: TableFormPro
           variant="secondary"
           onClick={onCancel}
           disabled={isLoading}
+          className='border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast'
         >
           Cancelar
         </Button>
-        <Button type="submit" isLoading={isLoading}>
+        <Button type="submit" isLoading={isLoading}
+        className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast">
           {table ? 'Guardar' : 'Agregar Mesa'}
         </Button>
       </div>

@@ -233,7 +233,7 @@ export function DashboardPage() {
             </div>
             <Button
               onClick={() => navigate('/landing')}
-              className="w-full"
+              className="bg-primary hover:bg-primary-dark text-primary-contrast w-full"
             >
               Administrar invitación
             </Button>

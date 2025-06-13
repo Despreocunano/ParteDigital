@@ -102,7 +102,7 @@ export function PublishSection({
                   type="button"
                   variant="secondary"
                   onClick={() => window.open(previewUrl, '_blank')}
-                  className="flex-1"
+                  className="flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast"
                   leftIcon={<Eye className="h-4 w-4" />}
                   disabled={!hasRequiredInfo}
                 >
@@ -113,7 +113,7 @@ export function PublishSection({
                     type="button"
                     onClick={onPublish}
                     disabled={isPublishing || !hasRequiredInfo}
-                    className="flex-1"
+                    className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
                     leftIcon={<Globe className="h-4 w-4" />}
                   >
                     {isPublishing ? 'Publicando...' : 'Publicar'}
@@ -123,7 +123,7 @@ export function PublishSection({
                     type="button"
                     onClick={onUnpublish}
                     variant="secondary"
-                    className="flex-1"
+                    className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
                     leftIcon={<EyeOff className="h-4 w-4" />}
                   >
                     Ocultar
@@ -171,7 +171,7 @@ export function PublishSection({
                       type="button"
                       variant="secondary"
                       onClick={() => handleShare('whatsapp')}
-                      className="flex-1"
+                      className="flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast text-sm"
                       leftIcon={<Share2 className="h-4 w-4" />}
                     >
                       WhatsApp
@@ -180,7 +180,7 @@ export function PublishSection({
                       type="button"
                       variant="secondary"
                       onClick={() => setShowQR(!showQR)}
-                      className="flex-1"
+                      className="flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast text-sm"
                       leftIcon={<QrCode className="h-4 w-4" />}
                     >
                       {showQR ? 'Ocultar QR' : 'Ver QR'}

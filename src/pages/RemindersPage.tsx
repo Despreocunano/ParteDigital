@@ -411,7 +411,7 @@ export function RemindersPage() {
                   isLoading={isSending}
                   disabled={isSending || selectedAttendees.length === 0 || !subject.trim() || !message.trim()}
                   leftIcon={<Send className="h-4 w-4" />}
-                  className="w-full"
+                  className='bg-primary hover:bg-primary-dark text-primary-contrast w-full sm:w-auto'
                 >
                   Enviar Recordatorios ({selectedAttendees.length})
                 </Button>

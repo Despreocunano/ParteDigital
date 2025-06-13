@@ -8,6 +8,13 @@ export default {
         lora: ['Lora', 'serif'],
         parisienne: ['Parisienne', 'cursive'],
       },
+      colors: {
+        primary: {
+          DEFAULT: '#f43f5c',  // rojo principal
+          dark: '#e11d48',     // rojo oscuro
+          contrast: '#FFFFFF'  // Contraste para texto sobre el color primario
+        }
+      },
     },
   },
   plugins: [],

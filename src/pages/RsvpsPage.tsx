@@ -162,6 +162,7 @@ export function RsvpsPage() {
               leftIcon={<Send className="h-3 w-3" />}
               onClick={() => handleSendSingleReminder(attendee)}
               isLoading={sendingReminder === attendee.id}
+              className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
             >
               Recordar
             </Button>
@@ -267,6 +268,7 @@ export function RsvpsPage() {
           <Button
             onClick={exportToExcel}
             leftIcon={<Download className="h-4 w-4" />}
+            className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
           >
             Exportar a Excel
           </Button>

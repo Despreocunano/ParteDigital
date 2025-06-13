@@ -63,13 +63,15 @@ export function Modal({
                 onClick={onConfirm}
                 variant={isDanger ? 'danger' : 'primary'}
                 isLoading={isLoading}
+                className='bg-primary hover:bg-primary-dark text-primary-contrast'
               >
                 {confirmText}
               </Button>
               <Button
                 onClick={onClose}
-                variant="outline"
+                variant="secondary"
                 disabled={isLoading}
+                className='border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast'
               >
                 {cancelText}
               </Button>

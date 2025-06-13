@@ -148,7 +148,7 @@ export function AttendeesPage() {
           <Button 
             onClick={() => setShowAddForm(true)}
             leftIcon={<Plus className="h-4 w-4" />}
-            className="w-full sm:w-auto"
+            className="bg-primary hover:bg-primary-dark text-primary-contrast w-full sm:w-auto"
           >
             Agregar Invitado
           </Button>

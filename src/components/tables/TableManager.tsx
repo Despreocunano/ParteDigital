@@ -64,12 +64,14 @@ export function TableManager({
             onClick={handleRefresh}
             isLoading={isRefreshing}
             leftIcon={<RefreshCw className={`h-4 w-4 ${isRefreshing ? '' : 'hover:animate-spin'}`} />}
+            className="flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast"
           >
             Actualizar
           </Button>
           <Button
             onClick={() => setShowAddModal(true)}
             leftIcon={<Plus className="h-4 w-4" />}
+            className='bg-primary hover:bg-primary-dark text-primary-contrast'
           >
             Agregar Mesa
           </Button>

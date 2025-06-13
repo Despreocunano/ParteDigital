@@ -106,7 +106,7 @@ export function SongRecommendationsPage() {
               </div>
               {filteredSongs.length > 0 && (
                 <Button
-                  variant="primary"
+                  className='bg-primary hover:bg-primary-dark text-primary-contrast'
                   onClick={exportToExcel}
                   leftIcon={<Download className="h-4 w-4" />}
                 >
