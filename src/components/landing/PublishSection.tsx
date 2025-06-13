@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 interface PublishSectionProps {
@@ -97,12 +96,12 @@ export function PublishSection({
                   </p>
                 </div>
               </div>
-              <div className="flex gap-3">
+              <div className="flex flex-col md:flex-row gap-3">
                 <Button
                   type="button"
                   variant="secondary"
                   onClick={() => window.open(previewUrl, '_blank')}
-                  className="flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast"
+                  className="w-full md:flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast"
                   leftIcon={<Eye className="h-4 w-4" />}
                   disabled={!hasRequiredInfo}
                 >
@@ -166,12 +165,12 @@ export function PublishSection({
                     </Button>
                   </div>
 
-                  <div className="flex gap-3">
+                  <div className="flex flex-col md:flex-row gap-3">
                     <Button
                       type="button"
                       variant="secondary"
                       onClick={() => handleShare('whatsapp')}
-                      className="flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast text-sm"
+                      className="w-full md:flex-1 border border-primary text-primary hover:bg-primary-dark hover:text-primary-contrast text-sm"
                       leftIcon={<Share2 className="h-4 w-4" />}
                     >
                       WhatsApp
