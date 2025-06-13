@@ -8,11 +8,11 @@ import { Button } from '../components/ui/Button';
 import { useState, useEffect } from 'react';
 
 // Import local images
-import app1 from '../assets/images/app_00001.png';
+import app1 from '../assets/images/app_00003.png';
 import app2 from '../assets/images/app_00002.png';
-import app3 from '../assets/images/app_00003.png';
+import app3 from '../assets/images/app_invitados.png';
 import app4 from '../assets/images/app_00004.png';
-import app5 from '../assets/images/app_00005.png';
+import app5 from '../assets/images/app_mesas.png';
 import app6 from '../assets/images/app_00006.png';
 import app7 from '../assets/images/app_00007.png';
 import herobg from '../assets/images/hero_public.webp';
@@ -124,6 +124,19 @@ const colorVariants = {
 };
 
 const featureSections = [
+  
+  {
+    title: "Confirmaciones en tiempo real",
+    description: "Mantente al día con las confirmaciones de asistencia de forma automática. Nuestro sistema RSVP digital permite a tus invitados confirmar su asistencia de manera sencilla, mientras tú recibes actualizaciones instantáneas y mantienes un control total sobre la lista final de asistentes.",
+    image: app3,
+    icon: Check,
+    features: [
+      "Confirmaciones automáticas",
+      "Estadísticas en tiempo real",
+      "Gestión de acompañantes",
+      "Seguimiento de respuestas"
+    ]
+  },
   {
     title: "Panel Intuitivo",
     description: "Tu centro de control completo para una boda perfecta. Visualiza estadísticas en tiempo real, gestiona todos los aspectos de tu evento y mantén todo organizado en un solo lugar.",
@@ -157,18 +170,6 @@ const featureSections = [
       "Control de acompañantes",
       "Preferencias alimentarias",
       "Información de contacto centralizada"
-    ]
-  },
-  {
-    title: "Confirmaciones en tiempo real",
-    description: "Mantente al día con las confirmaciones de asistencia de forma automática. Nuestro sistema RSVP digital permite a tus invitados confirmar su asistencia de manera sencilla, mientras tú recibes actualizaciones instantáneas y mantienes un control total sobre la lista final de asistentes.",
-    image: app3,
-    icon: Check,
-    features: [
-      "Confirmaciones automáticas",
-      "Estadísticas en tiempo real",
-      "Gestión de acompañantes",
-      "Seguimiento de respuestas"
     ]
   },
   {
@@ -474,7 +475,7 @@ export function PublicSite() {
                     <motion.img
                       src={section.image}
                       alt={section.title}
-                      className="relative rounded-xl shadow-2xl w-full"
+                      className="relative w-full"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     />

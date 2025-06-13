@@ -82,7 +82,7 @@ export function Countdown({ date, className = '' }: CountdownProps) {
           <h2 className="text-4xl font-serif text-[#D4B572]">Faltan</h2>
         </motion.div>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <motion.div 
             className="bg-[#1C2127] rounded-xl p-6 text-center border border-[#D4B572]/20"
             variants={item}
