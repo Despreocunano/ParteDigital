@@ -171,7 +171,7 @@ export function SettingsPage() {
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-gray-500">
-                      Esta imagen será utilizada como logo en la firma de los correos enviados a tus invitados.
+                      Imagen de firma para los correos enviados a tus invitados.
                     </p>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ export function SettingsPage() {
       >
         <div className="space-y-4">
           <p className="text-sm text-gray-500">
-            Esta imagen será utilizada como logo en la firma de los correos enviados a tus invitados.
+          Imagen de firma para los correos enviados a tus invitados.
           </p>
           <ImageUpload
             value={profileImage}

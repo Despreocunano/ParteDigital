@@ -144,7 +144,7 @@ export function MusicUpload({
       ) : (
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           className="w-full h-32 flex flex-col items-center justify-center gap-2 border-2 border-dashed"
           onClick={() => inputRef.current?.click()}
           isLoading={isUploading}

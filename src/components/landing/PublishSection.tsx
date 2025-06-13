@@ -122,10 +122,10 @@ export function PublishSection({
                     type="button"
                     onClick={onUnpublish}
                     variant="secondary"
-                    className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
+                    className="flex-1 border border-primary bg-primary hover:bg-primary-dark text-primary-contrast"
                     leftIcon={<EyeOff className="h-4 w-4" />}
                   >
-                    Ocultar
+                    Despublicar
                   </Button>
                 )}
               </div>

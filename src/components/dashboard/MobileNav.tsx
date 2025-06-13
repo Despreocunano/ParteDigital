@@ -63,7 +63,7 @@ export function MobileNav() {
             <Heart className="h-5 w-5 text-white" />
           </div>
           <div className="ml-3">
-            <h1 className="text-lg font-serif text-gray-900 leading-tight">
+            <h1 className="text-lg text-gray-900 leading-tight">
               Tu Parte Digital
             </h1>
           </div>
@@ -80,7 +80,7 @@ export function MobileNav() {
               <div className="w-16 h-16 bg-rose-600 rounded-full flex items-center justify-center mb-3">
                 <Heart className="h-8 w-8 text-white" />
               </div>
-              <h1 className="text-xl font-serif text-gray-900 text-center leading-tight">
+              <h1 className="text-xl text-gray-900 text-center leading-tight">
                 Tu Parte Digital
               </h1>
             </Link>

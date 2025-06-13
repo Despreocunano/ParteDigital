@@ -135,18 +135,18 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
 
   const dressCodeOptions = [
-    { value: 'formal', label: 'Formal' },
-    { value: 'black_tie', label: 'Black Tie' },
-    { value: 'cocktail', label: 'Cocktail' },
-    { value: 'semi_formal', label: 'Semi Formal' },
-    { value: 'casual_elegante', label: 'Casual Elegante' },
+    { value: 'Formal', label: 'Formal' },
+    { value: 'Black tie', label: 'Black Tie' },
+    { value: 'Cocktail', label: 'Cocktail' },
+    { value: 'Semi formal', label: 'Semi Formal' },
+    { value: 'Casual elegante', label: 'Casual Elegante' },
     { value: 'custom', label: 'Otro' }
   ];
 
   const accountTypeOptions = [
-    { value: 'cuenta_corriente', label: 'Cuenta Corriente' },
-    { value: 'cuenta_vista', label: 'Cuenta Vista' },
-    { value: 'cuenta_rut', label: 'Cuenta RUT' }
+    { value: 'Cuenta corriente', label: 'Cuenta Corriente' },
+    { value: 'Cuenta vista', label: 'Cuenta Vista' },
+    { value: 'Cuenta RUT', label: 'Cuenta RUT' }
   ];
 
   // Fetch user names from users table
@@ -594,7 +594,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
               <span className="text-rose-600 font-medium">5</span>
             </div>
-            <CardTitle>Fiesta</CardTitle>
+            <CardTitle>Recepción</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="p-0 pt-6">
