@@ -8,13 +8,10 @@ import { Button } from '../components/ui/Button';
 import { useState, useEffect } from 'react';
 
 // Import local images
-import app1 from '../assets/images/app_00003.png';
-import app2 from '../assets/images/app_00002.png';
+import app1 from '../assets/images/app_gestion.png';
+import app2 from '../assets/images/app_compartir.png';
 import app3 from '../assets/images/app_invitados.png';
-import app4 from '../assets/images/app_00004.png';
 import app5 from '../assets/images/app_mesas.png';
-import app6 from '../assets/images/app_00006.png';
-import app7 from '../assets/images/app_00007.png';
 import herobg from '../assets/images/hero_public.webp';
 
 const features = [
@@ -67,18 +64,6 @@ const features = [
     color: "violet"
   },
   {
-    icon: UserCheck,
-    title: "Lista de asistentes (RSVP)",
-    description: "Tus invitados podrán confirmar su presencia para ayudarte en la lista de invitados final",
-    color: "emerald"
-  },
-  {
-    icon: Instagram,
-    title: "Instagram Wall",
-    description: "Todas las publicaciones de tu evento en único lugar para que todos los invitados participen",
-    color: "fuchsia"
-  },
-  {
     icon: Shirt,
     title: "Dress Code",
     description: "Informa a tus invitados el código o estilo de vestimenta elegido para tu gran día",
@@ -89,12 +74,6 @@ const features = [
     title: "Acceso VIP",
     description: "Configura tu invitación en modo privado, solo los invitados con acceso podrán verla",
     color: "gray"
-  },
-  {
-    icon: Settings,
-    title: "Acceso de propietario",
-    description: "Configura funciones de tu invitación, visualiza lista de invitados y de canciones sugeridas",
-    color: "indigo"
   },
   {
     icon: LinkIcon,
@@ -138,23 +117,12 @@ const featureSections = [
     ]
   },
   {
-    title: "Panel Intuitivo",
-    description: "Tu centro de control completo para una boda perfecta. Visualiza estadísticas en tiempo real, gestiona todos los aspectos de tu evento y mantén todo organizado en un solo lugar.",
-    image: app1,
+    title: "Crea y comparte en minutos",
+    description: "Selecciona el diseño que mas te guste, completa la información necesaria, música de fondo, galería de fotos y compartela con tus invitados que tendrán una experiencia inolvidable desde el primer momento.",
+    image: app2,
     icon: LayoutDashboard,
     features: [
-      "Estadísticas en tiempo real",
-      "Vista general de confirmaciones",
-      "Acceso rápido a todas las funciones",
-      "Interfaz intuitiva y fácil de usar"
-    ]
-  },
-  {
-    title: "Invitación digital",
-    description: "Crea una invitación digital única que refleje tu estilo. Con diseños elegantes y personalizables, música de fondo, galería de fotos y toda la información importante de tu evento, tus invitados tendrán una experiencia inolvidable desde el primer momento.",
-    image: app6,
-    icon: Globe,
-    features: [
+      "Comparte directamente en whatsapp",
       "Música de fondo",
       "Galería de fotos",
       "Información interactiva"
@@ -163,25 +131,13 @@ const featureSections = [
   {
     title: "Gestión de invitados",
     description: "Olvídate de las hojas de cálculo y las listas en papel. Nuestra gestión de invitados te permite mantener toda la información organizada, actualizada y accesible. Añade, edita y gestiona tu lista de invitados con facilidad, incluyendo detalles importantes como preferencias alimentarias y acompañantes.",
-    image: app2,
+    image: app1,
     icon: Users,
     features: [
       "Gestión completa de invitados",
       "Control de acompañantes",
       "Preferencias alimentarias",
       "Información de contacto centralizada"
-    ]
-  },
-  {
-    title: "Recordatorios inteligentes",
-    description: "Mantén a tus invitados informados sin esfuerzo. Nuestro sistema de recordatorios te permite enviar mensajes personalizados a tus invitados, asegurando que nadie se pierda los detalles importantes de tu gran día. Programa recordatorios automáticos y mantén a todos actualizados.",
-    image: app4,
-    icon: Send,
-    features: [
-      "Recordatorios personalizados",
-      "Programación automática",
-      "Seguimiento de envíos",
-      "Plantillas prediseñadas"
     ]
   },
   {
@@ -194,18 +150,6 @@ const featureSections = [
       "Gestión de capacidades",
       "Asignación automática",
       "Vista previa en tiempo real"
-    ]
-  },
-  {
-    title: "Playlist colaborativa",
-    description: "Haz que tu fiesta sea inolvidable con la música perfecta. Permite que tus invitados sugieran sus canciones favoritas y crea la banda sonora perfecta para tu celebración. Una forma única de hacer que todos sean parte de la fiesta incluso antes de que comience.",
-    image: app7,
-    icon: Music2,
-    features: [
-      "Sugerencias de invitados",
-      "Lista de reproducción colaborativa",
-      "Gestión de canciones",
-      "Exportación de playlist"
     ]
   }
 ];
