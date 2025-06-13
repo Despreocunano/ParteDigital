@@ -34,6 +34,7 @@ export function TablesPage() {
       
       <TableManager 
         tables={tables}
+        guests={[]} // We keep this for backward compatibility
         attendees={attendees}
         isLoading={isLoading}
         onAddTable={addTable}

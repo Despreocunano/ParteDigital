@@ -5,7 +5,6 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { AuthPage } from './components/auth/AuthPage';
 import { Layout } from './components/dashboard/Layout';
 import { DashboardPage } from './pages/DashboardPage';
-import { GuestsPage } from './pages/GuestsPage';
 import { AttendeesPage } from './pages/AttendeesPage';
 import { RsvpsPage } from './pages/RsvpsPage';
 import { TablesPage } from './pages/TablesPage';
@@ -53,18 +52,6 @@ function AppRoutes() {
                   <RequireLandingPage>
                     <Layout>
                       <DashboardPage />
-                    </Layout>
-                  </RequireLandingPage>
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="/guests"
-              element={
-                <RequireAuth>
-                  <RequireLandingPage>
-                    <Layout>
-                      <GuestsPage />
                     </Layout>
                   </RequireLandingPage>
                 </RequireAuth>

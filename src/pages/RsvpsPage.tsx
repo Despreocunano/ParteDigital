@@ -4,7 +4,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useAttendees } from '../hooks/useAttendees';
 import { useTables } from '../hooks/useTables';
-import { X, Clock, Send, CheckCircle, XCircle, Table2, Search, Download } from 'lucide-react';
+import { X, Clock, Send, CheckCircle, XCircle, Table2, Search, Download, UserPlus } from 'lucide-react';
 import { Attendee } from '../types/supabase';
 import { AttendeeStatus } from '../components/attendees/AttendeeStatus';
 import { sendEmail } from '../lib/api';
@@ -232,100 +232,119 @@ export function RsvpsPage() {
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-500">Total de Invitados</p>
+                  <h3 className="text-3xl font-bold text-gray-900 mt-1">{stats.total}</h3>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Gestiona la lista completa de tus invitados
+                  </p>
+                </div>
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                  <UserPlus className="h-6 w-6 text-gray-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       )}
       
-        <Card>
-          <CardHeader className="px-6 py-4 border-b border-gray-200">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle>Respuestas</CardTitle>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Search className="h-5 w-5 text-gray-400" />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Buscar invitados..."
-                    className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent sm:text-sm"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                  />
+      <div className="flex justify-between items-center mb-6">
+        <div className="relative flex-1 max-w-sm mr-4">
+          <Input
+            type="text"
+            placeholder="Buscar invitado..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+        </div>
+        <div className="flex space-x-2">
+          <Button
+            onClick={exportToExcel}
+            leftIcon={<Download className="h-4 w-4" />}
+          >
+            Exportar a Excel
+          </Button>
+        </div>
+      </div>
+      
+      <Card>
+        <CardHeader className="px-6 py-4 border-b border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <CardTitle>Respuestas</CardTitle>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Search className="h-5 w-5 text-gray-400" />
                 </div>
-                <div className="flex gap-2">
-                  {filteredAttendees.length > 0 && (
-                    <Button
-                      variant="secondary"
-                      onClick={exportToExcel}
-                      leftIcon={<Download className="h-4 w-4" />}
-                    >
-                      Exportar
-                    </Button>
-                  )}
-                  {pendingAttendees.length > 0 && (
-                    <Button
-                    onClick={() => window.location.href = '/reminders'}
-                      leftIcon={<Send className="h-4 w-4" />}
-                    >
-                      Enviar Recordatorios
-                    </Button>
-                  )}
-                </div>
+                <input
+                  type="text"
+                  placeholder="Buscar invitados..."
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent sm:text-sm"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
             </div>
-          </CardHeader>
-          <CardContent className="px-0 py-0">
-            {attendeesLoading || tablesLoading ? (
-              <div className="flex justify-center items-center h-40">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
-              </div>
-            ) : filteredAttendees.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Nombre
+          </div>
+        </CardHeader>
+        <CardContent className="px-0 py-0">
+          {attendeesLoading || tablesLoading ? (
+            <div className="flex justify-center items-center h-40">
+              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
+            </div>
+          ) : filteredAttendees.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Nombre
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Estado
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Restricciones Alimentarias
+                    </th>
+                    <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Mesa
+                    </th>
+                      <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Acciones
                       </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Email
-                      </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Estado
-                      </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Restricciones Alimentarias
-                      </th>
-                      <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Mesa
-                      </th>
-                        <th scope="col" className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Acciones
-                        </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                  {pendingAttendees.map((attendee) => 
-                    renderAttendeeRow(attendee)
-                  )}
-                  {confirmedAttendees.map((attendee) => 
-                    renderAttendeeRow(attendee)
-                  )}
-                  {declinedAttendees.map((attendee) => 
-                    renderAttendeeRow(attendee)
-                  )}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-gray-500">
-                  {searchTerm ? 'No se encontraron invitados' : 'No hay invitados aún'}
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                {pendingAttendees.map((attendee) => 
+                  renderAttendeeRow(attendee)
+                )}
+                {confirmedAttendees.map((attendee) => 
+                  renderAttendeeRow(attendee)
+                )}
+                {declinedAttendees.map((attendee) => 
+                  renderAttendeeRow(attendee)
+                )}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-gray-500">
+                {searchTerm ? 'No se encontraron invitados' : 'No hay invitados aún'}
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

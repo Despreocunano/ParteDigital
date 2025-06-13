@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { MobileNav } from './MobileNav';
+import { Alert } from '../ui/Alert';
 import { useWedding } from '../../hooks/useWedding';
 
 interface LayoutProps {

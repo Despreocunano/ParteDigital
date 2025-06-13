@@ -29,6 +29,11 @@ export function MobileNav() {
       icon: UserPlus
     },
     {
+      name: 'Confirmaciones',
+      href: '/rsvps',
+      icon: ListChecks
+    },
+    {
       name: 'Mesas',
       href: '/tables',
       icon: Grid

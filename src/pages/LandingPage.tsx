@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 export function LandingPage() {
-  const { user, setHasLandingPage } = useAuth();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [landingData, setLandingData] = useState<any>(null);
 
@@ -25,28 +25,55 @@ export function LandingPage() {
           throw error;
         }
 
-        setLandingData(data);
-        setHasLandingPage(!!data);
+        if (data) {
+          // Format dates for form inputs
+          const formattedData = {
+            ...data,
+            wedding_date: data.wedding_date?.split('T')[0] || '',
+            ceremony_date: data.ceremony_date?.split('T')[0] || '',
+            party_date: data.party_date?.split('T')[0] || '',
+          };
+          setLandingData(formattedData);
+        } else {
+          // If no data exists, set empty landing data
+          setLandingData({
+            groom_name: '',
+            bride_name: '',
+            wedding_date: '',
+            welcome_message: '',
+            ceremony_date: '',
+            ceremony_location: '',
+            ceremony_time: '',
+            ceremony_address: '',
+            party_date: '',
+            party_location: '',
+            party_time: '',
+            party_address: '',
+            music_enabled: false,
+            selected_track: '',
+            hashtag: '',
+            dress_code: '',
+            additional_info: '',
+            bank_info: {
+              accountHolder: '',
+              rut: '',
+              bank: '',
+              accountType: '',
+              accountNumber: '',
+              email: ''
+            }
+          });
+        }
       } catch (error) {
         console.error('Error fetching landing page:', error);
-        setHasLandingPage(false);
+        toast.error('Error al cargar los datos de la invitación');
       } finally {
         setLoading(false);
       }
     };
 
     fetchLandingPage();
-  }, [user, setHasLandingPage]);
-
-  const handleSuccess = () => {
-    setHasLandingPage(true);
-    toast.success('¡Invitación guardada correctamente!');
-  };
-
-  const handleError = (error: Error) => {
-    console.error('Error saving landing page:', error);
-    toast.error('Error al guardar la invitación');
-  };
+  }, [user]);
 
   if (loading) {
     return (
@@ -57,12 +84,11 @@ export function LandingPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Card>
-        <LandingPageForm
-          initialData={landingData}
-          onSuccess={handleSuccess}
-          onError={handleError}
+    <div className="container mx-auto px-4 py-8 max-w-full overflow-x-hidden">
+      <Card className="p-4 sm:p-6">
+        <LandingPageForm 
+          initialData={landingData} 
+          onError={() => toast.error('Error al guardar los cambios')}
         />
       </Card>
     </div>

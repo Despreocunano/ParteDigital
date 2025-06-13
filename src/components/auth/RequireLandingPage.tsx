@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
 import { FeatureLockModal } from '../ui/FeatureLockModal';
@@ -8,7 +8,9 @@ interface RequireLandingPageProps {
 }
 
 export function RequireLandingPage({ children }: RequireLandingPageProps) {
-  const { user, hasLandingPage, setHasLandingPage } = useAuth();
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [hasLandingPage, setHasLandingPage] = useState(false);
 
   useEffect(() => {
     const checkLandingPage = async () => {
@@ -28,12 +30,21 @@ export function RequireLandingPage({ children }: RequireLandingPageProps) {
         setHasLandingPage(!!data);
       } catch (error) {
         console.error('Error checking landing page:', error);
-        setHasLandingPage(false);
+      } finally {
+        setLoading(false);
       }
     };
 
     checkLandingPage();
-  }, [user, setHasLandingPage]);
+  }, [user]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
+      </div>
+    );
+  }
 
   return (
     <>
