@@ -24,14 +24,14 @@ export const templates = {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Flowers',
     component: FlowersTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837920/cerezo_vni4m5.png',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/flowers_w4swj1.png',
     description: 'Un diseño floral y natural con tonos cálidos y terrosos'
   },
   terra: {
     id: '550e8400-e29b-41d4-a716-446655440003',
     name: 'Terra',
     component: TerraTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837920/cerezo_vni4m5.png',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png',
     description: 'Un diseño terroso y elegante con tonos tierra y dorados'
   },
   cerezo: {
