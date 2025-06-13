@@ -65,7 +65,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
     <Card className="w-full max-w-md mx-auto border-0 shadow-xl">
       <CardHeader className="space-y-1">
         <CardTitle className="text-center text-2xl font-bold text-gray-900">
-          Crear una cuenta
+          Crea una cuenta
         </CardTitle>
         <p className="text-center text-sm text-gray-500">
           Ingresa los datos para crear tu cuenta
@@ -85,7 +85,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <Input
-              label="Nombre del Novio"
+              label="Nombre novio"
               placeholder="Juan"
               error={errors.groomName?.message}
               leftIcon={<User className="h-4 w-4 text-gray-400" />}
@@ -94,7 +94,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
               })}
             />
             <Input
-              label="Nombre de la Novia"
+              label="Nombre novia"
               placeholder="María"
               error={errors.brideName?.message}
               leftIcon={<User className="h-4 w-4 text-gray-400" />}
