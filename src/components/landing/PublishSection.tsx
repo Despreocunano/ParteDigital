@@ -118,6 +118,12 @@ export function PublishSection({
     try {
       setIsCreatingPreference(true);
       
+      // Get the session token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('No authenticated session');
+      }
+
       // Log the request details
       console.log('Creating payment preference with:', {
         userId: user.id,
@@ -126,35 +132,28 @@ export function PublishSection({
         paymentType: 'publish'
       });
 
-      // First verify the function is available
-      const { data: healthCheck, error: healthError } = await supabase.functions.invoke('create-payment', {
-        method: 'GET'
-      });
-
-      if (healthError) {
-        console.error('Health check failed:', healthError);
-        toast.error('El servicio de pagos no está disponible en este momento. Por favor, intenta más tarde.');
-        return;
-      }
-
-      const { data, error } = await supabase.functions.invoke('create-payment', {
-        body: {
+      // Make the request to the Edge Function
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           userId: user.id,
           amount: PUBLISH_PRICE,
           description: 'Publicación de invitación digital',
           paymentType: 'publish'
-        }
+        }),
       });
 
-      if (error) {
-        console.error('Error creating payment:', error);
-        if (error.message.includes('Failed to send a request')) {
-          toast.error('Error de conexión con el servidor. Por favor, intenta nuevamente en unos minutos.');
-        } else {
-          toast.error(`Error al crear el pago: ${error.message}`);
-        }
-        throw error;
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error response:', errorData);
+        throw new Error(errorData.error || 'Error al crear el pago');
       }
+
+      const data = await response.json();
 
       if (!data?.init_point) {
         console.error('No init_point received from payment creation');
@@ -167,7 +166,7 @@ export function PublishSection({
       window.location.href = data.init_point;
     } catch (error) {
       console.error('Error in payment process:', error);
-      // Don't show another toast here as we already showed one above
+      toast.error(error instanceof Error ? error.message : 'Error al procesar el pago');
     } finally {
       setIsCreatingPreference(false);
     }
