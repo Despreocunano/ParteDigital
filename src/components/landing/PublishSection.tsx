@@ -117,6 +117,15 @@ export function PublishSection({
 
     try {
       setIsCreatingPreference(true);
+      
+      // Log the request details
+      console.log('Creating payment preference with:', {
+        userId: user.id,
+        amount: PUBLISH_PRICE,
+        description: 'Publicación de invitación digital',
+        paymentType: 'publish'
+      });
+
       const { data, error } = await supabase.functions.invoke('create-payment', {
         body: {
           userId: user.id,
@@ -128,19 +137,26 @@ export function PublishSection({
 
       if (error) {
         console.error('Error creating payment:', error);
+        if (error.message.includes('Failed to send a request')) {
+          toast.error('Error de conexión con el servidor. Por favor, intenta nuevamente en unos minutos.');
+        } else {
+          toast.error(`Error al crear el pago: ${error.message}`);
+        }
         throw error;
       }
 
       if (!data?.init_point) {
         console.error('No init_point received from payment creation');
+        toast.error('Error: No se recibió la URL de pago');
         throw new Error('No payment URL received');
       }
 
+      console.log('Payment preference created successfully, redirecting to:', data.init_point);
       // Redirect to MercadoPago checkout
       window.location.href = data.init_point;
     } catch (error) {
       console.error('Error in payment process:', error);
-      toast.error('Error al procesar el pago. Por favor, intenta nuevamente.');
+      // Don't show another toast here as we already showed one above
     } finally {
       setIsCreatingPreference(false);
     }
