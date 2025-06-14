@@ -77,7 +77,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
   );
 
   return (
-    <section className="pb-24 px-4 bg-[#5C3229]">
+    <section className="pb-24 px-4">
       <motion.div 
         className="max-w-4xl mx-auto"
         initial="hidden"
