@@ -16,7 +16,6 @@ import { PublicSite } from './pages/PublicSite';
 import { SongRecommendationsPage } from './pages/SongRecommendationsPage';
 import { RemindersPage } from './pages/RemindersPage';
 import { RequireLandingPage } from './components/auth/RequireLandingPage';
-import { PaymentSuccessPage } from './pages/PaymentSuccessPage';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -148,14 +147,6 @@ function AppRoutes() {
                 </RequireAuth>
               }
             />
-            <Route
-              path="/payment/:status"
-              element={
-                <RequireAuth>
-                  <PaymentSuccessPage />
-                </RequireAuth>
-              }
-            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         ) : (
@@ -163,9 +154,6 @@ function AppRoutes() {
           <>
             <Route path="/" element={<PublicSite />} />
             <Route path="/invitacion/:slug" element={<PublicSitePage />} />
-            <Route path="/payment/success" element={<PaymentSuccessPage />} />
-            <Route path="/payment/failure" element={<PaymentSuccessPage />} />
-            <Route path="/payment/pending" element={<PaymentSuccessPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         )}
