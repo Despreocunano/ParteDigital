@@ -9,6 +9,7 @@ import { Social } from './components/Social';
 import { Gifts } from './components/Gifts';
 import { Footer } from './components/Footer';
 import { WelcomeModal } from './components/WelcomeModal';
+import { KidsAndPets } from './components/KidsAndPets';
 import type { TemplateProps } from '../types';
 
 export function TerraTemplate({
@@ -35,7 +36,11 @@ export function TerraTemplate({
   userId,
   bankInfo,
   dress_code,
-  additional_info
+  additional_info,
+  accepts_kids,
+  accepts_pets,
+  couple_code,
+  store
 }: TemplateProps) {
   const [showWelcomeModal, setShowWelcomeModal] = useState(musicEnabled);
   const [autoplayMusic, setAutoplayMusic] = useState(false);
@@ -105,6 +110,12 @@ export function TerraTemplate({
             className="bg-[#47261F]"
           />
 
+          <KidsAndPets
+            acceptsKids={accepts_kids}
+            acceptsPets={accepts_pets}
+            className="bg-[#47261F]"
+          />
+
           <PartyInfo
             dresscode={dress_code || ''}
             musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
@@ -120,6 +131,8 @@ export function TerraTemplate({
 
           <Gifts
             bankInfo={bankInfo}
+            couple_code={couple_code}
+            store={store}
             className="bg-[#5C3229] border-y border-[#DF9434]/20"
           />
 

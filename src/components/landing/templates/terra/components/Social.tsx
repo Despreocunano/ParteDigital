@@ -49,8 +49,10 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
       variants={container}
     >
       <div className="max-w-6xl mx-auto text-center">
-        <motion.div variants={item}>
-          <div className="w-16 h-16 bg-[#DF9434]/20 rounded-full flex items-center justify-center mx-auto mb-6">
+        <motion.div variants={item}
+        >
+          <div className="w-16 h-16 bg-[#DF9434]/20 rounded-full flex items-center justify-center mx-auto mb-6"
+          >
             <Instagram className="w-8 h-8 text-[#FAB765]" />
           </div>
           

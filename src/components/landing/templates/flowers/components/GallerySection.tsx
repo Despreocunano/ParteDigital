@@ -1,6 +1,5 @@
 import { Gallery } from '../../../shared/Gallery';
 import { motion } from 'framer-motion';
-import { Divider } from './Divider';
 
 interface GallerySectionProps {
   images: string[];
@@ -45,7 +44,6 @@ export function GallerySection({ images, className = '' }: GallerySectionProps) 
           <h2 className="text-3xl md:text-4xl font-serif text-[#8B4513]">
             Nuestra Historia
           </h2>
-          <Divider className="mt-8" />
         </motion.div>
 
         <Gallery 

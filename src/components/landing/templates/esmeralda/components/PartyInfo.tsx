@@ -6,6 +6,7 @@ import { supabase } from '../../../../../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import rosas from '../assets/Grupo03.webp'
+import { InfoModal } from '../../../shared/InfoModal';
 
 interface Track {
   id: string;
@@ -82,60 +83,6 @@ export function PartyInfo({
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const InfoModal = ({ 
-    isOpen, 
-    onClose, 
-    title, 
-    content,
-    icon: Icon
-  }: { 
-    isOpen: boolean; 
-    onClose: () => void; 
-    title: string; 
-    content: string;
-    icon: any;
-  }) => {
-    if (!isOpen) return null;
-
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#012D27]">
-        <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#CFD6BA]">
-
-          <button
-            onClick={onClose}
-            className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#CFD6BA]/20 hover:bg-[#CFD6BA]/40 transition-colors z-20"
-          >
-            <X className="w-5 h-5 text-[#CFD6BA]" />
-          </button>
-
-          <div className="space-y-8">
-            <div className="w-24 h-24 bg-[#CFD6BA]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icon className="w-16 h-16 text-[#CFD6BA]" />
-            </div>
-
-            <div className="space-y-4">
-              <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#CFD6BA]">
-                {title}
-              </p>
-              <div className="flex items-center justify-center gap-4">
-              <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#CFD6BA]/30"></div>
-              <div className="w-2 h-2 rounded-full bg-[#CFD6BA]/30"></div>
-              <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#CFD6BA]/30"></div>
-            </div>
-              <div className="space-y-4">
-                <h1 className="text-2xl font-lora text-[#CFD6BA]">
-                  {content}
-                </h1>
-              </div>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -252,87 +199,96 @@ export function PartyInfo({
       </motion.section>
 
       {/* Music Modal */}
-      {showMusicModal && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#012D27]"
-        >
-          <div 
-            className="relative w-full max-w-2xl px-12 py-12 text-center text-[#CFD6BA]"
-          >
-            {/* Corner decorations */}
-            <div className="absolute top-0 left-0 w-24 h-24">
-            </div>
-            <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
-            </div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
-            </div>
-            <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
-            </div>
-
-            <button
-              onClick={() => setShowMusicModal(false)}
-              className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#CFD6BA]/20 hover:bg-[#CFD6BA]/40 transition-colors z-20"
-            >
-              <X className="w-5 h-5 text-[#CFD6BA]" />
-            </button>
-
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#CFD6BA]">
-                  Sugerir Canciones
-                </p>
-                <div className="space-y-4">
-                  <h1 className="text-3xl font-lora text-[#CFD6BA]">
-                    Ayúdanos a crear la playlist perfecta
-                  </h1>
-                </div>
+      <InfoModal
+        isOpen={showMusicModal}
+        onClose={() => setShowMusicModal(false)}
+        title="Sugerir Canciones"
+        icon={Music2}
+        iconColor="#CFD6BA"
+        overlayColor="#012D27"
+      >
+        <div className="space-y-6">
+          <SpotifySearch
+            onSelect={(track) => {
+              if (!selectedTracks.find(t => t.id === track.id)) {
+                setSelectedTracks([...selectedTracks, track]);
+              }
+            }}
+            onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
+            selectedTracks={selectedTracks}
+            maxTracks={2}
+          />
+          
+          {selectedTracks.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-xl font-lora text-[#CFD6BA]">Canciones seleccionadas:</h3>
+              <div className="space-y-2">
+                {selectedTracks.map((track) => (
+                  <div 
+                    key={track.id}
+                    className="flex items-center justify-between bg-[#00534E]/50 rounded-lg p-4 border border-[#CFD6BA]/20"
+                  >
+                    <div className="flex items-center space-x-4">
+                      {track.albumCover && (
+                        <img 
+                          src={track.albumCover} 
+                          alt={track.name}
+                          className="w-12 h-12 rounded"
+                        />
+                      )}
+                      <div className="text-left">
+                        <p className="font-medium text-[#CFD6BA]">{track.name}</p>
+                        <p className="text-[#CFD6BA]/60 text-sm">{track.artist}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setSelectedTracks(selectedTracks.filter(t => t.id !== track.id))}
+                      className="text-[#CFD6BA]/40 hover:text-[#CFD6BA]/60"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+                ))}
               </div>
-
-              <div className="flex items-center justify-center gap-4">
-                <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#CFD6BA]/30"></div>
-                <div className="w-2 h-2 rounded-full bg-[#CFD6BA]/30"></div>
-                <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#CFD6BA]/30"></div>
-              </div>
-
-              <div className="space-y-6">
-                <SpotifySearch
-                  selectedTracks={selectedTracks}
-                  onSelect={(track) => setSelectedTracks([...selectedTracks, track])}
-                  onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
-                  maxTracks={2}
-                />
-
-                <Button
-                  onClick={handleSubmit}
-                  isLoading={isSubmitting}
-                  disabled={selectedTracks.length === 0}
-                  className="bg-[#CFD6BA] text-[#012D27] hover:bg-[#012D27] hover:text-[#CFD6BA] rounded-full border hover:border-[#CFD6BA]"
-                >
-                  Guardar Canciones
-                </Button>
-              </div>
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="w-full bg-[#CFD6BA] text-[#012D27] hover:bg-[#012D27] hover:text-[#CFD6BA] rounded-full border hover:border-[#CFD6BA]"
+              >
+                {isSubmitting ? 'Enviando...' : 'Enviar Sugerencias'}
+              </Button>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </InfoModal>
 
       {/* Dress Code Modal */}
       <InfoModal
         isOpen={showDressCodeModal}
         onClose={() => setShowDressCodeModal(false)}
         title="Código de Vestimenta"
-        content={dresscode}
         icon={Shirt}
-      />
+        iconColor="#CFD6BA"
+        overlayColor="#012D27"
+      >
+        <p className="text-lg leading-relaxed whitespace-pre-wrap text-[#CFD6BA]">
+          {dresscode}
+        </p>
+      </InfoModal>
 
       {/* Tips Modal */}
       <InfoModal
         isOpen={showTipsModal}
         onClose={() => setShowTipsModal(false)}
         title="Información Adicional"
-        content={tips}
         icon={Lightbulb}
-      />
+        iconColor="#CFD6BA"
+        overlayColor="#012D27"
+      >
+        <p className="text-lg leading-relaxed whitespace-pre-wrap text-[#CFD6BA]">
+          {tips}
+        </p>
+      </InfoModal>
     </>
   );
 }

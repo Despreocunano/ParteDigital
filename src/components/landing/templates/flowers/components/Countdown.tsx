@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Divider } from './Divider';
 
 interface TimeLeft {
   days: number;
@@ -73,8 +72,6 @@ export function Countdown({ date, className = '' }: CountdownProps) {
         viewport={{ once: true }}
         variants={container}
       >
-        <Divider className="mb-12" />
-
         <motion.div 
           className="text-center mb-12"
           variants={item}
@@ -132,7 +129,6 @@ export function Countdown({ date, className = '' }: CountdownProps) {
           </motion.div>
         </div>
 
-        <Divider className="mt-12" />
       </motion.div>
     </section>
   );

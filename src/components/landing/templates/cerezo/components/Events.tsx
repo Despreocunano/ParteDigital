@@ -105,6 +105,24 @@ END:VCALENDAR`;
             <div className="space-y-4">
               <div className="flex items-start">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
+                  <MapPin className="w-6 h-6 text-[#2D1B69]" />
+                </div>
+                <div className="ml-4">
+                  <p className="text-xl font-medium text-[#2D1B69]">{location}</p>
+                </div>
+              </div>
+              
+              <Button
+                onClick={onRsvp}
+                className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
+              >
+                Confirmar Asistencia
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-start">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
                   <CalendarDays className="w-6 h-6 text-[#2D1B69]" />
                 </div>
                 <div className="ml-4">
@@ -171,33 +189,25 @@ END:VCALENDAR`;
               </AnimatePresence>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
-                  <MapPin className="w-6 h-6 text-[#2D1B69]" />
+            {address && (
+              <div className="space-y-4">
+                <div className="flex items-start">
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
+                    <MapPin className="w-6 h-6 text-[#2D1B69]" />
+                  </div>
+                  <div className="ml-4">
+                    <p className="text-[#8D6E63] leading-relaxed">{address}</p>
+                  </div>
                 </div>
-                <div className="ml-4">
-                  <p className="text-xl font-medium text-[#2D1B69]">{location}</p>
-                  {address && (
-                    <p className="mt-2 text-[#8D6E63] leading-relaxed">{address}</p>
-                  )}
-                </div>
+                
+                <Button
+                  onClick={handleOpenMaps}
+                  className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
+                >
+                  ¿Cómo llegar?
+                </Button>
               </div>
-              
-              <Button
-                onClick={handleOpenMaps}
-                className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
-              >
-                ¿Cómo llegar?
-              </Button>
-            </div>
-
-            <Button
-              onClick={onRsvp}
-              className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
-            >
-              Confirmar Asistencia
-            </Button>
+            )}
           </div>
         </div>
       </div>

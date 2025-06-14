@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
 import lineas from '../assets/lineas01.svg'
+import { InfoModal } from '../../../shared/InfoModal';
 
 
 interface EventProps {
@@ -73,6 +74,22 @@ function Event({ title, date, time, location, address, placeId, className = '', 
 
         <div className="p-8 md:p-10 pt-0 space-y-8">
           <div className="space-y-4 text-center">
+            <h4 className="text-4xl font-parisienne text-white mb-2">Lugar</h4>
+            <div className="flex flex-col items-center">
+              <p className="text-lg font-lora text-[#cfd6ba]">{location}</p>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <Button
+              onClick={onRsvp}
+              className="bg-[#E5D7A9] hover:bg-[#D0C293] text-[#0A3831] px-6 py-2 w-48 rounded-full text-base font-medium shadow-sm"
+            >
+              Confirmar Asistencia
+            </Button>
+          </div>
+
+          <div className="space-y-4 text-center">
             <h4 className="text-4xl font-parisienne text-white mb-2">Día</h4>
             <div className="flex items-center justify-center gap-4">
               <p className="text-lg font-lora text-[#cfd6ba]">
@@ -103,13 +120,13 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="bg-transparent p-4"
+                  className="mt-2 bg-[#012D27] border border-[#CFD6BA]/20 rounded-lg shadow-lg p-2"
                 >
                   <motion.a
                     href={generateCalendarLink('google')}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-48 mx-auto text-center px-4 py-2 text-white hover:bg-white/10 rounded-xl transition-colors font-sans"
+                    className="block w-full text-left px-4 py-2 text-[#CFD6BA] hover:bg-[#CFD6BA]/10 rounded-md"
                     whileHover={{ x: 5 }}
                   >
                     Google Calendar
@@ -117,7 +134,7 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                   <motion.a
                     href={generateCalendarLink('apple')}
                     download="event.ics"
-                    className="block w-48 mx-auto text-center px-4 py-2 text-white hover:bg-white/10 rounded-xl transition-colors font-sans"
+                    className="block w-full text-left px-4 py-2 text-[#CFD6BA] hover:bg-[#CFD6BA]/10 rounded-md"
                     whileHover={{ x: 5 }}
                   >
                     Apple Calendar
@@ -126,7 +143,7 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                     href={generateCalendarLink('outlook')}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-48 mx-auto text-center px-4 py-2 text-white hover:bg-white/10 rounded-xl transition-colors font-sans"
+                    className="block w-full text-left px-4 py-2 text-[#CFD6BA] hover:bg-[#CFD6BA]/10 rounded-md"
                     whileHover={{ x: 5 }}
                   >
                     Outlook
@@ -134,22 +151,6 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-
-          <div className="space-y-4 text-center">
-            <h4 className="text-4xl font-parisienne text-white mb-2">Lugar</h4>
-            <div className="flex flex-col items-center">
-              <p className="text-lg font-lora text-[#cfd6ba]">{location}</p>
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-            <Button
-              onClick={onRsvp}
-              className="bg-[#E5D7A9] hover:bg-[#D0C293] text-[#0A3831] px-6 py-2 w-48 rounded-full text-base font-medium shadow-sm"
-            >
-              Confirmar Asistencia
-            </Button>
           </div>
 
           <div className="space-y-4 text-center">
@@ -270,7 +271,7 @@ export function Events({
 
             {partyLocation && partyDate && (
               <Event
-                title="Celebración"
+                title="Recepción"
                 date={partyDate}
                 time={partyTime}
                 location={partyLocation}
@@ -284,69 +285,35 @@ export function Events({
         </motion.div>
       </section>
 
-      <AnimatePresence>
-        {showRsvpModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#012D27]">
-            <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#CFD6BA]">
-              {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-24 h-24">
-              </div>
-              <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
-              </div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
-              </div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowRsvpModal(false)}
-                className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#CFD6BA]/20 hover:bg-[#CFD6BA]/40 transition-colors z-20"
-              >
-                <X className="w-5 h-5 text-[#CFD6BA]" />
-              </button>
-              <div className="space-y-8">
-                <div className="space-y-4">
-                  <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#CFD6BA]">
-                    Confirmar Asistencia
-                  </p>
-                  <div className="space-y-4">
-                    <h1 className="text-3xl font-lora text-[#CFD6BA]">
-                      Nos encantaría contar con tu presencia
-                    </h1>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-center gap-4">
-                  <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#CFD6BA]/30"></div>
-                  <div className="w-2 h-2 rounded-full bg-[#CFD6BA]/30"></div>
-                  <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#CFD6BA]/30"></div>
-                </div>
-
-                <div className="space-y-6">
-                  <div>
-                    <PublicRsvpForm
-                      userId={userId}
-                      onSuccess={() => setShowRsvpModal(false)}
-                      theme={{
-                        backgroundColor: '#012D27',
-                        textColor: '#CFD6BA',
-                        borderColor: '#CFD6BA',
-                        inputBackground: '#012D27',
-                        placeholderColor: '#CFD6BA',
-                        accentColor: '#CFD6BA',
-                        successBackground: '#012D27',
-                        successText: '#CFD6BA',
-                        errorBackground: 'rgba(220, 38, 38, 0.1)',
-                        errorText: '#ef4444'
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+      <InfoModal
+        isOpen={showRsvpModal}
+        onClose={() => setShowRsvpModal(false)}
+        title="Confirmar Asistencia"
+        icon={UserPlus}
+        iconColor="#CFD6BA"
+        overlayColor="#012D27"
+      >
+        <div className="space-y-6">
+          <div>
+            <PublicRsvpForm
+              userId={userId}
+              onSuccess={() => setShowRsvpModal(false)}
+              theme={{
+                backgroundColor: '#012D27',
+                textColor: '#CFD6BA',
+                borderColor: '#CFD6BA',
+                inputBackground: '#012D27',
+                placeholderColor: '#CFD6BA',
+                accentColor: '#CFD6BA',
+                successBackground: '#012D27',
+                successText: '#CFD6BA',
+                errorBackground: 'rgba(220, 38, 38, 0.1)',
+                errorText: '#ef4444'
+              }}
+            />
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      </InfoModal>
     </>
   );
 }

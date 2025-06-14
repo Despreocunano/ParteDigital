@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { MapPin, Clock, CalendarDays, X } from 'lucide-react';
+import { MapPin, Clock, CalendarDays, X, UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
-import { Divider } from './Divider';
+import { InfoModal } from '../../../shared/InfoModal';
 
 interface EventProps {
   title: string;
@@ -75,33 +75,54 @@ END:VCALENDAR`;
     >
       <div className="p-8 md:p-10">
         <h3 className="text-3xl font-serif mb-8 text-[#8B4513]">{title}</h3>
-        <div className="space-y-6">
+        <div className="space-y-8">
+          <div>
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-[#E8A87C]/20 flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-5 h-5 text-[#8B4513]" />
+              </div>
+              <div className="ml-4">
+                <h4 className="text-sm font-medium text-[#8B4513]/80 mb-1">Lugar</h4>
+                <p className="text-lg font-medium text-[#8B4513]">{location}</p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <Button
+                onClick={onRsvp}
+                className="bg-[#E8A87C] hover:bg-[#D89A6E] text-[#8B4513] px-8 py-3 w-full"
+              >
+                Confirmar asistencia
+              </Button>
+            </div>
+          </div>
+
           <div>
             <div className="flex items-start">
               <div className="w-10 h-10 rounded-full bg-[#E8A87C]/20 flex items-center justify-center flex-shrink-0">
                 <CalendarDays className="w-5 h-5 text-[#8B4513]" />
               </div>
               <div className="ml-4">
+                <h4 className="text-sm font-medium text-[#8B4513]/80 mb-1">Fecha</h4>
                 <p className="text-lg font-medium text-[#8B4513]">
                   {new Date(date).toLocaleDateString('es-ES', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                   })}
+                  {time && (
+                    <span className="ml-2 text-[#8B4513]/80">
+                      <Clock className="w-4 h-4 inline mr-1" />
+                      {time}
+                    </span>
+                  )}
                 </p>
-                {time && (
-                  <div className="flex items-center mt-2 text-[#8B4513]/80">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>{time}</span>
-                  </div>
-                )}
               </div>
             </div>
             <div className="mt-4">
               <Button
                 onClick={() => setShowCalendarOptions(!showCalendarOptions)}
                 leftIcon={<CalendarDays className="w-5 h-5" />}
-                className="bg-[#8B4513] hover:bg-[#A0522D] text-white px-8 py-3 w-full flex items-center justify-center gap-2"
+                className="bg-[#E8A87C] hover:bg-[#D89A6E] text-[#8B4513] px-8 py-3 w-full flex items-center justify-center gap-2"
               >
                 Agendar
               </Button>
@@ -112,7 +133,7 @@ END:VCALENDAR`;
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="mt-2 bg-white border border-[#E8A87C]/20 rounded-lg shadow-lg p-2"
+                    className="mt-2 bg-[#FDF8F5] border border-[#E8A87C]/20 rounded-lg shadow-lg p-2"
                   >
                     <motion.a
                       href={generateCalendarLink('google')}
@@ -146,34 +167,27 @@ END:VCALENDAR`;
             </div>
           </div>
 
-          <div>
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-[#E8A87C]/20 flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-[#8B4513]" />
+          {address && (
+            <div>
+              <div className="flex items-start">
+                <div className="w-10 h-10 rounded-full bg-[#E8A87C]/20 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-[#8B4513]" />
+                </div>
+                <div className="ml-4">
+                  <h4 className="text-sm font-medium text-[#8B4513]/80 mb-1">Dirección</h4>
+                  <p className="text-[#8B4513]/90 leading-relaxed">{address}</p>
+                </div>
               </div>
-              <div className="ml-4">
-                <p className="text-lg font-medium text-[#8B4513]">{location}</p>
-                {address && (
-                  <p className="mt-2 text-[#8B4513]/80 leading-relaxed">{address}</p>
-                )}
+              <div className="mt-4">
+                <Button
+                  onClick={handleOpenMaps}
+                  className="bg-[#E8A87C] hover:bg-[#D89A6E] text-[#8B4513] px-8 py-3 w-full"
+                >
+                  ¿Cómo llegar?
+                </Button>
               </div>
             </div>
-            <div className="mt-4">
-              <Button
-                onClick={handleOpenMaps}
-                className="bg-[#8B4513] hover:bg-[#A0522D] text-white px-8 py-3 w-full"
-              >
-                ¿Cómo llegar?
-              </Button>
-            </div>
-          </div>
-
-          <Button
-            onClick={onRsvp}
-            className="bg-[#8B4513] hover:bg-[#A0522D] text-white px-8 py-3 w-full"
-          >
-            Confirmar asistencia
-          </Button>
+          )}
         </div>
       </div>
     </motion.div>
@@ -267,7 +281,6 @@ export function Events({
             variants={item}
           >
             <h2 className="text-3xl md:text-4xl font-serif text-[#8B4513]">¿Cuándo y Dónde?</h2>
-            <Divider className="mt-8" />
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
@@ -286,7 +299,7 @@ export function Events({
 
             {partyLocation && partyDate && (
               <Event
-                title="Celebración"
+                title="Recepción"
                 date={partyDate}
                 time={partyTime}
                 location={partyLocation}
@@ -300,79 +313,31 @@ export function Events({
         </motion.div>
       </section>
 
-      <AnimatePresence>
-        {showRsvpModal && (
-          <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#FDF8F5]/95 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowRsvpModal(false)}
-          >
-            <motion.div 
-              className="relative w-full max-w-xl px-8 py-12 text-center text-[#8B4513]"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={e => e.stopPropagation()}
-            >
-              <button
-                type="button"
-                onClick={() => setShowRsvpModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#E8A87C]/10 hover:bg-[#E8A87C]/20 transition-colors z-10"
-              >
-                <X className="w-5 h-5 text-[#8B4513]" />
-              </button>
-
-              {/* Floral corner decorations */}
-              <div className="absolute top-0 left-0 w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-[#E8A87C]/30">
-                  <path d="M20 20 C10 30, 10 50, 20 60 C30 50, 30 30, 20 20 Z" fill="currentColor"/>
-                  <path d="M10 40 C20 30, 40 30, 50 40 C40 50, 20 50, 10 40 Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <div className="absolute top-0 right-0 w-16 h-16 rotate-90">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-[#E8A87C]/30">
-                  <path d="M20 20 C10 30, 10 50, 20 60 C30 50, 30 30, 20 20 Z" fill="currentColor"/>
-                  <path d="M10 40 C20 30, 40 30, 50 40 C40 50, 20 50, 10 40 Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <div className="absolute bottom-0 left-0 w-16 h-16 -rotate-90">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-[#E8A87C]/30">
-                  <path d="M20 20 C10 30, 10 50, 20 60 C30 50, 30 30, 20 20 Z" fill="currentColor"/>
-                  <path d="M10 40 C20 30, 40 30, 50 40 C40 50, 20 50, 10 40 Z" fill="currentColor"/>
-                </svg>
-              </div>
-              <div className="absolute bottom-0 right-0 w-16 h-16 rotate-180">
-                <svg viewBox="0 0 100 100" className="w-full h-full text-[#E8A87C]/30">
-                  <path d="M20 20 C10 30, 10 50, 20 60 C30 50, 30 30, 20 20 Z" fill="currentColor"/>
-                  <path d="M10 40 C20 30, 40 30, 50 40 C40 50, 20 50, 10 40 Z" fill="currentColor"/>
-                </svg>
-              </div>
-
-              <div className="space-y-8">
-                <h2 className="text-3xl font-serif">Confirmar Asistencia</h2>
-                <PublicRsvpForm
-                  userId={userId}
-                  onSuccess={() => setShowRsvpModal(false)}
-                  theme={{
-                    backgroundColor: '#FDF8F5',
-                    textColor: '#8B4513',
-                    borderColor: '#E8A87C',
-                    inputBackground: '#FFFFFF',
-                    placeholderColor: '#8B4513',
-                    accentColor: '#A0522D',
-                    successBackground: '#FDF8F5',
-                    successText: '#8B4513',
-                    errorBackground: 'rgba(220, 38, 38, 0.2)',
-                    errorText: '#ef4444'
-                  }}
-                />
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <InfoModal
+        isOpen={showRsvpModal}
+        onClose={() => setShowRsvpModal(false)}
+        title="Confirmar Asistencia"
+        icon={UserPlus}
+        iconColor="#E8A87C"
+        overlayColor="#FDF8F5"
+      >
+        <PublicRsvpForm
+          userId={userId}
+          onSuccess={() => setShowRsvpModal(false)}
+          theme={{
+            backgroundColor: '#FDF8F5',
+            textColor: '#8B4513',
+            borderColor: '#E8A87C',
+            inputBackground: '#FFFFFF',
+            placeholderColor: '#8B4513',
+            accentColor: '#A0522D',
+            successBackground: '#FDF8F5',
+            successText: '#8B4513',
+            errorBackground: 'rgba(220, 38, 38, 0.2)',
+            errorText: '#ef4444'
+          }}
+        />
+      </InfoModal>
     </>
   );
 }

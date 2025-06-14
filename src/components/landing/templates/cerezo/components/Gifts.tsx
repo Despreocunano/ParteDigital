@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Gift, Copy, Check, X } from 'lucide-react';
+import { Gift, Copy, Check } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { toast } from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { InfoModal } from '../../../shared/InfoModal';
 import divider from '../assets/divider.svg'
 import rosa_a from '../assets/Grupo02_a.webp'
 import rosa_b from '../assets/Grupo02_b.webp'
 import rosa_c from '../assets/Grupo02_c.webp'
-import modal from '../assets/modal.svg'
 
 interface GiftsProps {
   bankInfo?: {
@@ -18,10 +18,12 @@ interface GiftsProps {
     accountNumber: string;
     email: string;
   };
+  couple_code?: string;
+  store?: string;
   className?: string;
 }
 
-export function Gifts({ bankInfo, className = '' }: GiftsProps) {
+export function Gifts({ bankInfo, couple_code, store, className = '' }: GiftsProps) {
   const [showModal, setShowModal] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -119,9 +121,8 @@ ${bankInfo.email}`;
           </motion.div>
           
           <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">Mesa de Regalos</h2>
-          
-          <img src={divider} alt="Divider" className="mx-auto mb-8" />
-          
+          <img src={divider} alt="Divider" className="mx-auto mb-4" />
+
           <motion.p 
             className="text-xl text-[#8D6E63] mb-4 max-w-2xl mx-auto"
             variants={item}
@@ -129,116 +130,108 @@ ${bankInfo.email}`;
             Tu presencia es nuestro mejor regalo. Sin embargo, si deseas hacernos un obsequio, aquí tienes la información necesaria.
           </motion.p>
           
-          <motion.button
-            onClick={() => setShowModal(true)}
-            className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-[#F8BBD9]/50 max-w-md mx-auto w-full hover:bg-white transition-colors duration-200 relative"
-            variants={item}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            {/* Cherry blossom decoration */}
-            <div className="absolute top-4 right-4">
-              <svg width="25" height="25" viewBox="0 0 25 25">
-                <circle cx="12.5" cy="12.5" r="3" fill="#F8BBD9" opacity="0.6"/>
-                <circle cx="10" cy="10" r="2" fill="#FCE4EC"/>
-                <circle cx="15" cy="10" r="2" fill="#FCE4EC"/>
-                <circle cx="10" cy="15" r="2" fill="#FCE4EC"/>
-                <circle cx="15" cy="15" r="2" fill="#FCE4EC"/>
-                <circle cx="12.5" cy="12.5" r="1" fill="#E91E63"/>
-              </svg>
-            </div>
-            <h3 className="text-xl font-serif mb-2 text-[#2D1B69]">Ver Datos Bancarios</h3>
-            <p className="text-[#8D6E63] text-sm">
-              Haz clic para ver la información de transferencia
-            </p>
-          </motion.button>
+          <div className="flex flex-col md:flex-row gap-8 justify-center">
+            {bankInfo && (
+              <motion.button
+                onClick={() => setShowModal(true)}
+                className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-[#F8BBD9]/50 w-full md:w-[400px] hover:bg-white transition-colors duration-200"
+                variants={item}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <h3 className="text-xl font-serif mb-2 text-[#2D1B69]">Datos Bancarios</h3>
+                <p className="text-[#8D6E63] text-sm mb-2">
+                  Información para transferencia
+                </p>
+                <div className="bg-[#F8BBD9]/20 rounded-lg p-3 h-[72px] flex items-center justify-center">
+                  <p className="text-[#2D1B69] text-sm">
+                    Haz clic para ver los datos de transferencia
+                  </p>
+                </div>
+              </motion.button>
+            )}
+
+            {couple_code && store && (
+              <motion.div
+                className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-[#F8BBD9]/50 w-full md:w-[400px]"
+                variants={item}
+              >
+                <h3 className="text-xl font-serif mb-2 text-[#2D1B69]">Lista de Regalos</h3>
+                <p className="text-[#8D6E63] text-sm mb-2">
+                  Información de nuestra lista de regalos
+                </p>
+                <div className="bg-[#F8BBD9]/20 rounded-lg p-3 h-[72px] flex flex-col justify-center">
+                  <p className="text-[#2D1B69] text-sm font-mono">Código: {couple_code}</p>
+                  <p className="text-[#8D6E63] text-xs">Tienda: {store === 'falabella' ? 'Falabella' : 'Paris'}</p>
+                </div>
+              </motion.div>
+            )}
+          </div>
+
+          {!bankInfo && !couple_code && (
+            <motion.p 
+              className="text-[#8D6E63]"
+              variants={item}
+            >
+              Pronto encontrarás aquí la información para realizar tu regalo.
+            </motion.p>
+          )}
         </motion.div>
       </motion.section>
 
-      <AnimatePresence>
-        {showModal && (
-          <div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]"
-          >
-            <div 
-              className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]"
-            >
-              {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-24 h-24">
-                <img src={modal} />
-              </div>
-              <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
-                <img src={modal} />
-              </div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
-                <img src={modal} />
-              </div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
-                <img src={modal} />
-              </div>
-
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
-              >
-                <X className="w-5 h-5 text-[#2D1B69]" />
-              </button>
-
-              <div className="space-y-8">
-                <div className="w-24 h-24 bg-[#F8BBD9]/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Gift className="w-16 h-16 text-[#BC913B]" />
+      <InfoModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Datos Bancarios"
+        icon={Gift}
+        iconColor="#BC913B"
+        overlayColor="#F8BBD9"
+      >
+        {bankInfo ? (
+          <div className="space-y-6">
+            <div className="bg-white/50 rounded-lg border border-[#F8BBD9]/30 p-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-[#8D6E63]">Titular</p>
+                  <p className="text-[#2D1B69]">{bankInfo.accountHolder}</p>
                 </div>
-                <h2 className="text-3xl font-serif">Datos Bancarios</h2>
-
-                {bankInfo ? (
-                  <div className="space-y-6">
-                    <div className="bg-white/50 rounded-lg border border-[#F8BBD9]/30 p-6">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-sm text-[#8D6E63]">Titular</p>
-                          <p className="text-[#2D1B69]">{bankInfo.accountHolder}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-[#8D6E63]">RUT</p>
-                          <p className="text-[#2D1B69]">{bankInfo.rut}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-[#8D6E63]">Banco</p>
-                          <p className="text-[#2D1B69]">{bankInfo.bank}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-[#8D6E63]">Tipo de Cuenta</p>
-                          <p className="text-[#2D1B69]">{bankInfo.accountType}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-[#8D6E63]">Número de Cuenta</p>
-                          <p className="text-[#2D1B69]">{bankInfo.accountNumber}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-[#8D6E63]">Email</p>
-                          <p className="text-[#2D1B69]">{bankInfo.email}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Button
-                      onClick={handleCopyAll}
-                      className="bg-[#E91E63] hover:bg-[#C2185B] text-white px-8 py-3"
-                      leftIcon={copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
-                    >
-                      {copied ? 'Copiado' : 'Copiar Datos'}
-                    </Button>
-                  </div>
-                ) : (
-                  <p className="text-xl text-center text-[#8D6E63]">
-                    Pronto encontrarás aquí la información bancaria para realizar tu regalo.
-                  </p>
-                )}
+                <div>
+                  <p className="text-sm text-[#8D6E63]">RUT</p>
+                  <p className="text-[#2D1B69]">{bankInfo.rut}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-[#8D6E63]">Banco</p>
+                  <p className="text-[#2D1B69]">{bankInfo.bank}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-[#8D6E63]">Tipo de Cuenta</p>
+                  <p className="text-[#2D1B69]">{bankInfo.accountType}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-[#8D6E63]">Número de Cuenta</p>
+                  <p className="text-[#2D1B69]">{bankInfo.accountNumber}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-[#8D6E63]">Email</p>
+                  <p className="text-[#2D1B69]">{bankInfo.email}</p>
+                </div>
               </div>
             </div>
+
+            <Button
+              onClick={handleCopyAll}
+              className="bg-[#E91E63] hover:bg-[#C2185B] text-white px-8 py-3"
+              leftIcon={copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+            >
+              {copied ? 'Copiado' : 'Copiar Datos'}
+            </Button>
           </div>
+        ) : (
+          <p className="text-xl text-center text-[#8D6E63]">
+            Pronto encontrarás aquí la información bancaria para realizar tu regalo.
+          </p>
         )}
-      </AnimatePresence>
+      </InfoModal>
     </>
   );
 }

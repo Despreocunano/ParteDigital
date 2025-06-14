@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Gift, Copy, Check, X } from 'lucide-react';
+import { Gift, Copy, Check } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { toast } from 'react-hot-toast';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Divider } from './Divider';
+import { InfoModal } from '../../../shared/InfoModal';
 
 interface GiftsProps {
   bankInfo?: {
@@ -107,7 +108,7 @@ ${bankInfo.email}`;
           <Divider className="mb-8" />
           
           <motion.p 
-            className="text-[#D4B572]/80 mb-8 max-w-2xl mx-auto"
+            className="text-lg text-[#D4B572]/80 mb-8 max-w-2xl mx-auto"
             variants={item}
           >
             Tu presencia es nuestro mejor regalo. Sin embargo, si deseas hacernos un obsequio, aquí tienes la información necesaria.
@@ -161,84 +162,57 @@ ${bankInfo.email}`;
         </motion.div>
       </motion.section>
 
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm px-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-2xl bg-white rounded-lg shadow-xl p-8"
-            >
-              <button
-                onClick={() => setShowModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
-              >
-                <X className="w-5 h-5 text-gray-600" />
-              </button>
-
-              <div className="space-y-8">
-                <div className="relative -mt-[100px] mb-8">
-                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto border-4 border-white shadow-lg">
-                    <Gift className="w-12 h-12 text-[#D4B572]" />
-                  </div>
+      <InfoModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Datos Bancarios"
+        icon={Gift}
+      >
+        {bankInfo ? (
+          <div className="space-y-6">
+            <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Titular</p>
+                  <p className="text-gray-900">{bankInfo.accountHolder}</p>
                 </div>
-                <h2 className="text-2xl font-serif text-gray-900">Datos Bancarios</h2>
-
-                {bankInfo ? (
-                  <div className="space-y-6">
-                    <div className="bg-gray-50 rounded-lg border border-gray-200 p-6">
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <p className="text-sm text-gray-500">Titular</p>
-                          <p className="text-gray-900">{bankInfo.accountHolder}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">RUT</p>
-                          <p className="text-gray-900">{bankInfo.rut}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Banco</p>
-                          <p className="text-gray-900">{bankInfo.bank}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Tipo de Cuenta</p>
-                          <p className="text-gray-900">{bankInfo.accountType}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Número de Cuenta</p>
-                          <p className="text-gray-900">{bankInfo.accountNumber}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Email</p>
-                          <p className="text-gray-900">{bankInfo.email}</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <Button
-                      onClick={handleCopyAll}
-                      className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3"
-                      leftIcon={copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
-                    >
-                      {copied ? 'Copiado' : 'Copiar Datos'}
-                    </Button>
-                  </div>
-                ) : (
-                  <p className="text-center text-gray-500 py-8">
-                    Pronto encontrarás aquí la información bancaria para realizar tu regalo.
-                  </p>
-                )}
+                <div>
+                  <p className="text-sm text-gray-500">RUT</p>
+                  <p className="text-gray-900">{bankInfo.rut}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Banco</p>
+                  <p className="text-gray-900">{bankInfo.bank}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Tipo de Cuenta</p>
+                  <p className="text-gray-900">{bankInfo.accountType}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Número de Cuenta</p>
+                  <p className="text-gray-900">{bankInfo.accountNumber}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="text-gray-900">{bankInfo.email}</p>
+                </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+
+            <Button
+              onClick={handleCopyAll}
+              className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3"
+              leftIcon={copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
+            >
+              {copied ? 'Copiado' : 'Copiar Datos'}
+            </Button>
+          </div>
+        ) : (
+          <p className="text-center text-gray-500 py-8">
+            Pronto encontrarás aquí la información bancaria para realizar tu regalo.
+          </p>
         )}
-      </AnimatePresence>
+      </InfoModal>
     </>
   );
 }

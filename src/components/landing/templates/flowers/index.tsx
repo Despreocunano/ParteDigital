@@ -9,6 +9,7 @@ import { Social } from './components/Social';
 import { Gifts } from './components/Gifts';
 import { Footer } from './components/Footer';
 import { WelcomeModal } from './components/WelcomeModal';
+import { KidsAndPets } from './components/KidsAndPets';
 import type { TemplateProps } from '../types';
 
 export function FlowersTemplate({
@@ -35,7 +36,11 @@ export function FlowersTemplate({
   userId,
   bankInfo,
   dress_code,
-  additional_info
+  additional_info,
+  accepts_kids,
+  accepts_pets,
+  couple_code,
+  store
 }: TemplateProps) {
   const [showWelcomeModal, setShowWelcomeModal] = useState(musicEnabled);
   const [autoplayMusic, setAutoplayMusic] = useState(false);
@@ -102,15 +107,20 @@ export function FlowersTemplate({
             partyLocation={partyLocation}
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
-            showSongRecommendations={musicEnabled}
-            className="bg-[#F7F1ED]"
+            className="bg-[#FFFFFF]"
+          />
+
+          <KidsAndPets
+            acceptsKids={accepts_kids}
+            acceptsPets={accepts_pets}
+            className="bg-[#FFFFFF]"
           />
 
           <PartyInfo
             dresscode={dress_code || ''}
             musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || ''}
-            className="bg-[#FEFCFA] border-y border-[#E8A87C]/20"
+            className="bg-[#FEFCFA]"
             userId={userId}
           />
 
@@ -121,19 +131,21 @@ export function FlowersTemplate({
 
           <Gifts
             bankInfo={bankInfo}
-            className="bg-[#FEFCFA] border-y border-[#E8A87C]/20"
+            couple_code={couple_code}
+            store={store}
+            className="bg-[#FEFCFA]"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-[#FEFCFA] border-y border-[#E8A87C]/20"
+            className="bg-[#F7F1ED]"
           />
 
           <Footer
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-[#F7F1ED] border-t border-[#E8A87C]/20"
+          className="bg-[#FEFCFA]"
           />
         </div>
       </main>

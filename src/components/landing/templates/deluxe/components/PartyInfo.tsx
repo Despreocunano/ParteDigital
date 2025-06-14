@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Music2, Shirt, Lightbulb, X, LucideIcon } from 'lucide-react';
+import { Music2, Shirt, Lightbulb, X } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { SpotifySearch } from '../../../shared/SpotifySearch';
+import { InfoModal } from '../../../shared/InfoModal';
 import { supabase } from '../../../../../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
@@ -82,57 +83,6 @@ export function PartyInfo({
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const InfoModal = ({ 
-    isOpen, 
-    onClose, 
-    title, 
-    content,
-    icon: Icon
-  }: { 
-    isOpen: boolean; 
-    onClose: () => void; 
-    title: string; 
-    content: string;
-    icon: LucideIcon;
-  }) => {
-    if (!isOpen) return null;
-
-    return (
-      <div 
-        className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm px-4"
-      >
-        <div 
-          className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl"
-        >
-          {/* Corner decorations */}
-          <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30" />
-          <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30" />
-          <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30" />
-
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
-          >
-            <X className="w-5 h-5 text-gray-600" />
-          </button>
-
-          <div className="space-y-8">
-            <div className="relative -mt-[100px] mb-8">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto border-4 border-white shadow-lg">
-                <Icon className="w-12 h-12 text-[#D4B572]" />
-              </div>
-            </div>
-            <h2 className="text-2xl font-serif text-gray-900">{title}</h2>
-            <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">
-              {content}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -234,83 +184,92 @@ export function PartyInfo({
       </motion.section>
 
       {/* Music Modal */}
-      {showMusicModal && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm px-4"
-        >
-          <div 
-            className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl"
-          >
-            {/* Corner decorations */}
-            <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30" />
-            <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30" />
-            <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30" />
-
-            <button
-              onClick={() => setShowMusicModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
-            >
-              <X className="w-5 h-5 text-gray-600" />
-            </button>
-
-            <div className="space-y-8">
-              <div className="relative -mt-[100px] mb-8">
-                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto border-4 border-white shadow-lg">
-                  <Music2 className="w-12 h-12 text-[#D4B572]" />
-                </div>
-              </div>
-              <h2 className="text-2xl font-serif text-gray-900">Sugerir Canciones</h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                {musicInfo}
-              </p>
-
-              <div className="mt-8">
-                <SpotifySearch
-                  selectedTracks={selectedTracks}
-                  onSelect={(track) => {
-                    if (!selectedTracks.find(t => t.id === track.id)) {
-                      setSelectedTracks([...selectedTracks, track]);
-                    }
-                  }}
-                  onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
-                  maxTracks={2}
-                />
-
-                {selectedTracks.length > 0 && (
-                  <div className="mt-8 space-y-4">
-                    <Button
-                      onClick={handleSubmit}
-                      disabled={isSubmitting}
-                      className="w-full bg-[#D4B572] hover:bg-[#C4A562] text-white"
+      <InfoModal
+        isOpen={showMusicModal}
+        onClose={() => setShowMusicModal(false)}
+        title="Sugerir Canciones"
+        icon={Music2}
+      >
+        <div className="space-y-6">
+          <p className="text-gray-600 text-lg leading-relaxed">
+            ¿Cuál es la canción que no debe faltar en la playlist de la fiesta?
+          </p>
+          <SpotifySearch
+            onSelect={(track) => {
+              if (!selectedTracks.find(t => t.id === track.id)) {
+                setSelectedTracks([...selectedTracks, track]);
+              }
+            }}
+            onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
+            selectedTracks={selectedTracks}
+            maxTracks={2}
+          />
+          {selectedTracks.length > 0 && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium text-gray-900">Canciones seleccionadas:</h3>
+              <div className="space-y-2">
+                {selectedTracks.map((track) => (
+                  <div
+                    key={track.id}
+                    className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
+                  >
+                    <div className="flex items-center space-x-3">
+                      {track.albumCover && (
+                        <img
+                          src={track.albumCover}
+                          alt={track.name}
+                          className="w-10 h-10 rounded"
+                        />
+                      )}
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{track.name}</p>
+                        <p className="text-sm text-gray-500">{track.artist}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setSelectedTracks(selectedTracks.filter(t => t.id !== track.id))}
+                      className="text-gray-400 hover:text-gray-500"
                     >
-                      {isSubmitting ? 'Enviando...' : 'Enviar Sugerencias'}
-                    </Button>
+                      <X className="w-5 h-5" />
+                    </button>
                   </div>
-                )}
+                ))}
               </div>
+              <Button
+                onClick={handleSubmit}
+                disabled={isSubmitting}
+                className="w-full"
+              >
+                {isSubmitting ? 'Enviando...' : 'Enviar Sugerencias'}
+              </Button>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </InfoModal>
 
       {/* Dress Code Modal */}
       <InfoModal
         isOpen={showDressCodeModal}
         onClose={() => setShowDressCodeModal(false)}
-        title="Código de Vestimenta"
-        content={dresscode || 'Formal'}
+        title="Dress Code"
         icon={Shirt}
-      />
+      >
+        <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">
+          {dresscode}
+        </p>
+      </InfoModal>
 
       {/* Tips Modal */}
       <InfoModal
         isOpen={showTipsModal}
         onClose={() => setShowTipsModal(false)}
         title="Información Adicional"
-        content={tips || 'La celebración será al aire libre'}
         icon={Lightbulb}
-      />
+      >
+        <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">
+          {tips}
+        </p>
+      </InfoModal>
     </>
   );
 }
