@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import { PaymentButton } from './PaymentButton';
+import { Modal } from '../ui/Modal';
 
 interface PublishSectionProps {
   previewUrl: string;
@@ -107,13 +108,6 @@ export function PublishSection({
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) throw new Error('No authenticated session');
 
-      console.log('Creating payment with data:', {
-        userId: user.id,
-        amount: 40000,
-        description: 'Publicación de invitación digital',
-        paymentType: 'publish'
-      });
-
       const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment`, {
         method: 'POST',
         headers: {
@@ -129,19 +123,15 @@ export function PublishSection({
       });
 
       const data = await response.json();
-      console.log('Payment creation response:', data);
       
       if (data.success) {
-        setPreferenceId(data.preferenceId);
-        setShowPaymentModal(true);
+        // Redirigir al checkout de MercadoPago
+        window.location.href = data.init_point;
       } else {
         throw new Error(data.error || 'Error al crear la preferencia de pago');
       }
     } catch (error) {
       console.error('Error creating payment preference:', error);
-      if (error instanceof Error) {
-        console.error('Error details:', error.message);
-      }
       toast.error('Error al crear la preferencia de pago');
     } finally {
       setIsCreatingPreference(false);
@@ -287,6 +277,45 @@ export function PublishSection({
           </div>
         )}
       </CardContent>
+
+      {/* Payment Modal */}
+      <Modal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        title="Publicar tu invitación"
+      >
+        <div className="space-y-6">
+          <div className="bg-gray-50 p-4 rounded-lg">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center">
+                <Globe className="w-5 h-5 text-rose-600" />
+              </div>
+              <div>
+                <h3 className="text-lg font-medium text-gray-900">Publicación de invitación</h3>
+                <p className="text-sm text-gray-500">
+                  Pago único para publicar tu invitación
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-between items-center border-t border-gray-200 pt-4">
+              <span className="text-gray-700">Total a pagar:</span>
+              <span className="text-xl font-semibold text-gray-900">$40.000 CLP</span>
+            </div>
+          </div>
+
+          <Button
+            onClick={createPaymentPreference}
+            className="w-full bg-primary hover:bg-primary-dark text-white"
+            disabled={isCreatingPreference}
+          >
+            {isCreatingPreference ? 'Procesando...' : 'Pagar con MercadoPago'}
+          </Button>
+
+          <p className="text-sm text-gray-500 text-center">
+            Al completar el pago, tu invitación será publicada automáticamente y podrás compartirla con tus invitados.
+          </p>
+        </div>
+      </Modal>
     </Card>
   );
 }

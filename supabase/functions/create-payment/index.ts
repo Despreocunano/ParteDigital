@@ -100,7 +100,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        preferenceId: preferenceData.id,
+        init_point: preferenceData.init_point
       }),
       {
         headers: {
