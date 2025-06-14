@@ -301,7 +301,11 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       if (error) throw error;
 
-      toast.success('Cambios guardados correctamente');
+      toast.success(
+        publishedStatus.isPublished 
+          ? 'Cambios guardados correctamente'
+          : 'Cambios guardados correctamente. Recuerda publicar tu invitación para poder compartirla'
+      );
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
       console.error('Error saving landing page:', error);
@@ -451,6 +455,28 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         hasRequiredInfo={hasRequiredInfo}
       />
 
+      {!publishedStatus.isPublished && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-amber-800">
+                Recuerda publicar tu invitación
+              </h3>
+              <div className="mt-2 text-sm text-amber-700">
+                <p>
+                  Tu invitación ha sido creada pero no está publicada. Debes publicarla para poder compartirla con tus invitados.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="bg-white rounded-lg border p-6">
         <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -486,12 +512,64 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         </CardContent>
       </div>
 
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">2</span>
+            </div>
+            <CardTitle>Nombres</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              label="Nombre del Novio"
+              {...register('groom_name', { required: 'El nombre del novio es requerido' })}
+              error={errors.groom_name?.message}
+            />
+            <Input
+              label="Nombre de la Novia"
+              {...register('bride_name', { required: 'El nombre de la novia es requerido' })}
+              error={errors.bride_name?.message}
+            />
+          </div>
+        </CardContent>
+      </div>
+
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">3</span>
+            </div>
+            <CardTitle>Mensaje de Bienvenida</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 pt-6">
+          <div className="space-y-4">
+            <Textarea
+              label="Mensaje de Bienvenida"
+              {...register('welcome_message')}
+              error={errors.welcome_message?.message}
+              placeholder="Escribe un mensaje de bienvenida para tus invitados..."
+            />
+            <Input
+              label="Hashtag"
+              {...register('hashtag')}
+              error={errors.hashtag?.message}
+              placeholder="Ej: #JuanYMaria2024"
+            />
+          </div>
+        </CardContent>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white rounded-lg border p-6">
           <CardHeader className="px-0 pt-0 pb-6">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-                <span className="text-rose-600 font-medium">2</span>
+                <span className="text-rose-600 font-medium">4</span>
               </div>
               <CardTitle>Imagen de portada</CardTitle>
             </div>
@@ -509,7 +587,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           <CardHeader className="px-0 pt-0 pb-6">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-                <span className="text-rose-600 font-medium">3</span>
+                <span className="text-rose-600 font-medium">5</span>
               </div>
               <CardTitle>Galería de fotos</CardTitle>
             </div>
@@ -527,7 +605,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">4</span>
+              <span className="text-rose-600 font-medium">6</span>
             </div>
             <CardTitle>Ceremonia</CardTitle>
           </div>
@@ -592,7 +670,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">5</span>
+              <span className="text-rose-600 font-medium">7</span>
             </div>
             <CardTitle>Recepción</CardTitle>
           </div>
@@ -600,7 +678,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardContent className="p-0 pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input
-              label="Fecha de la Fiesta"
+              label="Fecha de la recepción"
               type="date"
               min={today}
               {...register('party_date', { 
@@ -613,14 +691,14 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               error={errors.party_date?.message}
             />
             <Input
-              label="Hora de la Fiesta"
+              label="Hora de la recepción"
               type="time"
               {...register('party_time', { required: 'La hora es requerida' })}
               error={errors.party_time?.message}
             />
             <div className="md:col-span-2">
               <Input
-                label="Lugar de la Fiesta"
+                label="Lugar de la recepción"
                 {...register('party_location', { required: 'El lugar es requerido' })}
                 error={errors.party_location?.message}
                 placeholder="Estadio Español"
@@ -631,7 +709,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             </div>
             <div className="md:col-span-2">
               <PlacesAutocomplete
-                label="Dirección de la Fiesta"
+                label="Dirección de la recepción"
                 value={watch('party_address')}
                 onChange={(address, placeId) => {
                   setValue('party_address', address);
@@ -649,7 +727,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">6</span>
+              <span className="text-rose-600 font-medium">8</span>
             </div>
             <CardTitle>Información Adicional</CardTitle>
           </div>
@@ -695,7 +773,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">7</span>
+              <span className="text-rose-600 font-medium">9</span>
             </div>
             <CardTitle>Información Bancaria</CardTitle>
           </div>
@@ -775,7 +853,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         <CardHeader className="px-0 pt-0 pb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">8</span>
+              <span className="text-rose-600 font-medium">10</span>
             </div>
             <CardTitle>Música</CardTitle>
           </div>
