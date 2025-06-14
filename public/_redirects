@@ -1,0 +1,8 @@
+# Redirect www to non-www
+https://www.tuparte.digital/* https://tuparte.digital/:splat 301!
+
+# Handle panel subdomain
+https://panel.tuparte.digital/* /index.html 200
+
+# Handle client-side routing
+/* /index.html 200

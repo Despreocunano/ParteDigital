@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Input } from '../ui/Input';
@@ -18,8 +18,47 @@ import { toast } from 'react-hot-toast';
 import { Button } from '../ui/Button';
 import { Grid } from 'lucide-react';
 import { Select } from '../ui/Select';
-import { PRICING } from '../../config/pricing';
-import { LandingPageFormData } from '../../types/landing';
+
+interface LandingPageFormData {
+  groom_name: string;
+  bride_name: string;
+  welcome_message: string;
+  
+  ceremony_date: string;
+  ceremony_location: string;
+  ceremony_time: string;
+  ceremony_address: string;
+  ceremony_place_id?: string;
+  
+  party_date: string;
+  party_location: string;
+  party_time: string;
+  party_address: string;
+  party_place_id?: string;
+  
+  music_enabled: boolean;
+  selected_track: string;
+  hashtag: string;
+
+  // Additional Info
+  dress_code: string;
+  additional_info: string;
+
+  accepts_kids: boolean;
+  accepts_pets: boolean;
+
+  couple_code: string;
+  store: string;
+
+  bank_info: {
+    accountHolder: string;
+    rut: string;
+    bank: string;
+    accountType: string;
+    accountNumber: string;
+    email: string;
+  };
+}
 
 interface LandingPageFormProps {
   initialData?: Partial<LandingPageFormData> & { 
@@ -91,10 +130,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
   const [publishedStatus, setPublishedStatus] = useState<PublishStatus>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : { 
-      isPublished: !!initialData?.published_at, 
-      slug: initialData?.slug || null 
-    };
+    return stored ? JSON.parse(stored) : { isPublished: false, slug: null };
   });
   const [userNames, setUserNames] = useState<{ groom_name: string; bride_name: string } | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
@@ -191,35 +227,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       setValue('bride_name', userNames.bride_name);
     }
   }, [userNames, initialData, setValue]);
-
-  // Check if landing page is published
-  useEffect(() => {
-    const checkPublishedStatus = async () => {
-      if (!user?.id) return;
-
-      try {
-        const { data, error } = await supabase
-          .from('landing_pages')
-          .select('published_at, slug')
-          .eq('user_id', user.id)
-          .single();
-
-        if (error && error.code !== 'PGRST116') throw error;
-
-        const newStatus = {
-          isPublished: !!data?.published_at,
-          slug: data?.slug || null
-        };
-        
-        setPublishedStatus(newStatus);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
-      } catch (error) {
-        console.error('Error checking published status:', error);
-      }
-    };
-
-    checkPublishedStatus();
-  }, [user?.id]);
 
   const groomName = watch('groom_name');
   const brideName = watch('bride_name');
@@ -341,8 +348,13 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       if (refreshError) throw refreshError;
       if (!refreshedSession) throw new Error('No authenticated session');
 
-      // Create payment preference
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment`, {
+      const slug = `${groomName.toLowerCase()}-y-${brideName.toLowerCase()}`
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/publish-landing`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${refreshedSession.access_token}`,
@@ -350,29 +362,26 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         },
         body: JSON.stringify({
           userId: user?.id,
-          amount: PRICING.PUBLISH.DEFAULT,
-          description: 'Publicación de invitación digital',
-          paymentType: 'publish'
+          slug,
         }),
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Payment API error response:', errorText);
-        throw new Error(`Error en la respuesta del API: ${response.status} ${errorText}`);
-      }
-
       const data = await response.json();
       
-      if (data.success && data.init_point) {
-        // Redirect to MercadoPago checkout
-        window.location.href = data.init_point;
+      if (data.success) {
+        const newStatus = {
+          isPublished: true,
+          slug: data.data.slug
+        };
+        setPublishedStatus(newStatus);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
+        toast.success('¡Página publicada correctamente!');
       } else {
-        throw new Error(data.error || 'Error al crear el pago');
+        throw new Error(data.error || 'Error al publicar la página');
       }
     } catch (error) {
-      console.error('Error creating payment:', error);
-      toast.error(error instanceof Error ? error.message : 'Error al procesar el pago');
+      console.error('Error publishing landing:', error);
+      toast.error(error instanceof Error ? error.message : 'Error al publicar la página');
       onError?.(error as Error);
     } finally {
       setIsPublishing(false);

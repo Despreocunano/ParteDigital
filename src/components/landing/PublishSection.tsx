@@ -3,7 +3,6 @@ import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-import { PRICING } from '../../config/pricing';
 
 interface PublishSectionProps {
   previewUrl: string;
@@ -116,7 +115,7 @@ export function PublishSection({
                     className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
                     leftIcon={<Globe className="h-4 w-4" />}
                   >
-                    {isPublishing ? 'Publicando...' : `Publicar (${PRICING.PUBLISH.DEFAULT} CLP)`}
+                    {isPublishing ? 'Publicando...' : 'Publicar'}
                   </Button>
                 ) : (
                   <Button

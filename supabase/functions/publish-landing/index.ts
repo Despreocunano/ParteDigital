@@ -1,6 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.39.8";
-import { MercadoPagoConfig, Payment } from "npm:mercadopago";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -38,56 +37,40 @@ serve(async (req) => {
       throw new Error("Unauthorized");
     }
 
-    const { paymentId, preferenceId } = await req.json();
+    const { userId, slug } = await req.json();
 
-    if (!paymentId || !preferenceId) {
-      throw new Error("Missing payment information");
+    if (userId !== user.id) {
+      throw new Error("Unauthorized");
     }
 
-    const client = new MercadoPagoConfig({ 
-      accessToken: Deno.env.get("MERCADOPAGO_ACCESS_TOKEN") ?? "" 
-    });
-    const payment = new Payment(client);
-    const paymentData = await payment.get({ id: paymentId });
+    // Generate unique slug with user ID
+    const userIdSuffix = user.id.substring(0, 3);
+    const uniqueSlug = `${slug}-${userIdSuffix}`;
 
-    if (paymentData.status !== "approved") {
-      throw new Error("Payment not approved");
-    }
-
-    const { data: paymentRecord, error: paymentError } = await supabase
-      .from("payments")
-      .select("*")
-      .eq("payment_id", paymentId)
+    // Check if slug is already in use
+    const { data: existingPage, error: checkError } = await supabase
+      .from('landing_pages')
+      .select('id')
+      .eq('slug', uniqueSlug)
+      .neq('user_id', userId)
       .single();
 
-    if (paymentError || !paymentRecord) {
-      throw new Error("Payment record not found");
+    if (checkError && checkError.code !== 'PGRST116') {
+      throw new Error("Error checking slug availability");
     }
 
-    const { data: landingData, error: landingError } = await supabase
-      .from("landing_pages")
-      .select("*")
-      .eq("user_id", user.id)
-      .single();
-
-    if (landingError || !landingData) {
-      throw new Error("Landing page not found");
+    if (existingPage) {
+      throw new Error("This URL is already in use");
     }
 
-    const slug = `${landingData.groom_name.toLowerCase()}-y-${landingData.bride_name.toLowerCase()}`
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
-
+    // Update landing page status
     const { data, error: updateError } = await supabase
-      .from("landing_pages")
-      .update({
-        status: "published",
+      .from('landing_pages')
+      .update({ 
         published_at: new Date().toISOString(),
-        slug: slug
+        slug: uniqueSlug
       })
-      .eq("user_id", user.id)
+      .eq('user_id', userId)
       .select()
       .single();
 
@@ -98,10 +81,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({ 
         success: true,
-        data: {
-          slug: slug,
-          published_at: data.published_at
-        }
+        data
       }),
       {
         headers: {

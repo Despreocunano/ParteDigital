@@ -1,7 +1,1 @@
-export const PRICING = {
-  PUBLISH: {
-    DEFAULT: 5000, // Precio por defecto en CLP
-    MIN: 5000,     // Precio mínimo en CLP
-    MAX: 1000000   // Precio máximo en CLP
-  }
-} as const;
+// This file is no longer needed as we've removed MercadoPago integration 
