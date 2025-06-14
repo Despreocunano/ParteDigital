@@ -160,19 +160,22 @@ export function PaymentModal({
             ) : preferenceId ? (
               <div className="w-full">
                 <Wallet 
-                  initialization={{ preferenceId }}
-                  onReady={() => console.log('Wallet ready')}
-                  onError={(error) => {
-                    console.error('Wallet error:', error);
-                    toast.error('Error al cargar el método de pago');
-                  }}
-                  customization={{
-                    visual: {
-                      hideValueProp: false,
-                      buttonBackground: 'default',
-                      borderRadius: 'md',
+                  {...{
+                    initialization: { preferenceId },
+                    onReady: () => console.log('Wallet ready'),
+                    onError: (error: Error) => {
+                      console.error('Wallet error:', error);
+                      toast.error('Error al cargar el método de pago');
+                    },
+                    onSubmit: () => Promise.resolve(),
+                    customization: {
+                      visual: {
+                        hideValueProp: false,
+                        buttonBackground: 'default',
+                        borderRadius: 'md',
+                      }
                     }
-                  }}
+                  } as any}
                 />
               </div>
             ) : null}
