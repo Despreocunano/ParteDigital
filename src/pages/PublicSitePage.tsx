@@ -39,6 +39,8 @@ interface LandingPageData {
     accountNumber: string;
     email: string;
   };
+  couple_code: string;
+  store: string;
 }
 
 export function PublicSitePage() {
@@ -155,7 +157,9 @@ export function PublicSitePage() {
     dress_code: landingData.dress_code,
     additional_info: landingData.additional_info,
     accepts_kids: landingData.accepts_kids,
-    accepts_pets: landingData.accepts_pets
+    accepts_pets: landingData.accepts_pets,
+    couple_code: landingData.couple_code,
+    store: landingData.store
   };
 
   return <TemplateComponent {...templateProps} />;

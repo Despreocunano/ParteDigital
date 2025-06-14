@@ -101,10 +101,10 @@ export function PartyInfo({
 
     return (
       <div 
-        className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm px-4"
       >
         <div 
-          className="relative w-full max-w-2xl px-8 py-12 text-center text-[#D4B572]"
+          className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl"
         >
           {/* Corner decorations */}
           <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30" />
@@ -114,17 +114,19 @@ export function PartyInfo({
 
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
+            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
           >
-            <X className="w-5 h-5 text-[#D4B572]" />
+            <X className="w-5 h-5 text-gray-600" />
           </button>
 
           <div className="space-y-8">
-            <div className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Icon className="w-8 h-8 text-[#D4B572]" />
+            <div className="relative -mt-[100px] mb-8">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto border-4 border-white shadow-lg">
+                <Icon className="w-12 h-12 text-[#D4B572]" />
+              </div>
             </div>
-            <h2 className="text-3xl font-serif">{title}</h2>
-            <p className="text-[#D4B572]/80 text-lg leading-relaxed whitespace-pre-wrap">
+            <h2 className="text-2xl font-serif text-gray-900">{title}</h2>
+            <p className="text-gray-600 text-lg leading-relaxed whitespace-pre-wrap">
               {content}
             </p>
           </div>
@@ -147,7 +149,7 @@ export function PartyInfo({
             className="text-center mb-16"
             variants={item}
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#D4B572]">
+            <h2 className="text-2xl md:text-3xl font-serif text-[#D4B572]">
               Información de la Fiesta
             </h2>
             <Divider className="mt-8" />
@@ -234,10 +236,10 @@ export function PartyInfo({
       {/* Music Modal */}
       {showMusicModal && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm px-4"
         >
           <div 
-            className="relative w-full max-w-2xl px-8 py-12 text-center text-[#D4B572]"
+            className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl"
           >
             {/* Corner decorations */}
             <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30" />
@@ -247,35 +249,45 @@ export function PartyInfo({
 
             <button
               onClick={() => setShowMusicModal(false)}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
             >
-              <X className="w-5 h-5 text-[#D4B572]" />
+              <X className="w-5 h-5 text-gray-600" />
             </button>
 
             <div className="space-y-8">
-              <div className="w-16 h-16 bg-[#D4B572]/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Music2 className="w-8 h-8 text-[#D4B572]" />
+              <div className="relative -mt-[100px] mb-8">
+                <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto border-4 border-white shadow-lg">
+                  <Music2 className="w-12 h-12 text-[#D4B572]" />
+                </div>
               </div>
-              <h2 className="text-3xl font-serif">Sugerir Canciones</h2>
-              <p className="text-[#D4B572]/80">
-                Ayúdanos a crear la playlist perfecta para nuestra fiesta
+              <h2 className="text-2xl font-serif text-gray-900">Sugerir Canciones</h2>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                {musicInfo}
               </p>
 
-              <div className="space-y-6">
+              <div className="mt-8">
                 <SpotifySearch
                   selectedTracks={selectedTracks}
-                  onSelect={(track) => setSelectedTracks([...selectedTracks, track])}
+                  onSelect={(track) => {
+                    if (!selectedTracks.find(t => t.id === track.id)) {
+                      setSelectedTracks([...selectedTracks, track]);
+                    }
+                  }}
                   onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
                   maxTracks={2}
                 />
 
-                <Button
-                  onClick={handleSubmit}
-                  isLoading={isSubmitting}
-                  disabled={selectedTracks.length === 0}
-                >
-                  Guardar Canciones
-                </Button>
+                {selectedTracks.length > 0 && (
+                  <div className="mt-8 space-y-4">
+                    <Button
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
+                      className="w-full bg-[#D4B572] hover:bg-[#C4A562] text-white"
+                    >
+                      {isSubmitting ? 'Enviando...' : 'Enviar Sugerencias'}
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

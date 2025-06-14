@@ -48,6 +48,7 @@ interface LandingPageFormData {
   accepts_pets: boolean;
 
   couple_code: string;
+  store: string;
 
   bank_info: {
     accountHolder: string;
@@ -138,6 +139,42 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [selectedAccountType, setSelectedAccountType] = useState(initialData?.bank_info?.accountType || '');
   const [rutError, setRutError] = useState<string | null>(null);
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
+  const [selectedStore, setSelectedStore] = useState(initialData?.store || '');
+
+  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
+    defaultValues: {
+      groom_name: initialData?.groom_name || userNames?.groom_name || '',
+      bride_name: initialData?.bride_name || userNames?.bride_name || '',
+      welcome_message: initialData?.welcome_message || '',
+      ceremony_date: initialData?.ceremony_date || '',
+      ceremony_location: initialData?.ceremony_location || '',
+      ceremony_time: initialData?.ceremony_time || '',
+      ceremony_address: initialData?.ceremony_address || '',
+      ceremony_place_id: initialData?.ceremony_place_id,
+      party_date: initialData?.party_date || '',
+      party_location: initialData?.party_location || '',
+      party_time: initialData?.party_time || '',
+      party_address: initialData?.party_address || '',
+      party_place_id: initialData?.party_place_id,
+      dress_code: initialData?.dress_code || '',
+      additional_info: initialData?.additional_info || '',
+      hashtag: initialData?.hashtag || '',
+      accepts_kids: initialData?.accepts_kids ?? false,
+      accepts_pets: initialData?.accepts_pets ?? false,
+      couple_code: initialData?.couple_code || '',
+      store: initialData?.store || '',
+      bank_info: initialData?.bank_info || {
+        accountHolder: '',
+        rut: '',
+        bank: '',
+        accountType: '',
+        accountNumber: '',
+        email: ''
+      }
+    }
+  });
+
+  const coupleCode = watch('couple_code');
 
   const dressCodeOptions = [
     { value: 'Formal', label: 'Formal' },
@@ -152,6 +189,11 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     { value: 'Cuenta corriente', label: 'Cuenta Corriente' },
     { value: 'Cuenta vista', label: 'Cuenta Vista' },
     { value: 'Cuenta RUT', label: 'Cuenta RUT' }
+  ];
+
+  const storeOptions = [
+    { value: 'falabella', label: 'Falabella' },
+    { value: 'paris', label: 'Paris' }
   ];
 
   // Fetch user names from users table
@@ -177,38 +219,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
     fetchUserNames();
   }, [user?.id]);
-
-  const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
-    defaultValues: {
-      groom_name: initialData?.groom_name || userNames?.groom_name || '',
-      bride_name: initialData?.bride_name || userNames?.bride_name || '',
-      welcome_message: initialData?.welcome_message || '',
-      ceremony_date: initialData?.ceremony_date || '',
-      ceremony_location: initialData?.ceremony_location || '',
-      ceremony_time: initialData?.ceremony_time || '',
-      ceremony_address: initialData?.ceremony_address || '',
-      ceremony_place_id: initialData?.ceremony_place_id,
-      party_date: initialData?.party_date || '',
-      party_location: initialData?.party_location || '',
-      party_time: initialData?.party_time || '',
-      party_address: initialData?.party_address || '',
-      party_place_id: initialData?.party_place_id,
-      dress_code: initialData?.dress_code || '',
-      additional_info: initialData?.additional_info || '',
-      hashtag: initialData?.hashtag || '',
-      accepts_kids: initialData?.accepts_kids ?? false,
-      accepts_pets: initialData?.accepts_pets ?? false,
-      couple_code: initialData?.couple_code || '',
-      bank_info: initialData?.bank_info || {
-        accountHolder: '',
-        rut: '',
-        bank: '',
-        accountType: '',
-        accountNumber: '',
-        email: ''
-      }
-    }
-  });
 
   // Update form values when userNames are loaded
   useEffect(() => {
@@ -282,11 +292,11 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         .eq('user_id', user?.id)
         .single();
 
-      // Adjust dates to prevent timezone issues
+      // Clean hashtag by removing # if present
+      const cleanHashtag = data.hashtag.replace(/^#/, '');
+
       const adjustDate = (dateStr: string) => {
-        if (!dateStr) return null;
         const date = new Date(dateStr);
-        date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
         return date.toISOString();
       };
 
@@ -296,6 +306,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           id: existingPage?.id, // Include the id if it exists
           user_id: user?.id,
           ...data,
+          hashtag: cleanHashtag, // Use cleaned hashtag
           template_id: selectedTemplateId,
           wedding_date: adjustDate(data.ceremony_date),
           ceremony_date: adjustDate(data.ceremony_date),
@@ -310,9 +321,9 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       if (error) throw error;
 
       toast.success(
-        publishedStatus.isPublished 
-          ? 'Cambios guardados correctamente'
-          : 'Cambios guardados correctamente. Recuerda publicar tu invitación para poder compartirla'
+        !existingPage
+          ? 'Invitación creada correctamente'
+          : 'Cambios guardados correctamente'
       );
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
@@ -875,11 +886,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
                 error={errors.bank_info?.email?.message}
                 placeholder="Email para recibir comprobantes"
               />
-              <Input
-                label="Código de Novios"
-                {...register('couple_code')}
-                placeholder="Ingresa el código que te proporcionó la tienda..."
-              />
             </div>
           </div>
         </CardContent>
@@ -890,6 +896,40 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
               <span className="text-rose-600 font-medium">10</span>
+            </div>
+            <CardTitle>Regalo</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 pt-6">
+          <div className="space-y-4">
+            <Input
+              label="Código de Novios"
+              {...register('couple_code')}
+              error={errors.couple_code?.message}
+              placeholder="Ingresa el código de novios"
+            />
+            <Select
+              label="Tienda"
+              {...register('store')}
+              options={storeOptions}
+              disabled={!coupleCode}
+              value={selectedStore}
+              onChange={(e) => setSelectedStore(e.target.value)}
+            />
+            {!coupleCode && (
+              <p className="text-sm text-gray-500">
+                Ingresa un código de novios para seleccionar la tienda
+              </p>
+            )}
+          </div>
+        </CardContent>
+      </div>
+
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">11</span>
             </div>
             <CardTitle>Música</CardTitle>
           </div>

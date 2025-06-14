@@ -38,6 +38,8 @@ interface LandingPageData {
     email: string;
   };
   hashtag: string;
+  couple_code: string;
+  store: string;
 }
 
 export function PreviewPage() {
@@ -136,7 +138,9 @@ export function PreviewPage() {
     dress_code: landingData.dress_code,
     additional_info: landingData.additional_info,
     accepts_kids: landingData.accepts_kids,
-    accepts_pets: landingData.accepts_pets
+    accepts_pets: landingData.accepts_pets,
+    couple_code: landingData.couple_code,
+    store: landingData.store
   };
 
   return <TemplateComponent {...templateProps} />;

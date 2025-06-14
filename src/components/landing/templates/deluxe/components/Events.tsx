@@ -79,26 +79,47 @@ END:VCALENDAR`;
           <h3 className="text-3xl font-serif text-[#D4B572]">{title}</h3>
         </div>
         
-        <div className="space-y-6">
+        <div className="space-y-8">
+          <div>
+            <div className="flex items-start">
+              <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
+                <MapPin className="w-5 h-5 text-[#D4B572]" />
+              </div>
+              <div className="ml-4">
+                <h4 className="text-sm font-medium text-[#D4B572]/60 mb-1">Lugar</h4>
+                <p className="text-lg font-medium text-[#D4B572]">{location}</p>
+              </div>
+            </div>
+            <div className="mt-4">
+              <Button
+                onClick={onRsvp}
+                className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
+              >
+                Confirmar asistencia
+              </Button>
+            </div>
+          </div>
+
           <div>
             <div className="flex items-start">
               <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
                 <CalendarDays className="w-5 h-5 text-[#D4B572]" />
               </div>
               <div className="ml-4">
+                <h4 className="text-sm font-medium text-[#D4B572]/60 mb-1">Fecha</h4>
                 <p className="text-lg font-medium text-[#D4B572]">
                   {new Date(date).toLocaleDateString('es-ES', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric'
                   })}
+                  {time && (
+                    <span className="ml-2 text-[#D4B572]/80">
+                      <Clock className="w-4 h-4 inline mr-1" />
+                      {time}
+                    </span>
+                  )}
                 </p>
-                {time && (
-                  <div className="flex items-center mt-2 text-[#D4B572]/80">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span>{time}</span>
-                  </div>
-                )}
               </div>
             </div>
             <div className="mt-4">
@@ -150,34 +171,27 @@ END:VCALENDAR`;
             </div>
           </div>
 
-          <div>
-            <div className="flex items-start">
-              <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
-                <MapPin className="w-5 h-5 text-[#D4B572]" />
+          {address && (
+            <div>
+              <div className="flex items-start">
+                <div className="w-10 h-10 rounded-full bg-[#D4B572]/20 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-[#D4B572]" />
+                </div>
+                <div className="ml-4">
+                  <h4 className="text-sm font-medium text-[#D4B572]/60 mb-1">Dirección</h4>
+                  <p className="text-[#D4B572]/80 leading-relaxed">{address}</p>
+                </div>
               </div>
-              <div className="ml-4">
-                <p className="text-lg font-medium text-[#D4B572]">{location}</p>
-                {address && (
-                  <p className="mt-2 text-[#D4B572]/80 leading-relaxed">{address}</p>
-                )}
+              <div className="mt-4">
+                <Button
+                  onClick={handleOpenMaps}
+                  className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
+                >
+                  ¿Cómo llegar?
+                </Button>
               </div>
             </div>
-            <div className="mt-4">
-              <Button
-                onClick={handleOpenMaps}
-                className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
-              >
-                ¿Cómo llegar?
-              </Button>
-            </div>
-          </div>
-
-          <Button
-            onClick={onRsvp}
-            className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
-          >
-            Confirmar asistencia
-          </Button>
+          )}
         </div>
       </div>
     </motion.div>
@@ -291,7 +305,7 @@ export function Events({
 
             {partyLocation && partyDate && (
               <Event
-                title="Celebración"
+                title="Recepción"
                 date={partyDate}
                 time={partyTime}
                 location={partyLocation}
@@ -307,42 +321,43 @@ export function Events({
 
       <AnimatePresence>
         {showRsvpModal && (
-          <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowRsvpModal(false)}
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm px-4"
           >
-            <motion.div 
-              className="relative w-full max-w-xl px-8 py-12 text-center text-[#D4B572]"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={e => e.stopPropagation()}
+            <div 
+              className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl"
             >
+              {/* Corner decorations */}
+              <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30" />
+              <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30" />
+              <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30" />
+
               <button
-                type="button"
                 onClick={() => setShowRsvpModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-[#D4B572]/10 hover:bg-[#D4B572]/20 transition-colors z-10"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
               >
-                <X className="w-5 h-5 text-[#D4B572]" />
+                <X className="w-5 h-5 text-gray-600" />
               </button>
 
-              <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#D4B572]/30"></div>
-              <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#D4B572]/30"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#D4B572]/30"></div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#D4B572]/30"></div>
-
               <div className="space-y-8">
-                <h2 className="text-3xl font-serif">Confirmar Asistencia</h2>
+                <div className="relative -mt-[100px] mb-8">
+                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto border-4 border-white shadow-lg">
+                    <CalendarDays className="w-12 h-12 text-[#D4B572]" />
+                  </div>
+                </div>
+                <h2 className="text-2xl font-serif text-gray-900">Confirmar Asistencia</h2>
+                <p className="text-gray-600 text-lg leading-relaxed">
+                  Nos encantaría tenerte en nuestro día especial
+                </p>
+
                 <PublicRsvpForm
                   userId={userId}
                   onSuccess={() => setShowRsvpModal(false)}
                 />
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
     </>

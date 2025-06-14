@@ -39,7 +39,8 @@ export function DeluxeTemplate({
   additional_info,
   accepts_kids,
   accepts_pets,
-  couple_code
+  couple_code,
+  store
 }: TemplateProps) {
 
   const [showWelcomeModal, setShowWelcomeModal] = useState(musicEnabled);
@@ -131,6 +132,8 @@ export function DeluxeTemplate({
 
           <Gifts
             bankInfo={bankInfo}
+            couple_code={couple_code}
+            store={store}
             className="bg-[#253238] border-y border-[#D4B572]/20"
           />
 

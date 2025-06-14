@@ -77,7 +77,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
   );
 
   return (
-    <section className="py-24 px-4 bg-[#2F3E46]">
+    <section className="pb-24 px-4 bg-[#2F3E46]">
       <motion.div 
         className="max-w-4xl mx-auto"
         initial="hidden"
@@ -87,7 +87,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
       >
         <motion.div className="text-center mb-12" variants={item}>
           <h2 className="text-3xl md:text-4xl font-serif text-[#D4B572]">
-            Nuestra Familia
+            Todos son bienvenidos
           </h2>
           <Divider className="mt-8" />
         </motion.div>

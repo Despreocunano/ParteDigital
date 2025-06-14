@@ -327,49 +327,37 @@ export function Events({
 
       <AnimatePresence>
         {showRsvpModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]">
-            <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#1C2127]/95 backdrop-blur-sm px-4"
+          >
+            <div 
+              className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl"
+            >
               {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-24 h-24">
-                <img src={modal} />
-              </div>
-              <div className="absolute top-0 right-0 w-24 h-24 scale-x-[-1]">
-                <img src={modal} />
-              </div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 scale-y-[-1]">
-                <img src={modal} />
-              </div>
-              <div className="absolute bottom-0 right-0 w-24 h-24 scale-[-1]">
-                <img src={modal} />
-              </div>
+              <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-[#E91E63]/30" />
+              <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-[#E91E63]/30" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-[#E91E63]/30" />
+              <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-[#E91E63]/30" />
+
               <button
-                type="button"
                 onClick={() => setShowRsvpModal(false)}
-                className="absolute top-12 right-12 w-8 h-8 flex items-center justify-center rounded-full bg-[#F8BBD9]/20 hover:bg-[#F8BBD9]/40 transition-colors z-20"
+                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
               >
-                <X className="w-5 h-5 text-[#2D1B69]" />
+                <X className="w-5 h-5 text-gray-600" />
               </button>
+
               <div className="space-y-8">
-                <h2 className="text-3xl font-serif">Confirmar Asistencia</h2>
-                <p className="text-[#8D6E63] text-lg">Nos encantaría tenerte en nuestro día especial</p>
-                <div>
-                  <PublicRsvpForm
-                    userId={userId}
-                    onSuccess={() => setShowRsvpModal(false)}
-                    theme={{
-                      backgroundColor: '#FFFFFF',
-                      textColor: '#2D1B69',
-                      borderColor: '#F8BBD9',
-                      inputBackground: '#FFFFFF',
-                      placeholderColor: '#8D6E63',
-                      accentColor: '#C2185B',
-                      successBackground: '#FFFFFF',
-                      successText: '#2D1B69',
-                      errorBackground: 'rgba(220, 38, 38, 0.1)',
-                      errorText: '#ef4444'
-                    }}
-                  />
+                <div className="relative -mt-[100px] mb-8">
+                  <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto border-4 border-white shadow-lg">
+                    <CalendarDays className="w-12 h-12 text-[#E91E63]" />
+                  </div>
                 </div>
+                <h2 className="text-2xl font-serif text-gray-900">Confirmar Asistencia</h2>
+
+                <PublicRsvpForm
+                  userId={userId}
+                  onSuccess={() => setShowRsvpModal(false)}
+                />
               </div>
             </div>
           </div>

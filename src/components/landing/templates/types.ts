@@ -33,4 +33,5 @@ export interface TemplateProps {
   accepts_kids: boolean;
   accepts_pets: boolean;
   couple_code: string;
+  store?: string;
 }
