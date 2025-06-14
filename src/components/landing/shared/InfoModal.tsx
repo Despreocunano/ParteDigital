@@ -29,7 +29,7 @@ export function InfoModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm px-4`}
+        className={`fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm px-4 overflow-y-auto`}
         style={{ backgroundColor: `${overlayColor}95` }}
         onClick={onClose}
       >
@@ -37,7 +37,8 @@ export function InfoModal({
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl"
+          className="relative w-full max-w-2xl px-8 py-12 text-center bg-white rounded-lg shadow-xl my-8"
+          onClick={e => e.stopPropagation()}
         >
           <button
             onClick={onClose}
@@ -53,7 +54,9 @@ export function InfoModal({
               </div>
             </div>
             <h2 className="text-2xl font-serif text-gray-900">{title}</h2>
-            {children}
+            <div className="overflow-x-auto">
+              {children}
+            </div>
           </div>
         </motion.div>
       </motion.div>
