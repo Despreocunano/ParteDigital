@@ -8,6 +8,7 @@ export function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [publishedUrl, setPublishedUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const handlePaymentSuccess = async () => {
@@ -16,7 +17,7 @@ export function PaymentSuccess() {
         const preferenceId = searchParams.get('preference_id');
         const status = searchParams.get('status');
 
-        if (!paymentId || !preferenceId || status !== 'approved') {
+        if (!paymentId || !preferenceId) {
           throw new Error('Invalid payment response');
         }
 
@@ -40,13 +41,26 @@ export function PaymentSuccess() {
           }),
         });
 
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error en la respuesta del API: ${response.status} ${errorText}`);
+        }
+
         const data = await response.json();
         
         if (data.success) {
+          setPublishedUrl(data.data?.url || null);
           toast.success('¡Página publicada correctamente!');
+          
+          // Update local storage with published status
+          localStorage.setItem('landing_page_status', JSON.stringify({
+            isPublished: true,
+            slug: data.data?.slug || null
+          }));
+          
           // Redirect to the landing page after 3 seconds
           setTimeout(() => {
-            navigate('/dashboard');
+            navigate('/landing');
           }, 3000);
         } else {
           throw new Error(data.error || 'Error al publicar la página');
@@ -56,7 +70,7 @@ export function PaymentSuccess() {
         toast.error(error instanceof Error ? error.message : 'Error al procesar el pago');
         // Redirect to dashboard after error
         setTimeout(() => {
-          navigate('/dashboard');
+          navigate('/landing');
         }, 3000);
       } finally {
         setIsLoading(false);
@@ -82,7 +96,22 @@ export function PaymentSuccess() {
             </div>
             <h2 className="text-xl font-semibold text-gray-900">¡Pago exitoso!</h2>
             <p className="text-gray-500">Tu invitación ha sido publicada correctamente.</p>
-            <p className="text-sm text-gray-400">Serás redirigido al dashboard en unos segundos...</p>
+            
+            {publishedUrl && (
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <p className="text-sm font-medium text-gray-700 mb-2">Tu invitación está disponible en:</p>
+                <a 
+                  href={publishedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-rose-600 hover:text-rose-700 break-all"
+                >
+                  {publishedUrl}
+                </a>
+              </div>
+            )}
+            
+            <p className="text-sm text-gray-400 mt-6">Serás redirigido al dashboard en unos segundos...</p>
           </div>
         )}
       </div>

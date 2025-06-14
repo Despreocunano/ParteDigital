@@ -19,47 +19,7 @@ import { Button } from '../ui/Button';
 import { Grid } from 'lucide-react';
 import { Select } from '../ui/Select';
 import { PRICING } from '../../config/pricing';
-
-interface LandingPageFormData {
-  groom_name: string;
-  bride_name: string;
-  welcome_message: string;
-  
-  ceremony_date: string;
-  ceremony_location: string;
-  ceremony_time: string;
-  ceremony_address: string;
-  ceremony_place_id?: string;
-  
-  party_date: string;
-  party_location: string;
-  party_time: string;
-  party_address: string;
-  party_place_id?: string;
-  
-  music_enabled: boolean;
-  selected_track: string;
-  hashtag: string;
-
-  // Additional Info
-  dress_code: string;
-  additional_info: string;
-
-  accepts_kids: boolean;
-  accepts_pets: boolean;
-
-  couple_code: string;
-  store: string;
-
-  bank_info: {
-    accountHolder: string;
-    rut: string;
-    bank: string;
-    accountType: string;
-    accountNumber: string;
-    email: string;
-  };
-}
+import { LandingPageFormData } from '../../types/landing';
 
 interface LandingPageFormProps {
   initialData?: Partial<LandingPageFormData> & { 
@@ -131,7 +91,10 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [galleryImages, setGalleryImages] = useState<{ url: string; caption?: string }[]>(initialData?.gallery_images || []);
   const [publishedStatus, setPublishedStatus] = useState<PublishStatus>(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : { isPublished: false, slug: null };
+    return stored ? JSON.parse(stored) : { 
+      isPublished: !!initialData?.published_at, 
+      slug: initialData?.slug || null 
+    };
   });
   const [userNames, setUserNames] = useState<{ groom_name: string; bride_name: string } | null>(null);
   const [hasChanges, setHasChanges] = useState(false);
@@ -141,7 +104,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [rutError, setRutError] = useState<string | null>(null);
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
   const [selectedStore, setSelectedStore] = useState(initialData?.store || '');
-  const [publishPrice, setPublishPrice] = useState(PRICING.PUBLISH.DEFAULT);
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -229,6 +191,35 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       setValue('bride_name', userNames.bride_name);
     }
   }, [userNames, initialData, setValue]);
+
+  // Check if landing page is published
+  useEffect(() => {
+    const checkPublishedStatus = async () => {
+      if (!user?.id) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('landing_pages')
+          .select('published_at, slug')
+          .eq('user_id', user.id)
+          .single();
+
+        if (error && error.code !== 'PGRST116') throw error;
+
+        const newStatus = {
+          isPublished: !!data?.published_at,
+          slug: data?.slug || null
+        };
+        
+        setPublishedStatus(newStatus);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
+      } catch (error) {
+        console.error('Error checking published status:', error);
+      }
+    };
+
+    checkPublishedStatus();
+  }, [user?.id]);
 
   const groomName = watch('groom_name');
   const brideName = watch('bride_name');
@@ -359,7 +350,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         },
         body: JSON.stringify({
           userId: user?.id,
-          amount: publishPrice,
+          amount: PRICING.PUBLISH.DEFAULT,
           description: 'Publicación de invitación digital',
           paymentType: 'publish'
         }),
@@ -367,8 +358,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("Payment API error response:", errorText);
-        throw new Error(`Error en la respuesta del API: ${response.status} ${response.statusText}`);
+        console.error('Payment API error response:', errorText);
+        throw new Error(`Error en la respuesta del API: ${response.status} ${errorText}`);
       }
 
       const data = await response.json();
@@ -462,40 +453,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     }
   };
 
-  // Efecto para cargar el estado de publicación desde el servidor
-  useEffect(() => {
-    const loadPublishStatus = async () => {
-      if (!user?.id) return;
-      
-      try {
-        const { data, error } = await supabase
-          .from('landing_pages')
-          .select('published_at, slug')
-          .eq('user_id', user.id)
-          .single();
-          
-        if (error && error.code !== 'PGRST116') throw error;
-        
-        if (data) {
-          const newStatus = {
-            isPublished: !!data.published_at,
-            slug: data.slug
-          };
-          setPublishedStatus(newStatus);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
-          
-          if (data.slug) {
-            setPublishedUrl(`https://tuparte.digital/invitacion/${data.slug}`);
-          }
-        }
-      } catch (error) {
-        console.error('Error loading publish status:', error);
-      }
-    };
-    
-    loadPublishStatus();
-  }, [user?.id]);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <PublishSection
@@ -506,7 +463,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         onPublish={handlePublish}
         onUnpublish={handleUnpublish}
         hasRequiredInfo={hasRequiredInfo}
-        publishPrice={publishPrice}
       />
 
       {!publishedStatus.isPublished && (
@@ -989,42 +945,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               label="Subir música de fondo"
             />
           )}
-        </CardContent>
-      </div>
-
-      <div className="bg-white rounded-lg border p-6">
-        <CardHeader className="px-0 pt-0 pb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
-              <span className="text-rose-600 font-medium">12</span>
-            </div>
-            <CardTitle>Precio de Publicación</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0 pt-6">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Precio para publicar la invitación (CLP)
-              </label>
-              <Input
-                type="number"
-                min={PRICING.PUBLISH.MIN}
-                max={PRICING.PUBLISH.MAX}
-                value={publishPrice}
-                onChange={(e) => {
-                  const value = parseInt(e.target.value);
-                  if (!isNaN(value) && value >= PRICING.PUBLISH.MIN && value <= PRICING.PUBLISH.MAX) {
-                    setPublishPrice(value);
-                  }
-                }}
-                placeholder="Precio en CLP"
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                Este es el precio que se cobrará al publicar la invitación.
-              </p>
-            </div>
-          </div>
         </CardContent>
       </div>
 
