@@ -189,7 +189,7 @@ export function PublishSection({
                       className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
                       leftIcon={<CreditCard className="h-4 w-4" />}
                     >
-                      {isProcessingPayment ? 'Procesando...' : 'Publicar ($9.990)'}
+                      {isProcessingPayment ? 'Procesando...' : 'Publicar ($990)'}
                     </Button>
                   ) : (
                     <Button
@@ -290,7 +290,7 @@ export function PublishSection({
           <div className="bg-gray-50 p-4 rounded-lg">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-700 font-medium">Publicación de invitación</span>
-              <span className="text-gray-900 font-bold">$9.990</span>
+              <span className="text-gray-900 font-bold">$990</span>
             </div>
             <p className="text-sm text-gray-500">
               Pago único para publicar tu invitación digital y compartirla con tus invitados.
