@@ -110,38 +110,32 @@ export function PublishSection({
   };
 
   const createPaymentPreference = async () => {
-    if (!user) return;
-    
-    setIsCreatingPreference(true);
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('No authenticated session');
+    if (!user) {
+      toast.error('Debes iniciar sesión para realizar el pago');
+      return;
+    }
 
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${session.access_token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          amount: PUBLISH_PRICE,
-          description: 'Publicación de invitación digital',
-          paymentType: 'publish'
-        }),
+    try {
+      setIsCreatingPreference(true);
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: { userId: user.id }
       });
 
-      const data = await response.json();
-      
-      if (data.success) {
-        window.location.href = data.init_point;
-      } else {
-        throw new Error(data.error || 'Error al crear la preferencia de pago');
+      if (error) {
+        console.error('Error creating payment:', error);
+        throw error;
       }
+
+      if (!data?.init_point) {
+        console.error('No init_point received from payment creation');
+        throw new Error('No payment URL received');
+      }
+
+      // Redirect to MercadoPago checkout
+      window.location.href = data.init_point;
     } catch (error) {
-      console.error('Error creating payment preference:', error);
-      toast.error('Error al crear la preferencia de pago');
-      setShowPaymentModal(false);
+      console.error('Error in payment process:', error);
+      toast.error('Error al procesar el pago. Por favor, intenta nuevamente.');
     } finally {
       setIsCreatingPreference(false);
     }
@@ -314,14 +308,22 @@ export function PublishSection({
             </div>
           </div>
 
-          <Button
-            onClick={createPaymentPreference}
-            className="w-full bg-primary hover:bg-primary-dark text-white"
-            disabled={isCreatingPreference}
-            isLoading={isCreatingPreference}
-          >
-            {isCreatingPreference ? 'Procesando...' : 'Pagar con MercadoPago'}
-          </Button>
+          <div className="flex flex-col items-center gap-4">
+            <button
+              onClick={createPaymentPreference}
+              disabled={isCreatingPreference}
+              className="w-full px-6 py-3 text-lg font-medium text-white bg-[#009ee3] hover:bg-[#007eb5] transition-colors rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isCreatingPreference ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Procesando...</span>
+                </div>
+              ) : (
+                `Pagar ${PUBLISH_PRICE.toLocaleString('es-CL')} CLP con MercadoPago`
+              )}
+            </button>
+          </div>
 
           <p className="text-sm text-gray-500 text-center">
             Al completar el pago, tu invitación será publicada automáticamente y podrás compartirla con tus invitados.

@@ -37,10 +37,13 @@ serve(async (req) => {
 
     // Parse the webhook payload
     const payload = await req.json();
+    console.log("Webhook payload:", payload);
+
     const { type, data } = payload;
 
     // Only process payment notifications
     if (type !== "payment") {
+      console.log("Ignoring non-payment notification");
       return new Response(
         JSON.stringify({ success: true, message: "Ignored non-payment notification" }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -49,6 +52,8 @@ serve(async (req) => {
 
     // Get payment details from MercadoPago
     const paymentId = data.id;
+    console.log("Processing payment ID:", paymentId);
+
     const response = await fetch(
       `https://api.mercadopago.com/v1/payments/${paymentId}`,
       {
@@ -58,17 +63,45 @@ serve(async (req) => {
       }
     );
 
+    if (!response.ok) {
+      console.error("Error fetching payment details:", await response.text());
+      throw new Error("Failed to fetch payment details from MercadoPago");
+    }
+
     const paymentDetails = await response.json();
-    const { status, external_reference, preference_id } = paymentDetails;
+    console.log("Payment details:", paymentDetails);
+
+    const { status, external_reference, preference_id, payment_method_id, payment_type_id } = paymentDetails;
+
+    // Verify payment status
+    if (!status || !external_reference || !preference_id) {
+      console.error("Invalid payment details:", paymentDetails);
+      throw new Error("Invalid payment details");
+    }
+
+    // Only process approved payments
+    if (status !== "approved") {
+      console.log("Payment not approved, status:", status);
+      return new Response(
+        JSON.stringify({ success: true, message: "Payment not approved" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Verify payment method
+    if (!payment_method_id || !payment_type_id) {
+      console.error("Missing payment method details");
+      throw new Error("Invalid payment method");
+    }
 
     // Update payment status in database
     const { error: updateError } = await supabase
       .from("payments")
       .update({
-        status: status === "approved" ? "approved" : 
-                status === "rejected" ? "rejected" : 
-                status === "pending" ? "pending" : "failed",
+        status: "approved",
         updated_at: new Date().toISOString(),
+        payment_method: payment_method_id,
+        payment_type: payment_type_id
       })
       .eq("preference_id", preference_id);
 
@@ -77,22 +110,21 @@ serve(async (req) => {
       throw new Error("Failed to update payment status");
     }
 
-    // If payment is approved, update the user's published status
-    if (status === "approved") {
-      const { error: publishError } = await supabase
-        .from("users")
-        .update({
-          is_published: true,
-          published_at: new Date().toISOString(),
-        })
-        .eq("id", external_reference);
+    // Update user's published status
+    const { error: publishError } = await supabase
+      .from("users")
+      .update({
+        is_published: true,
+        published_at: new Date().toISOString(),
+      })
+      .eq("id", external_reference);
 
-      if (publishError) {
-        console.error("Error updating user publish status:", publishError);
-        throw new Error("Failed to update user publish status");
-      }
+    if (publishError) {
+      console.error("Error updating user publish status:", publishError);
+      throw new Error("Failed to update user publish status");
     }
 
+    console.log("Payment processed successfully");
     return new Response(
       JSON.stringify({ success: true }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
