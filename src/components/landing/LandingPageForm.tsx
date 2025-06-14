@@ -18,6 +18,7 @@ import { toast } from 'react-hot-toast';
 import { Button } from '../ui/Button';
 import { Grid } from 'lucide-react';
 import { Select } from '../ui/Select';
+import { PRICING } from '../../config/pricing';
 
 interface LandingPageFormData {
   groom_name: string;
@@ -348,13 +349,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       if (refreshError) throw refreshError;
       if (!refreshedSession) throw new Error('No authenticated session');
 
-      const slug = `${groomName.toLowerCase()}-y-${brideName.toLowerCase()}`
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
-
-      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/publish-landing`, {
+      // Create payment preference
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${refreshedSession.access_token}`,
@@ -362,26 +358,23 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         },
         body: JSON.stringify({
           userId: user?.id,
-          slug,
+          amount: PRICING.PUBLISH.DEFAULT,
+          description: 'Publicación de invitación digital',
+          paymentType: 'publish'
         }),
       });
 
       const data = await response.json();
       
-      if (data.success) {
-        const newStatus = {
-          isPublished: true,
-          slug: data.data.slug
-        };
-        setPublishedStatus(newStatus);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
-        toast.success('¡Página publicada correctamente!');
+      if (data.success && data.init_point) {
+        // Redirect to MercadoPago checkout
+        window.location.href = data.init_point;
       } else {
-        throw new Error(data.error || 'Error al publicar la página');
+        throw new Error(data.error || 'Error al crear el pago');
       }
     } catch (error) {
-      console.error('Error publishing landing:', error);
-      toast.error(error instanceof Error ? error.message : 'Error al publicar la página');
+      console.error('Error creating payment:', error);
+      toast.error(error instanceof Error ? error.message : 'Error al procesar el pago');
       onError?.(error as Error);
     } finally {
       setIsPublishing(false);
