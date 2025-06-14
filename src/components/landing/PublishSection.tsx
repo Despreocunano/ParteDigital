@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode, CreditCard } from 'lucide-react';
+import { Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode, CreditCard, Clock, XCircle } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { createPayment, checkPaymentStatus } from '../../lib/payment';
 import { Modal } from '../ui/Modal';
@@ -123,7 +123,9 @@ export function PublishSection({
           setTimeout(checkStatus, 3000);
         } else if (result.payment.status === 'pending') {
           setPaymentStatus('pending');
-          toast.info('Pago pendiente de confirmación');
+          toast('Pago pendiente de confirmación', {
+            icon: '⏳',
+          });
         } else {
           setPaymentStatus('failed');
           toast.error('El pago no fue completado');
@@ -391,7 +393,7 @@ export function PublishSection({
           {paymentStatus === 'failed' && (
             <div className="text-center py-4">
               <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <X className="h-8 w-8 text-red-600" />
+                <XCircle className="h-8 w-8 text-red-600" />
               </div>
               <h3 className="text-xl font-medium text-gray-900 mb-2">Pago no completado</h3>
               <p className="text-gray-600 mb-4">
