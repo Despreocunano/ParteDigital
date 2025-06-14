@@ -7,7 +7,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import { Modal } from '../ui/Modal';
 
-const PUBLISH_PRICE = 100; // Precio de publicación en CLP
+const PUBLISH_PRICE = 40000; // 40,000 CLP
 
 interface PublishSectionProps {
   previewUrl: string;
@@ -125,6 +125,17 @@ export function PublishSection({
         description: 'Publicación de invitación digital',
         paymentType: 'publish'
       });
+
+      // First verify the function is available
+      const { data: healthCheck, error: healthError } = await supabase.functions.invoke('create-payment', {
+        method: 'GET'
+      });
+
+      if (healthError) {
+        console.error('Health check failed:', healthError);
+        toast.error('El servicio de pagos no está disponible en este momento. Por favor, intenta más tarde.');
+        return;
+      }
 
       const { data, error } = await supabase.functions.invoke('create-payment', {
         body: {
