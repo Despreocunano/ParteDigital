@@ -118,7 +118,12 @@ export function PublishSection({
     try {
       setIsCreatingPreference(true);
       const { data, error } = await supabase.functions.invoke('create-payment', {
-        body: { userId: user.id }
+        body: {
+          userId: user.id,
+          amount: PUBLISH_PRICE,
+          description: 'Publicación de invitación digital',
+          paymentType: 'publish'
+        }
       });
 
       if (error) {
