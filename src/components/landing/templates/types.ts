@@ -30,4 +30,7 @@ export interface TemplateProps {
   };
   dress_code: string;
   additional_info: string;
+  accepts_kids: boolean;
+  accepts_pets: boolean;
+  couple_code: string;
 }

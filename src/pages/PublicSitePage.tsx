@@ -27,6 +27,8 @@ interface LandingPageData {
   template_id: string;
   dress_code: string;
   additional_info: string;
+  accepts_kids: boolean;
+  accepts_pets: boolean;
   cover_image?: string;
   gallery_images?: any[];
   bank_info?: {
@@ -151,7 +153,9 @@ export function PublicSitePage() {
     userId: landingData.user_id,
     bankInfo: landingData.bank_info,
     dress_code: landingData.dress_code,
-    additional_info: landingData.additional_info
+    additional_info: landingData.additional_info,
+    accepts_kids: landingData.accepts_kids,
+    accepts_pets: landingData.accepts_pets
   };
 
   return <TemplateComponent {...templateProps} />;

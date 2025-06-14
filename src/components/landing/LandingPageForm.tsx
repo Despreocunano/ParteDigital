@@ -44,6 +44,11 @@ interface LandingPageFormData {
   dress_code: string;
   additional_info: string;
 
+  accepts_kids: boolean;
+  accepts_pets: boolean;
+
+  couple_code: string;
+
   bank_info: {
     accountHolder: string;
     rut: string;
@@ -191,6 +196,9 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       dress_code: initialData?.dress_code || '',
       additional_info: initialData?.additional_info || '',
       hashtag: initialData?.hashtag || '',
+      accepts_kids: initialData?.accepts_kids ?? false,
+      accepts_pets: initialData?.accepts_pets ?? false,
+      couple_code: initialData?.couple_code || '',
       bank_info: initialData?.bank_info || {
         accountHolder: '',
         rut: '',
@@ -771,10 +779,33 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           
           <Textarea
             label="Información Adicional"
-            {...register('additional_info', { required: 'La información adicional es requerida' })}
-            error={errors.additional_info?.message}
-            placeholder="Ej: La celebración será al aire libre, se recomienda traer abrigo..."
+            {...register('additional_info')}
+            placeholder="Información adicional para tus invitados..."
           />
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="text-sm font-medium text-gray-700">¿Aceptas niños?</label>
+                <p className="text-sm text-gray-500">Informa a tus invitados que se permite llevar niños</p>
+              </div>
+              <Switch
+                checked={!!watch('accepts_kids')}
+                onCheckedChange={(checked) => setValue('accepts_kids', checked)}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="text-sm font-medium text-gray-700">¿Aceptas mascotas?</label>
+                <p className="text-sm text-gray-500">Informa a tus invitados que tu boda será pet friendly</p>
+              </div>
+              <Switch
+                checked={!!watch('accepts_pets')}
+                onCheckedChange={(checked) => setValue('accepts_pets', checked)}
+              />
+            </div>
+          </div>
+          <div className="border-t border-gray-200 pt-6">
+          </div>
         </CardContent>
       </div>
 
@@ -787,62 +818,53 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
             <CardTitle>Información Bancaria</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="p-0 pt-6">
-          <div className="mb-6">
-            <p className="text-sm text-gray-600">
-              Esta información se mostrará en la invitación para que tus invitados puedan realizar transferencias bancarias. 
-              Asegúrate de que los datos sean correctos.
+        <CardContent className="p-0 pt-6 space-y-6">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Información Bancaria</h3>
+            <p className="text-sm text-gray-500 mb-4">
+              Esta información será visible para tus invitados en la invitación.
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              label="Titular de la Cuenta"
-              {...register('bank_info.accountHolder', { required: 'El titular es requerido' })}
-              error={errors.bank_info?.accountHolder?.message}
-              placeholder="Nombre completo del titular"
-            />
-            <Input
-              label="RUT"
-              value={rutValue}
-              onChange={handleRutChange}
-              error={rutError || undefined}
-              placeholder="12345678-9"
-            />
-            <div className="md:col-span-2">
-              <Select
-                label="Tipo de Cuenta"
-                value={selectedAccountType}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                  const value = e.target.value;
-                  setSelectedAccountType(value);
-                  setValue('bank_info.accountType', value);
-                  if (value === 'cuenta_rut') {
-                    setValue('bank_info.bank', 'Banco Estado');
-                  } else {
-                    setValue('bank_info.bank', '');
-                  }
-                }}
-                options={accountTypeOptions}
-                error={errors.bank_info?.accountType?.message}
-              />
-            </div>
-            <Input
-              label="Banco"
-              {...register('bank_info.bank', { required: 'El banco es requerido' })}
-              error={errors.bank_info?.bank?.message}
-              placeholder="Nombre del banco"
-              disabled={selectedAccountType === 'cuenta_rut'}
-            />
-            <Input
-              label="Número de Cuenta"
-              {...register('bank_info.accountNumber', { required: 'El número de cuenta es requerido' })}
-              error={errors.bank_info?.accountNumber?.message}
-              placeholder="Número de cuenta sin guiones ni espacios"
-            />
-            <div className="md:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
-                label="Email"
-                type="email"
+                label="Titular de la cuenta"
+                {...register('bank_info.accountHolder', { required: 'El titular es requerido' })}
+                error={errors.bank_info?.accountHolder?.message}
+                placeholder="Nombre del titular de la cuenta"
+              />
+              <Input
+                label="RUT"
+                {...register('bank_info.rut', { required: 'El RUT es requerido' })}
+                error={errors.bank_info?.rut?.message}
+                placeholder="12345678-9"
+                value={rutValue}
+                onChange={handleRutChange}
+              />
+              <Input
+                label="Banco"
+                {...register('bank_info.bank', { required: 'El banco es requerido' })}
+                error={errors.bank_info?.bank?.message}
+                placeholder="Nombre del banco"
+              />
+              <Select
+                label="Tipo de cuenta"
+                value={watch('bank_info.accountType')}
+                onChange={(e) => setValue('bank_info.accountType', e.target.value)}
+                error={errors.bank_info?.accountType?.message}
+                options={[
+                  { value: '', label: 'Selecciona un tipo de cuenta' },
+                  { value: 'Cuenta Corriente', label: 'Cuenta Corriente' },
+                  { value: 'Cuenta Vista', label: 'Cuenta Vista' },
+                  { value: 'Cuenta RUT', label: 'Cuenta RUT' }
+                ]}
+              />
+              <Input
+                label="Número de cuenta"
+                {...register('bank_info.accountNumber', { required: 'El número de cuenta es requerido' })}
+                error={errors.bank_info?.accountNumber?.message}
+                placeholder="Número de cuenta"
+              />
+              <Input
+                label="Email para transferencias"
                 {...register('bank_info.email', { 
                   required: 'El email es requerido',
                   pattern: {
@@ -851,7 +873,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
                   }
                 })}
                 error={errors.bank_info?.email?.message}
-                placeholder="correo@ejemplo.com"
+                placeholder="Email para recibir comprobantes"
+              />
+              <Input
+                label="Código de Novios"
+                {...register('couple_code')}
+                placeholder="Ingresa el código que te proporcionó la tienda..."
               />
             </div>
           </div>

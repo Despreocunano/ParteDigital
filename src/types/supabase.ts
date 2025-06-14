@@ -99,6 +99,9 @@ export interface Database {
           hashtag: string | null
           dress_code: string
           additional_info: string
+          accepts_kids: boolean
+          accepts_pets: boolean
+          couple_code: string
           created_at: string | null
           updated_at: string | null
         }
@@ -130,6 +133,9 @@ export interface Database {
           hashtag?: string | null
           dress_code?: string
           additional_info?: string
+          accepts_kids?: boolean
+          accepts_pets?: boolean
+          couple_code?: string
           created_at?: string | null
           updated_at?: string | null
         }
@@ -161,6 +167,9 @@ export interface Database {
           hashtag?: string | null
           dress_code?: string
           additional_info?: string
+          accepts_kids?: boolean
+          accepts_pets?: boolean
+          couple_code?: string
           created_at?: string | null
           updated_at?: string | null
         }
