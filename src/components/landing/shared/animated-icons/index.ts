@@ -1,4 +1,1 @@
-export * from './AnimatedIcon';
-export * from './HeartIcon';
-export * from './DrawIcon';
-export * from './LottieIconWrapper'; 
+// Este archivo puede ser eliminado si no hay más exportaciones 
