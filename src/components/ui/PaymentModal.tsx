@@ -60,9 +60,9 @@ export function PaymentModal({
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Error response:', errorText);
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        const errorData = await response.json();
+        console.error('Error response:', errorData);
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -166,7 +166,6 @@ export function PaymentModal({
                     console.error('Wallet error:', error);
                     toast.error('Error al cargar el método de pago');
                   }}
-                  onSubmit={() => Promise.resolve()}
                   customization={{
                     visual: {
                       hideValueProp: false,
