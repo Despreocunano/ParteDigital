@@ -33,6 +33,9 @@ export function PublishSection({
   const [copied, setCopied] = useState(false);
   const [showQR, setShowQR] = useState(false);
   const [hasPaid, setHasPaid] = useState(false);
+  const [isCreatingPreference, setIsCreatingPreference] = useState(false);
+  const [preferenceId, setPreferenceId] = useState('');
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   // Check if user has already paid
   useEffect(() => {
@@ -93,6 +96,55 @@ export function PublishSection({
           toast.error('Error al copiar la URL');
         }
         break;
+    }
+  };
+
+  const createPaymentPreference = async () => {
+    if (!user) return;
+    
+    setIsCreatingPreference(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No authenticated session');
+
+      console.log('Creating payment with data:', {
+        userId: user.id,
+        amount: 40000,
+        description: 'Publicación de invitación digital',
+        paymentType: 'publish'
+      });
+
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-payment`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          amount: 40000,
+          description: 'Publicación de invitación digital',
+          paymentType: 'publish'
+        }),
+      });
+
+      const data = await response.json();
+      console.log('Payment creation response:', data);
+      
+      if (data.success) {
+        setPreferenceId(data.preferenceId);
+        setShowPaymentModal(true);
+      } else {
+        throw new Error(data.error || 'Error al crear la preferencia de pago');
+      }
+    } catch (error) {
+      console.error('Error creating payment preference:', error);
+      if (error instanceof Error) {
+        console.error('Error details:', error.message);
+      }
+      toast.error('Error al crear la preferencia de pago');
+    } finally {
+      setIsCreatingPreference(false);
     }
   };
 
