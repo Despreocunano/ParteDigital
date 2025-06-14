@@ -550,10 +550,19 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           <div className="space-y-4">
             <Textarea
               label="Mensaje de Bienvenida"
-              {...register('welcome_message')}
+              {...register('welcome_message', {
+                maxLength: {
+                  value: 120,
+                  message: 'El mensaje no puede tener más de 120 caracteres'
+                }
+              })}
               error={errors.welcome_message?.message}
               placeholder="Escribe un mensaje de bienvenida para tus invitados..."
+              maxLength={120}
             />
+            <div className="text-sm text-gray-500 text-right">
+              {watch('welcome_message')?.length || 0}/120 caracteres
+            </div>
             <Input
               label="Hashtag"
               {...register('hashtag')}
