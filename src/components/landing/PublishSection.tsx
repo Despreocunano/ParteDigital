@@ -3,6 +3,7 @@ import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { PRICING } from '../../config/pricing';
 
 interface PublishSectionProps {
   previewUrl: string;
@@ -15,6 +16,7 @@ interface PublishSectionProps {
   onPublish: () => void;
   onUnpublish: () => void;
   hasRequiredInfo?: boolean;
+  publishPrice?: number;
 }
 
 export function PublishSection({
@@ -24,7 +26,8 @@ export function PublishSection({
   isPublishing,
   onPublish,
   onUnpublish,
-  hasRequiredInfo = true
+  hasRequiredInfo = true,
+  publishPrice = PRICING.PUBLISH.DEFAULT
 }: PublishSectionProps) {
   const [copied, setCopied] = React.useState(false);
   const [showQR, setShowQR] = React.useState(false);
@@ -64,6 +67,14 @@ export function PublishSection({
         }
         break;
     }
+  };
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP',
+      maximumFractionDigits: 0
+    }).format(price);
   };
 
   return (
@@ -115,7 +126,7 @@ export function PublishSection({
                     className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
                     leftIcon={<Globe className="h-4 w-4" />}
                   >
-                    {isPublishing ? 'Publicando...' : 'Publicar'}
+                    {isPublishing ? 'Publicando...' : `Publicar (${formatPrice(publishPrice)})`}
                   </Button>
                 ) : (
                   <Button

@@ -141,6 +141,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [rutError, setRutError] = useState<string | null>(null);
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
   const [selectedStore, setSelectedStore] = useState(initialData?.store || '');
+  const [publishPrice, setPublishPrice] = useState(PRICING.PUBLISH.DEFAULT);
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -358,7 +359,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         },
         body: JSON.stringify({
           userId: user?.id,
-          amount: PRICING.PUBLISH.DEFAULT,
+          amount: publishPrice,
           description: 'Publicación de invitación digital',
           paymentType: 'publish'
         }),
@@ -455,6 +456,40 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     }
   };
 
+  // Efecto para cargar el estado de publicación desde el servidor
+  useEffect(() => {
+    const loadPublishStatus = async () => {
+      if (!user?.id) return;
+      
+      try {
+        const { data, error } = await supabase
+          .from('landing_pages')
+          .select('published_at, slug')
+          .eq('user_id', user.id)
+          .single();
+          
+        if (error && error.code !== 'PGRST116') throw error;
+        
+        if (data) {
+          const newStatus = {
+            isPublished: !!data.published_at,
+            slug: data.slug
+          };
+          setPublishedStatus(newStatus);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
+          
+          if (data.slug) {
+            setPublishedUrl(`https://tuparte.digital/invitacion/${data.slug}`);
+          }
+        }
+      } catch (error) {
+        console.error('Error loading publish status:', error);
+      }
+    };
+    
+    loadPublishStatus();
+  }, [user?.id]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       <PublishSection
@@ -465,6 +500,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         onPublish={handlePublish}
         onUnpublish={handleUnpublish}
         hasRequiredInfo={hasRequiredInfo}
+        publishPrice={publishPrice}
       />
 
       {!publishedStatus.isPublished && (
@@ -947,6 +983,42 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               label="Subir música de fondo"
             />
           )}
+        </CardContent>
+      </div>
+
+      <div className="bg-white rounded-lg border p-6">
+        <CardHeader className="px-0 pt-0 pb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center">
+              <span className="text-rose-600 font-medium">12</span>
+            </div>
+            <CardTitle>Precio de Publicación</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0 pt-6">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Precio para publicar la invitación (CLP)
+              </label>
+              <Input
+                type="number"
+                min={PRICING.PUBLISH.MIN}
+                max={PRICING.PUBLISH.MAX}
+                value={publishPrice}
+                onChange={(e) => {
+                  const value = parseInt(e.target.value);
+                  if (!isNaN(value) && value >= PRICING.PUBLISH.MIN && value <= PRICING.PUBLISH.MAX) {
+                    setPublishPrice(value);
+                  }
+                }}
+                placeholder="Precio en CLP"
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                Este es el precio que se cobrará al publicar la invitación.
+              </p>
+            </div>
+          </div>
         </CardContent>
       </div>
 
