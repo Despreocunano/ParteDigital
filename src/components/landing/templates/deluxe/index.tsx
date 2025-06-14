@@ -9,6 +9,7 @@ import { Social } from './components/Social';
 import { Gifts } from './components/Gifts';
 import { Footer } from './components/Footer';
 import { WelcomeModal } from './components/WelcomeModal';
+import { KidsAndPets } from './components/KidsAndPets';
 import type { TemplateProps } from '../types';
 
 export function DeluxeTemplate({
@@ -35,7 +36,10 @@ export function DeluxeTemplate({
   userId,
   bankInfo,
   dress_code,
-  additional_info
+  additional_info,
+  accepts_kids,
+  accepts_pets,
+  couple_code
 }: TemplateProps) {
 
   const [showWelcomeModal, setShowWelcomeModal] = useState(musicEnabled);
@@ -105,6 +109,11 @@ export function DeluxeTemplate({
             partyPlaceId={partyPlaceId}
             showSongRecommendations={musicEnabled}
             className="bg-[#2F3E46]"
+          />
+
+          <KidsAndPets
+            acceptsKids={accepts_kids}
+            acceptsPets={accepts_pets}
           />
 
           <PartyInfo
