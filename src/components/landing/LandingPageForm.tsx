@@ -18,6 +18,7 @@ import { toast } from 'react-hot-toast';
 import { Button } from '../ui/Button';
 import { Grid } from 'lucide-react';
 import { Select } from '../ui/Select';
+import { useSearchParams } from 'react-router-dom';
 
 interface LandingPageFormData {
   groom_name: string;
@@ -118,6 +119,7 @@ const validateRut = (rut: string): boolean => {
 
 export function LandingPageForm({ initialData, onSuccess, onError }: LandingPageFormProps) {
   const { user } = useAuth();
+  const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [showAllTemplates, setShowAllTemplates] = useState(false);
@@ -173,6 +175,22 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       }
     }
   });
+
+  // Check for payment status in URL
+  useEffect(() => {
+    const paymentStatus = searchParams.get('payment_status');
+    if (paymentStatus) {
+      if (paymentStatus === 'success') {
+        toast.success('¡Pago completado! Tu invitación ha sido publicada');
+        // Refresh the page to update the published status
+        window.location.href = '/landing';
+      } else if (paymentStatus === 'failure') {
+        toast.error('El pago no fue completado');
+      } else if (paymentStatus === 'pending') {
+        toast.info('Pago pendiente de confirmación');
+      }
+    }
+  }, [searchParams]);
 
   const coupleCode = watch('couple_code');
 
@@ -253,6 +271,40 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       setPublishedUrl(`https://tuparte.digital/invitacion/${publishedStatus.slug}`);
     }
   }, [groomName, brideName, publishedStatus.slug]);
+
+  // Check if landing page is published
+  useEffect(() => {
+    const checkPublishedStatus = async () => {
+      if (!user) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('landing_pages')
+          .select('published_at, slug')
+          .eq('user_id', user.id)
+          .single();
+
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error checking published status:', error);
+          return;
+        }
+
+        if (data?.published_at && data?.slug) {
+          const newStatus = {
+            isPublished: true,
+            slug: data.slug
+          };
+          setPublishedStatus(newStatus);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
+          setPublishedUrl(`https://tuparte.digital/invitacion/${data.slug}`);
+        }
+      } catch (error) {
+        console.error('Error checking published status:', error);
+      }
+    };
+
+    checkPublishedStatus();
+  }, [user]);
 
   // Watch for changes in form values
   const formValues = watch();
