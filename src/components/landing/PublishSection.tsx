@@ -7,6 +7,8 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import { Modal } from '../ui/Modal';
 
+const PUBLISH_PRICE = 100; // Precio de publicación en CLP
+
 interface PublishSectionProps {
   previewUrl: string;
   publishedUrl: string | null;
@@ -123,7 +125,7 @@ export function PublishSection({
         },
         body: JSON.stringify({
           userId: user.id,
-          amount: 40000,
+          amount: PUBLISH_PRICE,
           description: 'Publicación de invitación digital',
           paymentType: 'publish'
         }),
@@ -196,7 +198,7 @@ export function PublishSection({
                       leftIcon={hasPaid ? <Globe className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
                       isLoading={isPublishing || isCreatingPreference}
                     >
-                      {isPublishing ? 'Publicando...' : hasPaid ? 'Publicar' : 'Publicar ($40.000)'}
+                      {isPublishing ? 'Publicando...' : hasPaid ? 'Publicar' : `Publicar ($${PUBLISH_PRICE.toLocaleString('es-CL')})`}
                     </Button>
                   ) : (
                     <Button
@@ -308,7 +310,7 @@ export function PublishSection({
             </div>
             <div className="flex justify-between items-center border-t border-gray-200 pt-4">
               <span className="text-gray-700">Total a pagar:</span>
-              <span className="text-xl font-semibold text-gray-900">$40.000 CLP</span>
+              <span className="text-xl font-semibold text-gray-900">${PUBLISH_PRICE.toLocaleString('es-CL')} CLP</span>
             </div>
           </div>
 
