@@ -83,6 +83,12 @@ export function PublishSection({
     try {
       const result = await createPayment();
       if (result.success) {
+        if (result.alreadyPaid) {
+          toast.success('Ya tienes un pago aprobado. Tu invitación será publicada.');
+          onPublish(); // Trigger the publish action
+          return;
+        }
+        
         setPreferenceId(result.preferenceId);
         setPaymentUrl(result.initPoint);
         setShowPaymentModal(true);
@@ -119,6 +125,8 @@ export function PublishSection({
         } else if (result.payment.status === 'approved') {
           setPaymentStatus('processing');
           toast.success('Pago aprobado, publicando invitación...');
+          // Trigger the publish action
+          onPublish();
           // Check again in 3 seconds
           setTimeout(checkStatus, 3000);
         } else if (result.payment.status === 'pending') {
