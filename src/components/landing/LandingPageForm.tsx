@@ -365,6 +365,12 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         }),
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Payment API error response:", errorText);
+        throw new Error(`Error en la respuesta del API: ${response.status} ${response.statusText}`);
+      }
+
       const data = await response.json();
       
       if (data.success && data.init_point) {
