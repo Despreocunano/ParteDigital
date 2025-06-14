@@ -21,6 +21,10 @@ export function PaymentSuccess() {
           throw new Error('Invalid payment response');
         }
 
+        console.log("Payment success with ID:", paymentId);
+        console.log("Preference ID:", preferenceId);
+        console.log("Status:", status);
+
         // Get the session
         const { data: { session } } = await supabase.auth.getSession();
         if (!session) {
