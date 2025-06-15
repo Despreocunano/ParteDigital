@@ -1,5 +1,6 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 import { cn } from '../../lib/utils';
+import { Eye, EyeOff } from 'lucide-react';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -12,6 +13,15 @@ export interface InputProps
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, label, error, description, leftIcon, rightIcon, type, autoComplete, ...props }, ref) => {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+
+    const isPasswordType = type === 'password';
+    const inputType = isPasswordType && showPassword ? 'text' : type;
+
     return (
       <div className="w-full">
         {label && (
@@ -29,19 +39,32 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
           <input
-            type={type}
+            type={inputType}
             className={cn(
               'flex h-10 w-full rounded-md border border-gray-300 px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50',
               error && 'border-red-500 focus:ring-red-500',
               leftIcon && type !== 'date' && type !== 'time' && 'pl-10',
-              rightIcon && 'pr-10',
+              (rightIcon || isPasswordType) && 'pr-10',
               className
             )}
             ref={ref}
             autoComplete={autoComplete}
             {...props}
           />
-          {rightIcon && (
+          {isPasswordType && (
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+              ) : (
+                <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+              )}
+            </button>
+          )}
+          {rightIcon && !isPasswordType && (
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               {rightIcon}
             </div>
