@@ -51,8 +51,8 @@ export function RequireLandingPage({ children }: RequireLandingPageProps) {
       {children}
       <FeatureLockModal
         isOpen={!hasLandingPage}
-        title="¡Crea tu invitación digital!"
-        description="Para acceder a esta sección, primero necesitas crear tu invitación digital. ¡Es rápido y fácil!"
+        title="¡Bienvenid@ a Tu Parte Digital ❤️"
+        description="Vamos a crear tu invitación. ¡Es rápido y fácil!"
         actionText="Crear invitación"
         actionPath="/landing"
       />

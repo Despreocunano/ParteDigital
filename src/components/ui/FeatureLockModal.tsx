@@ -1,6 +1,6 @@
 import { Button } from './Button';
 import { useNavigate } from 'react-router-dom';
-import { Lock } from 'lucide-react';
+import { Heart } from 'lucide-react';
 
 interface FeatureLockModalProps {
   title: string;
@@ -33,14 +33,14 @@ export function FeatureLockModal({
         <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6 relative">
           <div className="flex flex-col items-center text-center space-y-4">
             <div className="bg-rose-50 p-3 rounded-full">
-              <Lock className="h-6 w-6 text-rose-500" />
+              <Heart className="h-20 w-20 text-primary" />
             </div>
             
             <h2 className="text-2xl font-semibold text-gray-900">
               {title}
             </h2>
             
-            <p className="text-gray-500">
+            <p className="text-gray-500 text-lg">
               {description}
             </p>
 
@@ -56,7 +56,7 @@ export function FeatureLockModal({
               )}
               <Button
                 onClick={() => navigate(actionPath)}
-                className="flex-1"
+                className="flex-1 bg-primary text-primary-contrast hover:bg-primary-dark"
               >
                 {actionText}
               </Button>
