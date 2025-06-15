@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
+import { ResetPasswordForm } from './ResetPasswordForm';
 import { Heart } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 export function AuthPage() {
   const [showLogin, setShowLogin] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     setShowLogin(searchParams.get('showLogin') === 'true');
+    setShowResetPassword(searchParams.get('resetPassword') === 'true');
   }, []);
 
   const toggleForm = () => {
@@ -31,7 +34,9 @@ export function AuthPage() {
             <Heart className="w-12 h-12 text-white mx-auto" />
           </div>
 
-          {showLogin ? (
+          {showResetPassword ? (
+            <ResetPasswordForm />
+          ) : showLogin ? (
             <LoginForm onToggleForm={toggleForm} />
           ) : (
             <RegisterForm onToggleForm={toggleForm} />

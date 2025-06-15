@@ -6,6 +6,7 @@ import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
 import { Mail, Lock } from 'lucide-react';
+import { ForgotPasswordForm } from './ForgotPasswordForm';
 
 type FormData = {
   email: string;
@@ -21,6 +22,7 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
@@ -44,6 +46,10 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
       setIsLoading(false);
     }
   };
+
+  if (showForgotPassword) {
+    return <ForgotPasswordForm onBack={() => setShowForgotPassword(false)} />;
+  }
 
   return (
     <Card className="w-full max-w-md mx-auto border-0 shadow-xl">
@@ -91,6 +97,15 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
               },
             })}
           />
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(true)}
+              className="text-xs text-blue-600 hover:text-blue-700"
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
           </div>
           <Button 
             type="submit" 

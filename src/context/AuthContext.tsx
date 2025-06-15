@@ -15,6 +15,10 @@ type AuthContextType = {
     error: Error | null;
   }>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{
+    success: boolean;
+    error: Error | null;
+  }>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -118,6 +122,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await supabase.auth.signOut();
   };
 
+  const resetPassword = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `https://panel.tuparte.digital.cl/auth?showLogin=true&resetPassword=true`,
+      });
+      
+      return {
+        success: !error,
+        error,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error as Error,
+      };
+    }
+  };
+
   const value = {
     user,
     session,
@@ -125,6 +147,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signIn,
     signUp,
     signOut,
+    resetPassword,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
