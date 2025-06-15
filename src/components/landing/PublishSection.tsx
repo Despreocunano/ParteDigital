@@ -5,6 +5,8 @@ import { Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode, CreditCard, Clo
 import { toast } from 'react-hot-toast';
 import { createPayment, checkPaymentStatus } from '../../lib/payment';
 import { Modal } from '../ui/Modal';
+import { supabase } from '../../lib/supabase';
+import { useAuth } from '../../context/AuthContext';
 
 interface PublishSectionProps {
   previewUrl: string;
@@ -19,6 +21,12 @@ interface PublishSectionProps {
   hasRequiredInfo?: boolean;
 }
 
+interface LandingPagePayload {
+  published_at: string | null;
+  slug: string | null;
+  [key: string]: any;
+}
+
 export function PublishSection({
   previewUrl,
   publishedUrl,
@@ -28,6 +36,7 @@ export function PublishSection({
   onUnpublish,
   hasRequiredInfo = true
 }: PublishSectionProps) {
+  const { user } = useAuth();
   const [copied, setCopied] = React.useState(false);
   const [showQR, setShowQR] = React.useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = React.useState(false);
@@ -36,12 +45,51 @@ export function PublishSection({
   const [preferenceId, setPreferenceId] = React.useState<string | null>(null);
   const [paymentUrl, setPaymentUrl] = React.useState<string | null>(null);
   const [hasAlreadyPaid, setHasAlreadyPaid] = React.useState<boolean>(false);
+  const [isPublished, setIsPublished] = React.useState(publishedStatus.isPublished);
+  const [currentPublishedUrl, setCurrentPublishedUrl] = React.useState(publishedUrl);
+
+  // Subscribe to realtime changes
+  React.useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel('landing_pages')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'landing_pages',
+          filter: `user_id=eq.${user.id}`
+        },
+        (payload) => {
+          if (payload.new) {
+            const newData = payload.new as LandingPagePayload;
+            const newPublishedStatus = {
+              isPublished: !!newData.published_at,
+              slug: newData.slug
+            };
+            setIsPublished(newPublishedStatus.isPublished);
+            if (newPublishedStatus.isPublished && newPublishedStatus.slug) {
+              setCurrentPublishedUrl(`https://tuparte.digital/invitacion/${newPublishedStatus.slug}`);
+            } else {
+              setCurrentPublishedUrl(null);
+            }
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
 
   const handleCopy = async () => {
-    if (!publishedUrl) return;
+    if (!currentPublishedUrl) return;
 
     try {
-      await navigator.clipboard.writeText(publishedUrl);
+      await navigator.clipboard.writeText(currentPublishedUrl);
       setCopied(true);
       toast.success('URL copiada al portapapeles');
       setTimeout(() => setCopied(false), 2000);
@@ -51,11 +99,11 @@ export function PublishSection({
   };
 
   const handleShare = async (platform: 'whatsapp' | 'copy') => {
-    if (!publishedUrl) return;
+    if (!currentPublishedUrl) return;
 
     const text = `¡Te invitamos a nuestra boda! 💍\n\nPuedes confirmar tu asistencia en:`;
     const encodedText = encodeURIComponent(text);
-    const encodedUrl = encodeURIComponent(publishedUrl);
+    const encodedUrl = encodeURIComponent(currentPublishedUrl);
 
     switch (platform) {
       case 'whatsapp':
@@ -63,7 +111,7 @@ export function PublishSection({
         break;
       case 'copy':
         try {
-          await navigator.clipboard.writeText(publishedUrl);
+          await navigator.clipboard.writeText(currentPublishedUrl);
           setCopied(true);
           toast.success('URL copiada al portapapeles');
           setTimeout(() => setCopied(false), 2000);
@@ -211,7 +259,7 @@ export function PublishSection({
                   >
                     Previsualizar
                   </Button>
-                  {!publishedStatus.isPublished ? (
+                  {!isPublished ? (
                     <Button
                       type="button"
                       onClick={handleStartPayment}
@@ -236,7 +284,7 @@ export function PublishSection({
               </div>
 
               {/* Compartir */}
-              {publishedStatus.isPublished && publishedUrl && (
+              {isPublished && currentPublishedUrl && (
                 <div className="p-6 space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center">
@@ -253,7 +301,7 @@ export function PublishSection({
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg">
                       <Link2 className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-gray-600 flex-1 truncate">{publishedUrl}</span>
+                      <span className="text-sm text-gray-600 flex-1 truncate">{currentPublishedUrl}</span>
                       <Button
                         type="button"
                         variant="ghost"
@@ -293,7 +341,7 @@ export function PublishSection({
                     {showQR && (
                       <div className="p-4 bg-white rounded-lg border border-gray-100 text-center">
                         <img
-                          src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(publishedUrl)}`}
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentPublishedUrl)}`}
                           alt="QR Code"
                           className="mx-auto"
                         />
