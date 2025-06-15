@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 import { Switch } from '../ui/Switch';
@@ -138,12 +138,11 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [hasChanges, setHasChanges] = useState(false);
   const [showCustomDressCode, setShowCustomDressCode] = useState(false);
   const [selectedDressCode, setSelectedDressCode] = useState(initialData?.dress_code || 'formal');
-  const [selectedAccountType, setSelectedAccountType] = useState(initialData?.bank_info?.accountType || '');
-  const [rutError, setRutError] = useState<string | null>(null);
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
   const [selectedStore, setSelectedStore] = useState(initialData?.store || '');
   const [hasModifiedPartyDate, setHasModifiedPartyDate] = useState(false);
   const [hasLandingPage, setHasLandingPage] = useState(false);
+  const [rutError, setRutError] = useState<string | null>(null);
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -203,12 +202,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     { value: 'Semi formal', label: 'Semi Formal' },
     { value: 'Casual elegante', label: 'Casual Elegante' },
     { value: 'custom', label: 'Otro' }
-  ];
-
-  const accountTypeOptions = [
-    { value: 'Cuenta corriente', label: 'Cuenta Corriente' },
-    { value: 'Cuenta vista', label: 'Cuenta Vista' },
-    { value: 'Cuenta RUT', label: 'Cuenta RUT' }
   ];
 
   const storeOptions = [
@@ -927,7 +920,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               <Input
                 label="RUT"
                 {...register('bank_info.rut', { required: 'El RUT es requerido' })}
-                error={errors.bank_info?.rut?.message}
+                error={rutError || errors.bank_info?.rut?.message}
                 placeholder="12345678-9"
                 value={rutValue}
                 onChange={handleRutChange}
