@@ -125,7 +125,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const resetPassword = async (email: string) => {
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `https://panel.tuparte.digital.cl/auth?showLogin=true&resetPassword=true`,
+        redirectTo: `https://panel.tuparte.digital/auth?showLogin=true&resetPassword=true`,
       });
       
       return {
