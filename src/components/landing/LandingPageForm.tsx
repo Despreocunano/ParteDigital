@@ -410,7 +410,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       if (refreshError) throw refreshError;
       if (!refreshedSession) throw new Error('No authenticated session');
 
-      const slug = `${groomName.toLowerCase()}-y-${brideName.toLowerCase()}`
+      const slug = `${groomName.toLowerCase()}-y-${brideName.toLowerCase()}-${user?.id.substring(0, 4)}`
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z0-9]+/g, '-')

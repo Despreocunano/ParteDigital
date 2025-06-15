@@ -44,7 +44,7 @@ serve(async (req) => {
     }
 
     // Generate unique slug with user ID
-    const userIdSuffix = user.id.substring(0, 3);
+    const userIdSuffix = user.id.substring(0, 4);
     const uniqueSlug = `${slug}-${userIdSuffix}`;
 
     // Check if slug is already in use
