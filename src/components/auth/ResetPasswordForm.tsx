@@ -86,7 +86,7 @@ export function ResetPasswordForm() {
 
           <Button
             type="submit"
-            className="w-full h-9"
+            className="w-full h-9 bg-primary text-primary-contrast hover:bg-primary-dark"
             isLoading={loading}
           >
             Actualizar Contraseña
