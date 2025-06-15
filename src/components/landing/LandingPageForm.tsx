@@ -143,6 +143,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
   const [selectedStore, setSelectedStore] = useState(initialData?.store || '');
   const [hasModifiedPartyDate, setHasModifiedPartyDate] = useState(false);
+  const [hasLandingPage, setHasLandingPage] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -273,7 +274,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     }
   }, [groomName, brideName, publishedStatus.slug]);
 
-  // Check if landing page is published
+  // Check if landing page exists and is published
   useEffect(() => {
     const checkPublishedStatus = async () => {
       if (!user) return;
@@ -290,14 +291,19 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           return;
         }
 
-        if (data?.published_at && data?.slug) {
-          const newStatus = {
-            isPublished: true,
-            slug: data.slug
-          };
-          setPublishedStatus(newStatus);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
-          setPublishedUrl(`https://tuparte.digital/invitacion/${data.slug}`);
+        if (data) {
+          setHasLandingPage(true);
+          if (data.published_at && data.slug) {
+            const newStatus = {
+              isPublished: true,
+              slug: data.slug
+            };
+            setPublishedStatus(newStatus);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
+            setPublishedUrl(`https://tuparte.digital/invitacion/${data.slug}`);
+          }
+        } else {
+          setHasLandingPage(false);
         }
       } catch (error) {
         console.error('Error checking published status:', error);
@@ -554,7 +560,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         hasRequiredInfo={hasRequiredInfo}
       />
 
-      {!publishedStatus.isPublished && initialData && (
+      {!publishedStatus.isPublished && hasLandingPage && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
           <div className="flex items-start">
             <div className="flex-shrink-0">
