@@ -142,6 +142,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [rutError, setRutError] = useState<string | null>(null);
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
   const [selectedStore, setSelectedStore] = useState(initialData?.store || '');
+  const [hasModifiedPartyDate, setHasModifiedPartyDate] = useState(false);
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -171,7 +172,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         bank: '',
         accountType: '',
         accountNumber: '',
-        email: ''
+        email: user?.email || ''
       }
     }
   });
@@ -324,6 +325,14 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
 
     setHasChanges(hasFormChanges || hasOtherChanges);
   }, [formValues, musicEnabled, selectedTrack, coverImage, galleryImages, selectedTemplateId, initialData]);
+
+  // Sincronizar fechas de ceremonia y recepción
+  useEffect(() => {
+    const ceremonyDate = watch('ceremony_date');
+    if (ceremonyDate && !hasModifiedPartyDate) {
+      setValue('party_date', ceremonyDate);
+    }
+  }, [watch('ceremony_date'), hasModifiedPartyDate, setValue]);
 
   const onSubmit = async (data: LandingPageFormData) => {
     if (!selectedTemplateId) {
@@ -512,6 +521,24 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       }
     } else {
       setRutError(null);
+    }
+  };
+
+  const handleAccountTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setValue('bank_info.accountType', value);
+    
+    if (value === 'Cuenta RUT') {
+      // Obtener el RUT sin dígito verificador
+      const rutWithoutDV = rutValue.split('-')[0];
+      
+      // Establecer Banco Estado y deshabilitar el campo
+      setValue('bank_info.bank', 'Banco Estado');
+      setValue('bank_info.accountNumber', rutWithoutDV);
+    } else {
+      // Si cambia a otro tipo de cuenta, limpiar el banco y habilitar el campo
+      setValue('bank_info.bank', '');
+      setValue('bank_info.accountNumber', '');
     }
   };
 
@@ -707,14 +734,6 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               })}
               error={errors.ceremony_date?.message}
               min={today}
-              onChange={(e) => {
-                const ceremonyDate = e.target.value;
-                setValue('ceremony_date', ceremonyDate);
-                const currentPartyDate = watch('party_date');
-                if (!currentPartyDate || currentPartyDate === watch('ceremony_date')) {
-                  setValue('party_date', ceremonyDate);
-                }
-              }}
             />
             <Input
               label="Hora de la Ceremonia"
@@ -770,6 +789,10 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
                 }
               })}
               error={errors.party_date?.message}
+              onChange={(e) => {
+                setHasModifiedPartyDate(true);
+                setValue('party_date', e.target.value);
+              }}
             />
             <Input
               label="Hora de la recepción"
@@ -886,11 +909,11 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Información Bancaria</h3>
             <p className="text-sm text-gray-500 mb-4">
-              Esta información será visible para tus invitados en la invitación.
+              Esta información será visible para tus invitados en la invitación. Los datos bancarios permitirán a tus invitados realizar transferencias como regalo para tu boda.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
-                label="Titular de la cuenta"
+                label="Nombre del titular"
                 {...register('bank_info.accountHolder', { required: 'El titular es requerido' })}
                 error={errors.bank_info?.accountHolder?.message}
                 placeholder="Nombre del titular de la cuenta"
@@ -903,16 +926,10 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
                 value={rutValue}
                 onChange={handleRutChange}
               />
-              <Input
-                label="Banco"
-                {...register('bank_info.bank', { required: 'El banco es requerido' })}
-                error={errors.bank_info?.bank?.message}
-                placeholder="Nombre del banco"
-              />
               <Select
                 label="Tipo de cuenta"
                 value={watch('bank_info.accountType')}
-                onChange={(e) => setValue('bank_info.accountType', e.target.value)}
+                onChange={handleAccountTypeChange}
                 error={errors.bank_info?.accountType?.message}
                 options={[
                   { value: '', label: 'Selecciona un tipo de cuenta' },
@@ -926,6 +943,14 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
                 {...register('bank_info.accountNumber', { required: 'El número de cuenta es requerido' })}
                 error={errors.bank_info?.accountNumber?.message}
                 placeholder="Número de cuenta"
+                disabled={watch('bank_info.accountType') === 'Cuenta RUT'}
+              />
+              <Input
+                label="Banco"
+                {...register('bank_info.bank', { required: 'El banco es requerido' })}
+                error={errors.bank_info?.bank?.message}
+                placeholder="Nombre del banco"
+                disabled={watch('bank_info.accountType') === 'Cuenta RUT'}
               />
               <Input
                 label="Email para transferencias"
