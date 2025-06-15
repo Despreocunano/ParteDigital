@@ -38,7 +38,9 @@ export function ResetPasswordForm() {
       }
 
       toast.success('Contraseña actualizada correctamente');
-      navigate('/auth?showLogin=true');
+      setTimeout(() => {
+        window.location.href = 'https://panel.tuparte.digital/auth?showLogin=true';
+      }, 1500);
     } catch (error) {
       console.error('Error al actualizar la contraseña:', error);
       toast.error('Error al actualizar la contraseña');
