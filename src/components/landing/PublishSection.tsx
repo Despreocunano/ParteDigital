@@ -35,6 +35,7 @@ export function PublishSection({
   const [paymentStatus, setPaymentStatus] = React.useState<string | null>(null);
   const [preferenceId, setPreferenceId] = React.useState<string | null>(null);
   const [paymentUrl, setPaymentUrl] = React.useState<string | null>(null);
+  const [hasAlreadyPaid, setHasAlreadyPaid] = React.useState<boolean>(false);
 
   const handleCopy = async () => {
     if (!publishedUrl) return;
@@ -84,6 +85,7 @@ export function PublishSection({
       const result = await createPayment();
       if (result.success) {
         if (result.alreadyPaid) {
+          setHasAlreadyPaid(true);
           toast.success('Ya tienes un pago aprobado. Tu invitación será publicada.');
           onPublish(); // Trigger the publish action
           return;
@@ -117,6 +119,7 @@ export function PublishSection({
       if (result.success) {
         if (result.landingPage.isPublished) {
           setPaymentStatus('success');
+          setHasAlreadyPaid(true);
           toast.success('¡Pago completado! Tu invitación ha sido publicada');
           // Wait a bit and then reload the page
           setTimeout(() => {
@@ -124,6 +127,7 @@ export function PublishSection({
           }, 2000);
         } else if (result.payment.status === 'approved') {
           setPaymentStatus('processing');
+          setHasAlreadyPaid(true);
           toast.success('Pago aprobado, publicando invitación...');
           // Trigger the publish action
           onPublish();
@@ -148,6 +152,22 @@ export function PublishSection({
       toast.error('Error al verificar el estado del pago');
     }
   };
+
+  // Check if user has already paid when component mounts
+  React.useEffect(() => {
+    const checkPaymentHistory = async () => {
+      try {
+        const result = await createPayment();
+        if (result.success && result.alreadyPaid) {
+          setHasAlreadyPaid(true);
+        }
+      } catch (error) {
+        console.error('Error checking payment history:', error);
+      }
+    };
+    
+    checkPaymentHistory();
+  }, []);
 
   return (
     <>
@@ -197,9 +217,9 @@ export function PublishSection({
                       onClick={handleStartPayment}
                       disabled={isProcessingPayment || !hasRequiredInfo}
                       className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
-                      leftIcon={<CreditCard className="h-4 w-4" />}
+                      leftIcon={hasAlreadyPaid ? <Globe className="h-4 w-4" /> : <CreditCard className="h-4 w-4" />}
                     >
-                      {isProcessingPayment ? 'Procesando...' : 'Publicar ($990)'}
+                      {isProcessingPayment ? 'Procesando...' : hasAlreadyPaid ? 'Publicar' : 'Publicar ($990)'}
                     </Button>
                   ) : (
                     <Button

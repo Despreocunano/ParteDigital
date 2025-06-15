@@ -22,7 +22,13 @@ export async function createPayment() {
         .eq('user_id', session.user.id)
         .single();
 
-      if (!landingError && !landingPage.published_at) {
+      if (!landingError && landingPage.published_at) {
+        // Landing page is already published
+        return {
+          success: false,
+          alreadyPublished: true
+        };
+      } else {
         // Landing page is not published but payment is approved
         // Trigger publish action
         return {

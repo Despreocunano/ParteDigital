@@ -187,7 +187,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       } else if (paymentStatus === 'failure') {
         toast.error('El pago no fue completado');
       } else if (paymentStatus === 'pending') {
-        toast.info('Pago pendiente de confirmación');
+        toast('Pago pendiente de confirmación');
       }
     }
   }, [searchParams]);
