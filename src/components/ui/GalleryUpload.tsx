@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Card, CardContent } from './Card';
 import { Plus, X, Upload } from 'lucide-react';
 import { Button } from './Button';
 import { toast } from 'react-hot-toast';
@@ -159,7 +158,7 @@ export function GalleryUpload({
               />
               <Button
                 type="button"
-                variant="outline"
+                variant="secondary"
                 onClick={() => inputRef.current?.click()}
                 className="w-full h-full flex flex-col items-center justify-center gap-2 border-2 border-dashed"
                 disabled={isUploading}
