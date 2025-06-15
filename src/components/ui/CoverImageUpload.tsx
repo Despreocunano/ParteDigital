@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, CardContent } from './Card';
+
 import { ImageUpload } from './ImageUpload';
 
 interface CoverImageUploadProps {

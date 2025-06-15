@@ -29,8 +29,8 @@ export function GalleryUpload({
     
     // Validate number of images
     const totalImages = images.length + files.length;
-    if (totalImages < 6) {
-      toast.error('Por favor selecciona al menos 6 fotos en total');
+    if (totalImages < 3) {
+      toast.error('Por favor selecciona al menos 3 fotos en total');
       return;
     }
     if (totalImages > 9) {
@@ -95,8 +95,8 @@ export function GalleryUpload({
   };
 
   const handleImageRemove = async (index: number) => {
-    if (images.length <= 6) {
-      toast.error('Debes mantener al menos 6 fotos');
+    if (images.length <= 3) {
+      toast.error('Debes mantener al menos 3 fotos');
       return;
     }
 
@@ -126,7 +126,7 @@ export function GalleryUpload({
     <div className={className}>
       <div className="space-y-4">
         <p className="text-sm text-gray-500">
-          Agrega entre 6 y 9 fotos a tu galería para compartir momentos especiales con tus invitados.
+          Agrega entre 3 y 9 fotos a tu galería para compartir momentos especiales con tus invitados.
         </p>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -180,10 +180,10 @@ export function GalleryUpload({
         </div>
 
         <div className="mt-2 text-sm text-gray-500 flex items-center gap-2">
-          <span className={images.length < 6 ? 'text-red-500' : 'text-green-500'}>
+          <span className={images.length < 3 ? 'text-red-500' : 'text-green-500'}>
             {images.length}/9
           </span>
-          fotos seleccionadas (mínimo 6)
+          fotos seleccionadas (mínimo 3)
         </div>
       </div>
     </div>

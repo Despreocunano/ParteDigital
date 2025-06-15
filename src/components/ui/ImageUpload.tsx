@@ -38,6 +38,13 @@ export function ImageUpload({
       return;
     }
 
+    // Validate specific image types
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Solo se permiten imágenes en formato JPG, PNG, WEBP o AVIF.');
+      return;
+    }
+
     setIsUploading(true);
 
     try {
@@ -107,7 +114,7 @@ export function ImageUpload({
       <input
         ref={inputRef}
         type="file"
-        accept="image/*"
+        accept=".jpg,.jpeg,.png,.webp,.avif"
         onChange={handleFileChange}
         className="hidden"
       />
@@ -132,7 +139,7 @@ export function ImageUpload({
       ) : (
         <Button
           type="button"
-          variant="outline"
+          variant="secondary"
           className="w-full aspect-video flex flex-col items-center justify-center gap-2 border-2 border-dashed"
           onClick={() => inputRef.current?.click()}
           isLoading={isUploading}
