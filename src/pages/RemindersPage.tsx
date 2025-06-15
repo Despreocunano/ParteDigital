@@ -9,7 +9,7 @@ import { useWedding } from '../hooks/useWedding';
 import { sendEmail } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { toast } from 'react-hot-toast';
-import { Search, Send, Check, X, Clock, Table2, Tag, Heart } from 'lucide-react';
+import { Search, Send, Check, X, Clock, Table2, Tag, Heart, Filter } from 'lucide-react';
 
 interface LandingPageData {
   ceremony_time?: string;
@@ -259,184 +259,168 @@ export function RemindersPage() {
   };
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Recordatorios</h1>
-        <p className="text-gray-500 mt-1">
-          Envía recordatorios personalizados a tus invitados
-        </p>
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Recordatorios</h1>
+          <p className="text-gray-500 mt-1">
+            Envía recordatorios personalizados a tus invitados
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Guest Selection */}
-        <Card>
-          <CardHeader className="border-b border-gray-200">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <CardTitle>Invitados</CardTitle>
-              <div className="flex items-center gap-2">
-                <select
-                  className="rounded-md border border-gray-300 text-sm py-2 px-3 bg-white"
-                  value={statusFilter}
-                  onChange={(e) => setStatusFilter(e.target.value as any)}
-                >
-                  <option value="all">Todos</option>
-                  <option value="pending">Pendientes</option>
-                  <option value="confirmed">Confirmados</option>
-                  <option value="declined">No Asistirán</option>
-                </select>
-                <div className="relative w-48">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <Input 
-                    placeholder="Buscar..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="p-0">
-            {attendeesLoading ? (
-              <div className="flex justify-center items-center h-40">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
-              </div>
-            ) : filteredAttendees.length > 0 ? (
-              <div>
-                <div className="p-4 border-b border-gray-200">
-                  <label className="flex items-center">
-                    <input
-                      type="checkbox"
-                      className="rounded border-gray-300 text-rose-600 focus:ring-rose-500"
-                      checked={selectedAttendees.length === filteredAttendees.length}
-                      onChange={handleSelectAll}
-                    />
-                    <span className="ml-2 text-sm text-gray-600">
-                      Seleccionar todos ({filteredAttendees.length})
-                    </span>
-                  </label>
-                </div>
-                <div className="divide-y max-h-[400px] overflow-y-auto">
-                  {filteredAttendees.map((attendee) => {
-                    const currentTable = tables.find(t => t.id === attendee.table_id);
-                    return (
-                      <div 
-                        key={attendee.id}
-                        className="flex items-center p-4 hover:bg-gray-50"
-                      >
-                        <input
-                          type="checkbox"
-                          className="rounded border-gray-300 text-rose-600 focus:ring-rose-500"
-                          checked={selectedAttendees.includes(attendee.id)}
-                          onChange={() => toggleAttendee(attendee.id)}
-                        />
-                        <div className="ml-3 flex-1">
-                          <div className="flex items-center">
-                            <p className="text-sm font-medium text-gray-900">
-                              {attendee.first_name} {attendee.last_name}
-                            </p>
-                            <div className="ml-2 flex items-center gap-2">
-                              {getStatusIcon(attendee.rsvp_status)}
-                              {currentTable && (
-                                <div className="flex items-center text-xs text-gray-500">
-                                  <Table2 className="h-3 w-3 mr-1" />
-                                  {currentTable.name}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          <p className="text-sm text-gray-500">{attendee.email}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <p className="text-gray-500">No se encontraron invitados</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Message Form */}
-        <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Panel de invitados */}
+        <div className="lg:col-span-1 space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Mensaje</CardTitle>
+            <CardHeader className="pb-3">
+              <CardTitle>Invitados</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Buscar invitados..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    leftIcon={<Search className="h-4 w-4 text-gray-400" />}
+                    rightIcon={searchTerm ? (
+                      <button onClick={() => setSearchTerm('')}>
+                        <X className="h-4 w-4 text-gray-400" />
+                      </button>
+                    ) : undefined}
+                  />
+                  <div className="relative">
+                    <select
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value as any)}
+                      className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent sm:text-sm"
+                    >
+                      <option value="all">Todos</option>
+                      <option value="pending">Pendientes</option>
+                      <option value="confirmed">Confirmados</option>
+                      <option value="declined">No asistirán</option>
+                    </select>
+                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleSelectAll}
+                    className="text-sm"
+                  >
+                    {selectedAttendees.length === filteredAttendees.length
+                      ? 'Deseleccionar todos'
+                      : 'Seleccionar todos'}
+                  </Button>
+                  <span className="text-sm text-gray-500">
+                    {selectedAttendees.length} seleccionados
+                  </span>
+                </div>
+
+                <div className="space-y-2 max-h-[500px] overflow-y-auto">
+                  {filteredAttendees.map((attendee) => (
+                    <div
+                      key={attendee.id}
+                      className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
+                        selectedAttendees.includes(attendee.id)
+                          ? 'border-rose-200 bg-rose-50'
+                          : 'border-gray-200 hover:border-rose-200 hover:bg-rose-50/50'
+                      }`}
+                      onClick={() => toggleAttendee(attendee.id)}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-2 h-2 rounded-full ${
+                          attendee.rsvp_status === 'confirmed' ? 'bg-green-500' :
+                          attendee.rsvp_status === 'declined' ? 'bg-red-500' :
+                          'bg-amber-500'
+                        }`} />
+                        <div>
+                          <div className="font-medium text-gray-900">
+                            {attendee.first_name} {attendee.last_name}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {attendee.email}
+                          </div>
+                        </div>
+                      </div>
+                      {selectedAttendees.includes(attendee.id) && (
+                        <Check className="h-5 w-5 text-rose-600" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Panel de composición */}
+        <div className="lg:col-span-2 space-y-4">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle>Componer mensaje</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
                 <div>
-                  <h3 className="text-sm font-medium text-gray-700 mb-2">Variables Disponibles</h3>
-                  <div className="flex flex-wrap gap-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Asunto
+                  </label>
+                  <Input
+                    ref={subjectRef}
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    onFocus={() => setActiveInput('subject')}
+                    placeholder="Asunto del recordatorio"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Mensaje
+                  </label>
+                  <Textarea
+                    ref={messageRef}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    onFocus={() => setActiveInput('message')}
+                    placeholder="Escribe tu mensaje aquí..."
+                    rows={8}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Variables disponibles
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
                     {variables.map((variable) => (
                       <button
                         key={variable.name}
                         onClick={() => insertVariable(variable.name)}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-rose-50 text-rose-700 hover:bg-rose-100 transition-colors"
-                        title={variable.description}
+                        className="flex items-center justify-between p-2 text-sm border border-gray-200 rounded-md hover:border-rose-200 hover:bg-rose-50 transition-colors"
                       >
-                        <Tag className="h-3 w-3 mr-1" />
-                        {variable.name}
+                        <span className="font-mono text-gray-600">{variable.name}</span>
+                        <span className="text-gray-500 text-xs">{variable.description}</span>
                       </button>
                     ))}
                   </div>
                 </div>
 
-                <Input
-                  ref={subjectRef}
-                  label="Asunto"
-                  value={subject}
-                  onChange={(e) => setSubject(e.target.value)}
-                  onFocus={() => setActiveInput('subject')}
-                  placeholder="Ej: Recordatorio para {nombre}"
-                  className="font-mono"
-                />
-
-                <Textarea
-                  ref={messageRef}
-                  label="Mensaje"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  onFocus={() => setActiveInput('message')}
-                  placeholder="Ej: Hola {nombre}, te esperamos en {lugar_ceremonia} a las {hora_ceremonia}..."
-                  rows={6}
-                  className="font-mono"
-                />
-
-                <Button
-                  onClick={handleSendReminders}
-                  isLoading={isSending}
-                  disabled={isSending || selectedAttendees.length === 0 || !subject.trim() || !message.trim()}
-                  leftIcon={<Send className="h-4 w-4" />}
-                  className='bg-primary hover:bg-primary-dark text-primary-contrast w-full sm:w-auto'
-                >
-                  Enviar Recordatorios ({selectedAttendees.length})
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Vista Previa de la Firma</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="border rounded-lg p-4">
-                <div className="border-t border-gray-200 pt-4 mt-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-cover bg-center" style={{ backgroundImage: `url(${profileImage || 'https://images.pexels.com/photos/931158/pexels-photo-931158.jpeg'})` }} />
-                    <div>
-                      <div className="text-lg font-serif text-rose-600">
-                        {groomName} & {brideName}
-                      </div>
-                      <div className="text-sm text-gray-600 mt-1">
-                        ¡Gracias por ser parte de nuestra historia!
-                      </div>
-                    </div>
-                  </div>
+                <div className="flex justify-end pt-4">
+                  <Button
+                    onClick={handleSendReminders}
+                    leftIcon={<Send className="h-4 w-4" />}
+                    isLoading={isSending}
+                    disabled={selectedAttendees.length === 0}
+                    className="bg-primary text-primary-contrast hover:bg-primary-dark"
+                  >
+                    Enviar recordatorios
+                  </Button>
                 </div>
               </div>
             </CardContent>

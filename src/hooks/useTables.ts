@@ -52,6 +52,42 @@ export function useTables() {
     
     // Then fetch from API
     fetchTables();
+
+    // Subscribe to realtime changes for both tables and attendees
+    const tablesChannel = supabase
+      .channel('tables_changes')
+      .on('postgres_changes', 
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'tables',
+          filter: `user_id=eq.${user?.id}`
+        }, 
+        () => {
+          fetchTables();
+        }
+      )
+      .subscribe();
+
+    const attendeesChannel = supabase
+      .channel('attendees_changes')
+      .on('postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'attendees',
+          filter: `user_id=eq.${user?.id}`
+        },
+        () => {
+          fetchTables();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(tablesChannel);
+      supabase.removeChannel(attendeesChannel);
+    };
   }, [user]);
 
   const addTable = async (tableData: Omit<Table, 'id' | 'user_id' | 'created_at' | 'updated_at'>) => {
@@ -115,6 +151,16 @@ export function useTables() {
     if (!user) return { success: false, error: new Error('No hay usuario autenticado') };
     
     try {
+      // First, remove table_id from all attendees in this table
+      const { error: updateError } = await supabase
+        .from('attendees')
+        .update({ table_id: null })
+        .eq('table_id', id)
+        .eq('user_id', user.id);
+
+      if (updateError) throw updateError;
+
+      // Then delete the table
       const { error } = await supabase
         .from('tables')
         .delete()
@@ -167,6 +213,9 @@ export function useTables() {
         .eq('user_id', user.id);
         
       if (error) throw error;
+      
+      // Refresh tables after assigning guest
+      await fetchTables();
       
       toast.success(tableId ? 'Invitado asignado correctamente' : 'Invitado removido de la mesa');
       return { success: true };

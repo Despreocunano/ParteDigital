@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Modal } from '../ui/Modal';
@@ -26,9 +26,14 @@ export function TableCard({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [localAttendees, setLocalAttendees] = useState<Attendee[]>([]);
   
-  const assignedAttendees = attendees.filter(attendee => attendee.table_id === table.id);
-  const unassignedAttendees = attendees.filter(attendee => 
+  useEffect(() => {
+    setLocalAttendees(attendees);
+  }, [attendees]);
+  
+  const assignedAttendees = localAttendees.filter(attendee => attendee.table_id === table.id);
+  const unassignedAttendees = localAttendees.filter(attendee => 
     !attendee.table_id && 
     attendee.rsvp_status === 'confirmed' &&
     (
@@ -60,12 +65,32 @@ export function TableCard({
       return;
     }
     
-    await onAssignTable(attendee.id, table.id);
-    setSearchTerm('');
+    const result = await onAssignTable(attendee.id, table.id);
+    if (result.success) {
+      // Update local state immediately
+      setLocalAttendees(prev => 
+        prev.map(a => 
+          a.id === attendee.id 
+            ? { ...a, table_id: table.id }
+            : a
+        )
+      );
+      setSearchTerm('');
+    }
   };
 
   const handleRemoveFromTable = async (attendee: Attendee) => {
-    await onAssignTable(attendee.id, null);
+    const result = await onAssignTable(attendee.id, null);
+    if (result.success) {
+      // Update local state immediately
+      setLocalAttendees(prev => 
+        prev.map(a => 
+          a.id === attendee.id 
+            ? { ...a, table_id: null }
+            : a
+        )
+      );
+    }
   };
 
   const handleDeleteTable = async () => {
@@ -180,12 +205,11 @@ export function TableCard({
                       <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-700 text-xs font-medium">
                         {getInitials(attendee.first_name, attendee.last_name)}
                       </div>
-                      <div className="ml-3">
-                        <p className="text-sm font-medium">
+                      <div className="ml-2 overflow-hidden">
+                        <p className="text-sm font-medium truncate">
                           {attendee.first_name} {attendee.last_name}
                           {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && ' (+1)'}
                         </p>
-                        <p className="text-xs text-gray-500">{attendee.email}</p>
                       </div>
                     </div>
                     <Button
@@ -212,12 +236,11 @@ export function TableCard({
                       <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-700 text-xs font-medium">
                         {getInitials(attendee.first_name, attendee.last_name)}
                       </div>
-                      <div className="ml-3">
-                        <p className="text-sm font-medium">
+                      <div className="ml-2 overflow-hidden">
+                        <p className="text-sm font-medium truncate">
                           {attendee.first_name} {attendee.last_name}
                           {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && ' (+1)'}
                         </p>
-                        <p className="text-xs text-gray-500">{attendee.email}</p>
                       </div>
                     </div>
                     <Button
