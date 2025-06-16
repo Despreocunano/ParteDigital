@@ -3,6 +3,7 @@ import { FlowersTemplate } from './flowers';
 import { TerraTemplate } from './terra';
 import { CerezoTemplate } from './cerezo';
 import { EsmeraldaTemplate } from './esmeralda';
+import { BurdeosTemplate } from './burdeos';
 import type { TemplateProps } from './types';
 
 export const templates = {
@@ -41,6 +42,14 @@ export const templates = {
     preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837920/cerezo_vni4m5.png',
     description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
   }
+  ,
+  burdeos: {
+    id: '550e8400-e29b-41d4-a716-446655440006',
+    name: 'Burdeos',
+    component: BurdeosTemplate,
+    preview: '',
+    description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
+  }
 };
 
 // Map template IDs to template keys for lookup
@@ -49,7 +58,8 @@ const templateIdMap = {
   '550e8400-e29b-41d4-a716-446655440002': 'flowers',
   '550e8400-e29b-41d4-a716-446655440003': 'terra',
   '550e8400-e29b-41d4-a716-446655440004': 'cerezo',
-  '550e8400-e29b-41d4-a716-446655440005': 'esmeralda'
+  '550e8400-e29b-41d4-a716-446655440005': 'esmeralda',
+  '550e8400-e29b-41d4-a716-446655440006': 'burdeos'
 };
 
 export function getTemplate(templateId: string) {
