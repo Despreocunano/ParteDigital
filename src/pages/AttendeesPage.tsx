@@ -35,8 +35,7 @@ export function AttendeesPage() {
   } = useTables();
 
   const filteredAttendees = attendees.filter((attendee) => {
-    const fullName = `${attendee.first_name} ${attendee.last_name}`.toLowerCase();
-    return fullName.includes(searchTerm.toLowerCase()) || 
+    return attendee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) || 
            attendee.email.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
@@ -45,7 +44,7 @@ export function AttendeesPage() {
     try {
       const result = await addAttendee({
         first_name: data.first_name,
-        last_name: data.last_name,
+        last_name: null,
         email: data.email,
         phone: data.phone || null,
         rsvp_status: data.rsvp_status,
@@ -76,7 +75,7 @@ export function AttendeesPage() {
     try {
       const result = await updateAttendee(editingAttendee.id, {
         first_name: data.first_name,
-        last_name: data.last_name,
+        last_name: null,
         email: data.email,
         phone: data.phone || null,
         rsvp_status: data.rsvp_status,

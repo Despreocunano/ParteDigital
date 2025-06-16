@@ -18,7 +18,6 @@ export function AttendeeForm({ onSubmit, onCancel, isLoading, attendee }: Attend
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
       first_name: attendee?.first_name || '',
-      last_name: attendee?.last_name || '',
       email: attendee?.email || '',
       phone: attendee?.phone || '',
       rsvp_status: attendee?.rsvp_status || 'pending',
@@ -73,20 +72,13 @@ export function AttendeeForm({ onSubmit, onCancel, isLoading, attendee }: Attend
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4">
           <Input
             label="Nombre"
             {...register('first_name', { 
               required: 'El nombre es requerido' 
             })}
             error={errors.first_name?.message}
-          />
-          <Input
-            label="Apellido"
-            {...register('last_name', { 
-              required: 'El apellido es requerido' 
-            })}
-            error={errors.last_name?.message}
           />
         </div>
 

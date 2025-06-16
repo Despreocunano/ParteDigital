@@ -16,7 +16,7 @@ export interface Database {
           id: string
           user_id: string
           first_name: string
-          last_name: string
+          last_name: string | null
           email: string
           phone: string | null
           rsvp_status: RsvpStatus
@@ -35,7 +35,7 @@ export interface Database {
           id?: string
           user_id: string
           first_name: string
-          last_name: string
+          last_name?: string | null
           email: string
           phone?: string | null
           rsvp_status?: RsvpStatus
@@ -54,7 +54,7 @@ export interface Database {
           id?: string
           user_id?: string
           first_name?: string
-          last_name?: string
+          last_name?: string | null
           email?: string
           phone?: string | null
           rsvp_status?: RsvpStatus
