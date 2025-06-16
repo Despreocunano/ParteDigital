@@ -42,7 +42,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
 
   return (
     <motion.section 
-      className={`py-24 px-4 ${className}`}
+      className={`py-20 px-4 ${className}`}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}

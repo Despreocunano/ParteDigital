@@ -80,18 +80,18 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 <div className="ml-4">
                   <div className="flex items-center gap-2">
                     <p className="text-lg font-medium text-[#2D1B69]">
-                      {new Date(date).toLocaleDateString('es-ES', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </p>
-                    {time && (
+                    {new Date(date).toLocaleDateString('es-ES', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                  {time && (
                       <div className="flex items-center text-[#2D1B69]">
                         <Clock className="w-4 h-4 mr-1" />
                         <span className="text-lg font-medium">{time}</span>
-                      </div>
-                    )}
+                    </div>
+                  )}
                   </div>
                 </div>
               </div>

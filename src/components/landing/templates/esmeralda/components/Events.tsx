@@ -69,18 +69,18 @@ function Event({ title, date, time, location, address, placeId, className = '', 
           </div>
 
           {address && (
-            <div className="space-y-4 text-center">
-              <h4 className="text-4xl font-parisienne text-white mb-2">Dirección</h4>
+          <div className="space-y-4 text-center">
+            <h4 className="text-4xl font-parisienne text-white mb-2">Dirección</h4>
               <div className="flex flex-col items-center">
                 <p className="text-lg font-lora text-[#cfd6ba]">{address}</p>
               </div>
-              <Button
-                onClick={handleOpenMaps}
-                className="bg-[#E5D7A9] hover:bg-[#D0C293] text-[#0A3831] px-6 py-2 w-48 mx-auto rounded-full text-base font-medium shadow-sm"
-              >
-                ¿Cómo llegar?
-              </Button>
-            </div>
+            <Button
+              onClick={handleOpenMaps}
+              className="bg-[#E5D7A9] hover:bg-[#D0C293] text-[#0A3831] px-6 py-2 w-48 mx-auto rounded-full text-base font-medium shadow-sm"
+            >
+              ¿Cómo llegar?
+            </Button>
+          </div>
           )}
         </div>
       </div>

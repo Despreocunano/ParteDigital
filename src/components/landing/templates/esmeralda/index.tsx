@@ -11,6 +11,7 @@ import { Footer } from './components/Footer';
 import { WelcomeModal } from './components/WelcomeModal';
 import { KidsAndPets } from './components/KidsAndPets';
 import type { TemplateProps } from '../types';
+import { InfiniteGallery } from '../../shared/InfiniteGallery';
 
 export function EsmeraldaTemplate({
   groomName,
@@ -142,6 +143,12 @@ export function EsmeraldaTemplate({
           <Social
             hashtag={hashtag || defaultHashtag}
             className="bg-[#012D27]"
+          />
+
+          <InfiniteGallery
+            images={galleryImages}
+            frameColor="#D4B572"
+            className="bg-[#253238]"
           />
 
           <Footer
