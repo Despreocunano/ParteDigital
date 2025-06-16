@@ -6,6 +6,7 @@ import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
 import { Mail, Lock, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { translateAuthError } from '../../lib/authErrors';
 
 type FormData = {
   email: string;
@@ -71,7 +72,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
           }, 2000);
         }
       } else if (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(translateAuthError(error));
       }
     } catch (error) {
       setErrorMessage('Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.');

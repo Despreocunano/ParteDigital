@@ -5,6 +5,7 @@ import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
 import { Mail } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { translateAuthError } from '../../lib/authErrors';
 
 type ForgotPasswordFormProps = {
   onBack: () => void;
@@ -34,7 +35,7 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
     const { success: resetSuccess, error: resetError } = await resetPassword(data.email);
 
     if (!resetSuccess) {
-      setError(resetError?.message || 'Error al enviar el correo de recuperación');
+      setError(translateAuthError(resetError));
     } else {
       setSuccess(true);
     }

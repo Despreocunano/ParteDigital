@@ -7,6 +7,7 @@ import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
 import { Mail, Lock } from 'lucide-react';
 import { ForgotPasswordForm } from './ForgotPasswordForm';
+import { translateAuthError } from '../../lib/authErrors';
 
 type FormData = {
   email: string;
@@ -37,7 +38,7 @@ export function LoginForm({ onToggleForm }: LoginFormProps) {
         window.scrollTo(0, 0);
         navigate('/', { replace: true });
       } else if (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(translateAuthError(error));
       }
     } catch (error) {
       setErrorMessage('Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo.');

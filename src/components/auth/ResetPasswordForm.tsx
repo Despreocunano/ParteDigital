@@ -6,6 +6,7 @@ import { Card } from '../ui/Card';
 import { supabase } from '../../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { translateAuthError } from '../../lib/authErrors';
 
 type ResetPasswordFormData = {
   password: string;
@@ -43,7 +44,7 @@ export function ResetPasswordForm() {
       }, 1500);
     } catch (error) {
       console.error('Error al actualizar la contraseña:', error);
-      toast.error('Error al actualizar la contraseña');
+      toast.error(translateAuthError(error as Error));
     } finally {
       setLoading(false);
     }
