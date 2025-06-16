@@ -86,7 +86,6 @@ export function RemindersPage() {
 
   const variables = [
     { name: '{nombre}', description: 'Nombre del invitado' },
-    { name: '{apellido}', description: 'Apellido del invitado' },
     { name: '{mesa}', description: 'Mesa asignada' },
     { name: '{fecha}', description: 'Fecha actual' },
     { name: '{hora_ceremonia}', description: 'Hora de la ceremonia' },
@@ -120,7 +119,6 @@ export function RemindersPage() {
   const filteredAttendees = attendees.filter(attendee => {
     const matchesSearch = 
       attendee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      attendee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       attendee.email.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesStatus = 
@@ -156,7 +154,6 @@ export function RemindersPage() {
 
     const replacements = {
       '{nombre}': attendee.first_name || '',
-      '{apellido}': attendee.last_name || '',
       '{mesa}': currentTable?.name || 'Sin mesa asignada',
       '{fecha}': currentDate,
       '{hora_ceremonia}': landingPage?.ceremony_time || '[Hora no definida]',
@@ -340,7 +337,7 @@ export function RemindersPage() {
                         }`} />
                         <div>
                           <div className="font-medium text-gray-900">
-                            {attendee.first_name} {attendee.last_name}
+                            {attendee.first_name}
                           </div>
                           <div className="text-sm text-gray-500">
                             {attendee.email}

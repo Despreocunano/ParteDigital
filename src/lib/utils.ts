@@ -13,8 +13,8 @@ export function formatDate(date: string | Date): string {
   });
 }
 
-export function getInitials(firstName: string, lastName: string): string {
-  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+export function getInitials(name: string): string {
+  return name.charAt(0).toUpperCase();
 }
 
 export function calculateRsvpStats(guests: any[]) {

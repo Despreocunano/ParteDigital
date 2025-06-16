@@ -49,12 +49,12 @@ export function AttendeeCard({
           <div className="space-y-4">
             <div className="flex items-center">
               <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-700 text-sm font-medium">
-                {getInitials(attendee.first_name, attendee.last_name)}
+                {getInitials(attendee.first_name)}
               </div>
               <div className="ml-3 flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-medium truncate">
-                  {attendee.first_name} {attendee.last_name}
+                    {attendee.first_name}
                   </p>
                   {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && (
                     <span className="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full">
@@ -129,7 +129,7 @@ export function AttendeeCard({
         isDanger
       >
         <p className="text-sm text-gray-500">
-          ¿Estás seguro de que deseas eliminar a {attendee.first_name} {attendee.last_name}?
+          ¿Estás seguro de que deseas eliminar a {attendee.first_name}?
         </p>
       </Modal>
 

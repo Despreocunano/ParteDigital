@@ -4,8 +4,7 @@ import { supabase } from '../../lib/supabase';
 import { Switch } from '../ui/Switch';
 
 interface RsvpFormData {
-  first_name: string;
-  last_name: string;
+  full_name: string;
   email: string;
   phone?: string;
   dietary_restrictions?: string;
@@ -31,7 +30,12 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
 
   const hasPlusOne = watch('has_plus_one');
 
-  const onSubmit = async (data: RsvpFormData) => {
+  const onSubmit = async (formData: RsvpFormData) => {
+    if (!formData.full_name) {
+      setError('full_name', { type: 'required', message: 'El nombre completo es requerido' });
+      return;
+    }
+
     setIsLoading(true);
     setSubmitStatus('idle');
 
@@ -41,16 +45,15 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
         .insert([
           {
             user_id: userId,
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-            phone: data.phone || null,
+            first_name: formData.full_name,
+            last_name: '',
+            email: formData.email || null,
+            phone: formData.phone || null,
+            dietary_restrictions: formData.dietary_restrictions || null,
             rsvp_status: 'confirmed',
-            dietary_restrictions: data.dietary_restrictions || null,
-            has_plus_one: data.has_plus_one,
-            plus_one_name: data.has_plus_one ? data.plus_one_name : null,
-            plus_one_dietary_restrictions: data.has_plus_one ? data.plus_one_dietary_restrictions : null,
-            plus_one_rsvp_status: data.has_plus_one ? 'confirmed' : null
+            has_plus_one: formData.has_plus_one || false,
+            plus_one_name: formData.plus_one_name || null,
+            plus_one_dietary_restrictions: formData.plus_one_dietary_restrictions || null
           }
         ]);
 
@@ -71,9 +74,8 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
 
   const onReject = async () => {
     const formData = getValues();
-    if (!formData.first_name || !formData.last_name) {
-      setError('first_name', { type: 'required', message: 'El nombre es requerido' });
-      setError('last_name', { type: 'required', message: 'El apellido es requerido' });
+    if (!formData.full_name) {
+      setError('full_name', { type: 'required', message: 'El nombre completo es requerido' });
       return;
     }
 
@@ -86,8 +88,8 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
         .insert([
           {
             user_id: userId,
-            first_name: formData.first_name,
-            last_name: formData.last_name,
+            first_name: formData.full_name,
+            last_name: '',
             email: formData.email || null,
             phone: formData.phone || null,
             rsvp_status: 'declined'
@@ -126,27 +128,15 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <input
-            {...register('first_name', { required: 'El nombre es requerido' })}
-            placeholder="Nombre *"
-            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-serif"
-          />
-          {errors.first_name && (
-            <p className="mt-1 text-xs text-red-500 font-serif">{errors.first_name.message}</p>
-          )}
-        </div>
-        <div>
-          <input
-            {...register('last_name', { required: 'El apellido es requerido' })}
-            placeholder="Apellido *"
-            className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-serif"
-          />
-          {errors.last_name && (
-            <p className="mt-1 text-xs text-red-500 font-serif">{errors.last_name.message}</p>
-          )}
-        </div>
+      <div>
+        <input
+          {...register('full_name', { required: 'El nombre completo es requerido' })}
+          placeholder="Nombre completo *"
+          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-serif"
+        />
+        {errors.full_name && (
+          <p className="mt-1 text-xs text-red-500 font-serif">{errors.full_name.message}</p>
+        )}
       </div>
 
       <div>

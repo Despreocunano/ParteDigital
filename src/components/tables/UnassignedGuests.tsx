@@ -91,11 +91,11 @@ export function UnassignedGuests({ attendees, tables, onAssignTable }: Unassigne
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-700 text-xs font-medium">
-                        {getInitials(attendee.first_name, attendee.last_name)}
+                        {getInitials(attendee.first_name)}
                       </div>
                       <div className="ml-2 overflow-hidden">
                         <p className="text-sm font-medium truncate">
-                          {attendee.first_name} {attendee.last_name}
+                          {attendee.first_name}
                           {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && ' (+1)'}
                         </p>
                       </div>
