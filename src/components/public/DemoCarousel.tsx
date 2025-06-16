@@ -82,7 +82,7 @@ export function DemoCarousel() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Main Carousel Card */}
         <div 
-          className="relative w-full h-[280px] rounded-2xl shadow-lg overflow-hidden bg-white flex flex-col md:flex-row"
+          className="relative w-full h-[280px] md:h-[280px] rounded-2xl shadow-lg overflow-hidden bg-white flex flex-col md:flex-row"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -96,7 +96,7 @@ export function DemoCarousel() {
               className="absolute inset-0 flex flex-col md:flex-row"
             >
               {/* Image Section */}
-              <div className="relative w-full md:w-[65%] h-full rounded-l-2xl overflow-hidden flex items-center justify-center">
+              <div className="relative w-full md:w-[65%] h-[140px] md:h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none overflow-hidden flex items-center justify-center">
                 <img
                   src={currentItem.image}
                   alt={currentItem.title}
@@ -108,11 +108,11 @@ export function DemoCarousel() {
               </div>
 
               {/* Content Section */}
-              <div className="w-full md:w-[35%] p-6 md:p-8 flex flex-col justify-center text-left">
-                <h3 className="text-2xl font-bold text-red-600 mb-2 leading-tight">
+              <div className="w-full md:w-[35%] p-4 md:p-8 flex flex-col justify-center text-left">
+                <h3 className="text-xl md:text-2xl font-bold text-red-600 mb-2 leading-tight">
                   {currentItem.title}
                 </h3>
-                <p className="text-gray-800 text-base mb-6 leading-relaxed">
+                <p className="text-gray-800 text-sm md:text-base mb-4 md:mb-6 leading-relaxed">
                   {currentItem.description}
                 </p>
                 {currentItem.buttonText && currentItem.buttonLink && (
