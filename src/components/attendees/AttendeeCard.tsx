@@ -99,7 +99,10 @@ export function AttendeeCard({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => onEdit(attendee)}
+                onClick={() => {
+                  onEdit(attendee);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="text-gray-600 hover:text-gray-900"
               >
                 <Edit2 className="h-4 w-4" />
