@@ -139,7 +139,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [showCustomDressCode, setShowCustomDressCode] = useState(false);
   const [selectedDressCode, setSelectedDressCode] = useState(initialData?.dress_code || 'formal');
   const [rutValue, setRutValue] = useState(initialData?.bank_info?.rut || '');
-  const [selectedStore, setSelectedStore] = useState(initialData?.store || '');
+  const [selectedStore, setSelectedStore] = useState(initialData?.store || 'falabella');
   const [hasModifiedPartyDate, setHasModifiedPartyDate] = useState(false);
   const [hasLandingPage, setHasLandingPage] = useState(false);
   const [rutError, setRutError] = useState<string | null>(null);
@@ -332,6 +332,18 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       setValue('party_date', ceremonyDate);
     }
   }, [watch('ceremony_date'), hasModifiedPartyDate, setValue]);
+
+  // Efecto para sincronizar el dresscode con el formulario
+  useEffect(() => {
+    if (!showCustomDressCode) {
+      setValue('dress_code', selectedDressCode);
+    }
+  }, [selectedDressCode, showCustomDressCode, setValue]);
+
+  // Efecto para sincronizar la tienda con el formulario
+  useEffect(() => {
+    setValue('store', selectedStore);
+  }, [selectedStore, setValue]);
 
   const onSubmit = async (data: LandingPageFormData) => {
     if (!selectedTemplateId) {
@@ -991,7 +1003,11 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
               options={storeOptions}
               disabled={!coupleCode}
               value={selectedStore}
-              onChange={(e) => setSelectedStore(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSelectedStore(value);
+                setValue('store', value);
+              }}
             />
             {!coupleCode && (
               <p className="text-sm text-gray-500">

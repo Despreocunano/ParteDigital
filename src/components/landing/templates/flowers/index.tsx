@@ -108,6 +108,8 @@ export function FlowersTemplate({
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
             className="bg-[#FFFFFF]"
+            groomName={groomName}
+            brideName={brideName}
           />
 
           <KidsAndPets

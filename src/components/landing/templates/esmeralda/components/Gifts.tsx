@@ -153,11 +153,11 @@ ${bankInfo.email}`;
                 whileTap={{ scale: 0.98 }}
               >
                 <h3 className="text-xl font-serif mb-2 text-[#CFD6BA]">Datos Bancarios</h3>
-                <p className="text-[#CFD6BA]/80 text-sm mb-2">
+                <p className="text-[#CFD6BA]/80 text-lg mb-2">
                   Información para transferencia
                 </p>
                 <div className="bg-[#CFD6BA]/10 rounded-lg p-3 h-[72px] flex items-center justify-center">
-                  <p className="text-[#CFD6BA] text-sm">
+                  <p className="text-[#CFD6BA] text-lg">
                     Haz clic para ver los datos de transferencia
                   </p>
                 </div>
@@ -170,12 +170,12 @@ ${bankInfo.email}`;
                 variants={item}
               >
                 <h3 className="text-xl font-serif mb-2 text-[#CFD6BA]">Lista de Regalos</h3>
-                <p className="text-[#CFD6BA]/80 text-sm mb-2">
+                <p className="text-[#CFD6BA]/80 text-lg mb-2">
                   Información de nuestra lista de regalos
                 </p>
                 <div className="bg-[#CFD6BA]/10 rounded-lg p-3 h-[72px] flex flex-col justify-center">
-                  <p className="text-[#CFD6BA] text-sm font-mono">Código: {couple_code}</p>
-                  <p className="text-[#CFD6BA]/80 text-xs">Tienda: {store === 'falabella' ? 'Falabella' : 'Paris'}</p>
+                  <p className="text-[#CFD6BA] text-lg font-mono">Código: {couple_code}</p>
+                  <p className="text-[#CFD6BA]/80 text-sm">Tienda: {store === 'falabella' ? 'Falabella' : 'Paris'}</p>
                 </div>
               </motion.div>
             )}
@@ -205,28 +205,28 @@ ${bankInfo.email}`;
             <div className="bg-[#CFD6BA]/10 rounded-lg border border-[#CFD6BA]/20 p-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-[#CFD6BA]/80">Titular</p>
-                  <p className="text-[#CFD6BA]">{bankInfo.accountHolder}</p>
+                  <p className="text-sm text-[#00534E]/80">Titular</p>
+                  <p className="text-[#00534E]">{bankInfo.accountHolder}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#CFD6BA]/80">RUT</p>
-                  <p className="text-[#CFD6BA]">{bankInfo.rut}</p>
+                  <p className="text-sm text-[#00534E]/80">RUT</p>
+                  <p className="text-[#00534E]">{bankInfo.rut}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#CFD6BA]/80">Banco</p>
-                  <p className="text-[#CFD6BA]">{bankInfo.bank}</p>
+                  <p className="text-sm text-[#00534E]/80">Banco</p>
+                  <p className="text-[#00534E]">{bankInfo.bank}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#CFD6BA]/80">Tipo de Cuenta</p>
-                  <p className="text-[#CFD6BA]">{bankInfo.accountType}</p>
+                  <p className="text-sm text-[#00534E]/80">Tipo de Cuenta</p>
+                  <p className="text-[#00534E]">{bankInfo.accountType}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#CFD6BA]/80">Número de Cuenta</p>
-                  <p className="text-[#CFD6BA]">{bankInfo.accountNumber}</p>
+                  <p className="text-sm text-[#00534E]/80">Número de Cuenta</p>
+                  <p className="text-[#00534E]">{bankInfo.accountNumber}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#CFD6BA]/80">Email</p>
-                  <p className="text-[#CFD6BA]">{bankInfo.email}</p>
+                  <p className="text-sm text-[#00534E]/80">Email</p>
+                  <p className="text-[#00534E]">{bankInfo.email}</p>
                 </div>
               </div>
             </div>

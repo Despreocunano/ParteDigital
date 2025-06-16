@@ -110,6 +110,8 @@ export function DeluxeTemplate({
             partyPlaceId={partyPlaceId}
             showSongRecommendations={musicEnabled}
             className="bg-[#2F3E46]"
+            groomName={groomName}
+            brideName={brideName}
           />
 
           <KidsAndPets

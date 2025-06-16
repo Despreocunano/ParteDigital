@@ -109,6 +109,8 @@ export function CerezoTemplate({
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
             className="bg-[#FFFFFF]"
+            groomName={groomName}
+            brideName={brideName}
           />
 
           <KidsAndPets

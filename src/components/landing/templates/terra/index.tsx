@@ -108,6 +108,8 @@ export function TerraTemplate({
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
             className="bg-[#47261F]"
+            groomName={groomName}
+            brideName={brideName}
           />
 
           <KidsAndPets

@@ -109,6 +109,8 @@ export function EsmeraldaTemplate({
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
             className="bg-[#012D27]"
+            groomName={groomName}
+            brideName={brideName}
           />
 
           <KidsAndPets

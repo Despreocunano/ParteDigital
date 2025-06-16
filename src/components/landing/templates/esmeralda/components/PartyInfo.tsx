@@ -271,7 +271,7 @@ export function PartyInfo({
         iconColor="#CFD6BA"
         overlayColor="#012D27"
       >
-        <p className="text-lg leading-relaxed whitespace-pre-wrap text-[#CFD6BA]">
+        <p className="text-lg leading-relaxed whitespace-pre-wrap text-[#00534E]">
           {dresscode}
         </p>
       </InfoModal>
@@ -285,7 +285,7 @@ export function PartyInfo({
         iconColor="#CFD6BA"
         overlayColor="#012D27"
       >
-        <p className="text-lg leading-relaxed whitespace-pre-wrap text-[#CFD6BA]">
+        <p className="text-lg leading-relaxed whitespace-pre-wrap text-[#00534E]">
           {tips}
         </p>
       </InfoModal>

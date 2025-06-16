@@ -16,55 +16,14 @@ interface EventProps {
   placeId?: string;
   className?: string;
   variants?: any;
-  onRsvp: () => void;
 }
 
-function Event({ title, date, time, location, address, placeId, className = '', variants, onRsvp }: EventProps) {
-  const [showCalendarOptions, setShowCalendarOptions] = useState(false);
-
+function Event({ title, date, time, location, address, placeId, className = '', variants }: EventProps) {
   const handleOpenMaps = () => {
     if (placeId) {
       window.open(`https://www.google.com/maps/place/?q=place_id:${placeId}`, '_blank');
     } else if (address) {
       window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
-    }
-  };
-
-  const generateCalendarLink = (type: 'google' | 'apple' | 'outlook') => {
-    const eventTitle = encodeURIComponent(`${title} - Boda`);
-    const eventLocation = encodeURIComponent(address || location);
-    const startDate = new Date(date);
-    const endDate = new Date(date);
-    
-    if (time) {
-      const [hours, minutes] = time.split(':');
-      startDate.setHours(parseInt(hours), parseInt(minutes));
-      endDate.setHours(parseInt(hours) + 2, parseInt(minutes));
-    }
-
-    const formatDate = (date: Date) => {
-      return date.toISOString().replace(/-|:|\.\d+/g, '');
-    };
-
-    switch (type) {
-      case 'google':
-        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${formatDate(startDate)}/${formatDate(endDate)}&location=${eventLocation}`;
-      case 'apple':
-        return `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-URL:${document.URL}
-DTSTART:${formatDate(startDate)}
-DTEND:${formatDate(endDate)}
-SUMMARY:${eventTitle}
-DESCRIPTION:${eventTitle}
-LOCATION:${eventLocation}
-END:VEVENT
-END:VCALENDAR`;
-      case 'outlook':
-        return `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${eventTitle}&startdt=${startDate.toISOString()}&enddt=${endDate.toISOString()}&location=${eventLocation}`;
-      default:
-        return '';
     }
   };
 
@@ -103,100 +62,49 @@ END:VCALENDAR`;
           
           <div className="space-y-8">
             <div className="space-y-4">
-              <div className="flex items-start">
+              <div className="flex items-center">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
                   <MapPin className="w-6 h-6 text-[#2D1B69]" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-xl font-medium text-[#2D1B69]">{location}</p>
+                  <p className="text-lg font-medium text-[#2D1B69]">{location}</p>
                 </div>
               </div>
-              
-              <Button
-                onClick={onRsvp}
-                className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
-              >
-                Confirmar Asistencia
-              </Button>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-start">
+              <div className="flex items-center">
                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
                   <CalendarDays className="w-6 h-6 text-[#2D1B69]" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-xl font-medium text-[#2D1B69]">
-                    {new Date(date).toLocaleDateString('es-ES', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                  </p>
-                  {time && (
-                    <div className="flex items-center mt-2 text-[#8D6E63]">
-                      <Clock className="w-4 h-4 mr-2" />
-                      <span className="font-medium">{time}</span>
-                    </div>
-                  )}
+                  <div className="flex items-center gap-2">
+                    <p className="text-lg font-medium text-[#2D1B69]">
+                      {new Date(date).toLocaleDateString('es-ES', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </p>
+                    {time && (
+                      <div className="flex items-center text-[#2D1B69]">
+                        <Clock className="w-4 h-4 mr-1" />
+                        <span className="text-lg font-medium">{time}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-              
-              <Button
-                onClick={() => setShowCalendarOptions(!showCalendarOptions)}
-                leftIcon={<CalendarDays className="w-5 h-5" />}
-                className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
-              >
-                Agendar Evento
-              </Button>
-              
-              <AnimatePresence>
-                {showCalendarOptions && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="bg-white/90 backdrop-blur-sm border border-[#F8BBD9]/30 rounded-2xl shadow-lg p-4"
-                  >
-                    <motion.a
-                      href={generateCalendarLink('google')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
-                      whileHover={{ x: 5 }}
-                    >
-                      Google Calendar
-                    </motion.a>
-                    <motion.a
-                      href={generateCalendarLink('apple')}
-                      download="event.ics"
-                      className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
-                      whileHover={{ x: 5 }}
-                    >
-                      Apple Calendar
-                    </motion.a>
-                    <motion.a
-                      href={generateCalendarLink('outlook')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
-                      whileHover={{ x: 5 }}
-                    >
-                      Outlook
-                    </motion.a>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
 
             {address && (
               <div className="space-y-4">
-                <div className="flex items-start">
+                <div className="flex items-center">
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] flex items-center justify-center flex-shrink-0 shadow-lg">
                     <MapPin className="w-6 h-6 text-[#2D1B69]" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-[#8D6E63] leading-relaxed">{address}</p>
+                    <p className="text-lg font-medium text-[#2D1B69]">{address}</p>
                   </div>
                 </div>
                 
@@ -228,6 +136,8 @@ interface EventsProps {
   partyAddress?: string;
   partyPlaceId?: string;
   className?: string;
+  groomName?: string;
+  brideName?: string;
 }
 
 export function Events({
@@ -242,25 +152,86 @@ export function Events({
   partyLocation,
   partyAddress,
   partyPlaceId,
-  className = ''
+  className = '',
+  groomName = '',
+  brideName = ''
 }: EventsProps) {
   const [showRsvpModal, setShowRsvpModal] = useState(false);
+  const [showCalendarOptions, setShowCalendarOptions] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<'ceremony' | 'party' | null>(null);
+
+  const generateCalendarLink = (type: 'google' | 'apple' | 'outlook') => {
+    if (!selectedEvent) return '';
+
+    const eventData = selectedEvent === 'ceremony' 
+      ? {
+          title: 'Ceremonia',
+          date: ceremonyDate,
+          time: ceremonyTime,
+          location: ceremonyLocation,
+          address: ceremonyAddress
+        }
+      : {
+          title: 'Recepción',
+          date: partyDate,
+          time: partyTime,
+          location: partyLocation,
+          address: partyAddress
+        };
+
+    const eventTitle = encodeURIComponent(`Boda de ${groomName} & ${brideName}`);
+    const eventLocation = encodeURIComponent(eventData.address || eventData.location || '');
+    const startDate = new Date(eventData.date || '');
+    const endDate = new Date(eventData.date || '');
+    
+    if (eventData.time) {
+      const [hours, minutes] = eventData.time.split(':');
+      startDate.setHours(parseInt(hours), parseInt(minutes));
+      endDate.setHours(parseInt(hours) + 2, parseInt(minutes));
+    }
+
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/-|:|\.\d+/g, '');
+    };
+
+    switch (type) {
+      case 'google':
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${formatDate(startDate)}/${formatDate(endDate)}&location=${eventLocation}`;
+      case 'apple':
+        return `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+URL:${document.URL}
+DTSTART:${formatDate(startDate)}
+DTEND:${formatDate(endDate)}
+SUMMARY:${eventTitle}
+DESCRIPTION:${eventTitle}
+LOCATION:${eventLocation}
+END:VEVENT
+END:VCALENDAR`;
+      case 'outlook':
+        return `https://outlook.live.com/calendar/0/deeplink/compose?path=/calendar/action/compose&rru=addevent&subject=${eventTitle}&startdt=${startDate.toISOString()}&enddt=${endDate.toISOString()}&location=${eventLocation}`;
+      default:
+        return '';
+    }
+  };
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setShowRsvpModal(false);
+        setShowCalendarOptions(false);
       }
     };
 
-    if (showRsvpModal) {
+    if (showRsvpModal || showCalendarOptions) {
       document.addEventListener('keydown', handleEscape);
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
     };
-  }, [showRsvpModal]);
+  }, [showRsvpModal, showCalendarOptions]);
 
   const container = {
     hidden: { opacity: 0 },
@@ -302,7 +273,6 @@ export function Events({
           >
             <img src={divider} alt="Divider" className="mx-auto mb-4" />
             <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">¿Cuándo y Dónde?</h2>
-
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 max-w-7xl mx-auto px-4">
@@ -315,7 +285,6 @@ export function Events({
                 address={ceremonyAddress}
                 placeId={ceremonyPlaceId}
                 variants={item}
-                onRsvp={() => setShowRsvpModal(true)}
               />
             )}
 
@@ -328,10 +297,85 @@ export function Events({
                 address={partyAddress}
                 placeId={partyPlaceId}
                 variants={item}
-                onRsvp={() => setShowRsvpModal(true)}
               />
             )}
           </div>
+
+          <motion.div 
+            className="mt-12 max-w-7xl mx-auto px-4"
+            variants={item}
+          >
+            <div className="relative">
+              {/* Unique card design with layered effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#E91E63] to-[#C2185B] rounded-3xl transform rotate-2 opacity-20"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] rounded-3xl transform -rotate-1 opacity-40"></div>
+              
+              <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-[#F8BBD9]/50">
+                {/* Decorative header */}
+                <div className="h-2 bg-gradient-to-r from-[#E91E63] via-[#F8BBD9] to-[#E91E63]"></div>
+                
+                <div className="p-8 md:p-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Button
+                      onClick={() => setShowRsvpModal(true)}
+                      className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
+                    >
+                      Confirmar Asistencia
+                    </Button>
+
+                    <Button
+                      onClick={() => {
+                        setSelectedEvent(ceremonyLocation ? 'ceremony' : 'party');
+                        setShowCalendarOptions(!showCalendarOptions);
+                      }}
+                      leftIcon={<CalendarDays className="w-5 h-5" />}
+                      className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium flex items-center justify-center gap-2"
+                    >
+                      Agendar Evento
+                    </Button>
+                    
+                    <AnimatePresence>
+                      {showCalendarOptions && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="col-span-1 md:col-span-2 mt-4 bg-white/90 backdrop-blur-sm border border-[#F8BBD9]/30 rounded-2xl shadow-lg p-4"
+                        >
+                          <motion.a
+                            href={generateCalendarLink('google')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
+                            whileHover={{ x: 5 }}
+                          >
+                            Google Calendar
+                          </motion.a>
+                          <motion.a
+                            href={generateCalendarLink('apple')}
+                            download="event.ics"
+                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
+                            whileHover={{ x: 5 }}
+                          >
+                            Apple Calendar
+                          </motion.a>
+                          <motion.a
+                            href={generateCalendarLink('outlook')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
+                            whileHover={{ x: 5 }}
+                          >
+                            Outlook
+                          </motion.a>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </section>
 
