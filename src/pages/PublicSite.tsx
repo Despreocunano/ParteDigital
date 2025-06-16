@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useState, useEffect } from 'react';
+import { DemoCarousel } from '../components/public/DemoCarousel';
 
 // Import local images
 import app1 from '../assets/images/app_gestion.png';
@@ -199,6 +200,7 @@ export function PublicSite() {
           transition={{ duration: 1.5 }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-transparent z-10"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,rgba(0,0,0,0)_70%)] z-10"></div>
           <img 
             src={herobg}
             alt="Wedding background"
@@ -213,10 +215,22 @@ export function PublicSite() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
+            <div className="inline-block mb-6">
+              <motion.div 
+                className="w-24 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+              />
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              Tu historia de amor merece una invitación única
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-200 to-rose-400">
+                Tu historia de amor
+              </span>
+              <br />
+              merece una invitación única
             </h1>
-            <p className="text-lg md:text-2xl text-white/90 mb-6 md:mb-8">
+            <p className="text-lg md:text-2xl text-white/90 mb-6 md:mb-8 font-light">
               Crea una experiencia digital mágica para tu boda
             </p>
             <p className="text-xl md:text-3xl text-white font-light mb-8 md:mb-12">
@@ -232,7 +246,7 @@ export function PublicSite() {
                   href="https://panel.tuparte.digital/auth"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-8 py-4 text-lg rounded-md bg-rose-500 hover:bg-rose-600 text-white transition-colors group"
+                  className="inline-flex items-center justify-center w-full px-8 py-4 text-lg rounded-md bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white transition-all duration-300 group shadow-lg shadow-rose-500/25"
                 >
                   <span>Crear mi invitación</span>
                   <Heart className="ml-2 h-5 w-5 group-hover:text-white transition-transform group-hover:scale-125" />
@@ -252,7 +266,7 @@ export function PublicSite() {
                       featuresTitle.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="w-full bg-white/10 text-white border-white/20 hover:bg-white/20 px-8 py-4"
+                  className="w-full bg-white/10 text-white border-white/20 hover:bg-white/20 px-8 py-4 backdrop-blur-sm"
                 >
                   Ver características
                 </Button>
@@ -290,21 +304,21 @@ export function PublicSite() {
                     </motion.div>
                     <div className="space-y-3 w-full">
                       <motion.button
-                        className="w-full bg-white text-gray-900 rounded-lg py-2 text-sm font-medium"
+                        className="w-full bg-gradient-to-r from-rose-500 to-rose-600 text-white rounded-lg py-2 text-sm font-medium shadow-lg shadow-rose-500/25"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
                         AGENDAR
                       </motion.button>
                       <motion.button
-                        className="w-full bg-white/20 text-white rounded-lg py-2 text-sm font-medium"
+                        className="w-full bg-white/20 text-white rounded-lg py-2 text-sm font-medium backdrop-blur-sm"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
                         CONFIRMAR ASISTENCIA
                       </motion.button>
                       <motion.button
-                        className="w-full bg-white/20 text-white rounded-lg py-2 text-sm font-medium"
+                        className="w-full bg-white/20 text-white rounded-lg py-2 text-sm font-medium backdrop-blur-sm"
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -336,6 +350,9 @@ export function PublicSite() {
         </motion.div>
       </section>
 
+      {/* Demo Carousel */}
+      <DemoCarousel />
+
       {/* Feature Sections */}
       <div className="text-center mb-16 pt-24 features-title">
         <motion.h2 
@@ -345,7 +362,9 @@ export function PublicSite() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          Partes digitales con carácteristicas increíbles
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-rose-600">
+            Características
+          </span> que harán tu invitación única
         </motion.h2>
         <motion.p 
           className="text-xl text-gray-600 max-w-3xl mx-auto"
@@ -354,7 +373,7 @@ export function PublicSite() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Todo lo que necesitas para gestionar las invitaciones a tus invitados en un solo lugar.
+          Todo lo que necesitas para crear una experiencia inolvidable
         </motion.p>
       </div>
 
@@ -365,7 +384,7 @@ export function PublicSite() {
         return (
           <motion.section 
             key={index} 
-            className={`py-24 px-4 feature-sections ${isEven ? 'bg-white' : 'bg-gray-50'}`}
+            className={`py-24 px-4 feature-sections ${isEven ? 'bg-white' : 'bg-gradient-to-b from-rose-50/30 to-white'}`}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -381,7 +400,7 @@ export function PublicSite() {
                   transition={{ delay: 0.2, duration: 0.8 }}
                 >
                   <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-2xl bg-rose-100 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-100 to-rose-50 flex items-center justify-center shadow-lg shadow-rose-100/50">
                       <Icon className="w-8 h-8 text-rose-600" />
                     </div>
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -395,14 +414,16 @@ export function PublicSite() {
                     {section.features.map((feature, i) => (
                       <motion.li 
                         key={i} 
-                        className="flex items-center text-gray-700"
+                        className="flex items-center text-gray-700 group"
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 + (i * 0.1), duration: 0.5 }}
                       >
-                        <Check className="w-5 h-5 text-emerald-500 mr-3 flex-shrink-0" />
-                        <span>{feature}</span>
+                        <div className="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                          <Check className="w-4 h-4 text-rose-600" />
+                        </div>
+                        <span className="group-hover:text-rose-600 transition-colors duration-300">{feature}</span>
                       </motion.li>
                     ))}
                   </ul>
@@ -419,7 +440,7 @@ export function PublicSite() {
                     <motion.img
                       src={section.image}
                       alt={section.title}
-                      className="relative w-full"
+                      className="relative w-full rounded-lg shadow-xl"
                       whileHover={{ scale: 1.02 }}
                       transition={{ duration: 0.3 }}
                     />
@@ -431,16 +452,18 @@ export function PublicSite() {
         );
       })}
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-20 bg-gradient-to-b from-white to-rose-50/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
-            className="bg-gradient-to-r from-rose-500 to-rose-600 rounded-2xl p-8 md:p-12 shadow-xl"
+            className="bg-gradient-to-r from-rose-500 to-rose-600 rounded-2xl p-8 md:p-12 shadow-xl relative overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,rgba(0,0,0,0)_70%)]"></div>
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%)] bg-[length:250%_250%] animate-shimmer"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="text-center md:text-left">
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                   Crea tu invitación en menos de 5 minutos
@@ -457,7 +480,7 @@ export function PublicSite() {
                   href="https://panel.tuparte.digital/register"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-4 text-lg rounded-lg bg-white text-rose-600 hover:bg-gray-50 transition-colors group font-medium"
+                  className="inline-flex items-center justify-center px-8 py-4 text-lg rounded-lg bg-white text-rose-600 hover:bg-gray-50 transition-colors group font-medium shadow-lg shadow-rose-500/25"
                 >
                   <span>Crear mi cuenta</span>
                   <Heart className="ml-2 h-5 w-5 group-hover:text-rose-500 transition-transform group-hover:scale-125" />
@@ -469,7 +492,7 @@ export function PublicSite() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-gradient-to-b from-white to-rose-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.h2 
@@ -479,7 +502,9 @@ export function PublicSite() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              Características que harán tu invitación única
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-rose-600">
+                Características
+              </span> que harán tu invitación única
             </motion.h2>
             <motion.p 
               className="text-xl text-gray-600 max-w-3xl mx-auto"
@@ -493,53 +518,54 @@ export function PublicSite() {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => {
-  const Icon = feature.icon;
-  const colorClasses = colorVariants[feature.color as keyof typeof colorVariants];
-  
-  return (
-    <motion.div 
-      key={index} 
-      className="group relative bg-white rounded-2xl p-6 shadow-lg border border-gray-100 overflow-hidden"
-      initial={{ opacity: 0, rotateX: 15 }}
-      whileInView={{ 
-        opacity: 1,
-        rotateX: 0,
-        transformPerspective: 1000,
-        transformStyle: "preserve-3d"
-      }}
-      viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-      transition={{ 
-        delay: index * 0.1, 
-        duration: 0.6,
-        type: "spring",
-        damping: 10
-      }}
-      whileHover={{
-        y: -10,
-        rotateX: 5,
-        boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-      }}
-    >
-      <div className="relative flex items-start gap-4">
-        <motion.div
-          className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorClasses}`}
-          whileHover={{ rotate: 10, scale: 1.1 }}
-        >
-          <Icon className="h-6 w-6" />
-        </motion.div>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            {feature.title}
-          </h3>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            {feature.description}
-          </p>
-        </div>
-      </div>
-    </motion.div>
-  );
-})}
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              const colorClasses = colorVariants[feature.color as keyof typeof colorVariants];
+              
+              return (
+                <motion.div 
+                  key={index} 
+                  className="group relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-100/50 overflow-hidden hover:border-rose-100/50 transition-all duration-300"
+                  initial={{ opacity: 0, rotateX: 15 }}
+                  whileInView={{ 
+                    opacity: 1,
+                    rotateX: 0,
+                    transformPerspective: 1000,
+                    transformStyle: "preserve-3d"
+                  }}
+                  viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+                  transition={{ 
+                    delay: index * 0.1, 
+                    duration: 0.6,
+                    type: "spring",
+                    damping: 10
+                  }}
+                  whileHover={{
+                    y: -10,
+                    rotateX: 5,
+                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-rose-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative flex items-start gap-4">
+                    <motion.div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorClasses} group-hover:scale-110 transition-transform duration-300`}
+                      whileHover={{ rotate: 10, scale: 1.1 }}
+                    >
+                      <Icon className="h-6 w-6" />
+                    </motion.div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-rose-600 transition-colors duration-300">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
 
           <motion.div 
@@ -552,7 +578,7 @@ export function PublicSite() {
             <Button
               size="lg"
               onClick={() => window.location.href = 'https://panel.tuparte.digital/register'}
-              className="bg-rose-500 hover:bg-rose-600 text-white px-8 group"
+              className="bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white px-8 group shadow-lg shadow-rose-500/25"
             >
               <span>Comenzar ahora</span>
               <Heart className="ml-2 h-5 w-5 group-hover:text-white transition-transform group-hover:scale-125" />
@@ -562,7 +588,7 @@ export function PublicSite() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t py-12">
+      <footer className="bg-gradient-to-b from-rose-50/30 to-white border-t border-rose-100/50 py-12">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
