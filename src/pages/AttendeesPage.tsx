@@ -215,7 +215,8 @@ export function AttendeesPage() {
                 {searchTerm ? 'No se encontraron invitados' : 'No hay invitados registrados'}
               </p>
               {!searchTerm && (
-                <Button onClick={() => setShowAddForm(true)}>
+                <Button onClick={() => setShowAddForm(true)}
+                className='bg-primary text-primary-contrast hover:bg-primary-dark'>
                   Agregar Primer Invitado
                 </Button>
               )}

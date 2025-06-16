@@ -97,7 +97,8 @@ export function TableManager({
             <div className="md:col-span-2 lg:col-span-2 flex items-center justify-center h-[400px] border-2 border-dashed border-gray-300 rounded-lg">
               <div className="text-center">
                 <p className="text-gray-500 mb-4">No hay mesas creadas aún</p>
-                <Button onClick={() => setShowAddModal(true)}>
+                <Button onClick={() => setShowAddModal(true)}
+                  className='bg-primary text-primary-contrast hover:bg-primary-dark'>
                   Crear Primera Mesa
                 </Button>
               </div>
