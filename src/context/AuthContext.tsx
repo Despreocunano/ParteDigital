@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { User, Session } from '@supabase/supabase-js';
-import { getWelcomeTemplate, getSignatureTemplate } from '../templates/emailTemplates';
 
 type AuthContextType = {
   user: User | null;
@@ -105,62 +104,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           success: false,
           error: profileError,
         };
-      }
-
-      // Enviar correo de bienvenida
-      try {
-        const { data: landingPage, error: landingError } = await supabase
-          .from('landing_pages')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        if (!landingError) {
-          const landingUrl = landingPage?.slug 
-            ? `https://tuparte.digital/invitacion/${landingPage.slug}`
-            : 'https://panel.tuparte.digital';
-
-          const signature = getSignatureTemplate(groomName, brideName);
-          const message = getWelcomeTemplate({ 
-            attendee: { 
-              id: user.id,
-              first_name: groomName,
-              last_name: null,
-              email: email,
-              phone: null,
-              user_id: user.id,
-              rsvp_status: 'pending',
-              table_id: null,
-              dietary_restrictions: null,
-              needs_accommodation: false,
-              accommodation_notes: null,
-              has_plus_one: false,
-              plus_one_name: null,
-              plus_one_dietary_restrictions: null,
-              plus_one_rsvp_status: null,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString()
-            }, 
-            landingUrl, 
-            signature 
-          });
-
-          await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-email`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${user.id}`,
-            },
-            body: JSON.stringify({
-              attendeeId: user.id,
-              subject: '¡Bienvenido/a a Tu Parte Digital!',
-              message,
-            }),
-          });
-        }
-      } catch (emailError) {
-        console.error('Error sending welcome email:', emailError);
-        // No retornamos error aquí para no interrumpir el flujo de registro
       }
 
       return {
