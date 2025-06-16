@@ -59,7 +59,7 @@ export function DemoCarousel() {
 
     const interval = setInterval(() => {
       handleNext();
-    }, 3000); // Change slide every 5 seconds
+    }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
   }, [isPaused, handleNext]);
@@ -96,7 +96,7 @@ export function DemoCarousel() {
               className="absolute inset-0 flex flex-col md:flex-row"
             >
               {/* Image Section */}
-              <div className="relative w-full md:w-[65%] h-[340px] md:h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none overflow-hidden flex items-center justify-center">
+              <div className="relative w-full md:w-[65%] h-[140px] md:h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none overflow-hidden flex items-center justify-center">
                 <img
                   src={currentItem.image}
                   alt={currentItem.title}
