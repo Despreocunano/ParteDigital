@@ -77,7 +77,7 @@ export function TemplateSelector({
         title="Todas las plantillas"
       >
         <div className="w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
             {Object.values(templates).map((template) => (
               <Card
                 key={template.id}
@@ -101,7 +101,7 @@ export function TemplateSelector({
                     </div>
                   )}
                 </div>
-                <CardContent className="p-4">
+                <CardContent className="pb-2 pt-0">
                   <h3 className="font-medium text-gray-900 text-center">{template.name}</h3>
                 </CardContent>
               </Card>
