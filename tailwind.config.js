@@ -7,7 +7,9 @@ export default {
         serif: ['PT Serif', 'serif'],
         lora: ['Lora', 'serif'],
         parisienne: ['Parisienne', 'cursive'],
-        fraunces: ['Fraunces', 'cursive'],
+        fraunces: ['Fraunces', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        rubik: ['Rubik', 'sans-serif'],
       },
       colors: {
         primary: {

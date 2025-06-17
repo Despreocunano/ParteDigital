@@ -3,7 +3,6 @@ import { UserPlus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../../../../ui/Button';
 import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
-import lineas from '../assets/lineas01.svg'
 import { InfoModal } from '../../../shared/InfoModal';
 
 interface EventProps {
@@ -29,30 +28,28 @@ function Event({ title, date, time, location, address, placeId, className = '', 
 
   return (
     <motion.div 
-      className={`relative group ${className}`}
+      className={`py-10 ${className}`}
       variants={variants}
     >
-      <div className="relative rounded-xl bg-transparent max-w-md mx-auto">
-        <div className="relative -top-8 flex justify-center w-full">
-          <div className="absolute bg-transparent w-[150px] h-[40px] transform -skew-y-3"></div>
-          <div className="absolute bg-transparent w-[150px] h-[40px] transform skew-y-3"></div>
-          <h3 className="relative z-10 text-5xl md:text-6xl font-parisienne text-white mb-6 text-center">
+      <div className="rounded-xl bg-transparent max-w-md mx-auto">
+        <div className="flex justify-center w-full">
+          <h2 className="z-10 text-4xl md:text-5xl font-poppins text-[#B87600] mb-10">
             {title}
-          </h3>
+          </h2>
         </div>
 
-        <div className="p-8 md:p-10 pt-0 space-y-8">
+        <div className="space-y-8">
           <div className="space-y-4 text-center">
-            <h4 className="text-4xl font-parisienne text-white mb-2">Lugar</h4>
+            <h4 className="text-4xl font-poppins text-[#333333] mb-2">Lugar</h4>
             <div className="flex flex-col items-center">
-              <p className="text-lg font-lora text-[#cfd6ba]">{location}</p>
+              <p className="text-lg font-rubik text-[#333333]">{location}</p>
             </div>
           </div>
 
           <div className="space-y-4 text-center">
-            <h4 className="text-4xl font-parisienne text-white mb-2">Día</h4>
+            <h4 className="text-4xl font-poppins text-[#333333] mb-2">Día</h4>
             <div className="flex items-center justify-center gap-4">
-              <p className="text-lg font-lora text-[#cfd6ba]">
+              <p className="text-lg font-rubik text-[#333333]">
                 {new Date(date).toLocaleDateString('es-ES', {
                   year: 'numeric',
                   month: 'long',
@@ -60,23 +57,23 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 })}
               </p>
               {time && (
-                <span className="font-lora text-[#cfd6ba]">•</span>
+                <span className="font-rubik text-[#cfd6ba]">•</span>
               )}
               {time && (
-                <span className="text-lg font-lora text-[#cfd6ba]">{time}</span>
+                <span className="text-lg font-rubik text-[#333333]">{time}</span>
               )}
             </div>
           </div>
 
           {address && (
           <div className="space-y-4 text-center">
-            <h4 className="text-4xl font-parisienne text-white mb-2">Dirección</h4>
+            <h4 className="text-4xl font-poppins text-[#333333] mb-2">Dirección</h4>
               <div className="flex flex-col items-center">
-                <p className="text-lg font-lora text-[#cfd6ba]">{address}</p>
+                <p className="text-lg font-rubik text-[#333333]">{address}</p>
               </div>
             <Button
               onClick={handleOpenMaps}
-              className="bg-[#E5D7A9] hover:bg-[#D0C293] text-[#0A3831] px-6 py-2 w-48 mx-auto rounded-full text-base font-medium shadow-sm"
+              className="bg-[#333333] hover:bg-[#c6c6c5] text-[#c6c6c5] hover:text-[#333333] px-6 py-2 w-48 mx-auto rounded-full text-base font-rubik shadow-sm"
             >
               ¿Cómo llegar?
             </Button>
@@ -224,7 +221,7 @@ END:VCALENDAR`;
 
   return (
     <>
-      <section className={`pb-32 px-4 w-full ${className}`}>
+      <section className={`py-20 px-4 w-full ${className}`}>
         <motion.div 
           className="w-full max-w-none mx-auto"
           initial="hidden"
@@ -232,7 +229,6 @@ END:VCALENDAR`;
           viewport={{ once: true }}
           variants={container}
         >
-          <img src={lineas} alt="Líneas decorativas" className="w-full h-auto mb-20" />
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 max-w-4xl mx-auto px-4">
             {ceremonyLocation && ceremonyDate && (
               <Event
@@ -268,7 +264,7 @@ END:VCALENDAR`;
           </div>
 
           <motion.div 
-            className="mt-12 max-w-4xl mx-auto px-4"
+            className="max-w-4xl mx-auto px-4"
             variants={item}
           >
             <div className="relative rounded-xl bg-transparent">
@@ -276,7 +272,7 @@ END:VCALENDAR`;
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Button
                     onClick={() => setShowRsvpModal(true)}
-                    className="bg-[#E5D7A9] hover:bg-[#D0C293] text-[#0A3831] px-6 py-2 w-full rounded-full text-base font-medium shadow-sm"
+                    className="bg-[#333333] hover:bg-[#c6c6c5] text-[#c6c6c5] hover:text-[#333333] px-6 py-2 w-full rounded-full text-base font-rubik shadow-sm"
                   >
                     Confirmar Asistencia
                   </Button>
@@ -286,7 +282,7 @@ END:VCALENDAR`;
                       setSelectedEvent(ceremonyLocation ? 'ceremony' : 'party');
                       setShowCalendarOptions(!showCalendarOptions);
                     }}
-                    className="bg-[#E5D7A9] hover:bg-[#D0C293] text-[#0A3831] px-6 py-2 w-full rounded-full text-base font-medium shadow-sm"
+                    className="bg-[#333333] hover:bg-[#c6c6c5] text-[#c6c6c5] hover:text-[#333333] px-6 py-2 w-full rounded-full text-base font-rubik shadow-sm"
                   >
                     Agendar Evento
                   </Button>
@@ -297,13 +293,13 @@ END:VCALENDAR`;
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="col-span-1 md:col-span-2 mt-2 bg-[#012D27] border border-[#CFD6BA]/20 rounded-lg shadow-lg p-2"
+                        className="col-span-1 md:col-span-2 mt-2 bg-[#333333] border border-[#CFD6BA]/20 rounded-lg shadow-lg p-2"
                       >
                         <motion.a
                           href={generateCalendarLink('google')}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block w-full text-left px-4 py-2 text-[#CFD6BA] hover:bg-[#CFD6BA]/10 rounded-md"
+                          className="block w-full text-left px-4 py-2 text-[#c6c6c5] hover:bg-[#CFD6BA]/10 rounded-md font-rubik"
                           whileHover={{ x: 5 }}
                         >
                           Google Calendar
@@ -311,7 +307,7 @@ END:VCALENDAR`;
                         <motion.a
                           href={generateCalendarLink('apple')}
                           download="event.ics"
-                          className="block w-full text-left px-4 py-2 text-[#CFD6BA] hover:bg-[#CFD6BA]/10 rounded-md"
+                          className="block w-full text-left px-4 py-2 text-[#c6c6c5] hover:bg-[#CFD6BA]/10 rounded-md font-rubik"
                           whileHover={{ x: 5 }}
                         >
                           Apple Calendar
@@ -320,7 +316,7 @@ END:VCALENDAR`;
                           href={generateCalendarLink('outlook')}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block w-full text-left px-4 py-2 text-[#CFD6BA] hover:bg-[#CFD6BA]/10 rounded-md"
+                          className="block w-full text-left px-4 py-2 text-[#c6c6c5] hover:bg-[#CFD6BA]/10 rounded-md font-rubik"
                           whileHover={{ x: 5 }}
                         >
                           Outlook
@@ -340,8 +336,8 @@ END:VCALENDAR`;
         onClose={() => setShowRsvpModal(false)}
         title="Confirmar Asistencia"
         icon={UserPlus}
-        iconColor="#CFD6BA"
-        overlayColor="#012D27"
+        iconColor="#333333"
+        overlayColor="#333333"
       >
         <div className="space-y-6">
           <div>
