@@ -37,7 +37,7 @@ export function Hero({
       {/* Mobile and Desktop Layout */}
       <div className="flex flex-col md:flex-row w-full">
         {/* Left Side - Background Image (50% on desktop, full height on mobile) */}
-        <div className="w-full md:w-1/2 h-[40vh] md:h-screen relative">
+        <div className="w-full md:w-1/2 h-[70vh] md:h-screen relative">
           <img 
             src={backgroundImage} 
             alt="Wedding background"
@@ -65,7 +65,7 @@ export function Hero({
         </div>
         
         {/* Right Side - Content Panel (50% on desktop, full width on mobile) */}
-        <div className="w-full md:w-1/2 bg-[#540A17] min-h-[60vh] md:min-h-screen flex items-center justify-center p-6 relative">
+        <div className="w-full md:w-1/2 bg-[#540A17] min-h-[20vh] md:min-h-screen flex items-center justify-center pb-16 md:pb-6 relative">
           {/* Top Flowers */}
           <motion.img
             src={topRightFlowers}
