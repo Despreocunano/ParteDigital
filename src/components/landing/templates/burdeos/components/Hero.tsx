@@ -60,7 +60,7 @@ export function Hero({
           <motion.img
             src={topRightFlowers}
             alt="Floral decoration"
-            className="absolute top-[-40px] left-1/2 transform -translate-x-1/2 w-32 md:w-40 lg:w-48 object-contain z-30"
+            className="absolute hidden md:block top-[-40px] transform -translate-x-1/2 w-32 md:w-40 lg:w-48 object-contain z-30"
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut", delay: baseDelay + 0.2 }}
