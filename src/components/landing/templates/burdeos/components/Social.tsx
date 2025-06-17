@@ -54,7 +54,7 @@ export function Social({ hashtag, instagramPosts = [], className = '' }: SocialP
     >
       {/* Rosas decorativas */}
       <div className="absolute -right-8 md:-right-24 top-0 h-full w-40 md:w-60 -scale-x-100">
-        <motion.img
+      <motion.img
           src={rosa_a}
           alt="Rosa decorativa"
           className="absolute right-20 md:right-6 top-[4%] md:top-[10%] -translate-y-1/2 w-16 md:w-48 z-10"

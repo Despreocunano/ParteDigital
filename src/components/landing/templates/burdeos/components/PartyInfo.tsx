@@ -5,7 +5,7 @@ import { SpotifySearch } from '../../../shared/SpotifySearch';
 import { supabase } from '../../../../../lib/supabase';
 import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
-import rosas from '../assets/flores_Grupo03.webp'
+import rosas from '../assets/flores_partyinfo.webp'
 import { InfoModal } from '../../../shared/InfoModal';
 
 interface Track {

@@ -280,7 +280,7 @@ END:VCALENDAR`;
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Button
                     onClick={() => setShowRsvpModal(true)}
-                    className="bg-[#C8A784] hover:bg-[#D0C293] text-[#540B17] px-6 py-2 w-full rounded-full text-base font-sans shadow-sm"
+                    className="bg-[#C8A784] hover:bg-[#D0C293] text-[#540B17] px-6 py-2 w-full rounded-full font-sans shadow-sm"
                   >
                     Confirmar Asistencia
                   </Button>
@@ -290,7 +290,7 @@ END:VCALENDAR`;
                       setSelectedEvent(ceremonyLocation ? 'ceremony' : 'party');
                       setShowCalendarOptions(!showCalendarOptions);
                     }}
-                    className="bg-[#C8A784] hover:bg-[#D0C293] text-[#540B17] px-6 py-2 w-full rounded-full text-sans font-sans shadow-sm"
+                    className="bg-[#C8A784] hover:bg-[#D0C293] text-[#540B17] px-6 py-2 w-full rounded-full font-sans shadow-sm"
                   >
                     Agendar Evento
                   </Button>
