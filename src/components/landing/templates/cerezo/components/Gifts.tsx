@@ -139,12 +139,12 @@ ${bankInfo.email}`;
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <h3 className="text-xl font-serif mb-2 text-[#2D1B69]">Datos Bancarios</h3>
-                <p className="text-[#8D6E63] text-sm mb-2">
+                <h3 className="text-3xl font-sans mb-4 text-[#985B70]">Datos Bancarios</h3>
+                <p className="text-[#985B70] text-xl mb-2">
                   Información para transferencia
                 </p>
                 <div className="bg-[#F8BBD9]/20 rounded-lg p-3 h-[72px] flex items-center justify-center">
-                  <p className="text-[#2D1B69] text-sm">
+                  <p className="text-[#985B70] text-lg">
                     Haz clic para ver los datos de transferencia
                   </p>
                 </div>
@@ -156,13 +156,13 @@ ${bankInfo.email}`;
                 className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-[#F8BBD9]/50 w-full md:w-[400px]"
                 variants={item}
               >
-                <h3 className="text-xl font-serif mb-2 text-[#2D1B69]">Lista de Regalos</h3>
-                <p className="text-[#8D6E63] text-sm mb-2">
+                <h3 className="text-3xl font-sans mb-4 text-[#985B70]">Lista de Regalos</h3>
+                <p className="text-[#985B70] text-xl mb-2">
                   Información de nuestra lista de regalos
                 </p>
                 <div className="bg-[#F8BBD9]/20 rounded-lg p-3 h-[72px] flex flex-col justify-center">
-                  <p className="text-[#2D1B69] text-sm font-mono">Código: {couple_code}</p>
-                  <p className="text-[#8D6E63] text-xs">Tienda: {store === 'falabella' ? 'Falabella' : 'Paris'}</p>
+                  <p className="text-[#985B70] text-lg">Código: {couple_code}</p>
+                  <p className="text-[#985B70] text-lg">Tienda: {store === 'falabella' ? 'Falabella' : 'Paris'}</p>
                 </div>
               </motion.div>
             )}

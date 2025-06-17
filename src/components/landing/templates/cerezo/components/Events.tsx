@@ -55,7 +55,7 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                   <MapPin className="w-6 h-6 text-[#2D1B69]" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-lg font-medium text-[#2D1B69]">{location}</p>
+                  <p className="text-xl font-sans font-medium text-[#995B70]">{location}</p>
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 </div>
                 <div className="ml-4">
                   <div className="flex items-center gap-2">
-                    <p className="text-lg font-medium text-[#2D1B69]">
+                    <p className="text-xl font-sans font-medium text-[#995B70]">
                     {new Date(date).toLocaleDateString('es-ES', {
                       year: 'numeric',
                       month: 'long',
@@ -77,7 +77,7 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                   {time && (
                       <div className="flex items-center text-[#2D1B69]">
                         <Clock className="w-4 h-4 mr-1" />
-                        <span className="text-lg font-medium">{time}</span>
+                        <span className="text-xl font-sans font-medium text-[#995B70]">{time}</span>
                     </div>
                   )}
                   </div>
@@ -92,13 +92,13 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                     <MapPin className="w-6 h-6 text-[#2D1B69]" />
                   </div>
                   <div className="ml-4">
-                    <p className="text-lg font-medium text-[#2D1B69]">{address}</p>
+                    <p className="text-xl font-sans font-medium text-[#995B70]">{address}</p>
                   </div>
                 </div>
                 
                 <Button
                   onClick={handleOpenMaps}
-                  className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
+                  className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-sans"
                 >
                   ¿Cómo llegar?
                 </Button>
@@ -306,7 +306,7 @@ END:VCALENDAR`;
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Button
                       onClick={() => setShowRsvpModal(true)}
-                      className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium"
+                      className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-sans"
                     >
                       Confirmar Asistencia
                     </Button>
@@ -317,7 +317,7 @@ END:VCALENDAR`;
                         setShowCalendarOptions(!showCalendarOptions);
                       }}
                       leftIcon={<CalendarDays className="w-5 h-5" />}
-                      className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-medium flex items-center justify-center gap-2"
+                      className="bg-[#BF0D78] hover:bg-[#9a5b71] text-white px-8 py-4 w-full rounded-full text-lg font-sans flex items-center justify-center gap-2"
                     >
                       Agendar Evento
                     </Button>
@@ -334,7 +334,7 @@ END:VCALENDAR`;
                             href={generateCalendarLink('google')}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
+                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors font-sans"
                             whileHover={{ x: 5 }}
                           >
                             Google Calendar
@@ -342,7 +342,7 @@ END:VCALENDAR`;
                           <motion.a
                             href={generateCalendarLink('apple')}
                             download="event.ics"
-                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
+                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors font-sans"
                             whileHover={{ x: 5 }}
                           >
                             Apple Calendar
@@ -351,7 +351,7 @@ END:VCALENDAR`;
                             href={generateCalendarLink('outlook')}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors"
+                            className="block w-full text-left px-4 py-3 text-[#2D1B69] hover:bg-[#F8BBD9]/20 rounded-xl transition-colors font-sans"
                             whileHover={{ x: 5 }}
                           >
                             Outlook

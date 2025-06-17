@@ -56,8 +56,8 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
           >
             <Baby className="w-16 h-16 text-[#BC913B]" />
           </motion.div>
-          <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Los Niños Bienvenidos</h3>
-          <p className="text-[#8D6E63] text-lg leading-relaxed">
+          <h3 className="text-3xl font-sans mb-4 text-[#985B70]">Los niños bienvenidos</h3>
+          <p className="text-[#985B70] text-xl leading-relaxed">
             Los más pequeños de la familia son bienvenidos a nuestra celebración
           </p>
         </motion.div>
@@ -84,8 +84,8 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
           >
             <PawPrint className="w-16 h-16 text-[#BC913B]" />
           </motion.div>
-          <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Pet Friendly</h3>
-          <p className="text-[#8D6E63] text-lg leading-relaxed">
+          <h3 className="text-3xl font-sans mb-4 text-[#985B70]">Pet Friendly</h3>
+          <p className="text-[#985B70] text-xl leading-relaxed">
             Tu mascota es parte de la familia y es bienvenida a nuestra celebración
           </p>
         </motion.div>
