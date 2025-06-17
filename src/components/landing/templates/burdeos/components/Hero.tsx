@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import topRightFlowers from '../assets/flor_hero.webp';
 import verticalSeparator from '../assets/curva_portada_vertical.svg';
+import horizontalSeparator from '../assets/curva_portada_horizontal.png';
 
 interface HeroProps {
   groomName: string;
@@ -45,6 +46,15 @@ export function Hero({
           <div className="absolute inset-0 bg-black/40"></div>
         </div>
         
+        {/* Horizontal Separator - Only visible on mobile */}
+        <div className="block md:hidden w-full relative z-10">
+          <img 
+            src={horizontalSeparator} 
+            alt="Decorative horizontal separator"
+            className="w-full h-auto transform -translate-y-1/2 -mt-11"
+          />
+        </div>
+        
         {/* Vertical Separator - Only visible on desktop */}
         <div className="hidden md:block absolute left-[47%] top-0 h-full z-0 transform -translate-x-1/2">
           <img 
@@ -67,7 +77,7 @@ export function Hero({
           />
 
           {/* Main Content */}
-          <div className="text-center text-[#FFFCE8] max-w-sm mx-auto z-20 pt-8 md:pt-0">
+          <div className="text-center text-[#FFFCE8] max-w-sm mx-auto z-20 pt-0">
             {/* Date */}
             <motion.div
               className="mb-4"
