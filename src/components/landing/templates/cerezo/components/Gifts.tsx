@@ -124,7 +124,7 @@ ${bankInfo.email}`;
           <img src={divider} alt="Divider" className="mx-auto mb-4" />
 
           <motion.p 
-            className="text-xl text-[#8D6E63] mb-4 max-w-2xl mx-auto"
+            className="text-2xl text-center text-[#995B70] mb-12"
             variants={item}
           >
             Tu presencia es nuestro mejor regalo. Sin embargo, si deseas hacernos un obsequio, aquí tienes la información necesaria.

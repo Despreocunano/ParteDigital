@@ -47,7 +47,7 @@ export function GallerySection({ images, className = '' }: GallerySectionProps) 
           <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-6">
           Retratos de Nuestro Amor
           </h2>
-          <p className="text-xl text-center text-[#8D6E63]">
+          <p className="text-2xl text-center text-[#995B70]">
           Un minuto, un segundo, un instante que queda en la eternidad.
           </p>
         </motion.div>

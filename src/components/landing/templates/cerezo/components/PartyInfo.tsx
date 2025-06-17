@@ -105,7 +105,7 @@ export function PartyInfo({
             <h2 className="text-4xl md:text-5xl font-serif font-black text-[#995B70] mb-2">
               Información de la Fiesta
             </h2>
-            <p className="text-xl text-center text-[#8D6E63]">
+            <p className="text-2xl text-center text-[#995B70]">
             Hagamos juntos una fiesta épica. Aquí algunos detalles a tener en cuenta.
             </p>
           </motion.div>
@@ -145,12 +145,12 @@ export function PartyInfo({
               >
                 <Shirt className="w-16 h-16 text-[#BC913B]" />
               </motion.div>
-              <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Una orientación para tu vestuario</h3>
+              <h3 className="text-xl text-center text-[#995B70] mb-6">Una orientación para que elijas tu mejor vestuario</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   onClick={() => setShowDressCodeModal(true)}
                   variant="secondary"
-                  className="w-full border-[#BF0D78] text-[#BF0D78] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
+                  className="w-full border-[#9a5b71] text-[#9a5b71] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
                 >
                   Ver más
                 </Button>
@@ -179,12 +179,12 @@ export function PartyInfo({
                 >
                   <Music2 className="w-16 h-16 text-[#BC913B]" />
                 </motion.div>
-                <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
+                <h3 className="text-xl text-center text-[#995B70] mb-6">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => setShowMusicModal(true)}
                     variant="secondary"
-                    className="w-full border-[#BF0D78] text-[#BF0D78] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
+                    className="w-full border-[#9a5b71] text-[#9a5b71] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
                   >
                     Sugerir Canciones
                   </Button>
@@ -213,12 +213,12 @@ export function PartyInfo({
               >
                 <Lightbulb className="w-16 h-16 text-[#BC913B]" />
               </motion.div>
-              <h3 className="text-xl font-serif mb-4 text-[#2D1B69]">Información adicional para tener en cuenta</h3>
+              <h3 className="text-xl text-center text-[#995B70] mb-6">Información adicional para tener en cuenta</h3>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   onClick={() => setShowTipsModal(true)}
                   variant="secondary"
-                  className="w-full border-[#BF0D78] text-[#BF0D78] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
+                  className="w-full border-[#9a5b71] text-[#9a5b71] hover:bg-[#9a5b71] hover:border-[#9a5b71] hover:text-white"
                 >
                   Ver más
                 </Button>
