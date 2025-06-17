@@ -35,24 +35,12 @@ function Event({ title, date, time, location, address, placeId, className = '', 
       transition={{ type: "spring", stiffness: 300 }}
     >
       {/* Unique card design with layered effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#E91E63] to-[#C2185B] rounded-3xl transform rotate-2 opacity-20"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#985B6F] to-[#985B6F] rounded-3xl transform rotate-2 opacity-20"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] rounded-3xl transform -rotate-1 opacity-40"></div>
       
       <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-[#F8BBD9]/50">
         {/* Decorative header */}
-        <div className="h-2 bg-gradient-to-r from-[#E91E63] via-[#F8BBD9] to-[#E91E63]"></div>
-        
-        {/* Cherry blossom corner decoration */}
-        <div className="absolute top-6 right-6 opacity-20">
-          <svg width="40" height="40" viewBox="0 0 40 40">
-            <circle cx="20" cy="20" r="6" fill="#F8BBD9"/>
-            <circle cx="14" cy="14" r="4" fill="#FCE4EC"/>
-            <circle cx="26" cy="14" r="4" fill="#FCE4EC"/>
-            <circle cx="14" cy="26" r="4" fill="#FCE4EC"/>
-            <circle cx="26" cy="26" r="4" fill="#FCE4EC"/>
-            <circle cx="20" cy="20" r="2" fill="#E91E63"/>
-          </svg>
-        </div>
+        <div className="h-2 bg-gradient-to-r from-[#985B6F] via-[#F8BBD9] to-[#985B6F]"></div>
         
         <div className="p-8 md:p-10">
           <h3 className="text-4xl font-serif font-black mb-8 text-[#BC913B] relative">
@@ -307,12 +295,12 @@ END:VCALENDAR`;
           >
             <div className="relative">
               {/* Unique card design with layered effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#E91E63] to-[#C2185B] rounded-3xl transform rotate-2 opacity-20"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#985B6F] to-[#985B6F] rounded-3xl transform rotate-2 opacity-20"></div>
               <div className="absolute inset-0 bg-gradient-to-br from-[#F8BBD9] to-[#FCE4EC] rounded-3xl transform -rotate-1 opacity-40"></div>
               
               <div className="relative bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-[#F8BBD9]/50">
                 {/* Decorative header */}
-                <div className="h-2 bg-gradient-to-r from-[#E91E63] via-[#F8BBD9] to-[#E91E63]"></div>
+                <div className="h-2 bg-gradient-to-r from-[#985B6F] via-[#F8BBD9] to-[#985B6F]"></div>
                 
                 <div className="p-8 md:p-10">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

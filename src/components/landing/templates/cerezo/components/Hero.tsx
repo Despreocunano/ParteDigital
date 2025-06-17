@@ -1,7 +1,4 @@
 import { motion } from 'framer-motion';
-import topFlor1 from '../assets/top_flor_00001.png';
-import topFlor2 from '../assets/top_flor_00002.png';
-import topFlor3 from '../assets/top_flor_00003.png';
 
 interface HeroProps {
   groomName: string;
@@ -31,37 +28,6 @@ export function Hero({
   // Delay animations until welcome modal is closed
   const baseDelay = showWelcomeModal ? 2 : 0;
 
-  const topImagesVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: -50
-    },
-    visible: (i: number) => ({
-      opacity: [0.9, 0.8, 0.7][i] || 0.9,
-      y: 0,
-      transition: {
-        delay: baseDelay + (i * 0.2),
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
-
-  const bottomImagesVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 50
-    },
-    visible: (i: number) => ({
-      opacity: [0.9, 0.8, 0.7][i] || 0.9,
-      y: 0,
-      transition: {
-        delay: baseDelay + 1 + (i * 0.2),
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
 
   return (
     <section className={`relative w-full min-h-screen overflow-hidden ${className}`}>
@@ -74,41 +40,6 @@ export function Hero({
       >
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
-
-      {/* Top Floral Bouquet - Left side */}
-      <div className="absolute top-0 left-24 z-20 w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64">
-        <motion.div
-          className="relative w-full h-full"
-          initial="hidden"
-          animate="visible"
-          viewport={{ once: true }}
-        >
-          <motion.img
-            src={topFlor1}
-            alt="Cherry blossom decoration 1"
-            className="absolute top-0 left-0 w-full h-full object-contain opacity-90"
-            custom={0}
-            variants={topImagesVariants}
-          />
-          
-          <motion.img
-            src={topFlor2}
-            alt="Cherry blossom decoration 2"
-            className="absolute top-0 left-0 w-full h-full object-contain opacity-80"
-            custom={1}
-            variants={topImagesVariants}
-          />
-          
-          <motion.img
-            src={topFlor3}
-            alt="Cherry blossom decoration 3"
-            className="absolute top-0 left-0 w-full h-full object-contain opacity-70"
-            custom={2}
-            variants={topImagesVariants}
-          />
-        </motion.div>
-      </div>
-
       {/* Main Content */}
       <div className="relative z-10 w-full min-h-screen flex items-center justify-center px-4">
         <div className="text-center text-white max-w-4xl mx-auto w-full">
