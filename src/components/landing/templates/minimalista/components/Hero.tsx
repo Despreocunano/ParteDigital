@@ -28,38 +28,6 @@ export function Hero({
   // Delay animations until welcome modal is closed
   const baseDelay = showWelcomeModal ? 2 : 0;
 
-  const topImagesVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: -50
-    },
-    visible: (i: number) => ({
-      opacity: [0.9, 0.8, 0.7][i] || 0.9,
-      y: 0,
-      transition: {
-        delay: baseDelay + (i * 0.2),
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
-
-  const bottomImagesVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 50
-    },
-    visible: (i: number) => ({
-      opacity: [0.9, 0.8, 0.7][i] || 0.9,
-      y: 0,
-      transition: {
-        delay: baseDelay + 1 + (i * 0.2),
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    })
-  };
-
   return (
     <section className={`relative w-full min-h-screen overflow-hidden ${className}`}>
       {/* Background Image */}

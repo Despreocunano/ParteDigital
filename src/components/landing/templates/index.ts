@@ -54,7 +54,7 @@ export const templates = {
     id: '550e8400-e29b-41d4-a716-446655440007',
     name: 'Minimalista',
     component: MinimalistaTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750127535/burdeos_eckqzg.png',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750135663/minimalista_ykwwf7.png',
     description: 'Un diseño romántico inspirado en los cerezos en flor con tonos rosados'
   }
 };
