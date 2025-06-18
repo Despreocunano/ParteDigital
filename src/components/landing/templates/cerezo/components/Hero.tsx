@@ -1,4 +1,7 @@
 import { motion } from 'framer-motion';
+import topFlowers_a from '../assets/Grupo01_a.webp'
+import topFlowers_b from '../assets/Grupo01_b.webp'
+import topFlowers_c from '../assets/Grupo01_c.webp'
 
 interface HeroProps {
   groomName: string;
@@ -25,8 +28,24 @@ export function Hero({
     year: 'numeric'
   }).replace(/\//g, '.');
 
-  // Delay animations until welcome modal is closed
+  // Delay animations until welcome modal is closedhhh
   const baseDelay = showWelcomeModal ? 2 : 0;
+
+  const topImagesVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: -50
+    },
+    visible: (i: number) => ({
+      opacity: [0.9, 0.8, 0.7][i] || 0.9,
+      y: 0,
+      transition: {
+        delay: baseDelay + (i * 0.2),
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    })
+  };
 
 
   return (
@@ -38,6 +57,39 @@ export function Hero({
           backgroundImage: `url(${backgroundImage})`
         }}
       >
+              {/* Top Floral Bouquet - Centered */}
+      <div className="absolute -top-20 md:-top-40 left-1/2 transform -translate-x-1/2 z-20 w-48 h-48 md:w-56 md:h-56 lg:w-96 lg:h-96">
+        <motion.div
+          className="relative w-full h-full"
+          initial="hidden"
+          animate="visible"
+          viewport={{ once: false, amount: 0.1 }}
+        >
+          <motion.img
+            src={topFlowers_a}
+            alt="Floral decoration 1"
+            className="absolute top-0 left-0 w-full h-full object-contain opacity-90"
+            custom={0}
+            variants={topImagesVariants}
+          />
+          
+          <motion.img
+            src={topFlowers_b}
+            alt="Floral decoration 2"
+            className="absolute top-0 left-0 w-full h-full object-contain opacity-80"
+            custom={1}
+            variants={topImagesVariants}
+          />
+          
+          <motion.img
+            src={topFlowers_c}
+            alt="Floral decoration 3"
+            className="absolute top-0 left-0 w-full h-full object-contain opacity-70"
+            custom={2}
+            variants={topImagesVariants}
+          />
+        </motion.div>
+      </div>
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
       {/* Main Content */}

@@ -29,7 +29,7 @@ export function Hero({
   const baseDelay = showWelcomeModal ? 2 : 0;
 
   return (
-    <section className={`relative w-full min-h-screen overflow-hidden ${className}`}>
+    <section className={`relative w-full h-screen overflow-hidden ${className}`}>
       {/* Background Image */}
       <div 
         className="absolute inset-0 w-full h-full bg-cover bg-center"
@@ -41,7 +41,7 @@ export function Hero({
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full min-h-screen flex items-center justify-center px-4">
+      <div className="relative z-10 w-full h-full flex items-center justify-center px-4">
         <div className="text-center text-white max-w-4xl mx-auto w-full">
           {/* Date */}
           <motion.div 
