@@ -36,7 +36,7 @@ export const templateVariants: Record<string, TemplateVariantGroup> = {
         color: 'jade',
         colorValue: '#254636',
         component: DeluxeJadeTemplate,
-        preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png'
+        preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228168/jade_ed85lx.png'
       }
     ]
   }
@@ -63,7 +63,7 @@ export const templates: Record<string, Template> = {
     id: '550e8400-e29b-41d4-a716-446655440008',
     name: 'Deluxe Jade',
     component: DeluxeJadeTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228168/jade_ed85lx.png',
     hasVariants: true,
     variantGroup: 'deluxe'
   },
@@ -77,13 +77,13 @@ export const templates: Record<string, Template> = {
     id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'Flowers',
     component: FlowersTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/flowers_w4swj1.png'
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228351/flowers_x8glz3.png'
   },
   cerezo: {
     id: '550e8400-e29b-41d4-a716-446655440004',
     name: 'Cerezo',
     component: CerezoTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837920/cerezo_vni4m5.png'
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228019/cerezo_2_vxfrn6.png'
   },
   burdeos: {
     id: '550e8400-e29b-41d4-a716-446655440006',
@@ -95,7 +95,7 @@ export const templates: Record<string, Template> = {
     id: '550e8400-e29b-41d4-a716-446655440007',
     name: 'Minimalista',
     component: MinimalistaTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750135663/minimalista_ykwwf7.png'
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228541/minimalista_01_qheez7.png'
   }
 };
 
