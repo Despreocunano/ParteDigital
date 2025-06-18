@@ -39,7 +39,7 @@ export function WelcomeModal({
               Bienvenidos a la invitación de
             </p>
             <div className="space-y-4">
-              <h1 className="text-6xl font-serif font-black text-[#BF0D78]">
+              <h1 className="text-6xl font-serif font-black text-[#995B6F]">
               {groomName} & {brideName}
               </h1>
             </div>

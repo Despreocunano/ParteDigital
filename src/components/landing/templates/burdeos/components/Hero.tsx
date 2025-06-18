@@ -9,7 +9,6 @@ interface HeroProps {
   brideName: string;
   weddingDate: string;
   welcomeMessage?: string;
-  backgroundImage?: string;
   className?: string;
   showWelcomeModal?: boolean;
 }
@@ -19,7 +18,6 @@ export function Hero({
   brideName,
   weddingDate,
   welcomeMessage,
-  backgroundImage = 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg',
   className = '',
   showWelcomeModal = false
 }: HeroProps) {
@@ -39,7 +37,7 @@ export function Hero({
         {/* Left Side - Background Image (50% on desktop, full height on mobile) */}
         <div className="w-full md:w-1/2 h-[70vh] md:h-screen relative">
           <img 
-            src={backgroundImage} 
+            src="https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg" 
             alt="Wedding background"
             className="absolute inset-0 w-full h-full object-cover"
           />

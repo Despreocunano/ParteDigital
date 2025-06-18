@@ -87,7 +87,6 @@ export function BurdeosTemplate({
             brideName={brideName}
             weddingDate={weddingDate}
             welcomeMessage={welcomeMessage}
-            backgroundImage={coverImage}
             className="bg-[#540A17]"
             showWelcomeModal={showWelcomeModal}
           />
