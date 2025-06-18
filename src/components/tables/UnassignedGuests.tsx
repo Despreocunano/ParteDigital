@@ -96,7 +96,7 @@ export function UnassignedGuests({ attendees, tables, onAssignTable }: Unassigne
                       <div className="ml-2 overflow-hidden">
                         <p className="text-sm font-medium truncate">
                           {attendee.first_name}
-                          {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && ' (+1)'}
+                          {attendee.has_plus_one && ' (+1)'}
                         </p>
                       </div>
                     </div>

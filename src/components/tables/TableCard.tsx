@@ -38,14 +38,14 @@ export function TableCard({
     attendee.rsvp_status === 'confirmed' &&
     (
       attendee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      attendee.last_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (attendee.last_name && attendee.last_name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       attendee.email.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
   
   const totalSeats = assignedAttendees.reduce((total, attendee) => {
     let seats = 1;
-    if (attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed') {
+    if (attendee.has_plus_one) {
       seats++;
     }
     return total + seats;
@@ -208,7 +208,7 @@ export function TableCard({
                       <div className="ml-2 overflow-hidden">
                         <p className="text-sm font-medium truncate">
                           {attendee.first_name}
-                          {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && ' (+1)'}
+                          {attendee.has_plus_one && ' (+1)'}
                         </p>
                       </div>
                     </div>
@@ -239,7 +239,7 @@ export function TableCard({
                       <div className="ml-2 overflow-hidden">
                         <p className="text-sm font-medium truncate">
                           {attendee.first_name}
-                          {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && ' (+1)'}
+                          {attendee.has_plus_one && ' (+1)'}
                         </p>
                       </div>
                     </div>

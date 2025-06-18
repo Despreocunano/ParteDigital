@@ -81,7 +81,7 @@ export function TableAssignmentModal({
     const assignedAttendees = attendees.filter(a => a.table_id === tableId);
     return assignedAttendees.reduce((total, attendee) => {
       let seats = 1;
-      if (attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed') {
+      if (attendee.has_plus_one) {
         seats++;
       }
       return total + seats;
@@ -91,7 +91,7 @@ export function TableAssignmentModal({
   const getRequiredSeats = () => {
     if (!guest) return 0;
     let seats = 1;
-    if (guest.has_plus_one && guest.plus_one_rsvp_status === 'confirmed') {
+    if (guest.has_plus_one) {
       seats++;
     }
     return seats;
@@ -152,7 +152,7 @@ export function TableAssignmentModal({
         {guest && (
           <p className="text-sm text-gray-500">
             Asignar mesa para {guest.first_name} {guest.last_name}
-            {guest.has_plus_one && guest.plus_one_rsvp_status === 'confirmed' && ' (+1)'}
+            {guest.has_plus_one && ' (+1)'}
           </p>
         )}
 

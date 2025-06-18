@@ -56,7 +56,7 @@ export function AttendeeCard({
                   <p className="text-sm font-medium truncate">
                     {attendee.first_name}
                   </p>
-                  {attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' && (
+                  {attendee.has_plus_one && (
                     <span className="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full">
                       +1
                     </span>

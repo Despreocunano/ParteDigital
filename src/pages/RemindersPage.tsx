@@ -18,6 +18,7 @@ interface LandingPageData {
   party_location?: string;
   ceremony_address?: string;
   party_address?: string;
+  wedding_date?: string;
 }
 
 export function RemindersPage() {
@@ -49,7 +50,8 @@ export function RemindersPage() {
             ceremony_location,
             party_location,
             ceremony_address,
-            party_address
+            party_address,
+            wedding_date
           `)
           .eq('user_id', session.user.id)
           .single();
@@ -59,6 +61,7 @@ export function RemindersPage() {
 
         // Check for missing fields and warn user
         const missingFields = [];
+        if (!data?.wedding_date) missingFields.push('fecha de la boda');
         if (!data?.ceremony_time) missingFields.push('hora de la ceremonia');
         if (!data?.party_time) missingFields.push('hora de la fiesta');
         if (!data?.ceremony_location) missingFields.push('lugar de la ceremonia');
@@ -86,8 +89,9 @@ export function RemindersPage() {
 
   const variables = [
     { name: '{nombre}', description: 'Nombre del invitado' },
+    { name: '{acompañante}', description: 'Nombre del acompañante' },
     { name: '{mesa}', description: 'Mesa asignada' },
-    { name: '{fecha}', description: 'Fecha actual' },
+    { name: '{fecha}', description: 'Fecha de la boda' },
     { name: '{hora_ceremonia}', description: 'Hora de la ceremonia' },
     { name: '{hora_fiesta}', description: 'Hora de la fiesta' },
     { name: '{lugar_ceremonia}', description: 'Lugar de la ceremonia' },
@@ -119,7 +123,8 @@ export function RemindersPage() {
   const filteredAttendees = attendees.filter(attendee => {
     const matchesSearch = 
       attendee.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      attendee.email.toLowerCase().includes(searchTerm.toLowerCase());
+      attendee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (attendee.plus_one_name && attendee.plus_one_name.toLowerCase().includes(searchTerm.toLowerCase()));
 
     const matchesStatus = 
       statusFilter === 'all' || 
@@ -146,16 +151,19 @@ export function RemindersPage() {
 
   const replaceVariables = (text: string, attendee: any) => {
     const currentTable = tables.find(t => t.id === attendee.table_id);
-    const currentDate = new Date().toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
+    const weddingDate = landingPage?.wedding_date 
+      ? new Date(landingPage.wedding_date).toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      : '[Fecha no definida]';
 
     const replacements = {
       '{nombre}': attendee.first_name || '',
+      '{acompañante}': attendee.has_plus_one ? attendee.plus_one_name : '',
       '{mesa}': currentTable?.name || 'Sin mesa asignada',
-      '{fecha}': currentDate,
+      '{fecha}': weddingDate,
       '{hora_ceremonia}': landingPage?.ceremony_time || '[Hora no definida]',
       '{hora_fiesta}': landingPage?.party_time || '[Hora no definida]',
       '{lugar_ceremonia}': landingPage?.ceremony_location || '[Lugar no definido]',
@@ -338,6 +346,7 @@ export function RemindersPage() {
                         <div>
                           <div className="font-medium text-gray-900">
                             {attendee.first_name}
+                            {attendee.has_plus_one && ' (+1)'}
                           </div>
                           <div className="text-sm text-gray-500">
                             {attendee.email}
@@ -372,7 +381,7 @@ export function RemindersPage() {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     onFocus={() => setActiveInput('subject')}
-                    placeholder="Asunto del recordatorio"
+                    placeholder="Ej: Recordatorio para {nombre} - Nuestra boda"
                   />
                 </div>
 
@@ -385,7 +394,7 @@ export function RemindersPage() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     onFocus={() => setActiveInput('message')}
-                    placeholder="Escribe tu mensaje aquí..."
+                    placeholder="Ej: Hola {nombre}, esperamos verte junto a {acompañante} en nuestra boda el {fecha} en {lugar_ceremonia}..."
                     rows={8}
                   />
                 </div>
