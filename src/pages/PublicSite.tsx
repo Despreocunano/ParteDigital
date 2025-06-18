@@ -360,6 +360,176 @@ export function PublicSite() {
         </motion.div>
       </section>
 
+      {/* Step by Step Process */}
+      <section className="py-32 bg-gradient-to-b from-white via-rose-50/20 to-white relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-rose-200/30 to-pink-200/30 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-200/30 to-blue-200/30 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-rose-100/20 to-purple-100/20 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <motion.div 
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
+
+            <h2 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 via-purple-500 to-rose-600">
+                En solo 4 pasos
+              </span>
+              <br />
+              <span className="text-gray-800">tendrás tu invitación lista</span>
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Un proceso diseñado para ser simple, rápido y divertido. 
+              <span className="text-rose-600 font-semibold"> Sin complicaciones, solo resultados increíbles.</span>
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {[
+              {
+                step: "01",
+                title: "Crea tu cuenta",
+                description: "Regístrate de forma gratuita y accede a todas las plantillas disponibles. ¡Solo toma 30 segundos!",
+                icon: User,
+                color: "from-blue-500 via-blue-600 to-indigo-600",
+                bgColor: "from-blue-50 to-indigo-50",
+                accentColor: "blue"
+              },
+              {
+                step: "02",
+                title: "Elige tu plantilla y completa tu información",
+                description: "Elige entre más de 10 diseños únicos y personaliza cada detalle de tu evento especial",
+                icon: LayoutDashboard,
+                color: "from-purple-500 via-purple-600 to-violet-600",
+                bgColor: "from-purple-50 to-violet-50",
+                accentColor: "purple"
+              },
+              {
+                step: "03",
+                title: "Visualiza tu parte digital",
+                description: "Revisa cómo se ve tu invitación en tiempo real y haz los ajustes perfectos hasta que quede exactamente como quieres",
+                icon: Globe,
+                color: "from-emerald-500 via-emerald-600 to-teal-600",
+                bgColor: "from-emerald-50 to-teal-50",
+                accentColor: "emerald"
+              },
+              {
+                step: "04",
+                title: "Publícalo y comparte con tus amigos",
+                description: "Activa tu invitación con un clic y compártela instantáneamente con todos tus invitados",
+                icon: Heart,
+                color: "from-rose-500 via-rose-600 to-pink-600",
+                bgColor: "from-rose-50 to-pink-50",
+                accentColor: "rose"
+              }
+            ].map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  className="relative group"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                >
+                  {/* Step number with enhanced design */}
+                  <div className="absolute -top-6 -left-6 w-20 h-20 bg-gradient-to-r from-gray-900 to-gray-800 rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-2xl group-hover:scale-105 transition-transform duration-300 z-20">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
+                      {item.step}
+                    </span>
+                  </div>
+
+                  {/* Enhanced card with gradient background */}
+                  <div className={`relative bg-gradient-to-br ${item.bgColor} rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 border border-white/50 backdrop-blur-sm group-hover:border-${item.accentColor}-200 overflow-hidden`}>
+                    {/* Decorative background pattern */}
+                    <div className="absolute inset-0 opacity-5">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-current to-transparent rounded-full"></div>
+                      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-current to-transparent rounded-full"></div>
+                    </div>
+
+                    {/* Icon with enhanced styling */}
+                    <div className={`relative w-20 h-20 bg-gradient-to-r ${item.color} rounded-3xl flex items-center justify-center mb-8 group-hover:scale-105 transition-transform duration-300 shadow-lg`}>
+                      <Icon className="h-10 w-10 text-white drop-shadow-lg" />
+                      {/* Glow effect */}
+                      <div className={`absolute inset-0 bg-gradient-to-r ${item.color} rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300`}></div>
+                    </div>
+                    
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 group-hover:text-gray-800 transition-colors duration-300 leading-tight">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-gray-600 leading-relaxed text-lg">
+                      {item.description}
+                    </p>
+
+                    {/* Enhanced arrow connector for desktop */}
+                    {index < 3 && (
+                      <div className="hidden lg:block absolute -right-6 top-1/2 transform -translate-y-1/2 z-10">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-12 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full"></div>
+                          <div className="w-4 h-4 border-r-2 border-b-2 border-gray-400 transform rotate-45"></div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Floating decorative elements */}
+                    <div className="absolute top-4 right-4 w-3 h-3 bg-gradient-to-r from-rose-400 to-pink-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute bottom-6 right-6 w-2 h-2 bg-gradient-to-r from-purple-400 to-violet-400 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Enhanced CTA section */}
+          <motion.div 
+            className="text-center mt-20"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <div className="inline-flex flex-col items-center space-y-6">
+              <div className="flex items-center space-x-4 text-gray-600">
+                <div className="w-8 h-px bg-gradient-to-r from-transparent to-gray-400"></div>
+                <span className="text-lg font-medium">¿Listo para comenzar?</span>
+                <div className="w-8 h-px bg-gradient-to-l from-transparent to-gray-400"></div>
+              </div>
+              
+              <a
+                href="https://panel.tuparte.digital/auth"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent('cta_click', { 
+                  location: 'step_by_step',
+                  button_text: 'Comenzar ahora'
+                })}
+                className="group relative inline-flex items-center px-12 py-6 text-xl rounded-2xl bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 hover:from-rose-600 hover:via-pink-600 hover:to-rose-700 text-white transition-all duration-300 shadow-2xl shadow-rose-500/30 hover:shadow-3xl hover:shadow-rose-500/40 transform hover:scale-105"
+              >
+                <span className="font-bold">Comenzar ahora</span>
+                <Heart className="ml-3 h-6 w-6 group-hover:text-white transition-all duration-300 group-hover:scale-110" />
+                
+                {/* Button glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
+              </a>
+              
+              <p className="text-gray-500 text-sm">
+                ✨ Prueba sin tarjeta de crédito • Sin compromisos
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Demo Carousel */}
       <DemoCarousel />
 
@@ -532,7 +702,7 @@ export function PublicSite() {
             </motion.p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               const colorClasses = colorVariants[feature.color as keyof typeof colorVariants];
