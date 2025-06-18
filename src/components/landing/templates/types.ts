@@ -35,3 +35,28 @@ export interface TemplateProps {
   couple_code: string;
   store?: string;
 }
+
+export interface TemplateVariant {
+  id: string;
+  name: string;
+  color: string;
+  colorValue: string;
+  component: React.ComponentType<TemplateProps>;
+  preview: string;
+}
+
+export interface TemplateVariantGroup {
+  baseId: string;
+  name: string;
+  variants: TemplateVariant[];
+  isVariantGroup?: boolean;
+}
+
+export interface Template {
+  id: string;
+  name: string;
+  component: React.ComponentType<TemplateProps>;
+  preview: string;
+  hasVariants?: boolean;
+  variantGroup?: string;
+}
