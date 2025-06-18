@@ -1,6 +1,7 @@
-import { DeluxeTemplate } from './deluxe';
+import { DeluxePetroTemplate } from './deluxe_petro';
+import { DeluxeTerraTemplate } from './deluxe_terra';
+import { DeluxeJadeTemplate } from './deluxe_jade';
 import { FlowersTemplate } from './flowers';
-import { TerraTemplate } from './terra';
 import { CerezoTemplate } from './cerezo';
 import { EsmeraldaTemplate } from './esmeralda';
 import { BurdeosTemplate } from './burdeos';
@@ -15,10 +16,10 @@ export const templateVariants: Record<string, TemplateVariantGroup> = {
     variants: [
       {
         id: '550e8400-e29b-41d4-a716-446655440000',
-        name: 'Deluxe',
-        color: 'deluxe',
+        name: 'Petro',
+        color: 'petro',
         colorValue: '#253238',
-        component: DeluxeTemplate,
+        component: DeluxePetroTemplate,
         preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749836790/deluxe_ixlksa.png'
       },
       {
@@ -26,7 +27,15 @@ export const templateVariants: Record<string, TemplateVariantGroup> = {
         name: 'Terra',
         color: 'terra',
         colorValue: '#5B3229',
-        component: TerraTemplate,
+        component: DeluxeTerraTemplate,
+        preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png'
+      },
+      {
+        id: '550e8400-e29b-41d4-a716-446655440008',
+        name: 'Jade',
+        color: 'jade',
+        colorValue: '#254636',
+        component: DeluxeJadeTemplate,
         preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png'
       }
     ]
@@ -34,18 +43,26 @@ export const templateVariants: Record<string, TemplateVariantGroup> = {
 };
 
 export const templates: Record<string, Template> = {
-  deluxe: {
+  deluxe_petro: {
     id: '550e8400-e29b-41d4-a716-446655440000',
-    name: 'Deluxe',
-    component: DeluxeTemplate,
+    name: 'Deluxe Petro',
+    component: DeluxePetroTemplate,
     preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749836790/deluxe_ixlksa.png',
     hasVariants: true,
     variantGroup: 'deluxe'
   },
-  terra: {
+  deluxe_terra: {
     id: '550e8400-e29b-41d4-a716-446655440003',
-    name: 'Terra',
-    component: TerraTemplate,
+    name: 'Deluxe Terra',
+    component: DeluxeTerraTemplate,
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png',
+    hasVariants: true,
+    variantGroup: 'deluxe'
+  },
+  deluxe_jade: {
+    id: '550e8400-e29b-41d4-a716-446655440008',
+    name: 'Deluxe Jade',
+    component: DeluxeJadeTemplate,
     preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png',
     hasVariants: true,
     variantGroup: 'deluxe'
@@ -84,13 +101,14 @@ export const templates: Record<string, Template> = {
 
 // Map template IDs to template keys for lookup
 const templateIdMap: Record<string, string> = {
-  '550e8400-e29b-41d4-a716-446655440000': 'deluxe',
+  '550e8400-e29b-41d4-a716-446655440000': 'deluxe_petro',
   '550e8400-e29b-41d4-a716-446655440002': 'flowers',
-  '550e8400-e29b-41d4-a716-446655440003': 'terra',
+  '550e8400-e29b-41d4-a716-446655440003': 'deluxe_terra',
   '550e8400-e29b-41d4-a716-446655440004': 'cerezo',
   '550e8400-e29b-41d4-a716-446655440005': 'esmeralda',
   '550e8400-e29b-41d4-a716-446655440006': 'burdeos',
-  '550e8400-e29b-41d4-a716-446655440007': 'minimalista'
+  '550e8400-e29b-41d4-a716-446655440007': 'minimalista',
+  '550e8400-e29b-41d4-a716-446655440008': 'deluxe_jade'
 };
 
 export function getTemplate(templateId: string): Template | null {

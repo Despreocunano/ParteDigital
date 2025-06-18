@@ -13,7 +13,7 @@ import { KidsAndPets } from './components/KidsAndPets';
 import type { TemplateProps } from '../types';
 import { InfiniteGallery } from '../../shared/InfiniteGallery';
 
-export function TerraTemplate({
+export function DeluxeJadeTemplate({
   groomName,
   brideName,
   weddingDate,
@@ -43,6 +43,7 @@ export function TerraTemplate({
   couple_code,
   store
 }: TemplateProps) {
+
   const [showWelcomeModal, setShowWelcomeModal] = useState(musicEnabled);
   const [autoplayMusic, setAutoplayMusic] = useState(false);
 
@@ -80,20 +81,20 @@ export function TerraTemplate({
         />
       )}
 
-      <main className="font-['Crimson_Text'] bg-[#46261F]">
-        <div className="container mx-auto max-w-7xl">
+      <main className="font-['Cormorant_Garamond'] bg-[#23342D]">
+        <div className="container mx-auto max-w-7xl drop-shadow-lg shadow-lg">
           <Hero
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
             welcomeMessage={welcomeMessage}
             backgroundImage={coverImage}
-            className="bg-[#5B3229]"
+            className="bg-[#254636]"
           />
 
           <Countdown 
             date={weddingDate}
-            className="bg-[#341d17]"
+            className="bg-[#23342D]"
           />
 
           <Events
@@ -108,7 +109,8 @@ export function TerraTemplate({
             partyLocation={partyLocation}
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
-            className="bg-[#5B3229]"
+            showSongRecommendations={musicEnabled}
+            className="bg-[#254636]"
             groomName={groomName}
             brideName={brideName}
           />
@@ -116,45 +118,45 @@ export function TerraTemplate({
           <KidsAndPets
             acceptsKids={accepts_kids}
             acceptsPets={accepts_pets}
-            className="bg-[#5B3229]"
+            className="bg-[#23342D]"
           />
 
           <PartyInfo
-            dresscode={dress_code || ''}
+            dresscode={dress_code || 'Formal'}
             musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
-            tips={additional_info || ''}
-            className="bg-[#341d17]"
+            tips={additional_info || 'La celebración será al aire libre'}
+            className="bg-[#254636]"
             userId={userId}
           />
 
           <GallerySection
             images={galleryImages}
-            className="bg-[#5B3229]"
+            className="bg-[#23342D]"
           />
 
           <Gifts
             bankInfo={bankInfo}
             couple_code={couple_code}
             store={store}
-            className="bg-[#341d17] border-y border-[#DF9434]/20"
+            className="bg-[#254636]"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-[#5B3229] border-y border-[#DF9434]/20"
+            className="bg-[#23342D]"
           />
 
           <InfiniteGallery
             images={galleryImages}
             frameColor="#D4B572"
-            className="bg-[#341d17]"
+            className="bg-[#254636]"
           />
 
           <Footer
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-[#341d17] border-t border-[#DF9434]/20"
+            className="bg-[#23342D]"
           />
         </div>
       </main>

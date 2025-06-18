@@ -13,7 +13,7 @@ import { KidsAndPets } from './components/KidsAndPets';
 import type { TemplateProps } from '../types';
 import { InfiniteGallery } from '../../shared/InfiniteGallery';
 
-export function DeluxeTemplate({
+export function DeluxePetroTemplate({
   groomName,
   brideName,
   weddingDate,
@@ -82,7 +82,7 @@ export function DeluxeTemplate({
       )}
 
       <main className="font-['Cormorant_Garamond'] bg-[#1C2127]">
-        <div className="container mx-auto max-w-7xl">
+        <div className="container mx-auto max-w-7xl drop-shadow-lg shadow-lg">
           <Hero
             groomName={groomName}
             brideName={brideName}
@@ -118,6 +118,7 @@ export function DeluxeTemplate({
           <KidsAndPets
             acceptsKids={accepts_kids}
             acceptsPets={accepts_pets}
+            className='bg-[#1C2127] '
           />
 
           <PartyInfo

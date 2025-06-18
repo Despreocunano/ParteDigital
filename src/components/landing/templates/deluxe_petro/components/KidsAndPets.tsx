@@ -37,7 +37,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
     <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8 ${className}`}>
       {acceptsKids && (
         <motion.div 
-          className="bg-[#1C2127] rounded-xl p-8 text-center border border-[#D4B572]/20"
+          className="rounded-xl p-8 text-center border border-[#D4B572]/20"
           variants={item}
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}

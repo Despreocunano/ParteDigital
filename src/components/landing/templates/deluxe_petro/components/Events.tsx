@@ -45,8 +45,8 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 <MapPin className="w-5 h-5 text-[#D4B572]" />
               </div>
               <div className="ml-4">
-                <h4 className="text-sm font-medium text-[#D4B572]/60 mb-1">Lugar</h4>
-                <p className="text-lg font-medium text-[#D4B572]">{location}</p>
+                <h4 className="text-2xl font-medium text-[#D4B572]/60 mb-1">Lugar</h4>
+                <p className="text-lg font-medium text-[#D4B572] font-sans">{location}</p>
               </div>
             </div>
           </div>
@@ -57,8 +57,8 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 <CalendarDays className="w-5 h-5 text-[#D4B572]" />
               </div>
               <div className="ml-4">
-                <h4 className="text-sm font-medium text-[#D4B572]/60 mb-1">Fecha</h4>
-                <p className="text-lg font-medium text-[#D4B572]">
+                <h4 className="text-2xl font-medium text-[#D4B572]/60 mb-1">Fecha</h4>
+                <p className="text-lg font-medium text-[#D4B572] font-sans">
                   {new Date(date).toLocaleDateString('es-ES', {
                     year: 'numeric',
                     month: 'long',
@@ -82,14 +82,14 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                   <MapPin className="w-5 h-5 text-[#D4B572]" />
                 </div>
                 <div className="ml-4">
-                  <h4 className="text-sm font-medium text-[#D4B572]/60 mb-1">Dirección</h4>
-                  <p className="text-[#D4B572]/80 leading-relaxed">{address}</p>
+                  <h4 className="text-2xl font-medium text-[#D4B572]/60">Dirección</h4>
+                  <p className="text-lg font-medium text-[#D4B572] font-sans">{address}</p>
                 </div>
               </div>
               <div className="mt-4">
                 <Button
                   onClick={handleOpenMaps}
-                  className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
+                  className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full font-sans"
                 >
                   ¿Cómo llegar?
                 </Button>
@@ -271,7 +271,7 @@ END:VCALENDAR`;
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Button
                     onClick={() => setShowRsvpModal(true)}
-                    className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full"
+                    className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full font-sans"
                   >
                     Confirmar asistencia
                   </Button>
@@ -279,7 +279,7 @@ END:VCALENDAR`;
                   <Button
                     onClick={() => setShowCalendarOptions(!showCalendarOptions)}
                     leftIcon={<CalendarDays className="w-5 h-5" />}
-                    className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full flex items-center justify-center gap-2"
+                    className="bg-[#D4B572] hover:bg-[#C4A562] text-[#1C2127] px-8 py-3 w-full flex items-center justify-center gap-2 font-sans"
                   >
                     Agendar
                   </Button>

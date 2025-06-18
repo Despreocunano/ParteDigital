@@ -46,7 +46,8 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 <MapPin className="w-5 h-5 text-[#DF9434]" />
               </div>
               <div className="ml-4">
-                <p className="text-lg font-medium text-[#DF9434]">{location}</p>
+                <h4 className="text-2xl font-medium text-[#D4B572]">Lugar</h4>
+                <p className="text-lg font-medium text-[#DF9434] font-sans">{location}</p>
               </div>
             </div>
           </div>
@@ -57,6 +58,7 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                 <Clock className="w-5 h-5 text-[#DF9434]" />
               </div>
               <div className="ml-4">
+              <h4 className="text-2xl font-medium text-[#D4B572]">Fecha</h4>
                 <p className="text-lg font-medium text-[#DF9434]">
                   {new Date(date).toLocaleDateString('es-ES', {
                     year: 'numeric',
@@ -81,13 +83,14 @@ function Event({ title, date, time, location, address, placeId, className = '', 
                   <MapPin className="w-5 h-5 text-[#DF9434]" />
                 </div>
                 <div className="ml-4">
+                <h4 className="text-2xl font-medium text-[#D4B572]">Dirección</h4>
                   <p className="text-[#DF9434]/80 leading-relaxed">{address}</p>
                 </div>
               </div>
               <div className="mt-4">
                 <Button
                   onClick={handleOpenMaps}
-                  className="bg-[#DF9434] hover:bg-[#C4A562] text-[#47261F] px-8 py-3 w-full"
+                  className="bg-[#DF9434] hover:bg-[#C4A562] text-[#47261F] px-8 py-3 w-full font-sans"
                 >
                   ¿Cómo llegar?
                 </Button>
@@ -295,7 +298,7 @@ END:VCALENDAR`;
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Button
                     onClick={() => setShowRsvpModal(true)}
-                    className="bg-[#DF9434] hover:bg-[#C4A562] text-[#47261F] px-8 py-3 w-full"
+                    className="bg-[#DF9434] hover:bg-[#C4A562] text-[#47261F] px-8 py-3 w-full font-sans"
                   >
                     Confirmar asistencia
                   </Button>
@@ -306,7 +309,7 @@ END:VCALENDAR`;
                       setShowCalendarOptions(!showCalendarOptions);
                     }}
                     leftIcon={<CalendarDays className="w-5 h-5" />}
-                    className="bg-[#DF9434] hover:bg-[#C4A562] text-[#47261F] px-8 py-3 w-full flex items-center justify-center gap-2"
+                    className="bg-[#DF9434] hover:bg-[#C4A562] text-[#47261F] px-8 py-3 w-full flex items-center justify-center gap-2 font-sans"
                   >
                     Agendar
                   </Button>

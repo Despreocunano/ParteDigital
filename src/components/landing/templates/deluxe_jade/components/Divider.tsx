@@ -5,14 +5,14 @@ interface DividerProps {
   color?: string;
 }
 
-export function Divider({ className = '', color = '#DF9434' }: DividerProps) {
+export function Divider({ className = '', color = '#D4B572' }: DividerProps) {
   return (
     <div className={`flex items-center justify-center ${className}`}>
       <motion.div 
         className="w-full flex items-center justify-center opacity-50"
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 0.5, scale: 1 }}
-        viewport={{ once: true }}
+        viewport={{ once: false }}
         transition={{ duration: 0.5 }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="206" height="6" viewBox="0 0 206 6" fill={color} className="transform -scale-x-100">
