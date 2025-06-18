@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { Globe, UserPlus, Grid, Send, Music, ListChecks, CheckCircle2, XCircle, Clock, Heart } from 'lucide-react';
+import { UserPlus, CheckCircle2, XCircle, Clock, Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
@@ -73,7 +73,7 @@ export function DashboardPage() {
 
       // Fetch Tables Data
       const { data: tables, error: tablesError } = await supabase
-        .from('tables')
+        .from('guest_tables')
         .select('id, name, capacity')
         .eq('user_id', user.id);
 

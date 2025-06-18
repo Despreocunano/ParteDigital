@@ -2,18 +2,18 @@ import { useState } from 'react';
 import { Modal } from '../ui/Modal';
 import { Select } from '../ui/Select';
 import { Input } from '../ui/Input';
-import { Attendee, Table } from '../../types/supabase';
+import { Attendee, GuestTable } from '../../types/supabase';
 import toast from 'react-hot-toast';
 
 interface TableAssignmentModalProps {
   isOpen: boolean;
   onClose: () => void;
   guest?: Attendee;
-  table?: Table;
-  tables?: Table[];
+  table?: GuestTable;
+  tables?: GuestTable[];
   attendees?: Attendee[];
   onAssign?: (guestId: string, tableId: string | null) => Promise<{ success: boolean }>;
-  onSave?: (table: Table) => void;
+  onSave?: (table: GuestTable) => void;
 }
 
 export function TableAssignmentModal({

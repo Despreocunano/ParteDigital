@@ -9,7 +9,7 @@ import { useWedding } from '../hooks/useWedding';
 import { sendEmail } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import { toast } from 'react-hot-toast';
-import { Search, Send, Check, X, Clock, Table2, Tag, Heart, Filter } from 'lucide-react';
+import { Search, Send, Check, X, Clock, Filter } from 'lucide-react';
 
 interface LandingPageData {
   ceremony_time?: string;

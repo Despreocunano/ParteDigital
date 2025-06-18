@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../../ui/Card';
 import { Input } from '../../ui/Input';
 import { PlacesAutocomplete } from '../../ui/PlacesAutocomplete';
 import { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form';
@@ -50,11 +49,10 @@ export function PartySection({ register, errors, setValue, watch }: PartySection
           <PlacesAutocomplete
             label="Lugar"
             value={partyLocation}
-            onChange={(value) => setValue('party_location', value)}
-            onPlaceSelect={(place: Place) => {
-              setValue('party_location', place.name);
-              setValue('party_address', place.formatted_address);
-              setValue('party_place_id', place.place_id);
+            onChange={(address, placeId) => {
+              setValue('party_location', address);
+              setValue('party_address', address);
+              setValue('party_place_id', placeId);
             }}
             error={errors.party_location?.message}
           />

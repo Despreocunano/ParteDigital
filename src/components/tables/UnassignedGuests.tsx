@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
-import { Table, Attendee } from '../../types/supabase';
+import { GuestTable, Attendee } from '../../types/supabase';
 import { getInitials } from '../../lib/utils';
 import { UserPlus } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -8,7 +8,7 @@ import { TableAssignmentModal } from './TableAssignmentModal';
 
 interface UnassignedGuestsProps {
   attendees: Attendee[];
-  tables: Table[];
+  tables: GuestTable[];
   onAssignTable: (guestId: string, tableId: string | null) => Promise<{ success: boolean }>;
 }
 
