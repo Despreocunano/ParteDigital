@@ -15,7 +15,7 @@ export function WelcomeModal({
   onEnterWithoutMusic
 }: WelcomeModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#012D27]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#540B17]">
       <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]">
         {/* Corner decorations */}
         <div className="absolute top-0 left-0 w-24 h-24">

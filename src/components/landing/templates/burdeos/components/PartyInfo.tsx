@@ -211,56 +211,9 @@ export function PartyInfo({
       >
         <div className="space-y-6">
           <SpotifySearch
-            onSelect={(track) => {
-              if (!selectedTracks.find(t => t.id === track.id)) {
-                setSelectedTracks([...selectedTracks, track]);
-              }
-            }}
-            onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
-            selectedTracks={selectedTracks}
+            userId={userId}
             maxTracks={2}
           />
-          
-          {selectedTracks.length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-lora text-[#CFD6BA]">Canciones seleccionadas:</h3>
-              <div className="space-y-2">
-                {selectedTracks.map((track) => (
-                  <div 
-                    key={track.id}
-                    className="flex items-center justify-between bg-[#00534E]/50 rounded-lg p-4 border border-[#CFD6BA]/20"
-                  >
-                    <div className="flex items-center space-x-4">
-                      {track.albumCover && (
-                        <img 
-                          src={track.albumCover} 
-                          alt={track.name}
-                          className="w-12 h-12 rounded"
-                        />
-                      )}
-                      <div className="text-left">
-                        <p className="font-medium text-[#CFD6BA]">{track.name}</p>
-                        <p className="text-[#CFD6BA]/60 text-sm">{track.artist}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setSelectedTracks(selectedTracks.filter(t => t.id !== track.id))}
-                      className="text-[#CFD6BA]/40 hover:text-[#CFD6BA]/60"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <Button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="w-full bg-[#CFD6BA] text-[#012D27] hover:bg-[#012D27] hover:text-[#CFD6BA] rounded-full border hover:border-[#CFD6BA]"
-              >
-                {isSubmitting ? 'Enviando...' : 'Enviar Sugerencias'}
-              </Button>
-            </div>
-          )}
         </div>
       </InfoModal>
 
