@@ -16,21 +16,21 @@ const carouselItems: CarouselItem[] = [
   {
     id: 1,
     image: 'https://res.cloudinary.com/sorostica/image/upload/v1750035389/slider_01_jlsnua.avif',
-    title: 'Diseños increíbles para tu parte de matrimonio.',
+    title: 'Diseños increíbles.',
     description: 'Elige entre decenas de diseños, selecciona el que más te guste, previsualiza tu invitación y compartela con tus amigos.',
     tabText: 'Diseños increíbles'
   },
   {
     id: 2,
     image: 'https://res.cloudinary.com/sorostica/image/upload/v1750035389/slider_02_aflfwv.avif',
-    title: 'Una invitación 100% digital para tu matrimonio.',
-    description: 'Olvidate de los papeles y PDFs, comparte tu invitación con tus invitados de inmediato.',
+    title: 'Una invitación 100% digital.',
+    description: 'Olvidate de los papeles, PDFs y planillas de excel. Comparte tu invitación de inmediato..',
     tabText: '100% Digital'
   },
   {
     id: 3,
     image: 'https://res.cloudinary.com/sorostica/image/upload/v1750035390/slider_03_ho7sp7.jpg',
-    title: 'Tu matrimonio, tus recuerdos para siempre.',
+    title: 'Tu matrimonio, tus recuerdos.',
     description: 'Tu invitacióin permanecerá disponibles para siempre, puedes volver a recordar el momento mas feliz de tu vida las veces que quieras.',
     tabText: 'Un recuerdo para siempre'
   }
