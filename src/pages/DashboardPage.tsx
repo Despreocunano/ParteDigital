@@ -73,7 +73,7 @@ export function DashboardPage() {
 
       // Fetch Tables Data
       const { data: tables, error: tablesError } = await supabase
-        .from('tables')
+        .from('guest_tables')
         .select('id, name, capacity')
         .eq('user_id', user.id);
 

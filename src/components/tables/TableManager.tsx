@@ -5,13 +5,13 @@ import { TableCard } from './TableCard';
 import { UnassignedGuests } from './UnassignedGuests';
 import { Button } from '../ui/Button';
 import { Plus } from 'lucide-react';
-import { Table, Attendee } from '../../types/supabase';
+import { GuestTable, Attendee } from '../../types/supabase';
 import { TableAssignmentModal } from './TableAssignmentModal';
 import { TableForm } from './TableForm';
 import { Modal } from '../ui/Modal';
 
 interface TableManagerProps {
-  tables: Table[];
+  tables: GuestTable[];
   attendees: Attendee[];
   isLoading: boolean;
   onAddTable: (data: any) => Promise<{ success: boolean }>;
@@ -43,7 +43,7 @@ export function TableManager({
     }
   };
 
-  const handleUpdateTable = async (table: Table) => {
+  const handleUpdateTable = async (table: GuestTable) => {
     await onUpdateTable(table.id, {
       name: table.name,
       capacity: table.capacity
