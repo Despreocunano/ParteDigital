@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { TicketPlus, Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode, CreditCard, Clock, XCircle } from 'lucide-react';
@@ -31,12 +31,14 @@ export function PublishSection({
 }: PublishSectionProps) {
   const [copied, setCopied] = React.useState(false);
   const [showQR, setShowQR] = React.useState(false);
-  const [isProcessingPayment, setIsProcessingPayment] = React.useState(false);
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = React.useState(false);
   const [paymentStatus, setPaymentStatus] = React.useState<string | null>(null);
   const [preferenceId, setPreferenceId] = React.useState<string | null>(null);
   const [paymentUrl, setPaymentUrl] = React.useState<string | null>(null);
   const [hasAlreadyPaid, setHasAlreadyPaid] = React.useState<boolean>(false);
+  const [checkAttempts, setCheckAttempts] = React.useState(0);
+  const maxCheckAttempts = 12; // Máximo 1 minuto de verificación (12 * 5 segundos)
 
   const handleCopy = async () => {
     if (!publishedUrl) return;
@@ -116,7 +118,10 @@ export function PublishSection({
   const checkStatus = async () => {
     if (!preferenceId) return;
     
-    console.log('🔍 Checking payment status for:', preferenceId);
+    // Increment check attempts
+    setCheckAttempts(prev => prev + 1);
+    
+    console.log('🔍 Checking payment status for:', preferenceId, `(attempt ${checkAttempts + 1}/${maxCheckAttempts})`);
     
     try {
       setPaymentStatus('checking');
@@ -153,6 +158,12 @@ export function PublishSection({
           toast('Pago pendiente de confirmación', {
             icon: '⏳',
           });
+        } else if (result.payment.status === 'rejected' || result.payment.status === 'cancelled') {
+          console.log('❌ Payment rejected or cancelled');
+          setPaymentStatus('failed');
+          toast.error('El pago fue rechazado o cancelado');
+          // Stop checking for rejected payments - clear any pending intervals
+          return;
         } else {
           console.log('❌ Payment failed or not completed');
           setPaymentStatus('failed');
@@ -189,14 +200,33 @@ export function PublishSection({
   // Handle payment modal and automatic status checking
   React.useEffect(() => {
     if (showPaymentModal && preferenceId) {
+      // Reset check attempts when modal opens
+      setCheckAttempts(0);
+      
       // Set up interval to check payment status every 5 seconds
       const interval = setInterval(() => {
+        // Stop checking if we've reached max attempts
+        if (checkAttempts >= maxCheckAttempts) {
+          console.log('⏰ Max check attempts reached, stopping automatic verification');
+          clearInterval(interval);
+          setPaymentStatus('timeout');
+          toast.error('Tiempo de verificación agotado. Por favor verifica manualmente.');
+          return;
+        }
+        
+        // Don't check if payment status is already failed or timeout
+        if (paymentStatus === 'failed' || paymentStatus === 'timeout') {
+          console.log('🛑 Stopping verification - payment already failed or timed out');
+          clearInterval(interval);
+          return;
+        }
+        
         checkStatus();
       }, 5000);
       
       // Listen for window focus events (when user returns from Mercado Pago)
       const handleFocus = () => {
-        if (showPaymentModal && preferenceId) {
+        if (showPaymentModal && preferenceId && paymentStatus !== 'failed' && paymentStatus !== 'timeout') {
           // Check status immediately when user returns
           checkStatus();
         }
@@ -208,8 +238,11 @@ export function PublishSection({
         clearInterval(interval);
         window.removeEventListener('focus', handleFocus);
       };
+    } else {
+      // Reset check attempts when modal closes
+      setCheckAttempts(0);
     }
-  }, [showPaymentModal, preferenceId]);
+  }, [showPaymentModal, preferenceId, checkAttempts, paymentStatus]);
 
   return (
     <>
@@ -362,7 +395,7 @@ export function PublishSection({
           <div className="bg-gray-50 p-4 rounded-lg">
             <div className="flex items-center justify-between mb-2">
               <span className="text-gray-700 font-medium">Publicación de invitación</span>
-              <span className="text-gray-900 font-bold">$990</span>
+              <span className="text-gray-900 font-bold">$39.990</span>
             </div>
             <p className="text-sm text-gray-500">
               Pago único para publicar tu invitación digital y compartirla con tus invitados.
@@ -488,6 +521,35 @@ export function PublishSection({
                   disabled={!paymentUrl}
                 >
                   Reintentar pago
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {paymentStatus === 'timeout' && (
+            <div className="text-center py-4">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Clock className="h-8 w-8 text-orange-600" />
+              </div>
+              <h3 className="text-xl font-medium text-gray-900 mb-2">Tiempo de verificación agotado</h3>
+              <p className="text-gray-600 mb-4">
+                No pudimos verificar automáticamente tu pago. Si ya realizaste el pago, puedes verificarlo manualmente.
+              </p>
+              <div className="flex gap-3">
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setPaymentStatus(null);
+                    setCheckAttempts(0);
+                  }}
+                >
+                  Volver
+                </Button>
+                <Button
+                  onClick={checkStatus}
+                  disabled={!preferenceId}
+                >
+                  Verificar manualmente
                 </Button>
               </div>
             </div>
