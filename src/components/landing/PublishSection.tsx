@@ -115,8 +115,14 @@ export function PublishSection({
     }
   };
 
-  const checkStatus = async () => {
+  const checkStatus = async (isManualCheck = false) => {
     if (!preferenceId) return;
+    
+    // If this is a manual check after timeout, reset the attempts
+    if (isManualCheck && (paymentStatus === 'timeout' || paymentStatus === 'failed')) {
+      setCheckAttempts(0);
+      console.log('🔄 Manual check after timeout/failure - resetting attempts');
+    }
     
     // Increment check attempts
     setCheckAttempts(prev => prev + 1);
@@ -151,7 +157,7 @@ export function PublishSection({
           // Trigger the publish action
           onPublish();
           // Check again in 3 seconds
-          setTimeout(checkStatus, 3000);
+          setTimeout(() => checkStatus(), 3000);
         } else if (result.payment.status === 'pending') {
           console.log('⏳ Payment pending...');
           setPaymentStatus('pending');
@@ -179,6 +185,10 @@ export function PublishSection({
       setPaymentStatus('failed');
       toast.error('Error al verificar el estado del pago');
     }
+  };
+
+  const handleManualCheck = () => {
+    checkStatus(true);
   };
 
   // Check if user has already paid when component mounts
@@ -244,6 +254,39 @@ export function PublishSection({
       setCheckAttempts(0);
     }
   }, [showPaymentModal, preferenceId, checkAttempts, paymentStatus]);
+
+  // Restart automatic checking when user manually checks after timeout
+  React.useEffect(() => {
+    if (showPaymentModal && preferenceId && paymentStatus === 'initiated' && checkAttempts === 0) {
+      // If user manually checked after timeout and reset attempts, restart automatic checking
+      console.log('🔄 Restarting automatic verification after manual check');
+      
+      const interval = setInterval(() => {
+        if (checkAttempts >= maxCheckAttempts) {
+          console.log('⏰ Max check attempts reached, stopping automatic verification');
+          clearInterval(interval);
+          setPaymentStatus('timeout');
+          toast.error('Tiempo de verificación agotado. Por favor verifica manualmente.');
+          return;
+        }
+        
+        checkStatus();
+      }, 5000);
+      
+      const handleFocus = () => {
+        if (showPaymentModal && preferenceId) {
+          checkStatus();
+        }
+      };
+
+      window.addEventListener('focus', handleFocus);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('focus', handleFocus);
+      };
+    }
+  }, [showPaymentModal, preferenceId, paymentStatus, checkAttempts]);
 
   return (
     <>
@@ -433,7 +476,7 @@ export function PublishSection({
                   variant="secondary"
                   onClick={() => {
                     setPaymentStatus('initiated');
-                    checkStatus();
+                    handleManualCheck();
                   }}
                   disabled={!preferenceId}
                 >
@@ -461,7 +504,7 @@ export function PublishSection({
               </p>
               <Button
                 variant="secondary"
-                onClick={checkStatus}
+                onClick={handleManualCheck}
                 disabled={!preferenceId}
               >
                 Verificar manualmente
@@ -571,7 +614,7 @@ export function PublishSection({
                   Volver
                 </Button>
                 <Button
-                  onClick={checkStatus}
+                  onClick={handleManualCheck}
                   disabled={!preferenceId}
                 >
                   Verificar manualmente
