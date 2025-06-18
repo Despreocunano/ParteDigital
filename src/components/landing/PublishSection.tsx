@@ -219,7 +219,7 @@ export function PublishSection({
                       className="flex-1 bg-primary hover:bg-primary-dark text-primary-contrast"
                       leftIcon={hasAlreadyPaid ? <Globe className="h-4 w-4" /> : <CreditCard className="h-4 w-4" />}
                     >
-                      {isProcessingPayment ? 'Procesando...' : hasAlreadyPaid ? 'Publicar' : 'Publicar ($990)'}
+                      {isProcessingPayment ? 'Procesando...' : hasAlreadyPaid ? 'Publicar' : 'Publicar ($39.990)'}
                     </Button>
                   ) : (
                     <Button
