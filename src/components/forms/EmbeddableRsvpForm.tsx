@@ -119,9 +119,9 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="text-xl font-serif text-gray-800 mb-2">¡Gracias por tu respuesta!</h3>
-        <p className="text-gray-600 text-sm font-serif mb-3">Hemos registrado tu respuesta.</p>
-        <p className="text-xs text-gray-500 font-serif">El modal se cerrará en unos segundos...</p>
+        <h3 className="text-xl font-sans text-gray-800 mb-2">¡Gracias por tu respuesta!</h3>
+        <p className="text-gray-600 text-sm font-sans mb-3">Hemos registrado tu respuesta.</p>
+        <p className="text-xs text-gray-500 font-sans">El modal se cerrará en unos segundos...</p>
       </div>
     );
   }
@@ -132,10 +132,10 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
         <input
           {...register('full_name', { required: 'El nombre completo es requerido' })}
           placeholder="Nombre completo *"
-          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-serif"
+          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-sans"
         />
         {errors.full_name && (
-          <p className="mt-1 text-xs text-red-500 font-serif">{errors.full_name.message}</p>
+          <p className="mt-1 text-xs text-red-500 font-sans">{errors.full_name.message}</p>
         )}
       </div>
 
@@ -149,10 +149,10 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
             }
           })}
           placeholder="Correo Electrónico *"
-          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-serif"
+          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-sans"
         />
         {errors.email && (
-          <p className="mt-1 text-xs text-red-500 font-serif">{errors.email.message}</p>
+          <p className="mt-1 text-xs text-red-500 font-sans">{errors.email.message}</p>
         )}
       </div>
 
@@ -160,7 +160,7 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
         <input
           {...register('phone')}
           placeholder="Teléfono (opcional)"
-          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-serif"
+          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-sans"
         />
       </div>
 
@@ -169,12 +169,12 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
           {...register('dietary_restrictions')}
           placeholder="Restricciones alimentarias (opcional)"
           rows={2}
-          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 resize-none font-serif"
+          className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 resize-none font-sans"
         />
       </div>
 
       <div className="flex items-center justify-between py-2">
-        <span className="text-sm text-gray-700 font-serif">¿Vienes con Acompañante?</span>
+        <span className="text-sm text-gray-700 font-sans">¿Vienes con Acompañante?</span>
         <Switch
           checked={watch('has_plus_one')}
           onCheckedChange={(checked) => setValue('has_plus_one', checked)}
@@ -188,10 +188,10 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
             <input
               {...register('plus_one_name', { required: 'El nombre del acompañante es requerido' })}
               placeholder="Nombre del Acompañante *"
-              className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-serif"
+              className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 font-sans"
             />
             {errors.plus_one_name && (
-              <p className="mt-1 text-xs text-red-500 font-serif">{errors.plus_one_name.message}</p>
+              <p className="mt-1 text-xs text-red-500 font-sans">{errors.plus_one_name.message}</p>
             )}
           </div>
 
@@ -200,7 +200,7 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
               {...register('plus_one_dietary_restrictions')}
               placeholder="Restricciones alimentarias del acompañante (opcional)"
               rows={2}
-              className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 resize-none font-serif"
+              className="w-full px-3 py-2 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-transparent text-sm text-gray-700 placeholder-gray-400 resize-none font-sans"
             />
           </div>
         </div>
@@ -210,7 +210,7 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed font-serif"
+          className="w-full px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed font-sans"
         >
           {isLoading ? 'Confirmando...' : 'Confirmar Asistencia'}
         </button>
@@ -218,14 +218,14 @@ export function EmbeddableRsvpForm({ userId, onSuccess, onError }: EmbeddableRsv
           type="button"
           onClick={onReject}
           disabled={isLoading}
-          className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed font-serif"
+          className="w-full px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed font-sans"
         >
           {isLoading ? 'Enviando...' : 'No podré asistir'}
         </button>
       </div>
 
       {submitStatus === 'error' && (
-        <p className="text-xs text-red-500 text-center font-serif">
+        <p className="text-xs text-red-500 text-center font-sans">
           Hubo un error al enviar tu respuesta. Por favor, intenta nuevamente.
         </p>
       )}

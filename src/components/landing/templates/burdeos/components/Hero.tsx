@@ -11,6 +11,7 @@ interface HeroProps {
   welcomeMessage?: string;
   className?: string;
   showWelcomeModal?: boolean;
+  coverImage?: string;
 }
 
 export function Hero({
@@ -19,7 +20,8 @@ export function Hero({
   weddingDate,
   welcomeMessage,
   className = '',
-  showWelcomeModal = false
+  showWelcomeModal = false,
+  coverImage
 }: HeroProps) {
   const formattedDate = new Date(weddingDate).toLocaleDateString('es-ES', {
     day: '2-digit',
@@ -37,7 +39,7 @@ export function Hero({
         {/* Left Side - Background Image (50% on desktop, full height on mobile) */}
         <div className="w-full md:w-1/2 h-[70vh] md:h-screen relative">
           <img 
-            src="https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg" 
+            src={coverImage || "https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg"} 
             alt="Wedding background"
             className="absolute inset-0 w-full h-full object-cover"
           />

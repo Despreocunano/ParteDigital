@@ -15,26 +15,26 @@ export function WelcomeModal({
   onEnterWithoutMusic
 }: WelcomeModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#FAF3F4]">
-      <div className="relative w-full max-w-2xl px-12 py-12 text-center text-[#2D1B69]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#333]">
+      <div className="relative w-full max-w-2xl px-12 py-12 text-center text-white">
 
         {/* Content */}
         <div className="space-y-8">
           <div className="space-y-4">
-            <p className="text-lg font-light tracking-[0.2em] uppercase text-[#8D6E63]">
+            <p className="text-lg font-light tracking-[0.2em] uppercase text-white">
               Bienvenidos a la invitación de
             </p>
             <div className="space-y-4">
-              <h1 className="text-6xl font-serif font-black text-[#BF0D78]">
+              <h1 className="text-6xl font-sans font-black text-white">
               {groomName} & {brideName}
               </h1>
             </div>
           </div>
 
           <div className="flex items-center justify-center gap-4">
-            <div className="h-px w-24 bg-gradient-to-r from-transparent to-[#E91E63]/30"></div>
-            <div className="w-2 h-2 rounded-full bg-[#E91E63]/30"></div>
-            <div className="h-px w-24 bg-gradient-to-l from-transparent to-[#E91E63]/30"></div>
+            <div className="h-px w-24 bg-gradient-to-r from-transparent to-white/30"></div>
+            <div className="w-2 h-2 rounded-full bg-white/30"></div>
+            <div className="h-px w-24 bg-gradient-to-l from-transparent to-white/30"></div>
           </div>
 
           <div className="space-y-6">
@@ -46,7 +46,7 @@ export function WelcomeModal({
                 type="button"
                 onClick={onEnterWithMusic}
                 leftIcon={<Music className="h-4 w-4" />}
-                className="bg-[#bf0d78] hover:bg-[#9a5b71] text-white"
+                className="bg-[#B87600] hover:bg-[#c6c6c5] text-white hover:text-[#333]"
               >
                 Ingresar con música
               </Button>
@@ -54,7 +54,7 @@ export function WelcomeModal({
                 type="button"
                 variant="secondary"
                 onClick={onEnterWithoutMusic}
-                className="border-[#bf0d78] text-[#bf0d78] hover:bg-[#bf0d78] hover:text-white"
+                className="border-[#B87600] text-[#B87600] hover:bg-[#B87600] hover:text-white"
               >
                 Ingresar sin música
               </Button>

@@ -89,6 +89,7 @@ export function BurdeosTemplate({
             welcomeMessage={welcomeMessage}
             className="bg-[#540A17]"
             showWelcomeModal={showWelcomeModal}
+            coverImage={coverImage}
           />
 
           <Countdown 

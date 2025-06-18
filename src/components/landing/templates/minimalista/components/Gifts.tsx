@@ -153,30 +153,30 @@ ${bankInfo.email}`;
       >
         {bankInfo ? (
           <div className="space-y-6">
-            <div className="bg-white/50 rounded-lg border border-[#F8BBD9]/30 p-6">
+            <div className="bg-white/50 rounded-lg border border-[#F8BBD9]/30 p-6 font-sans">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-[#333333]">Titular</p>
+                  <p className="text-sm text-[#333333] font-sans">Titular</p>
                   <p className="text-[#333333]">{bankInfo.accountHolder}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#333333]">RUT</p>
+                  <p className="text-sm text-[#333333] font-sans">RUT</p>
                   <p className="text-[#333]">{bankInfo.rut}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#333]">Banco</p>
+                  <p className="text-sm text-[#333] font-sans">Banco</p>
                   <p className="text-[#333]">{bankInfo.bank}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#333]">Tipo de Cuenta</p>
+                  <p className="text-sm text-[#333] font-sans">Tipo de Cuenta</p>
                   <p className="text-[#333333]">{bankInfo.accountType}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#333]">Número de Cuenta</p>
+                  <p className="text-sm text-[#333] font-sans">Número de Cuenta</p>
                   <p className="text-[#333]">{bankInfo.accountNumber}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#333]">Email</p>
+                  <p className="text-sm text-[#333] font-sans">Email</p>
                   <p className="text-[#333]">{bankInfo.email}</p>
                 </div>
               </div>
@@ -184,7 +184,7 @@ ${bankInfo.email}`;
 
             <Button
               onClick={handleCopyAll}
-              className="bg-[#333333] hover:bg-[#666666] text-white px-8 py-3"
+              className="bg-[#333333] hover:bg-[#666666] text-white px-8 py-3 font-sans"
               leftIcon={copied ? <Check className="h-5 w-5" /> : <Copy className="h-5 w-5" />}
             >
               {copied ? 'Copiado' : 'Copiar Datos'}

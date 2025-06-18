@@ -53,7 +53,7 @@ export function InfoModal({
                 <Icon className="w-12 h-12" style={{ color: iconColor }} />
               </div>
             </div>
-            <h2 className="text-2xl font-serif text-gray-900">{title}</h2>
+            <h2 className="text-2xl font-sans text-gray-900">{title}</h2>
             <div className="overflow-x-auto">
               {children}
             </div>
