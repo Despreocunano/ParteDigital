@@ -124,7 +124,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [isLoading, setIsLoading] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
   const [showAllTemplates, setShowAllTemplates] = useState(false);
-  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialData?.template_id || templates.deluxe.id);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialData?.template_id || templates.deluxe_petro.id);
   const [musicEnabled, setMusicEnabled] = useState(initialData?.music_enabled ?? false);
   const [selectedTrack, setSelectedTrack] = useState<string>(initialData?.selected_track || '');
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -144,6 +144,15 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const [hasModifiedPartyDate, setHasModifiedPartyDate] = useState(false);
   const [hasLandingPage, setHasLandingPage] = useState(false);
   const [rutError, setRutError] = useState<string | null>(null);
+
+  // Show loading state if user is not available yet
+  if (!user?.id) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px]">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-rose-600"></div>
+      </div>
+    );
+  }
 
   const { register, handleSubmit, formState: { errors }, watch, setValue } = useForm<LandingPageFormData>({
     defaultValues: {
@@ -237,8 +246,8 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   // Update form values when userNames are loaded
   useEffect(() => {
     if (userNames && !initialData?.groom_name && !initialData?.bride_name) {
-      setValue('groom_name', userNames.groom_name);
-      setValue('bride_name', userNames.bride_name);
+      setValue('groom_name', userNames.groom_name || '');
+      setValue('bride_name', userNames.bride_name || '');
     }
   }, [userNames, initialData, setValue]);
 
@@ -257,10 +266,10 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   const today = new Date().toISOString().split('T')[0];
 
   React.useEffect(() => {
-    if (user) {
+    if (user?.id) {
       setPreviewUrl(`${window.location.origin}/preview/${user.id}`);
     }
-  }, [user]);
+  }, [user?.id]);
 
   React.useEffect(() => {
     if (groomName && brideName && publishedStatus.slug) {
@@ -271,7 +280,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
   // Check if landing page exists and is published
   useEffect(() => {
     const checkPublishedStatus = async () => {
-      if (!user) return;
+      if (!user?.id) return;
 
       try {
         const { data, error } = await supabase
@@ -305,7 +314,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
     };
 
     checkPublishedStatus();
-  }, [user]);
+  }, [user?.id]);
 
   // Watch for changes in form values
   const formValues = watch();
@@ -321,7 +330,7 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       selectedTrack !== (initialData?.selected_track || '') ||
       coverImage !== (initialData?.cover_image || '') ||
       JSON.stringify(galleryImages) !== JSON.stringify(initialData?.gallery_images || []) ||
-      selectedTemplateId !== (initialData?.template_id || templates.deluxe.id);
+      selectedTemplateId !== (initialData?.template_id || templates.deluxe_petro.id);
 
     setHasChanges(hasFormChanges || hasOtherChanges);
   }, [formValues, musicEnabled, selectedTrack, coverImage, galleryImages, selectedTemplateId, initialData]);

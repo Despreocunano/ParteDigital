@@ -54,6 +54,7 @@ export function LandingPage() {
             hashtag: '',
             dress_code: '',
             additional_info: '',
+            template_id: '550e8400-e29b-41d4-a716-446655440000', // Default to deluxe_petro
             bank_info: {
               accountHolder: '',
               rut: '',
