@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../../ui/Card';
 import { Input } from '../../ui/Input';
 import { PlacesAutocomplete } from '../../ui/PlacesAutocomplete';
 import { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form';
@@ -50,11 +49,10 @@ export function CeremonySection({ register, errors, setValue, watch }: CeremonyS
           <PlacesAutocomplete
             label="Lugar"
             value={ceremonyLocation}
-            onChange={(value) => setValue('ceremony_location', value)}
-            onPlaceSelect={(place: Place) => {
-              setValue('ceremony_location', place.name);
-              setValue('ceremony_address', place.formatted_address);
-              setValue('ceremony_place_id', place.place_id);
+            onChange={(address, placeId) => {
+              setValue('ceremony_location', address);
+              setValue('ceremony_address', address);
+              setValue('ceremony_place_id', placeId);
             }}
             error={errors.ceremony_location?.message}
           />

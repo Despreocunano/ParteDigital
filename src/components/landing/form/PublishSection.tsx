@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../../ui/Card';
 import { PublishSection as PublishSectionComponent } from '../PublishSection';
 import { UseFormWatch } from 'react-hook-form';
 import { LandingPageFormData } from '../../../types/landing';
