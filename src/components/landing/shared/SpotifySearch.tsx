@@ -136,7 +136,7 @@ export function SpotifySearch({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && searchTracks()}
-              className="pl-10 bg-white border-[#333]/20 text-[#333] placeholder-[#333]/60 font-sans"
+              className="pl-10 bg-white border-[#333]/20 text-[#333] placeholder-[#333]/60 font-sans focus:outline-none focus:ring-0 focus:border-[#333]/20"
             />
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#333]/60" />
             {searchTerm && (
