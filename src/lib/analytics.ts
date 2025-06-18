@@ -35,6 +35,7 @@ export const trackSignUp = (method: string = 'email') => {
 
 // Track when user starts checkout process
 export const trackBeginCheckout = () => {
+  console.log('🛒 Tracking begin_checkout event:', { value: 39990 });
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'begin_checkout', {
       currency: 'CLP',
@@ -46,11 +47,15 @@ export const trackBeginCheckout = () => {
         quantity: 1
       }]
     });
+    console.log('✅ Begin checkout event sent to GA4');
+  } else {
+    console.log('❌ GA4 not available for begin_checkout tracking');
   }
 };
 
 // Track successful purchase
 export const trackPurchase = (transactionId: string) => {
+  console.log('🎯 Tracking purchase event:', { transactionId, value: 39990 });
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'purchase', {
       transaction_id: transactionId,
@@ -65,6 +70,9 @@ export const trackPurchase = (transactionId: string) => {
         quantity: 1
       }]
     });
+    console.log('✅ Purchase event sent to GA4');
+  } else {
+    console.log('❌ GA4 not available for purchase tracking');
   }
 };
 

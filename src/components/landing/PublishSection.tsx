@@ -116,23 +116,30 @@ export function PublishSection({
   const checkStatus = async () => {
     if (!preferenceId) return;
     
+    console.log('🔍 Checking payment status for:', preferenceId);
+    
     try {
       setPaymentStatus('checking');
       const result = await checkPaymentStatus(preferenceId);
       
+      console.log('📊 Payment status result:', result);
+      
       if (result.success) {
         if (result.landingPage.isPublished) {
+          console.log('🎉 Payment successful! Landing page is published');
           // Track successful purchase
           trackPurchase(preferenceId);
           
           setPaymentStatus('success');
           setHasAlreadyPaid(true);
           toast.success('¡Pago completado! Tu invitación ha sido publicada');
-          // Wait a bit and then reload the page
+          // Close modal and reload page after a short delay
           setTimeout(() => {
+            setShowPaymentModal(false);
             window.location.reload();
-          }, 2000);
+          }, 1500);
         } else if (result.payment.status === 'approved') {
+          console.log('✅ Payment approved, processing publication...');
           setPaymentStatus('processing');
           setHasAlreadyPaid(true);
           toast.success('Pago aprobado, publicando invitación...');
@@ -141,20 +148,23 @@ export function PublishSection({
           // Check again in 3 seconds
           setTimeout(checkStatus, 3000);
         } else if (result.payment.status === 'pending') {
+          console.log('⏳ Payment pending...');
           setPaymentStatus('pending');
           toast('Pago pendiente de confirmación', {
             icon: '⏳',
           });
         } else {
+          console.log('❌ Payment failed or not completed');
           setPaymentStatus('failed');
           toast.error('El pago no fue completado');
         }
       } else {
+        console.log('❌ Payment status check failed:', result.error);
         setPaymentStatus('failed');
         toast.error(result.error || 'Error al verificar el estado del pago');
       }
     } catch (error) {
-      console.error('Error checking payment status:', error);
+      console.error('💥 Error checking payment status:', error);
       setPaymentStatus('failed');
       toast.error('Error al verificar el estado del pago');
     }
@@ -175,6 +185,31 @@ export function PublishSection({
     
     checkPaymentHistory();
   }, []);
+
+  // Handle payment modal and automatic status checking
+  React.useEffect(() => {
+    if (showPaymentModal && preferenceId) {
+      // Set up interval to check payment status every 5 seconds
+      const interval = setInterval(() => {
+        checkStatus();
+      }, 5000);
+      
+      // Listen for window focus events (when user returns from Mercado Pago)
+      const handleFocus = () => {
+        if (showPaymentModal && preferenceId) {
+          // Check status immediately when user returns
+          checkStatus();
+        }
+      };
+
+      window.addEventListener('focus', handleFocus);
+
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('focus', handleFocus);
+      };
+    }
+  }, [showPaymentModal, preferenceId]);
 
   return (
     <>
