@@ -16,15 +16,13 @@ interface Track {
 interface SpotifySearchProps {
   userId?: string;
   maxTracks?: number;
-  onTracksChange?: (tracks: Track[]) => void;
 }
 
 const spotify = new SpotifyWebApi();
 
 export function SpotifySearch({ 
   userId,
-  maxTracks = 2,
-  onTracksChange
+  maxTracks = 2
 }: SpotifySearchProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState<Track[]>([]);
@@ -56,12 +54,6 @@ export function SpotifySearch({
 
     getToken();
   }, []);
-
-  useEffect(() => {
-    if (onTracksChange) {
-      onTracksChange(selectedTracks);
-    }
-  }, [selectedTracks, onTracksChange]);
 
   const searchTracks = async () => {
     if (!searchTerm.trim() || !token) return;

@@ -32,8 +32,6 @@ export function PartyInfo({
   const [showMusicModal, setShowMusicModal] = useState(false);
   const [showDressCodeModal, setShowDressCodeModal] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
-  const [selectedTracks, setSelectedTracks] = useState<Track[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const container = {
     hidden: { opacity: 0 },
@@ -54,34 +52,6 @@ export function PartyInfo({
         type: "spring",
         stiffness: 100
       }
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!userId || selectedTracks.length === 0) return;
-
-    setIsSubmitting(true);
-    try {
-      const { error } = await supabase
-        .from('song_recommendations')
-        .insert(
-          selectedTracks.map(track => ({
-            user_id: userId,
-            song_name: track.name,
-            artist_name: track.artist
-          }))
-        );
-
-      if (error) throw error;
-
-      toast.success('¡Gracias por tus sugerencias!');
-      setShowMusicModal(false);
-      setSelectedTracks([]);
-    } catch (error) {
-      console.error('Error saving songs:', error);
-      toast.error('Error al guardar las canciones');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -193,56 +163,9 @@ export function PartyInfo({
       >
         <div className="space-y-6">
           <SpotifySearch
-            onSelect={(track) => {
-              if (!selectedTracks.find(t => t.id === track.id)) {
-                setSelectedTracks([...selectedTracks, track]);
-              }
-            }}
-            onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
-            selectedTracks={selectedTracks}
+            userId={userId}
             maxTracks={2}
           />
-          
-          {selectedTracks.length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-serif">Canciones seleccionadas:</h3>
-              <div className="space-y-2">
-                {selectedTracks.map((track) => (
-                  <div 
-                    key={track.id}
-                    className="flex items-center justify-between bg-white/50 rounded-lg p-4 border border-gray-200"
-                  >
-                    <div className="flex items-center space-x-4">
-                      {track.albumCover && (
-                        <img 
-                          src={track.albumCover} 
-                          alt={track.name}
-                          className="w-12 h-12 rounded"
-                        />
-                      )}
-                      <div className="text-left">
-                        <p className="font-medium">{track.name}</p>
-                        <p className="text-gray-600 text-sm">{track.artist}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setSelectedTracks(selectedTracks.filter(t => t.id !== track.id))}
-                      className="text-gray-400 hover:text-gray-600"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <Button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="w-full bg-[#8B4513] hover:bg-[#7D3C0F] text-white"
-              >
-                {isSubmitting ? 'Enviando...' : 'Enviar Sugerencias'}
-              </Button>
-            </div>
-          )}
         </div>
       </InfoModal>
 

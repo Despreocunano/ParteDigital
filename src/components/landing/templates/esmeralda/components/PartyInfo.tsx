@@ -32,8 +32,6 @@ export function PartyInfo({
   const [showMusicModal, setShowMusicModal] = useState(false);
   const [showDressCodeModal, setShowDressCodeModal] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
-  const [selectedTracks, setSelectedTracks] = useState<Track[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const container = {
     hidden: { opacity: 0 },
@@ -54,34 +52,6 @@ export function PartyInfo({
         type: "spring",
         stiffness: 100
       }
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!userId || selectedTracks.length === 0) return;
-
-    setIsSubmitting(true);
-    try {
-      const { error } = await supabase
-        .from('song_recommendations')
-        .insert(
-          selectedTracks.map(track => ({
-            user_id: userId,
-            song_name: track.name,
-            artist_name: track.artist
-          }))
-        );
-
-      if (error) throw error;
-
-      toast.success('¡Gracias por tus sugerencias!');
-      setShowMusicModal(false);
-      setSelectedTracks([]);
-    } catch (error) {
-      console.error('Error saving songs:', error);
-      toast.error('Error al guardar las canciones');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -209,16 +179,8 @@ export function PartyInfo({
       >
         <div className="space-y-6">
           <SpotifySearch
-            onSelect={(track) => {
-              if (!selectedTracks.find(t => t.id === track.id)) {
-                setSelectedTracks([...selectedTracks, track]);
-              }
-            }}
-            onRemove={(trackId) => setSelectedTracks(selectedTracks.filter(t => t.id !== trackId))}
-            selectedTracks={selectedTracks}
+            userId={userId}
             maxTracks={2}
-            onSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
           />
         </div>
       </InfoModal>

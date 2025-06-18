@@ -33,8 +33,6 @@ export function PartyInfo({
   const [showMusicModal, setShowMusicModal] = useState(false);
   const [showDressCodeModal, setShowDressCodeModal] = useState(false);
   const [showTipsModal, setShowTipsModal] = useState(false);
-  const [selectedTracks, setSelectedTracks] = useState<Track[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const container = {
     hidden: { opacity: 0 },
@@ -55,33 +53,6 @@ export function PartyInfo({
         type: "spring",
         stiffness: 100
       }
-    }
-  };
-
-  const handleSubmit = async () => {
-    if (!userId || selectedTracks.length === 0) return;
-
-    setIsSubmitting(true);
-    try {
-      const { error } = await supabase
-        .from('song_recommendations')
-        .insert(
-          selectedTracks.map(track => ({
-            user_id: userId,
-            song_name: track.name,
-            artist_name: track.artist
-          }))
-        );
-
-      if (error) throw error;
-
-      toast.success('¡Gracias por tus sugerencias!');
-      setShowMusicModal(false);
-      setSelectedTracks([]);
-    } catch (error) {
-      toast.error('Error al guardar la canción');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -197,48 +168,7 @@ export function PartyInfo({
           <SpotifySearch
             userId={userId}
             maxTracks={2}
-            onTracksChange={(tracks) => setSelectedTracks(tracks)}
           />
-          {selectedTracks.length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">Canciones seleccionadas:</h3>
-              <div className="space-y-2">
-                {selectedTracks.map((track) => (
-                  <div
-                    key={track.id}
-                    className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
-                  >
-                    <div className="flex items-center space-x-3">
-                      {track.albumCover && (
-                        <img
-                          src={track.albumCover}
-                          alt={track.name}
-                          className="w-10 h-10 rounded"
-                        />
-                      )}
-                      <div>
-                        <p className="text-sm font-medium text-gray-900">{track.name}</p>
-                        <p className="text-sm text-gray-500">{track.artist}</p>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setSelectedTracks(selectedTracks.filter(t => t.id !== track.id))}
-                      className="text-gray-400 hover:text-gray-500"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <Button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="w-full"
-              >
-                {isSubmitting ? 'Enviando...' : 'Enviar Sugerencias'}
-              </Button>
-            </div>
-          )}
         </div>
       </InfoModal>
 
