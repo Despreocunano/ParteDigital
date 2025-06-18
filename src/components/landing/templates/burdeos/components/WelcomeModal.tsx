@@ -30,11 +30,11 @@ export function WelcomeModal({
         {/* Content */}
         <div className="space-y-8">
           <div className="space-y-4">
-            <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#CFD6BA]">
+            <p className="text-sm font-lora tracking-[0.2em] uppercase text-[#D0C293]">
               Bienvenidos a la invitación de
             </p>
             <div className="space-y-4">
-              <h1 className="text-6xl font-parisienne text-[#CFD6BA]">
+              <h1 className="text-6xl font-fraunces font-semibold text-[#D0C293]">
               {groomName} & {brideName}
               </h1>
             </div>
@@ -47,7 +47,7 @@ export function WelcomeModal({
           </div>
 
           <div className="space-y-6">
-            <p className="text-lg font-lora text-[#CFD6BA]">
+            <p className="text-lg font-sans text-[#D0C293]">
               La música de fondo es parte de la experiencia
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -55,7 +55,7 @@ export function WelcomeModal({
                 type="button"
                 onClick={onEnterWithMusic}
                 leftIcon={<Music className="h-4 w-4" />}
-                className="bg-[#CFD6BA] text-[#012D27] hover:bg-[#012D27] hover:text-[#CFD6BA] rounded-full border hover:border-[#CFD6BA]"
+                className="bg-[#C8A784] hover:bg-[#D0C293] text-[#540B17] rounded-full"
               >
                 Ingresar con música
               </Button>
@@ -63,7 +63,7 @@ export function WelcomeModal({
                 type="button"
                 variant="secondary"
                 onClick={onEnterWithoutMusic}
-                className="border-[#CFD6BA] text-[#CFD6BA] hover:bg-[#CFD6BA] hover:text-[#012D27] rounded-full"
+                className="text-[#D0C293] hover:bg-[#D0C293] hover:text-[#540B17] rounded-full"
               >
                 Ingresar sin música
               </Button>
