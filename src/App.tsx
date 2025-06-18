@@ -16,6 +16,7 @@ import { PublicSite } from './pages/PublicSite';
 import { SongRecommendationsPage } from './pages/SongRecommendationsPage';
 import { RemindersPage } from './pages/RemindersPage';
 import { RequireLandingPage } from './components/auth/RequireLandingPage';
+import { trackPageView } from './lib/analytics';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -37,6 +38,11 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 
 function AppRoutes() {
   const isPanel = window.location.hostname.startsWith('panel.');
+
+  // Track page views
+  React.useEffect(() => {
+    trackPageView(window.location.pathname);
+  }, [window.location.pathname]);
 
   return (
     <BrowserRouter>

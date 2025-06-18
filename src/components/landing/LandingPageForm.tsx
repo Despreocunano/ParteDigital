@@ -18,7 +18,8 @@ import { toast } from 'react-hot-toast';
 import { Button } from '../ui/Button';
 import { Grid } from 'lucide-react';
 import { Select } from '../ui/Select';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { trackEvent } from '../../lib/analytics';
 
 interface LandingPageFormData {
   groom_name: string;
@@ -399,6 +400,16 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           : 'Cambios guardados correctamente'
       );
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      trackEvent('landing_page_created', {
+        userId: user?.id,
+        templateId: selectedTemplateId,
+        musicEnabled: musicEnabled,
+        selectedTrack: selectedTrack,
+        coverImage: coverImage,
+        galleryImages: galleryImages,
+        hasBankInfo: !!data.bank_info
+      });
     } catch (error) {
       console.error('Error saving landing page:', error);
       toast.error('Error al guardar los cambios');
@@ -449,6 +460,16 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
         setPublishedStatus(newStatus);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
         toast.success('¡Página publicada correctamente!');
+
+        trackEvent('landing_page_published', {
+          userId: user?.id,
+          templateId: selectedTemplateId,
+          musicEnabled: musicEnabled,
+          selectedTrack: selectedTrack,
+          coverImage: coverImage,
+          galleryImages: galleryImages,
+          hasBankInfo: !!watch('bank_info')
+        });
       } else {
         throw new Error(data.error || 'Error al publicar la página');
       }
@@ -480,6 +501,16 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
       setPublishedStatus(newStatus);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
       toast.success('Página despublicada correctamente');
+
+      trackEvent('landing_page_unpublished', {
+        userId: user?.id,
+        templateId: selectedTemplateId,
+        musicEnabled: musicEnabled,
+        selectedTrack: selectedTrack,
+        coverImage: coverImage,
+        galleryImages: galleryImages,
+        hasBankInfo: !!watch('bank_info')
+      });
     } catch (error) {
       console.error('Error unpublishing landing page:', error);
       toast.error('Error al despublicar la página');

@@ -7,6 +7,7 @@ import {
 import { Button } from '../components/ui/Button';
 import { useState, useEffect } from 'react';
 import { DemoCarousel } from '../components/public/DemoCarousel';
+import { trackEvent } from '../lib/analytics';
 
 // Import local images
 import app1 from '../assets/images/app_gestion.png';
@@ -182,6 +183,10 @@ export function PublicSite() {
             <div>
               <a
                 href="https://panel.tuparte.digital/auth?showLogin=true"
+                onClick={() => trackEvent('cta_click', { 
+                  location: 'header',
+                  button_text: isPanel ? 'Crear mi invitación' : 'Iniciar sesión'
+                })}
                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300 backdrop-blur-sm"
               >
                 <User className="h-4 w-4 mr-2" />
@@ -247,6 +252,10 @@ export function PublicSite() {
                   href="https://panel.tuparte.digital/auth"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent('cta_click', { 
+                    location: 'hero_section',
+                    button_text: 'Crear mi invitación'
+                  })}
                   className="inline-flex items-center justify-center w-full px-8 py-4 text-lg rounded-md bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white transition-all duration-300 group shadow-lg shadow-rose-500/25"
                 >
                   <span>Crear mi invitación</span>
@@ -477,15 +486,20 @@ export function PublicSite() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <a
-                  href="https://panel.tuparte.digital/register"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center px-8 py-4 text-lg rounded-lg bg-white text-rose-600 hover:bg-gray-50 transition-colors group font-medium shadow-lg shadow-rose-500/25"
+                <Button
+                  size="lg"
+                  onClick={() => {
+                    trackEvent('cta_click', { 
+                      location: 'features_final',
+                      button_text: 'Crear mi invitación'
+                    });
+                    window.location.href = 'https://panel.tuparte.digital/register';
+                  }}
+                  className="bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white px-8 group shadow-lg shadow-rose-500/25"
                 >
                   <span>Crear mi invitación</span>
-                  <Heart className="ml-2 h-5 w-5 group-hover:text-rose-500 transition-transform group-hover:scale-125" />
-                </a>
+                  <Heart className="ml-2 h-5 w-5 group-hover:text-white transition-transform group-hover:scale-125" />
+                </Button>
               </motion.div>
             </div>
           </motion.div>
@@ -578,7 +592,13 @@ export function PublicSite() {
           >
             <Button
               size="lg"
-              onClick={() => window.location.href = 'https://panel.tuparte.digital/register'}
+              onClick={() => {
+                trackEvent('cta_click', { 
+                  location: 'features_final',
+                  button_text: 'Crear mi invitación'
+                });
+                window.location.href = 'https://panel.tuparte.digital/register';
+              }}
               className="bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white px-8 group shadow-lg shadow-rose-500/25"
             >
               <span>Crear mi invitación</span>

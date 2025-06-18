@@ -4,9 +4,10 @@ import { useAuth } from '../../context/AuthContext';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/Card';
-import { Mail, Lock, User } from 'lucide-react';
+import { Mail, Lock, User, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { translateAuthError } from '../../lib/authErrors';
+import { trackSignUp } from '../../lib/analytics';
 
 type FormData = {
   email: string;
@@ -65,6 +66,7 @@ export function RegisterForm({ onToggleForm }: RegisterFormProps) {
         if (loginSuccess) {
           window.scrollTo(0, 0);
           navigate('/', { replace: true });
+          trackSignUp(data.email);
         } else {
           setSuccessMessage('¡Registro exitoso! Ahora puedes iniciar sesión.');
           setTimeout(() => {

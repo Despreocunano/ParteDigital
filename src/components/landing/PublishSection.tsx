@@ -5,6 +5,7 @@ import { TicketPlus, Globe, EyeOff, Copy, Check, Share2, Eye, Link2, QrCode, Cre
 import { toast } from 'react-hot-toast';
 import { createPayment, checkPaymentStatus } from '../../lib/payment';
 import { Modal } from '../ui/Modal';
+import { trackBeginCheckout, trackPurchase } from '../../lib/analytics';
 
 interface PublishSectionProps {
   previewUrl: string;
@@ -91,6 +92,9 @@ export function PublishSection({
           return;
         }
         
+        // Track begin checkout event
+        trackBeginCheckout();
+        
         setPreferenceId(result.preferenceId);
         setPaymentUrl(result.initPoint);
         setShowPaymentModal(true);
@@ -118,6 +122,9 @@ export function PublishSection({
       
       if (result.success) {
         if (result.landingPage.isPublished) {
+          // Track successful purchase
+          trackPurchase(preferenceId);
+          
           setPaymentStatus('success');
           setHasAlreadyPaid(true);
           toast.success('¡Pago completado! Tu invitación ha sido publicada');
