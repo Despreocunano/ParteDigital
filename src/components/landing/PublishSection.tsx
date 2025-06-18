@@ -199,8 +199,9 @@ export function PublishSection({
 
   // Handle payment modal and automatic status checking
   React.useEffect(() => {
-    if (showPaymentModal && preferenceId) {
-      // Reset check attempts when modal opens
+    if (showPaymentModal && preferenceId && paymentStatus && paymentStatus !== null) {
+      // Only start checking after user has initiated payment (paymentStatus is not null)
+      // Reset check attempts when payment is initiated
       setCheckAttempts(0);
       
       // Set up interval to check payment status every 5 seconds
@@ -238,7 +239,7 @@ export function PublishSection({
         clearInterval(interval);
         window.removeEventListener('focus', handleFocus);
       };
-    } else {
+    } else if (!showPaymentModal) {
       // Reset check attempts when modal closes
       setCheckAttempts(0);
     }
@@ -419,6 +420,7 @@ export function PublishSection({
                 <Button
                   onClick={() => {
                     if (paymentUrl) {
+                      setPaymentStatus('initiated');
                       window.open(paymentUrl, '_blank');
                     }
                   }}
@@ -429,7 +431,10 @@ export function PublishSection({
                 </Button>
                 <Button
                   variant="secondary"
-                  onClick={checkStatus}
+                  onClick={() => {
+                    setPaymentStatus('initiated');
+                    checkStatus();
+                  }}
                   disabled={!preferenceId}
                 >
                   Ya realicé el pago
@@ -442,6 +447,25 @@ export function PublishSection({
             <div className="text-center py-4">
               <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-rose-600 mx-auto mb-4"></div>
               <p className="text-gray-700">Verificando el estado del pago...</p>
+            </div>
+          )}
+
+          {paymentStatus === 'initiated' && (
+            <div className="text-center py-4">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+              </div>
+              <h3 className="text-xl font-medium text-gray-900 mb-2">Pago iniciado</h3>
+              <p className="text-gray-600 mb-4">
+                Estamos verificando automáticamente el estado de tu pago. Si ya completaste el pago, se detectará en unos momentos.
+              </p>
+              <Button
+                variant="secondary"
+                onClick={checkStatus}
+                disabled={!preferenceId}
+              >
+                Verificar manualmente
+              </Button>
             </div>
           )}
 
@@ -513,6 +537,7 @@ export function PublishSection({
                 </Button>
                 <Button
                   onClick={() => {
+                    setPaymentStatus('initiated');
                     if (paymentUrl) {
                       window.open(paymentUrl, '_blank');
                     }
