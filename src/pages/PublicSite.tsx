@@ -156,10 +156,11 @@ const featureSections = [
 
 export function PublicSite() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const isPanel = window.location.hostname.startsWith('panel.');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -184,7 +185,7 @@ export function PublicSite() {
                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300 backdrop-blur-sm"
               >
                 <User className="h-4 w-4 mr-2" />
-                Iniciar sesión
+                {isPanel ? 'Crear mi invitación' : 'Iniciar sesión'}
               </a>
             </div>
           </div>

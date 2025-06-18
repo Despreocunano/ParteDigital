@@ -147,6 +147,7 @@ function AppRoutes() {
                 </RequireAuth>
               }
             />
+            <Route path="/lp" element={<PublicSite />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         ) : (
