@@ -63,6 +63,7 @@ export function TemplateSelector({
             'cursor-pointer transition-all hover:shadow-lg w-[200px] flex-shrink-0',
             selectedTemplateId === currentVariant.id && 'ring-2 ring-rose-500'
           )}
+          onClick={() => handleVariantSelect(currentVariant.id)}
         >
           <div className="aspect-[3/5] max-h-[300px] relative overflow-hidden mx-auto p-1">
             <img
@@ -88,6 +89,7 @@ export function TemplateSelector({
             <div className="flex gap-2 justify-center">
               {template.variants.map((variant) => (
                 <button
+                  type="button"
                   key={variant.id}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -193,6 +195,7 @@ export function TemplateSelector({
                       <div className="flex gap-2 justify-center">
                         {template.variants.map((variant) => (
                           <button
+                            type="button"
                             key={variant.id}
                             onClick={(e) => {
                               e.stopPropagation();
