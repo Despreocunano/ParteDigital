@@ -190,7 +190,17 @@ export function PublicSite() {
                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300 backdrop-blur-sm"
               >
                 <User className="h-4 w-4 mr-2" />
-                {isPanel ? 'Crear mi invitación' : 'Iniciar sesión'}
+                {isPanel ? (
+                  <>
+                    Crear mi invitación
+                    <img src="https://flagcdn.com/cl.svg" alt="Chile" className="ml-2 h-4 w-6 object-cover rounded-sm shadow inline-block align-middle" />
+                  </>
+                ) : (
+                  <>
+                    Iniciar sesión
+                    <img src="https://flagcdn.com/cl.svg" alt="Chile" className="ml-2 h-4 w-6 object-cover rounded-sm shadow inline-block align-middle" />
+                  </>
+                )}
               </a>
             </div>
           </div>
@@ -423,7 +433,7 @@ export function PublicSite() {
               {
                 step: "04",
                 title: "Publícalo y comparte con tus amigos",
-                description: "Activa tu invitación con un clic y compártela instantáneamente con todos tus invitados",
+                description: "Activa tu invitación con un clic por solo $39.990 y compártela instantáneamente con todos tus invitados",
                 icon: Heart,
                 color: "from-rose-500 via-rose-600 to-pink-600",
                 bgColor: "from-rose-50 to-pink-50",
@@ -523,7 +533,7 @@ export function PublicSite() {
               </a>
               
               <p className="text-gray-500 text-sm">
-                ✨ Prueba sin tarjeta de crédito • Sin compromisos
+                Visualiza GRATIS tu invitación digital • Sin compromisos
               </p>
             </div>
           </motion.div>
