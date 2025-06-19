@@ -8,6 +8,7 @@ import { Button } from '../components/ui/Button';
 import { useState, useEffect } from 'react';
 import { DemoCarousel } from '../components/public/DemoCarousel';
 import { trackEvent } from '../lib/analytics';
+import TemplateExamples from '../components/public/TemplateExamples';
 
 // Import local images
 import app1 from '../assets/images/app_gestion.png';
@@ -388,12 +389,10 @@ export function PublicSite() {
             transition={{ duration: 0.6 }}
           >
 
-            <h2 className="text-5xl md:text-7xl font-bold text-gray-900 mb-8 leading-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 via-purple-500 to-rose-600">
+            <h2 className="text-4xl md:text-5xl font-bold text-rose-600 mb-8 leading-tight">
                 En solo 4 pasos
-              </span>
               <br />
-              <span className="text-gray-800">tendrás tu invitación lista</span>
+              <span className="text-slate-600">tendrás tu invitación lista</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Un proceso diseñado para ser simple, rápido y divertido. 
@@ -415,7 +414,7 @@ export function PublicSite() {
               {
                 step: "02",
                 title: "Elige tu plantilla y completa tu información",
-                description: "Elige entre más de 10 diseños únicos y personaliza cada detalle de tu evento especial",
+                description: "Elige entre más de 10 diseños únicos y personaliza cada detalle de tu boda",
                 icon: LayoutDashboard,
                 color: "from-purple-500 via-purple-600 to-violet-600",
                 bgColor: "from-purple-50 to-violet-50",
@@ -424,7 +423,7 @@ export function PublicSite() {
               {
                 step: "03",
                 title: "Visualiza tu parte digital",
-                description: "Revisa cómo se ve tu invitación en tiempo real y haz los ajustes perfectos hasta que quede exactamente como quieres",
+                description: "Revisa cómo se ve tu invitación en tiempo real y haz los ajustes necesarios hasta que quede exactamente como quieres",
                 icon: Globe,
                 color: "from-emerald-500 via-emerald-600 to-teal-600",
                 bgColor: "from-emerald-50 to-teal-50",
@@ -473,7 +472,7 @@ export function PublicSite() {
                       <div className={`absolute inset-0 bg-gradient-to-r ${item.color} rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300`}></div>
                     </div>
                     
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6 group-hover:text-gray-800 transition-colors duration-300 leading-tight">
+                    <h3 className="text-2xl font-bold text-slate-600 mb-6 group-hover:text-slate-800 transition-colors duration-300 leading-tight">
                       {item.title}
                     </h3>
                     
@@ -507,35 +506,9 @@ export function PublicSite() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.4 }}
+            
           >
-            <div className="inline-flex flex-col items-center space-y-6">
-              <div className="flex items-center space-x-4 text-gray-600">
-                <div className="w-8 h-px bg-gradient-to-r from-transparent to-gray-400"></div>
-                <span className="text-lg font-medium">¿Listo para comenzar?</span>
-                <div className="w-8 h-px bg-gradient-to-l from-transparent to-gray-400"></div>
-              </div>
-              
-              <a
-                href="https://panel.tuparte.digital/auth"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackEvent('cta_click', { 
-                  location: 'step_by_step',
-                  button_text: 'Comenzar ahora'
-                })}
-                className="group relative inline-flex items-center px-12 py-6 text-xl rounded-2xl bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 hover:from-rose-600 hover:via-pink-600 hover:to-rose-700 text-white transition-all duration-300 shadow-2xl shadow-rose-500/30 hover:shadow-3xl hover:shadow-rose-500/40 transform hover:scale-105"
-              >
-                <span className="font-bold">Comenzar ahora</span>
-                <Heart className="ml-3 h-6 w-6 group-hover:text-white transition-all duration-300 group-hover:scale-110" />
-                
-                {/* Button glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 rounded-2xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-300"></div>
-              </a>
-              
-              <p className="text-gray-500 text-sm">
-                Visualiza GRATIS tu invitación digital • Sin compromisos
-              </p>
-            </div>
+            <TemplateExamples />
           </motion.div>
         </div>
       </section>
@@ -546,18 +519,17 @@ export function PublicSite() {
       {/* Feature Sections */}
       <div className="text-center mb-16 pt-24 features-title">
         <motion.h2 
-          className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+          className="text-4xl md:text-5xl font-bold text-rose-600 mb-8 leading-tight"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-rose-600">
             Características
-          </span> que harán tu invitación única
+           <span className='text-slate-600'> que harán tu invitación única</span>
         </motion.h2>
         <motion.p 
-          className="text-xl text-gray-600 max-w-3xl mx-auto"
+          className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -593,7 +565,7 @@ export function PublicSite() {
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-100 to-rose-50 flex items-center justify-center shadow-lg shadow-rose-100/50">
                       <Icon className="w-8 h-8 text-rose-600" />
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                    <h2 className="text-3xl md:text-4xl font-bold text-slate-600">
                       {section.title}
                     </h2>
                   </div>
@@ -702,7 +674,7 @@ export function PublicSite() {
               </span> que harán tu invitación única
             </motion.h2>
             <motion.p 
-              className="text-xl text-gray-600 max-w-3xl mx-auto"
+              className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -762,29 +734,6 @@ export function PublicSite() {
               );
             })}
           </div>
-
-          <motion.div 
-            className="mt-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-          >
-            <Button
-              size="lg"
-              onClick={() => {
-                trackEvent('cta_click', { 
-                  location: 'features_final',
-                  button_text: 'Crear mi invitación'
-                });
-                window.location.href = 'https://panel.tuparte.digital/register';
-              }}
-              className="bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white px-8 group shadow-lg shadow-rose-500/25"
-            >
-              <span>Crear mi invitación</span>
-              <Heart className="ml-2 h-5 w-5 group-hover:text-white transition-transform group-hover:scale-125" />
-            </Button>
-          </motion.div>
         </div>
       </section>
 

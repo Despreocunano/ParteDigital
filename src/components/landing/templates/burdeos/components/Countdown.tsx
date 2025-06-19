@@ -118,7 +118,7 @@ export function Countdown({
             className="w-64 h-auto absolute -top-24 md:-top-20 -left-6 z-50"
           />
           <motion.div 
-            className="relative flex flex-col items-center justify-center p-8 rounded-full shadow-2xl h-auto w-64 lg:w-80 lg:h-80"
+            className="relative flex flex-col items-center justify-center p-8 rounded-full shadow-2xl h-auto w-72 lg:w-80 lg:h-80"
             style={{
               backgroundColor: '#33040E',
               borderColor: secondaryColor,

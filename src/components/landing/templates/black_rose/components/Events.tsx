@@ -46,7 +46,7 @@ function Event({ title, date, time, location, address, placeId, className = '', 
           </h3>
         </div>
 
-        <div className="p-8 md:p-10 pt-0 space-y-8">
+        <div className="p-0 md:p-10 pt-0 space-y-8">
           <div className="space-y-4 text-center">
             <h4 className="text-4xl font-parisienne text-white mb-2">Lugar</h4>
             <div className="flex flex-col items-center">

@@ -24,14 +24,14 @@ const carouselItems: CarouselItem[] = [
     id: 2,
     image: 'https://res.cloudinary.com/sorostica/image/upload/v1750035389/slider_02_aflfwv.avif',
     title: 'Una invitación 100% digital.',
-    description: 'Olvidate de los papeles, PDFs y planillas de excel. Comparte tu invitación de inmediato..',
+    description: 'Olvidate de los papeles, PDFs y planillas de excel. Comparte tu invitación de inmediato.',
     tabText: '100% Digital'
   },
   {
     id: 3,
     image: 'https://res.cloudinary.com/sorostica/image/upload/v1750035390/slider_03_ho7sp7.jpg',
     title: 'Tu matrimonio, tus recuerdos.',
-    description: 'Tu invitacióin permanecerá disponibles para siempre, puedes volver a recordar el momento mas feliz de tu vida las veces que quieras.',
+    description: 'Tu invitación permanecerá disponibles para siempre, puedes volver a recordar el momento mas feliz de tu vida las veces que quieras.',
     tabText: 'Un recuerdo para siempre'
   }
 ];
@@ -109,10 +109,10 @@ export function DemoCarousel() {
 
               {/* Content Section */}
               <div className="w-full md:w-[35%] p-6 md:p-8 flex flex-col justify-center text-left">
-                <h3 className="text-2xl md:text-2xl font-bold text-red-600 mb-4 leading-tight">
+                <h3 className="text-2xl md:text-2xl font-bold text-slate-600 mb-4 leading-tight">
                   {currentItem.title}
                 </h3>
-                <p className="text-gray-800 text-lg md:text-base mb-6 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-lg">
                   {currentItem.description}
                 </p>
                 {currentItem.buttonText && currentItem.buttonLink && (
@@ -167,7 +167,7 @@ export function DemoCarousel() {
                 >
                   <button
                     onClick={() => handleTabClick(index)}
-                    className={`w-full px-4 py-3 text-sm transition-all duration-300 relative font-normal 
+                    className={`w-full px-4 py-3 text-lg transition-all duration-300 relative font-normal 
                       ${currentIndex === index
                         ? 'bg-rose-600 text-white font-semibold z-20'
                         : 'bg-rose-500 text-white hover:bg-rose-600 z-10'

@@ -268,7 +268,7 @@ END:VCALENDAR`;
             variants={item}
           >
             <div className="relative rounded-xl bg-transparent">
-              <div className="p-8 md:p-10 space-y-6">
+              <div className="p-0 md:p-10 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Button
                     onClick={() => setShowRsvpModal(true)}
