@@ -6,6 +6,7 @@ import { CerezoTemplate } from './cerezo';
 import { EsmeraldaTemplate } from './esmeralda';
 import { BurdeosTemplate } from './burdeos';
 import { MinimalistaTemplate } from './minimalista';
+import { BlackRoseTemplate } from './black_rose';
 import type { TemplateProps, Template, TemplateVariantGroup } from './types';
 
 // Color variants for templates that are identical except for colors
@@ -96,6 +97,12 @@ export const templates: Record<string, Template> = {
     name: 'Minimalista',
     component: MinimalistaTemplate,
     preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228541/minimalista_01_qheez7.png'
+  },
+  black_rose: {
+    id: '550e8400-e29b-41d4-a716-446655440009',
+    name: 'Black Rose',
+    component: BlackRoseTemplate,
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228541/minimalista_01_qheez7.png'
   }
 };
 
@@ -108,7 +115,8 @@ const templateIdMap: Record<string, string> = {
   '550e8400-e29b-41d4-a716-446655440005': 'esmeralda',
   '550e8400-e29b-41d4-a716-446655440006': 'burdeos',
   '550e8400-e29b-41d4-a716-446655440007': 'minimalista',
-  '550e8400-e29b-41d4-a716-446655440008': 'deluxe_jade'
+  '550e8400-e29b-41d4-a716-446655440008': 'deluxe_jade',
+  '550e8400-e29b-41d4-a716-446655440009': 'black_rose'
 };
 
 export function getTemplate(templateId: string): Template | null {

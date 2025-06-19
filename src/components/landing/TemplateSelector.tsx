@@ -113,12 +113,12 @@ export function TemplateSelector({
       );
     } else {
       // Render regular template
-      return (
+  return (
         <Card
           key={template.id}
-          data-template-id={template.id}
+              data-template-id={template.id}
           className={cn(
-            'cursor-pointer transition-all hover:shadow-lg w-[200px] flex-shrink-0',
+                'cursor-pointer transition-all hover:shadow-lg w-[200px] flex-shrink-0',
             selectedTemplateId === template.id && 'ring-2 ring-rose-500'
           )}
           onClick={() => onSelect(template.id)}
@@ -219,32 +219,32 @@ export function TemplateSelector({
                 );
               } else {
                 return (
-                  <Card
-                    key={template.id}
-                    className={cn(
-                      'cursor-pointer transition-all hover:shadow-lg',
-                      selectedTemplateId === template.id && 'ring-2 ring-rose-500'
-                    )}
-                    onClick={() => handleTemplateSelect(template.id)}
-                  >
-                    <div className="aspect-[3/5] max-h-[200px] relative overflow-hidden rounded-t-lg mx-auto p-2">
-                      <img
-                        src={template.preview}
-                        alt={template.name}
-                        className="object-cover w-full h-full"
-                      />
-                      {selectedTemplateId === template.id && (
-                        <div className="absolute inset-0 bg-opacity-20 flex items-center justify-center">
+              <Card
+                key={template.id}
+                className={cn(
+                  'cursor-pointer transition-all hover:shadow-lg',
+                  selectedTemplateId === template.id && 'ring-2 ring-rose-500'
+                )}
+                onClick={() => handleTemplateSelect(template.id)}
+              >
+                <div className="aspect-[3/5] max-h-[200px] relative overflow-hidden rounded-t-lg mx-auto p-2">
+                  <img
+                    src={template.preview}
+                    alt={template.name}
+                    className="object-cover w-full h-full"
+                  />
+                  {selectedTemplateId === template.id && (
+                    <div className="absolute inset-0 bg-opacity-20 flex items-center justify-center">
                           <div className="bg-white text-rose-600 px-4 py-2 rounded-full text-sm font-medium">
-                            Seleccionado
-                          </div>
-                        </div>
-                      )}
+                        Seleccionado
+                      </div>
                     </div>
-                    <CardContent className="pb-2 pt-0">
-                      <h3 className="font-medium text-gray-900 text-center">{template.name}</h3>
-                    </CardContent>
-                  </Card>
+                  )}
+                </div>
+                <CardContent className="pb-2 pt-0">
+                  <h3 className="font-medium text-gray-900 text-center">{template.name}</h3>
+                </CardContent>
+              </Card>
                 );
               }
             })}

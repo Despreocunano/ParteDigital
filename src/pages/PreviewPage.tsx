@@ -113,6 +113,18 @@ export function PreviewPage() {
   }
 
   const template = getTemplate(landingData.template_id);
+  
+  if (!template) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Error</h1>
+          <p className="text-gray-600">Template not found</p>
+        </div>
+      </div>
+    );
+  }
+  
   const TemplateComponent = template.component;
 
   const templateProps: TemplateProps = {

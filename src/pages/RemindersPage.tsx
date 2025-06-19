@@ -153,9 +153,9 @@ export function RemindersPage() {
     const currentTable = tables.find(t => t.id === attendee.table_id);
     const weddingDate = landingPage?.wedding_date 
       ? new Date(landingPage.wedding_date).toLocaleDateString('es-ES', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
         })
       : '[Fecha no definida]';
 

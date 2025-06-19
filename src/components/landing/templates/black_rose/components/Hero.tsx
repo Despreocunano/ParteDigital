@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import backgroundImage from '../assets/fondo_esmeralda.webp'
-import topFlowers_a from '../assets/Grupo01_a.webp'
-import topFlowers_b from '../assets/Grupo01_b.webp'
-import topFlowers_c from '../assets/Grupo01_c.webp'
+import backgroundImage from '../assets/fondo.webp'
+import topFlowers_a from '../assets/top_a.webp'
+import topFlowers_b from '../assets/top_b.webp'
+import topFlowers_c from '../assets/top_c.webp'
 
 
 interface HeroProps {
@@ -124,9 +124,9 @@ export function Hero({
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: baseDelay + 0.4 }}
           >
-            <h1 className="text-7xl md:text-8xl font-light font-parisienne font-light">
+            <h1 className="text-7xl md:text-8xl font-light font-parisienne">
               {groomName}
-              <span className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-[#CFD6BA]/30 backdrop-blur-sm rounded-full mx-4 md:mx-8 text-3xl md:text-4xl font-lora">
+              <span className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-[#B87600] backdrop-blur-sm rounded-full mx-4 md:mx-8 text-3xl md:text-4xl font-lora">
                 &
               </span> 
               {brideName}
