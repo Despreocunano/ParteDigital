@@ -1,10 +1,8 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../../ui/Card';
 import { Input } from '../../ui/Input';
 import { PlacesAutocomplete } from '../../ui/PlacesAutocomplete';
 import { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { LandingPageFormData } from '../../../types/landing';
-import { Place } from '../../../types/ui';
 
 interface PartySectionProps {
   register: UseFormRegister<LandingPageFormData>;
@@ -14,9 +12,7 @@ interface PartySectionProps {
 }
 
 export function PartySection({ register, errors, setValue, watch }: PartySectionProps) {
-  const partyDate = watch('party_date');
   const partyLocation = watch('party_location');
-  const partyTime = watch('party_time');
   const partyAddress = watch('party_address');
 
   return (
@@ -50,11 +46,9 @@ export function PartySection({ register, errors, setValue, watch }: PartySection
           <PlacesAutocomplete
             label="Lugar"
             value={partyLocation}
-            onChange={(value) => setValue('party_location', value)}
-            onPlaceSelect={(place: Place) => {
-              setValue('party_location', place.name);
-              setValue('party_address', place.formatted_address);
-              setValue('party_place_id', place.place_id);
+            onChange={(address, placeId) => {
+              setValue('party_location', address);
+              setValue('party_place_id', placeId);
             }}
             error={errors.party_location?.message}
           />

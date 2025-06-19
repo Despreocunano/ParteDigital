@@ -1,19 +1,17 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../../ui/Card';
 import { Switch } from '../../ui/Switch';
 import { MusicSelector } from '../MusicSelector';
-import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form';
+import { FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form';
 import { LandingPageFormData } from '../../../types/landing';
 import { Track } from '../../../types/ui';
 
 interface MusicSectionProps {
-  register: UseFormRegister<LandingPageFormData>;
   errors: FieldErrors<LandingPageFormData>;
   watch: UseFormWatch<LandingPageFormData>;
   setValue: UseFormSetValue<LandingPageFormData>;
 }
 
-export function MusicSection({ register, errors, watch, setValue }: MusicSectionProps) {
+export function MusicSection({ watch, setValue }: MusicSectionProps) {
   const musicEnabled = watch('music_enabled');
   const selectedTrack = watch('selected_track');
 

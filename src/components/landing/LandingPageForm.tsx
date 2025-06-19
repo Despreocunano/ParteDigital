@@ -401,6 +401,17 @@ export function LandingPageForm({ initialData, onSuccess, onError }: LandingPage
           bank_info: data.bank_info
         });
 
+      // Sincroniza los nombres en la tabla users
+      if (user?.id) {
+        await supabase
+          .from('users')
+          .update({
+            groom_name: data.groom_name,
+            bride_name: data.bride_name,
+          })
+          .eq('id', user.id);
+      }
+
       if (error) throw error;
 
       toast.success(

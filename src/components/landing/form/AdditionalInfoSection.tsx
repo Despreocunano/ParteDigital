@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../../ui/Card';
 import { Textarea } from '../../ui/Textarea';
 import { Switch } from '../../ui/Switch';
 import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form';

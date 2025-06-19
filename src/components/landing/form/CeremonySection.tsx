@@ -1,10 +1,8 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/Card';
+import { CardContent, CardHeader, CardTitle } from '../../ui/Card';
 import { Input } from '../../ui/Input';
 import { PlacesAutocomplete } from '../../ui/PlacesAutocomplete';
 import { UseFormRegister, FieldErrors, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import { LandingPageFormData } from '../../../types/landing';
-import { Place } from '../../../types/ui';
 
 interface CeremonySectionProps {
   register: UseFormRegister<LandingPageFormData>;
@@ -14,9 +12,7 @@ interface CeremonySectionProps {
 }
 
 export function CeremonySection({ register, errors, setValue, watch }: CeremonySectionProps) {
-  const ceremonyDate = watch('ceremony_date');
   const ceremonyLocation = watch('ceremony_location');
-  const ceremonyTime = watch('ceremony_time');
   const ceremonyAddress = watch('ceremony_address');
 
   return (
@@ -50,11 +46,9 @@ export function CeremonySection({ register, errors, setValue, watch }: CeremonyS
           <PlacesAutocomplete
             label="Lugar"
             value={ceremonyLocation}
-            onChange={(value) => setValue('ceremony_location', value)}
-            onPlaceSelect={(place: Place) => {
-              setValue('ceremony_location', place.name);
-              setValue('ceremony_address', place.formatted_address);
-              setValue('ceremony_place_id', place.place_id);
+            onChange={(address, placeId) => {
+              setValue('ceremony_location', address);
+              setValue('ceremony_place_id', placeId);
             }}
             error={errors.ceremony_location?.message}
           />

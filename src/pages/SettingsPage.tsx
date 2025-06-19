@@ -72,16 +72,22 @@ export function SettingsPage() {
     try {
       // Delete all related data
       const { error: deleteError } = await supabase
-        .rpc('delete_user_data', { user_id: user?.id });
+        .rpc('delete_user_data', { target_user_id: user?.id });
 
       if (deleteError) throw deleteError;
 
-      // Delete auth user
-      const { error: authError } = await supabase.auth.admin.deleteUser(
-        user?.id as string
-      );
-
-      if (authError) throw authError;
+      // Delete auth user (usuario autenticado)
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No authenticated session');
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/delete-user`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      const result = await response.json();
+      if (!result.success) throw new Error(result.error || 'Error al eliminar la cuenta');
 
       await signOut();
       navigate('/login');
