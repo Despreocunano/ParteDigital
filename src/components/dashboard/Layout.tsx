@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { MobileNav } from './MobileNav';
-import { Alert } from '../ui/Alert';
-import { useWedding } from '../../hooks/useWedding';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export function Layout({ children }: LayoutProps) {
-  const { profileImage } = useWedding();
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar />
