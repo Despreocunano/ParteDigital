@@ -36,19 +36,45 @@ const carouselItems: CarouselItem[] = [
   }
 ];
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 300 : -300,
+    opacity: 0,
+    zIndex: 1
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    zIndex: 2
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -300 : 300,
+    opacity: 0,
+    zIndex: 1
+  })
+};
+
 export function DemoCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [direction, setDirection] = useState(0); // 1: next, -1: prev
+  const [prevIndex, setPrevIndex] = useState(0);
 
   const handleNext = useCallback(() => {
+    setDirection(1);
+    setPrevIndex(currentIndex);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-  }, []);
+  }, [currentIndex]);
 
   const handlePrev = useCallback(() => {
+    setDirection(-1);
+    setPrevIndex(currentIndex);
     setCurrentIndex((prevIndex) => (prevIndex - 1 + carouselItems.length) % carouselItems.length);
-  }, []);
+  }, [currentIndex]);
 
   const handleTabClick = (index: number) => {
+    setDirection(index > currentIndex ? 1 : -1);
+    setPrevIndex(currentIndex);
     setCurrentIndex(index);
     setIsPaused(true);
   };
@@ -59,7 +85,7 @@ export function DemoCarousel() {
 
     const interval = setInterval(() => {
       handleNext();
-    }, 5000); // Change slide every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [isPaused, handleNext]);
@@ -70,12 +96,13 @@ export function DemoCarousel() {
 
     const timeout = setTimeout(() => {
       setIsPaused(false);
-    }, 5000); // Resume autoplay after 10 seconds of inactivity
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, [isPaused]);
 
   const currentItem = carouselItems[currentIndex];
+  const prevItem = carouselItems[prevIndex];
 
   return (
     <section className="py-20 bg-gray-50 overflow-hidden">
@@ -86,44 +113,35 @@ export function DemoCarousel() {
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <AnimatePresence initial={false} mode='wait'>
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            {/* Slide saliente */}
+            {prevIndex !== currentIndex && (
+              <motion.div
+                key={prevItem.id + '-prev'}
+                custom={direction}
+                variants={slideVariants}
+                initial="center"
+                animate="exit"
+                exit="exit"
+                transition={{ x: { type: 'spring', stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
+                className="absolute inset-0 flex flex-col md:flex-row"
+                style={{ pointerEvents: 'none' }}
+              >
+                <SlideContent item={prevItem} />
+              </motion.div>
+            )}
+            {/* Slide entrante */}
             <motion.div
-              key={currentItem.id}
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -100 }}
-              transition={{ duration: 0.5 }}
+              key={currentItem.id + '-current'}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ x: { type: 'spring', stiffness: 300, damping: 30 }, opacity: { duration: 0.2 } }}
               className="absolute inset-0 flex flex-col md:flex-row"
             >
-              {/* Image Section */}
-              <div className="relative w-full md:w-[65%] h-[140px] md:h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none overflow-hidden flex items-center justify-center">
-                <img
-                  src={currentItem.image}
-                  alt={currentItem.title}
-                  className="w-full h-full object-cover object-center"
-                />
-                {/* Overlay for subtle lighting, mimicking the original image's glow/light source */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-yellow-300/10"></div>
-                <div className="absolute inset-0 bg-gradient-to-bl from-white/20 to-transparent"></div>
-              </div>
-
-              {/* Content Section */}
-              <div className="w-full md:w-[35%] p-6 md:p-8 flex flex-col justify-center text-left">
-                <h3 className="text-2xl md:text-2xl font-bold text-slate-600 mb-4 leading-tight">
-                  {currentItem.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  {currentItem.description}
-                </p>
-                {currentItem.buttonText && currentItem.buttonLink && (
-                  <a
-                    href={currentItem.buttonLink}
-                    className="inline-flex self-start items-center justify-center px-6 py-2 text-base rounded-full bg-red-600 text-white hover:bg-red-700 transition-colors duration-300 font-medium shadow-md"
-                  >
-                    {currentItem.buttonText}
-                  </a>
-                )}
-              </div>
+              <SlideContent item={currentItem} />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -196,5 +214,40 @@ export function DemoCarousel() {
         </div>
       </div>
     </section>
+  );
+}
+
+function SlideContent({ item }: { item: CarouselItem }) {
+  return (
+    <>
+      {/* Image Section */}
+      <div className="relative w-full md:w-[65%] h-[300px] md:h-full rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none overflow-hidden flex items-center justify-center">
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-full object-cover object-center"
+        />
+        {/* Overlay for subtle lighting, mimicking the original image's glow/light source */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-yellow-300/10"></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-white/20 to-transparent"></div>
+      </div>
+      {/* Content Section */}
+      <div className="w-full md:w-[35%] p-6 md:p-8 flex flex-col justify-center text-left">
+        <h3 className="text-2xl md:text-2xl font-bold text-slate-600 mb-4 leading-tight">
+          {item.title}
+        </h3>
+        <p className="text-gray-600 leading-relaxed text-lg">
+          {item.description}
+        </p>
+        {item.buttonText && item.buttonLink && (
+          <a
+            href={item.buttonLink}
+            className="inline-flex self-start items-center justify-center px-6 py-2 text-base rounded-full bg-red-600 text-white hover:bg-red-700 transition-colors duration-300 font-medium shadow-md"
+          >
+            {item.buttonText}
+          </a>
+        )}
+      </div>
+    </>
   );
 } 
