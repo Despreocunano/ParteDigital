@@ -405,7 +405,7 @@ export function PublicSite() {
               {
                 step: "01",
                 title: "Crea tu cuenta",
-                description: "Regístrate de forma gratuita y accede a todas las plantillas disponibles. ¡Solo toma 30 segundos!",
+                description: "Regístrate de forma gratuita y accede a todas los diseños disponibles. ¡Solo toma 30 segundos!",
                 icon: User,
                 color: "from-blue-500 via-blue-600 to-indigo-600",
                 bgColor: "from-blue-50 to-indigo-50",
@@ -413,7 +413,7 @@ export function PublicSite() {
               },
               {
                 step: "02",
-                title: "Elige tu plantilla y completa tu información",
+                title: "Elige el diseño y completa tu información",
                 description: "Elige entre más de 10 diseños únicos y personaliza cada detalle de tu boda",
                 icon: LayoutDashboard,
                 color: "from-purple-500 via-purple-600 to-violet-600",

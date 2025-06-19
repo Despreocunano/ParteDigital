@@ -30,10 +30,10 @@ export default function TemplateExamples() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-10">
           <motion.h2 className="text-4xl md:text-5xl font-bold text-rose-600 mb-8 leading-tight">
-            Algunos ejemplos <span className='text-slate-600'>de plantillas</span>
+            Algunos ejemplos <span className='text-slate-600'>de diseños</span>
           </motion.h2>
           <p className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Elige el diseño que más te inspire y visualiza cómo lucirá tu invitación digital antes de decidirte. Cada plantilla está pensada para que tu evento sea único, elegante y memorable.
+            Elige el diseño que más te inspire y visualiza cómo lucirá tu invitación digital antes de decidirte. Cada diseño está pensada para que tu evento sea único, elegante y memorable.
           </p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
