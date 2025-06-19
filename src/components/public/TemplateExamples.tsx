@@ -17,6 +17,11 @@ const templates = [
     preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749837919/esmeralda_pn3bwa.png',
     link: '/ejemplo/esmeralda',
   },
+  {
+    name: 'Deluxe Jade',
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228168/jade_ed85lx.png',
+    link: '/ejemplo/deluxe-jade',
+  },
 ];
 
 export default function TemplateExamples() {
@@ -31,24 +36,24 @@ export default function TemplateExamples() {
             Elige el diseño que más te inspire y visualiza cómo lucirá tu invitación digital antes de decidirte. Cada plantilla está pensada para que tu evento sea único, elegante y memorable.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {templates.map((tpl) => (
             <div key={tpl.name} className="flex flex-col items-center">
               <img
                 src={tpl.preview}
                 alt={`Preview ${tpl.name}`}
-                className="aspect-[3/5] max-h-[300px] rounded-xl object-cover shadow-sm border border-gray-100 mb-2"
+                className="aspect-[3/5] max-h-[300px] rounded-xl object-cover mb-2"
               />
-              <span className="block text-base font-semibold text-gray-800 tracking-wide mb-2 uppercase letter-spacing-[0.08em] text-center">
+              <span className="block text-base text-gray-800 tracking-wide mb-2 uppercase letter-spacing-[0.08em] text-center">
                 {tpl.name}
               </span>
               <Link
                 to={tpl.link}
-                className="inline-block px-6 py-2 rounded-full bg-rose-600 text-white font-medium shadow hover:bg-rose-700 transition-all duration-300 text-lg mt-1"
+                className="inline-block px-6 py-2 rounded-full bg-rose-600 text-white shadow hover:bg-rose-700 transition-all duration-300 text-sm mt-1"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Ver demo
+                ver demo
               </Link>
             </div>
           ))}

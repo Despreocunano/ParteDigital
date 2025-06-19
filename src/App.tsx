@@ -20,6 +20,7 @@ import { trackPageView } from './lib/analytics';
 import ExampleBurdeosPage from './pages/examples/ExampleBurdeosPage';
 import ExampleEsmeraldaPage from './pages/examples/ExampleEsmeraldaPage';
 import ExampleMinimalistaPage from './pages/examples/ExampleMinimalistaPage';
+import ExampleDeluxeJadePage from './pages/examples/ExampleDeluxeJadePage';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -160,6 +161,7 @@ function AppRoutes() {
             <Route path="/ejemplo/burdeos" element={<ExampleBurdeosPage />} />
             <Route path="/ejemplo/esmeralda" element={<ExampleEsmeraldaPage />} />
             <Route path="/ejemplo/minimalista" element={<ExampleMinimalistaPage />} />
+            <Route path="/ejemplo/deluxe-jade" element={<ExampleDeluxeJadePage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         ) : (
@@ -170,6 +172,7 @@ function AppRoutes() {
             <Route path="/ejemplo/burdeos" element={<ExampleBurdeosPage />} />
             <Route path="/ejemplo/esmeralda" element={<ExampleEsmeraldaPage />} />
             <Route path="/ejemplo/minimalista" element={<ExampleMinimalistaPage />} />
+            <Route path="/ejemplo/deluxe-jade" element={<ExampleDeluxeJadePage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         )}
