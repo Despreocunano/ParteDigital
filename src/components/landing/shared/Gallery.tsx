@@ -49,21 +49,24 @@ export function Gallery({ images, frameColor = '#D4B572', className = '' }: Gall
   };
 
   return (
-    <div className={className}>
-      <div className="relative px-12">
+    <div className={className} style={{ maxWidth: '100%' }}>
+      <div className="relative px-2 md:px-12" style={{ maxWidth: '100%' }}>
         <div 
           ref={scrollContainerRef}
           className="flex overflow-x-auto snap-x snap-mandatory hide-scrollbar"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
-            WebkitOverflowScrolling: 'touch'
+            WebkitOverflowScrolling: 'touch',
+            maxWidth: '100%',
+            overflowX: 'auto'
           }}
         >
           {images.map((image, index) => (
             <motion.div 
               key={index}
               className="flex-none w-full md:w-1/3 snap-start px-2"
+              style={{ maxWidth: '100%' }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
@@ -74,20 +77,22 @@ export function Gallery({ images, frameColor = '#D4B572', className = '' }: Gall
             >
               <div 
                 className="aspect-[4/3] cursor-pointer transform transition-all duration-500 hover:scale-[1.02]"
+                style={{ maxWidth: '100%' }}
               >
                 <div 
                   className="w-full h-full p-3 rounded-xl transition-colors"
-                  style={{ backgroundColor: `${frameColor}20` }}
+                  style={{ backgroundColor: `${frameColor}20`, maxWidth: '100%' }}
                 >
                   <div 
                     className="w-full h-full rounded-lg overflow-hidden border transition-colors group relative"
-                    style={{ borderColor: `${frameColor}30` }}
+                    style={{ borderColor: `${frameColor}30`, maxWidth: '100%' }}
                   >
                     <img
                       src={image}
                       alt={`Gallery image ${index + 1}`}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       loading="lazy"
+                      style={{ maxWidth: '100%' }}
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                       <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

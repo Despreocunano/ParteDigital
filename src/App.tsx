@@ -17,6 +17,9 @@ import { SongRecommendationsPage } from './pages/SongRecommendationsPage';
 import { RemindersPage } from './pages/RemindersPage';
 import { RequireLandingPage } from './components/auth/RequireLandingPage';
 import { trackPageView } from './lib/analytics';
+import ExampleBurdeosPage from './pages/examples/ExampleBurdeosPage';
+import ExampleEsmeraldaPage from './pages/examples/ExampleEsmeraldaPage';
+import ExampleMinimalistaPage from './pages/examples/ExampleMinimalistaPage';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -154,6 +157,9 @@ function AppRoutes() {
               }
             />
             <Route path="/lp" element={<PublicSite />} />
+            <Route path="/ejemplo/burdeos" element={<ExampleBurdeosPage />} />
+            <Route path="/ejemplo/esmeralda" element={<ExampleEsmeraldaPage />} />
+            <Route path="/ejemplo/minimalista" element={<ExampleMinimalistaPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         ) : (
@@ -161,6 +167,9 @@ function AppRoutes() {
           <>
             <Route path="/" element={<PublicSite />} />
             <Route path="/invitacion/:slug" element={<PublicSitePage />} />
+            <Route path="/ejemplo/burdeos" element={<ExampleBurdeosPage />} />
+            <Route path="/ejemplo/esmeralda" element={<ExampleEsmeraldaPage />} />
+            <Route path="/ejemplo/minimalista" element={<ExampleMinimalistaPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         )}

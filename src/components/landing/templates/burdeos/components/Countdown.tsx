@@ -77,10 +77,10 @@ export function Countdown({
 
   const renderTimeUnit = (value: number, label: string) => (
     <motion.div 
-      className="flex flex-col items-center justify-center min-w-[80px]"
+      className="flex flex-col items-center justify-center min-w-[60px]"
       variants={itemVariants}
     >
-      <span className="text-4xl font-fraunces leading-none" style={{ color: secondaryColor }}>
+      <span className="text-2xl font-fraunces leading-none" style={{ color: secondaryColor }}>
         {value < 10 ? `0${value}` : value}
       </span>
       <span className="text-sm uppercase tracking-wider mt-1" style={{ color: secondaryColor }}>
@@ -102,7 +102,7 @@ export function Countdown({
         }}
       />
       <motion.div 
-        className="w-full max-w-none mx-auto flex items-center justify-center py-8 relative z-10"
+        className="w-full max-w-full mx-auto flex items-center justify-center py-8 relative z-10"
         initial="hidden" 
         whileInView="show" 
         viewport={{ once: true }} 
@@ -118,15 +118,13 @@ export function Countdown({
             className="w-64 h-auto absolute -top-24 md:-top-20 -left-6 z-50"
           />
           <motion.div 
-            className="relative flex flex-col items-center justify-center p-8 rounded-full shadow-2xl"
+            className="relative flex flex-col items-center justify-center p-8 rounded-full shadow-2xl h-auto w-64 lg:w-80 lg:h-80"
             style={{
               backgroundColor: '#33040E',
               borderColor: secondaryColor,
               borderWidth: '2px',
               borderStyle: 'solid',
               padding: '2rem',
-              width: '350px',
-              height: '350px',
               zIndex: 1
             }}
             variants={itemVariants}
