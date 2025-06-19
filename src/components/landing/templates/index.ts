@@ -102,7 +102,7 @@ export const templates: Record<string, Template> = {
     id: '550e8400-e29b-41d4-a716-446655440009',
     name: 'Black Rose',
     component: BlackRoseTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228541/minimalista_01_qheez7.png'
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750299549/blackrose_nhvdaq.png'
   }
 };
 
