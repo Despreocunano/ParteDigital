@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../ui/Button';
 import { Edit, Trash2, Send, Grid } from 'lucide-react';
 

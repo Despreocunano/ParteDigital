@@ -174,8 +174,32 @@ export interface Database {
           updated_at?: string | null
         }
       }
-      tables: Table
-      email_logs: EmailLog
+      guest_tables: {
+        Row: {
+          id: string;
+          user_id: string;
+          name: string;
+          capacity: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          name: string;
+          capacity: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          name?: string;
+          capacity?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      }
     }
   }
 }
@@ -197,11 +221,9 @@ interface BankInfo {
 export type Attendee = Database['public']['Tables']['attendees']['Row']
 export type AttendeeInsert = Database['public']['Tables']['attendees']['Insert']
 export type AttendeeUpdate = Database['public']['Tables']['attendees']['Update']
-export type Table = Database['public']['Tables']['tables']['Row']
-export type TableInsert = Database['public']['Tables']['tables']['Insert']
-export type TableUpdate = Database['public']['Tables']['tables']['Update']
-export type User = Database['public']['Tables']['users']['Row']
-export type UserUpdate = Database['public']['Tables']['users']['Update']
 export type LandingPage = Database['public']['Tables']['landing_pages']['Row']
 export type LandingPageInsert = Database['public']['Tables']['landing_pages']['Insert']
 export type LandingPageUpdate = Database['public']['Tables']['landing_pages']['Update']
+export type GuestTable = Database['public']['Tables']['guest_tables']['Row']
+export type GuestTableInsert = Database['public']['Tables']['guest_tables']['Insert']
+export type GuestTableUpdate = Database['public']['Tables']['guest_tables']['Update']

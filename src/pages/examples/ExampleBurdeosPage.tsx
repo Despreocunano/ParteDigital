@@ -18,8 +18,8 @@ export default function ExampleBurdeosPage() {
       partyLocation="Centro de Eventos La Casona"
       partyAddress="Camino Real 456, Santiago"
       partyPlaceId="ChIJ0987654321"
-      musicEnabled={false}
-      musicUrl="https://open.spotify.com/track/1234567890"
+      musicEnabled={true}
+      musicUrl="https://res.cloudinary.com/sorostica/video/upload/v1750387028/Bruno_Mars_-_Marry_You_Lyrics_NXTca1xc6O4_pgl1aw.mp3"
       coverImage="https://res.cloudinary.com/sorostica/image/upload/v1750355980/ejemplos%20partes/338_psip7x.jpg"
       galleryImages={[
         "https://res.cloudinary.com/sorostica/image/upload/v1750355980/ejemplos%20partes/2149868548_c8judk.jpg",

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
-import { Table } from '../../types/supabase';
+import { GuestTable } from '../../types/supabase';
 
 type FormData = {
   name: string;
@@ -12,7 +12,7 @@ interface TableFormProps {
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
   isLoading: boolean;
-  table?: Table;
+  table?: GuestTable;
 }
 
 export function TableForm({ onSubmit, onCancel, isLoading, table }: TableFormProps) {

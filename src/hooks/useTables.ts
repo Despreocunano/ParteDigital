@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import type { Table } from '../types/supabase';
+import type { GuestTable } from '../types/supabase';
 import { useAuth } from '../context/AuthContext';
 import { useStore } from '../lib/store';
 import toast from 'react-hot-toast';
@@ -18,7 +18,7 @@ export function useTables() {
 
     try {
       const { data, error } = await supabase
-        .from('tables')
+        .from('guest_tables')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: true });
@@ -55,12 +55,12 @@ export function useTables() {
 
     // Subscribe to realtime changes for both tables and attendees
     const tablesChannel = supabase
-      .channel('tables_changes')
+      .channel('guest_tables_changes')
       .on('postgres_changes', 
         { 
           event: '*', 
           schema: 'public', 
-          table: 'tables',
+          table: 'guest_tables',
           filter: `user_id=eq.${user?.id}`
         }, 
         () => {
@@ -90,7 +90,7 @@ export function useTables() {
     };
   }, [user]);
 
-  const addTable = async (tableData: Omit<Table, 'id' | 'user_id' | 'created_at' | 'updated_at'>) => {
+  const addTable = async (tableData: Omit<GuestTable, 'id' | 'user_id' | 'created_at' | 'updated_at'>) => {
     if (!user) return { success: false, error: new Error('No hay usuario autenticado') };
     
     try {
@@ -100,7 +100,7 @@ export function useTables() {
       };
       
       const { data, error } = await supabase
-        .from('tables')
+        .from('guest_tables')
         .insert([newTable])
         .select()
         .single();
@@ -120,12 +120,12 @@ export function useTables() {
     }
   };
 
-  const updateTable = async (id: string, updates: Partial<Table>) => {
+  const updateTable = async (id: string, updates: Partial<GuestTable>) => {
     if (!user) return { success: false, error: new Error('No hay usuario autenticado') };
     
     try {
       const { data, error } = await supabase
-        .from('tables')
+        .from('guest_tables')
         .update(updates)
         .eq('id', id)
         .eq('user_id', user.id)
@@ -162,7 +162,7 @@ export function useTables() {
 
       // Then delete the table
       const { error } = await supabase
-        .from('tables')
+        .from('guest_tables')
         .delete()
         .eq('id', id)
         .eq('user_id', user.id);

@@ -3,15 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Modal } from '../ui/Modal';
 import { Edit, Trash2, Users, X, Plus, Search } from 'lucide-react';
-import { Table, Attendee } from '../../types/supabase';
+import { GuestTable, Attendee } from '../../types/supabase';
 import { getInitials } from '../../lib/utils';
 import { TableAssignmentModal } from './TableAssignmentModal';
 import { Input } from '../ui/Input';
 
 interface TableCardProps {
-  table: Table;
+  table: GuestTable;
   attendees: Attendee[];
-  onEdit: (table: Table) => void;
+  onEdit: (table: GuestTable) => void;
   onDelete: (id: string) => void;
   onAssignTable: (guestId: string, tableId: string | null) => Promise<{ success: boolean }>;
 }

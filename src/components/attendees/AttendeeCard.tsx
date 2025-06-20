@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Modal } from '../ui/Modal';
-import { Attendee, Table } from '../../types/supabase';
+import { Attendee, GuestTable } from '../../types/supabase';
 import { TableAssignmentModal } from '../tables/TableAssignmentModal';
-import { AttendeeAvatar } from './AttendeeAvatar';
 import { AttendeeStatus } from './AttendeeStatus';
 import { Edit2, Trash2, Send, Table2 } from 'lucide-react';
 import { Button } from '../ui/Button';
@@ -12,7 +11,7 @@ import { getInitials } from '../../lib/utils';
 interface AttendeeCardProps {
   attendee: Attendee;
   attendees: Attendee[];
-  tables: Table[];
+  tables: GuestTable[];
   onEdit: (attendee: Attendee) => void;
   onDelete: (id: string) => void;
   onSendReminder: (attendee: Attendee) => void;

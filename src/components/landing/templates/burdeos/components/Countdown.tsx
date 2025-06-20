@@ -80,7 +80,7 @@ export function Countdown({
       className="flex flex-col items-center justify-center min-w-[60px]"
       variants={itemVariants}
     >
-      <span className="text-2xl font-fraunces leading-none" style={{ color: secondaryColor }}>
+      <span className="text-4xl font-fraunces leading-none" style={{ color: secondaryColor }}>
         {value < 10 ? `0${value}` : value}
       </span>
       <span className="text-sm uppercase tracking-wider mt-1" style={{ color: secondaryColor }}>
