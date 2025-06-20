@@ -33,13 +33,13 @@ const features = [
   {
     icon: Clock,
     title: "Cuenta Regresiva",
-    description: "Emocionante cuenta regresiva en tiempo real directo a la fecha de tu evento",
+    description: "Emocionante cuenta regresiva en tiempo real directo a la fecha de tu boda",
     color: "amber"
   },
   {
     icon: MapPin,
     title: "Ubicación e Indicaciones",
-    description: "Mapa interactivo con la ubicación del evento, tus invitados llegarán sin complicaciones",
+    description: "Mapa interactivo con la ubicación de tu boda, tus invitados llegarán sin complicaciones",
     color: "rose"
   },
   {
@@ -57,7 +57,7 @@ const features = [
   {
     icon: CalendarDays,
     title: "Agenda",
-    description: "Tus invitados podrán agendar tu evento con un solo clic en sus agendas",
+    description: "Tus invitados podrán agendar la fecha de tu boda con un solo clic en sus agendas",
     color: "indigo"
   },
   {
@@ -145,7 +145,7 @@ const featureSections = [
   },
   {
     title: "Organizador de mesas digitales",
-    description: "Diseña la distribución perfecta para tu evento con nuestro organizador de mesas digital. Agrega y elimina invitados, gestiona capacidades y visualiza la disposición completa de tu evento. Una herramienta poderosa que hace que la organización de mesas sea un juego de niños.",
+    description: "Diseña la distribución perfecta para tu boda con nuestro organizador de mesas digital. Agrega y elimina invitados, gestiona capacidades y visualiza la disposición completa de tu matrimonio. Una herramienta poderosa que hace que la organización de mesas sea un juego de niños.",
     image: app5,
     icon: Table2,
     features: [
@@ -182,27 +182,20 @@ export function PublicSite() {
               <span className="ml-2 text-xl font-semibold text-white">Tu Parte Digital</span>
             </div>
             <div>
-              <a
-                href="https://panel.tuparte.digital/auth?showLogin=true"
-                onClick={() => trackEvent('cta_click', { 
-                  location: 'header',
-                  button_text: isPanel ? 'Crear mi invitación' : 'Iniciar sesión'
-                })}
-                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300 backdrop-blur-sm"
-              >
-                <User className="h-4 w-4 mr-2" />
-                {isPanel ? (
-                  <>
-                    Crear mi invitación
-                    <img src="https://flagcdn.com/cl.svg" alt="Chile" className="ml-2 h-4 w-6 object-cover rounded-sm shadow inline-block align-middle" />
-                  </>
-                ) : (
-                  <>
-                    Iniciar sesión
-                    <img src="https://flagcdn.com/cl.svg" alt="Chile" className="ml-2 h-4 w-6 object-cover rounded-sm shadow inline-block align-middle" />
-                  </>
-                )}
-              </a>
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://panel.tuparte.digital/auth?showLogin=true"
+                  onClick={() => trackEvent('cta_click', { 
+                    location: 'header',
+                    button_text: isPanel ? 'Crear mi invitación' : 'Iniciar sesión'
+                  })}
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300 backdrop-blur-sm"
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  {isPanel ? 'Crear mi invitación' : 'Iniciar sesión'}
+                </a>
+                <img src="https://flagcdn.com/cl.svg" alt="Chile" className="h-4 w-6 object-cover rounded-sm shadow inline-block align-middle" />
+              </div>
             </div>
           </div>
         </div>
@@ -248,7 +241,7 @@ export function PublicSite() {
               merece una invitación única
             </h1>
             <p className="text-lg md:text-2xl text-white/90 mb-6 md:mb-8 font-light">
-              Crea una experiencia digital mágica para tu boda
+              Crea una experiencia interactiva, original y ecológica para tu boda
             </p>
             <p className="text-xl md:text-3xl text-white font-light mb-8 md:mb-12">
               No pagues de más, tu parte por solo $39.990
@@ -535,7 +528,7 @@ export function PublicSite() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Todo lo que necesitas para crear una experiencia inolvidable
+          Tu matrimonio es un momento que no repetiras, haz que sea una experiencia inolvidable desde el primer minuto
         </motion.p>
       </div>
 
@@ -615,7 +608,7 @@ export function PublicSite() {
       })}
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-b from-white to-rose-50/30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             className="bg-gradient-to-r from-rose-500 to-rose-600 rounded-2xl p-8 md:p-12 shadow-xl relative overflow-hidden"
             initial={{ opacity: 0, y: 20 }}
@@ -631,7 +624,7 @@ export function PublicSite() {
                   Crea tu invitación en menos de 5 minutos
                 </h2>
                 <p className="text-white/90 text-lg">
-                  Regístrate ahora, ingresa los datos de tu evento y visualiza tu invitación digital.
+                  Regístrate ahora, ingresa los datos de tu boda y visualiza tu invitación digital.
                 </p>
               </div>
               <motion.div
@@ -670,7 +663,7 @@ export function PublicSite() {
               transition={{ duration: 0.8 }}
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-rose-600">
-                Desbloquea todas
+                Todas
               </span> las características por $39.990
             </motion.h2>
             <motion.p 
@@ -680,7 +673,7 @@ export function PublicSite() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Todo lo que necesitas en un solo lugar y listo en menos de 5 minutos
+              Crea tu invitación gratis y paga solo si todo queda como tú quieres. Sin costes ocultos ni funciones premium.
             </motion.p>
           </div>
           
