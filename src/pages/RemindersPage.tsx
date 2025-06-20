@@ -56,7 +56,13 @@ export function RemindersPage() {
           .eq('user_id', session.user.id)
           .single();
 
-        if (error) throw error;
+        if (error) {
+          if (error.code === 'PGRST116') {
+            return;
+          }
+          throw error;
+        }
+        
         setLandingPage(data);
 
         // Check for missing fields and warn user
@@ -79,8 +85,10 @@ export function RemindersPage() {
           });
         }
       } catch (error) {
-        console.error('Error fetching landing page:', error);
-        toast.error('Error al cargar los datos de la invitación');
+        if (error && typeof error === 'object' && 'code' in error && error.code !== 'PGRST116') {
+          console.error('Error fetching landing page:', error);
+          toast.error('Error al cargar los datos de la invitación');
+        }
       }
     };
 
