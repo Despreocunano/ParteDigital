@@ -109,7 +109,7 @@ export const templates: Record<string, Template> = {
     id: '550e8400-e29b-41d4-a716-446655440010',
     name: 'Barroco',
     component: BarrocoTemplate,
-    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750299549/blackrose_nhvdaq.png'
+    preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750439537/barroco_trm9ly.png'
   }
 };
 
