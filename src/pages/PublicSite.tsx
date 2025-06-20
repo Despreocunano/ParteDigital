@@ -251,7 +251,7 @@ export function PublicSite() {
               Crea una experiencia digital mágica para tu boda
             </p>
             <p className="text-xl md:text-3xl text-white font-light mb-8 md:mb-12">
-              ¡Comienza tu historia hoy!
+              No pagues de más, tu parte por solo $39.990
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <motion.div
@@ -670,8 +670,8 @@ export function PublicSite() {
               transition={{ duration: 0.8 }}
             >
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-rose-600">
-                Características
-              </span> que harán tu invitación única
+                Desbloquea todas
+              </span> las características por $39.990
             </motion.h2>
             <motion.p 
               className="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed"
@@ -680,7 +680,7 @@ export function PublicSite() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Todo lo que necesitas para crear una experiencia inolvidable
+              Todo lo que necesitas en un solo lugar y listo en menos de 5 minutos
             </motion.p>
           </div>
           
