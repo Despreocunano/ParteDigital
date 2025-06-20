@@ -15,18 +15,16 @@ export function WelcomeModal({
   onEnterWithoutMusic
 }: WelcomeModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#333]">
-      <div className="relative w-full max-w-2xl px-12 py-12 text-center text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#07212B]">
+      <div className="relative w-full max-w-4xl px-12 py-12 text-center text-white">
 
         {/* Content */}
         <div className="space-y-8">
           <div className="space-y-4">
-            <p className="text-lg font-light tracking-[0.2em] uppercase text-white">
-              Bienvenidos a la invitación de
-            </p>
+
             <div className="space-y-4">
-              <h1 className="text-6xl font-sans font-black text-white">
-              {groomName} & {brideName}
+              <h1 className="text-4xl md:text-6xl font-fraunces font-light text-[#C8A784]">
+              Bienvenidos a la invitación de {groomName} & {brideName}
               </h1>
             </div>
           </div>
@@ -38,7 +36,7 @@ export function WelcomeModal({
           </div>
 
           <div className="space-y-6">
-            <p className="text-lg font-light">
+            <p className="text-2xl font-surana font-light">
               La música de fondo es parte de la experiencia
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -46,7 +44,7 @@ export function WelcomeModal({
                 type="button"
                 onClick={onEnterWithMusic}
                 leftIcon={<Music className="h-4 w-4" />}
-                className="bg-[#B87600] hover:bg-[#c6c6c5] text-white hover:text-[#333]"
+                className="bg-[#c8a784] hover:bg-[#c6c6c5] text-white hover:text-[#333]"
               >
                 Ingresar con música
               </Button>
@@ -54,7 +52,7 @@ export function WelcomeModal({
                 type="button"
                 variant="secondary"
                 onClick={onEnterWithoutMusic}
-                className="border-[#B87600] text-[#B87600] hover:bg-[#B87600] hover:text-white"
+                className="border-[#c8a784] text-[#c8a784] hover:bg-[#c8a784] hover:text-white"
               >
                 Ingresar sin música
               </Button>
