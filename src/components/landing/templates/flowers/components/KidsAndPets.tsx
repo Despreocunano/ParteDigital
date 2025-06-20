@@ -1,4 +1,3 @@
-import { Baby, PawPrint } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface KidsAndPetsProps {
@@ -34,7 +33,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
 
   return (
     <motion.section 
-      className={`pb-24 px-4 ${className}`}
+      className={`p-24 px-4 ${className}`}
       initial="hidden"
       whileInView="show"
       viewport={{ once: true }}

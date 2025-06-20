@@ -10,6 +10,7 @@ export default {
         fraunces: ['Fraunces', 'serif'],
         poppins: ['Poppins', 'sans-serif'],
         rubik: ['Rubik', 'sans-serif'],
+        surana: ['Suranna', 'serif'],
       },
       colors: {
         primary: {

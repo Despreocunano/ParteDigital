@@ -33,7 +33,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
   };
 
   const content = (
-    <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8 ${className}`}>
+    <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8`}>
       {acceptsKids && (
         <motion.div 
           className="bg-[#575756] rounded-xl p-8 text-center border border-[#575756]/20"
@@ -55,7 +55,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
       )}
       {acceptsPets && (
         <motion.div 
-          className="bg-[#012D27] rounded-xl p-8 text-center border border-[#CFD6BA]/20"
+          className="bg-[#575756] rounded-xl p-8 text-center border border-[#575756]/20"
           variants={item}
           whileHover={{ scale: 1.02 }}
           transition={{ type: "spring", stiffness: 300 }}
@@ -76,7 +76,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
   );
 
   return (
-    <section className="py-24 px-4">
+    <section className={`p-24 px-4 ${className ?? ''}`}>
       <motion.div 
         className="max-w-4xl mx-auto"
         initial="hidden"

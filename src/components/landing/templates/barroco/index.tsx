@@ -13,7 +13,7 @@ import { KidsAndPets } from './components/KidsAndPets';
 import type { TemplateProps } from '../types';
 import { InfiniteGallery } from '../../shared/InfiniteGallery';
 
-export function DeluxeTerraTemplate({
+export function BarrocoTemplate({
   groomName,
   brideName,
   weddingDate,
@@ -80,20 +80,21 @@ export function DeluxeTerraTemplate({
         />
       )}
 
-      <main className="font-['Crimson_Text'] bg-[#46261F]">
-        <div className="container mx-auto max-w-7xl drop-shadow-lg shadow-lg">
+      <main className="font-['Playfair_Display'] bg-white w-full">
+        <div className="w-full">
           <Hero
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
             welcomeMessage={welcomeMessage}
             backgroundImage={coverImage}
-            className="bg-[#5B3229]"
+            className="bg-gradient-to-br from-[#2D1B69] to-[#E91E63]"
+            showWelcomeModal={showWelcomeModal}
           />
 
           <Countdown 
             date={weddingDate}
-            className="bg-[#341d17]"
+            className="bg-[#FBF3E8] border-t-[10px] border-b-[10px] border-[#E0CAA7]"
           />
 
           <Events
@@ -108,7 +109,7 @@ export function DeluxeTerraTemplate({
             partyLocation={partyLocation}
             partyAddress={partyAddress}
             partyPlaceId={partyPlaceId}
-            className="bg-[#5B3229]"
+            className="bg-[#08202B]"
             groomName={groomName}
             brideName={brideName}
           />
@@ -116,45 +117,45 @@ export function DeluxeTerraTemplate({
           <KidsAndPets
             acceptsKids={accepts_kids}
             acceptsPets={accepts_pets}
-            className="bg-[#5B3229]"
+            className="bg-[#08202B]"
           />
 
           <PartyInfo
             dresscode={dress_code || ''}
             musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || ''}
-            className="bg-[#341d17]"
+            className="bg-[#FBF3E8] border-t-[10px] border-b-[10px] border-[#E0CAA7]"
             userId={userId}
           />
 
           <GallerySection
             images={galleryImages}
-            className="bg-[#5B3229]"
+            className="bg-[#08202B]"
           />
 
           <Gifts
             bankInfo={bankInfo}
             couple_code={couple_code}
             store={store}
-            className="bg-[#341d17]"
+            className="bg-[#FBF3E8] border-t-[10px] border-b-[10px] border-[#E0CAA7]"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-[#5B32290"
+            className="bg-[#08202B]"
           />
 
           <InfiniteGallery
             images={galleryImages}
             frameColor="#D4B572"
-            className="bg-[#341d17]"
+            className="bg-[#FBF3E8]"
           />
 
           <Footer
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-[#341d17]"
+            className="bg-[#08202B]"
           />
         </div>
       </main>

@@ -36,38 +36,34 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
     <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8`}>
       {acceptsKids && (
         <motion.div 
-          className="bg-[#012D27] rounded-xl p-8 text-center border border-[#CFD6BA]/20"
+          className="bg-[#FCF3E8] backdrop-blur-sm rounded-2xl p-8 text-center border border-[#333333]/20"
           variants={item}
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
         >
           <motion.div 
-            className="w-16 h-16 bg-[#CFD6BA]/20 rounded-full flex items-center justify-center mx-auto mb-6"
+            className="w-24 h-24 bg-[#08202B]/90 rounded-full flex items-center justify-center mx-auto mb-6"
             whileHover={{ rotate: 15 }}
           >
-            <Baby className="w-8 h-8 text-[#CFD6BA]" />
+            <Baby className="w-16 h-16 text-white" />
           </motion.div>
-          <h3 className="text-xl font-serif mb-4 text-[#CFD6BA]">Los Niños Bienvenidos</h3>
-          <p className="text-[#CFD6BA]/80 text-lg leading-relaxed">
+          <h3 className="text-2xl font-poppins mb-4 text-[#B87600]">Los Niños Bienvenidos</h3>
+          <p className="text-[#8D6E63] text-lg leading-relaxed font-rubik">
             Los más pequeños de la familia son bienvenidos a nuestra celebración
           </p>
         </motion.div>
       )}
       {acceptsPets && (
         <motion.div 
-          className="bg-[#012D27] rounded-xl p-8 text-center border border-[#CFD6BA]/20"
+          className="bg-[#FCF3E8] backdrop-blur-sm rounded-2xl p-8 text-center border border-[#333333]/20"
           variants={item}
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
         >
           <motion.div 
-            className="w-16 h-16 bg-[#CFD6BA]/20 rounded-full flex items-center justify-center mx-auto mb-6"
+            className="w-24 h-24 bg-[#08202B]/90 rounded-full flex items-center justify-center mx-auto mb-6"
             whileHover={{ rotate: 15 }}
           >
-            <PawPrint className="w-8 h-8 text-[#CFD6BA]" />
+            <PawPrint className="w-16 h-16 text-white" />
           </motion.div>
-          <h3 className="text-xl font-serif mb-4 text-[#CFD6BA]">Pet Friendly</h3>
-          <p className="text-[#CFD6BA]/80 text-lg leading-relaxed">
+          <h3 className="text-2xl font-poppins mb-4 text-[#B87600]">Pet Friendly</h3>
+          <p className="text-[#8D6E63] text-lg leading-relaxed font-rubik">
             Tu mascota es parte de la familia y es bienvenida a nuestra celebración
           </p>
         </motion.div>
@@ -76,7 +72,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
   );
 
   return (
-    <section className={`p-24 px-4 ${className}`}>
+    <section className={`p-24 px-4 ${className ?? ''}`}>
       <motion.div 
         className="max-w-4xl mx-auto"
         initial="hidden"
@@ -85,7 +81,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
         variants={container}
       >
         <motion.div className="text-center mb-12" variants={item}>
-          <h2 className="text-5xl md:text-6xl font-parisienne text-white mb-2">
+          <h2 className="text-4xl md:text-6xl font-fraunces font-extrabold text-white mb-6">
             Todos son bienvenidos
           </h2>
         </motion.div>

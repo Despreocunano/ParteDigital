@@ -34,7 +34,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, bgColor = '#540A17', cla
   };
 
   const content = (
-    <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8 ${className}`}>
+    <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8`}>
       {acceptsKids && (
         <motion.div 
           className="bg-[#C5A07F] rounded-xl p-8 text-center border border-[#CFD6BA]/20"
@@ -77,7 +77,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, bgColor = '#540A17', cla
   );
 
   return (
-    <section className={`pb-24 px-4 bg-[${bgColor}]`}>
+    <section className={`p-24 px-4 ${className}`}>
       <motion.div 
         className="max-w-4xl mx-auto"
         initial="hidden"

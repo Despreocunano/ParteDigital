@@ -33,7 +33,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
   };
 
   const content = (
-    <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8 ${className}`}>
+    <div className={`grid ${acceptsKids && acceptsPets ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'} gap-8`}>
       {acceptsKids && (
         <motion.div 
           className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 text-center border border-[#F8BBD9]/50 shadow-lg relative"
@@ -94,7 +94,7 @@ export function KidsAndPets({ acceptsKids, acceptsPets, className = '' }: KidsAn
   );
 
   return (
-    <section className="pb-24 px-4">
+    <section className={`p-24 px-4 ${className}`}>
       <motion.div 
         className="max-w-4xl mx-auto"
         initial="hidden"

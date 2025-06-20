@@ -118,14 +118,14 @@ export function DeluxePetroTemplate({
           <KidsAndPets
             acceptsKids={accepts_kids}
             acceptsPets={accepts_pets}
-            className='bg-[#1C2127] '
+            className='bg-[#2F3E46] '
           />
 
           <PartyInfo
             dresscode={dress_code || 'Formal'}
             musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || 'La celebración será al aire libre'}
-            className="bg-[#253238] border-y border-[#D4B572]/20"
+            className="bg-[#1C2127]"
             userId={userId}
           />
 
@@ -138,12 +138,12 @@ export function DeluxePetroTemplate({
             bankInfo={bankInfo}
             couple_code={couple_code}
             store={store}
-            className="bg-[#253238] border-y border-[#D4B572]/20"
+            className="bg-[#1C2127]"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-[#253238] border-y border-[#D4B572]/20"
+            className="bg-[#253238]"
           />
 
           <InfiniteGallery
@@ -156,7 +156,7 @@ export function DeluxePetroTemplate({
             groomName={groomName}
             brideName={brideName}
             weddingDate={weddingDate}
-            className="bg-[#2F3E46] border-t border-[#D4B572]/20"
+            className="bg-[#1C2127]"
           />
         </div>
       </main>

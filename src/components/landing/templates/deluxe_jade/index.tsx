@@ -118,32 +118,32 @@ export function DeluxeJadeTemplate({
           <KidsAndPets
             acceptsKids={accepts_kids}
             acceptsPets={accepts_pets}
-            className="bg-[#23342D]"
+            className="bg-[#254636]"
           />
 
           <PartyInfo
             dresscode={dress_code || 'Formal'}
             musicInfo="¿Cuál es la canción que no debe faltar en la playlist de la fiesta?"
             tips={additional_info || 'La celebración será al aire libre'}
-            className="bg-[#254636]"
+            className="bg-[#23342D]"
             userId={userId}
           />
 
           <GallerySection
             images={galleryImages}
-            className="bg-[#23342D]"
+            className="bg-[#254636]"
           />
 
           <Gifts
             bankInfo={bankInfo}
             couple_code={couple_code}
             store={store}
-            className="bg-[#254636]"
+            className="bg-[#23342D]"
           />
 
           <Social
             hashtag={hashtag || defaultHashtag}
-            className="bg-[#23342D]"
+            className="bg-[#254636]"
           />
 
           <InfiniteGallery

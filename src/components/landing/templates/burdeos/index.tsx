@@ -119,7 +119,7 @@ export function BurdeosTemplate({
           <KidsAndPets
             acceptsKids={accepts_kids}
             acceptsPets={accepts_pets}
-            bgColor="#540A17"
+            className='#540A17'
           />
 
           <PartyInfo
