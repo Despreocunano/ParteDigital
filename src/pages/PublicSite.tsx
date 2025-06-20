@@ -121,7 +121,7 @@ const featureSections = [
   },
   {
     title: "Crea y comparte en minutos",
-    description: "Selecciona el diseño que mas te guste, completa la información necesaria, música de fondo, galería de fotos y compartela con tus invitados que tendrán una experiencia inolvidable desde el primer momento.",
+    description: "Selecciona el diseño que mas te guste, completa la información necesaria, música de fondo, galería de fotos y compartela con tus invitados para que tengan una experiencia inolvidable desde el primer momento.",
     image: app2,
     icon: LayoutDashboard,
     features: [
@@ -144,7 +144,7 @@ const featureSections = [
     ]
   },
   {
-    title: "Organizador de mesas digitales",
+    title: "Organizador de mesas",
     description: "Diseña la distribución perfecta para tu boda con nuestro organizador de mesas digital. Agrega y elimina invitados, gestiona capacidades y visualiza la disposición completa de tu matrimonio. Una herramienta poderosa que hace que la organización de mesas sea un juego de niños.",
     image: app5,
     icon: Table2,
