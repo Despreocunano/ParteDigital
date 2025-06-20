@@ -67,21 +67,6 @@ ${bankInfo.email}`;
     }
   };
 
-  const handleStoreClick = () => {
-    if (!store) return;
-    
-    let url = '';
-    if (store === 'falabella') {
-      url = `https://www.falabella.com/falabella-cl/collection/lista-de-regalos?code=${couple_code}`;
-    } else if (store === 'paris') {
-      url = `https://www.paris.cl/lista-de-regalos/${couple_code}`;
-    }
-    
-    if (url) {
-      window.open(url, '_blank');
-    }
-  };
-
   return (
     <>
       <motion.section 

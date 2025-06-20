@@ -2,18 +2,9 @@ import { useState } from 'react';
 import { Music2, Shirt, Lightbulb, X } from 'lucide-react';
 import { Button } from '../../../../ui/Button';
 import { SpotifySearch } from '../../../shared/SpotifySearch';
-import { supabase } from '../../../../../lib/supabase';
-import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import rosas from '../assets/Grupo03.webp'
 import { InfoModal } from '../../../shared/InfoModal';
-
-interface Track {
-  id: string;
-  name: string;
-  artist: string;
-  albumCover?: string;
-}
 
 interface PartyInfoProps {
   dresscode: string;
@@ -106,7 +97,7 @@ export function PartyInfo({
                 >
                   <Shirt className="w-16 h-16 text-white" />
                 </motion.div>
-                <h3 className="text-xl font-lora text-[#cfd6bb] font-parisienne mb-4">Una orientación para que elijas tu mejor vestuario</h3>
+                <h3 className="text-xl font-lora text-[#cfd6bb] mb-4">Una orientación para que elijas tu mejor vestuario</h3>
                 <Button
                   onClick={() => setShowDressCodeModal(true)}
                   variant="secondary"
@@ -130,7 +121,7 @@ export function PartyInfo({
                 >
                   <Music2 className="w-16 h-16 text-white" />
                 </motion.div>
-                <h3 className="text-xl font-lora text-[#cfd6bb] font-parisienne mb-4">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
+                <h3 className="text-xl font-lora text-[#cfd6bb] mb-4">¿Cuál es la canción que no debe faltar en la playlist de la fiesta?</h3>
                 <Button
                   onClick={() => setShowMusicModal(true)}
                   variant="secondary"
@@ -154,7 +145,7 @@ export function PartyInfo({
                 >
                   <Lightbulb className="w-16 h-16 text-white" />
                 </motion.div>
-                <h3 className="text-xl font-lora text-[#cfd6bb] font-parisienne mb-4">Información adicional para tener en cuenta</h3>
+                <h3 className="text-xl font-lora text-[#cfd6bb] mb-4">Información adicional para tener en cuenta</h3>
                 <Button
                   onClick={() => setShowTipsModal(true)}
                   variant="secondary"

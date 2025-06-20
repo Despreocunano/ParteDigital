@@ -5,7 +5,6 @@ import rosa_c from '../assets/Grupo02_d.webp'
 import rosa_b from '../assets/Grupo02_e.webp'
 import rosa_a from '../assets/Grupo02_f.webp'
 
-
 interface SocialProps {
   hashtag?: string;
   instagramPosts?: Array<{

@@ -6,6 +6,9 @@ import { PublicRsvpForm } from '../../../../forms/PublicRsvpForm';
 import { InfoModal } from '../../../shared/InfoModal';
 import { ConfetiIcon } from '../animations/confeti';
 import { HeartIcon } from '../animations/heart';
+import flor05 from '../assets/flor_05.webp';
+import flor06 from '../assets/flor_06.webp';
+import flor07 from '../assets/flor_07.webp';
 
 
 interface EventProps {
@@ -229,7 +232,35 @@ END:VCALENDAR`;
 
   return (
     <>
-      <section className={`py-20 px-4 w-full ${className}`}>
+      <section className={`py-20 px-4 w-full ${className} relative overflow-hidden`}>
+        {/* Rosas decorativas */}
+        <motion.img
+          src={flor07}
+          alt="Rosa decorativa"
+          className="absolute -left-0 md:left-6 top-4 md:top-48 -translate-y-1/2 w-32 md:w-52"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1  }}
+        />
+        <motion.img
+          src={flor06}
+          alt="Rosa decorativa"
+          className="absolute -left-6 md:-left-16 top-16 md:top-56 -translate-y-1/2 w-32 md:w-52"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        />
+        <motion.img
+          src={flor05}
+          alt="Rosa decorativa"
+          className="absolute -left-6 md:-left-16 top-36 md:top-96 -translate-y-1/2 w-32 md:w-52"
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+        />
         <motion.div 
           className="w-full max-w-none mx-auto"
           initial="hidden"
