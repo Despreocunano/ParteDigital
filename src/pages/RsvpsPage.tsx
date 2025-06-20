@@ -56,28 +56,6 @@ export function RsvpsPage() {
     }, 0),
   };
 
-  // Calcular estadísticas de invitados filtrados
-  const stats = {
-    total: filteredAttendees.reduce((acc, attendee) => {
-      return acc + 1 + (attendee.has_plus_one ? 1 : 0);
-    }, 0),
-    confirmed: filteredAttendees.reduce((acc, attendee) => {
-      const mainConfirmed = attendee.rsvp_status === 'confirmed' ? 1 : 0;
-      const plusOneConfirmed = attendee.has_plus_one && attendee.plus_one_rsvp_status === 'confirmed' ? 1 : 0;
-      return acc + mainConfirmed + plusOneConfirmed;
-    }, 0),
-    declined: filteredAttendees.reduce((acc, attendee) => {
-      const mainDeclined = attendee.rsvp_status === 'declined' ? 1 : 0;
-      const plusOneDeclined = attendee.has_plus_one && attendee.plus_one_rsvp_status === 'declined' ? 1 : 0;
-      return acc + mainDeclined + plusOneDeclined;
-    }, 0),
-    pending: filteredAttendees.reduce((acc, attendee) => {
-      const mainPending = attendee.rsvp_status === 'pending' ? 1 : 0;
-      const plusOnePending = attendee.has_plus_one && (!attendee.plus_one_rsvp_status || attendee.plus_one_rsvp_status === 'pending') ? 1 : 0;
-      return acc + mainPending + plusOnePending;
-    }, 0),
-  };
-
   const handleSendSingleReminder = async (attendee: Attendee) => {
     try {
       setSendingReminder(attendee.id);
@@ -172,59 +150,6 @@ export function RsvpsPage() {
         >
           Exportar Lista
         </Button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-white border-none shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Confirmados</p>
-                <h3 className="text-3xl font-bold text-green-600 mt-1">{totalStats.confirmed}</h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  {totalStats.total ? Math.round((totalStats.confirmed / totalStats.total) * 100) : 0}% de invitados
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center">
-                <CheckCircle className="h-6 w-6 text-green-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-white border-none shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">No Asistirán</p>
-                <h3 className="text-3xl font-bold text-red-600 mt-1">{totalStats.declined}</h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  {totalStats.total ? Math.round((totalStats.declined / totalStats.total) * 100) : 0}% de invitados
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center">
-                <XCircle className="h-6 w-6 text-red-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card className="bg-white border-none shadow-sm">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-500">Pendientes</p>
-                <h3 className="text-3xl font-bold text-amber-600 mt-1">{totalStats.pending}</h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  {totalStats.total ? Math.round((totalStats.pending / totalStats.total) * 100) : 0}% de invitados
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-amber-50 rounded-full flex items-center justify-center">
-                <Clock className="h-6 w-6 text-amber-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       <Card className="bg-white border-none shadow-sm">

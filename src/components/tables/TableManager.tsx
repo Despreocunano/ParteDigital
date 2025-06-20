@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useTables } from '../../hooks/useTables';
-import { useAttendees } from '../../hooks/useAttendees';
+import { useState, useEffect } from 'react';
 import { TableCard } from './TableCard';
 import { UnassignedGuests } from './UnassignedGuests';
 import { Button } from '../ui/Button';
-import { Plus } from 'lucide-react';
 import { Table, Attendee } from '../../types/supabase';
-import { TableAssignmentModal } from './TableAssignmentModal';
 import { TableForm } from './TableForm';
 import { Modal } from '../ui/Modal';
 
