@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Heart, UserPlus, ListChecks, Grid, Settings, LogOut, Globe, Music, Send } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
+import logoMercadoPago from '../../assets/images/logo.svg';
 
 export function Sidebar() {
   const { pathname } = useLocation();
@@ -94,7 +95,23 @@ export function Sidebar() {
             );
           })}
         </nav>
+
+        {/* MercadoPago Logo */}
+        <div className="px-4 py-4 border-t border-gray-200">
+          <div className="flex flex-col items-center space-y-2">
+            <img 
+              src={logoMercadoPago} 
+              alt="MercadoPago" 
+              className="h-8 w-auto opacity-70"
+            />
+            <p className="text-xs text-gray-500 text-center leading-tight">
+              Paga con el respaldo de MercadoPago
+            </p>
+          </div>
+        </div>
       </div>
+
+      {/* Logout Button */}
       <div className="p-4 border-t border-gray-200">
         <button
           onClick={() => signOut()}
