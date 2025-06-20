@@ -105,7 +105,7 @@ export function Sidebar() {
               className="h-8 w-auto opacity-70"
             />
             <p className="text-xs text-gray-500 text-center leading-tight">
-              Paga con el respaldo de MercadoPago
+            Paga tu invitación con el respaldo de MercadoPago
             </p>
           </div>
         </div>
