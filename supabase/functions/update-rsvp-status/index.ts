@@ -13,7 +13,6 @@ const RsvpStatus = z.enum(['pending', 'confirmed', 'declined']);
 const updateSchema = z.object({
   attendeeId: z.string().uuid(),
   status: RsvpStatus,
-  plusOneStatus: RsvpStatus.optional(),
 });
 
 serve(async (req) => {
@@ -61,14 +60,9 @@ serve(async (req) => {
       updated_at: new Date().toISOString(),
     };
 
-    // Only update plus_one_rsvp_status if the attendee has a plus one
-    if (attendee.has_plus_one && validatedData.plusOneStatus) {
-      updateData.plus_one_rsvp_status = validatedData.plusOneStatus;
-    }
-
-    // If main attendee declines, plus-one should also be declined
-    if (validatedData.status === 'declined' && attendee.has_plus_one) {
-      updateData.plus_one_rsvp_status = 'declined';
+    // Si el invitado tiene acompañante, el acompañante debe tener el mismo estado
+    if (attendee.has_plus_one) {
+      updateData.plus_one_rsvp_status = validatedData.status;
     }
 
     const { data, error } = await supabaseClient

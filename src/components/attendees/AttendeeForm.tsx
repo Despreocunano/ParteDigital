@@ -32,14 +32,10 @@ export function AttendeeForm({ onSubmit, onCancel, isLoading, attendee }: Attend
   const hasPlusOne = watch('has_plus_one');
   const rsvpStatus = watch('rsvp_status') as RsvpStatus;
 
-  // Handle plus one status when main attendee declines or changes status
+  // El acompañante siempre debe tener el mismo estado que el invitado principal
   React.useEffect(() => {
     if (hasPlusOne) {
-      if (rsvpStatus === 'declined') {
-        setValue('plus_one_rsvp_status', 'declined');
-      } else {
-        setValue('plus_one_rsvp_status', rsvpStatus);
-      }
+      setValue('plus_one_rsvp_status', rsvpStatus);
     }
   }, [rsvpStatus, hasPlusOne, setValue]);
 
@@ -58,7 +54,11 @@ export function AttendeeForm({ onSubmit, onCancel, isLoading, attendee }: Attend
     // Format the data before submitting
     const formattedData = {
       ...data,
-      // If has_plus_one is false, ensure all plus one fields are null
+      // Si tiene acompañante, asegurar que tenga el mismo estado
+      ...(data.has_plus_one && {
+        plus_one_rsvp_status: data.rsvp_status
+      }),
+      // Si no tiene acompañante o el invitado principal rechaza, limpiar campos del acompañante
       ...((!data.has_plus_one || data.rsvp_status === 'declined') && {
         plus_one_name: null,
         plus_one_dietary_restrictions: null,

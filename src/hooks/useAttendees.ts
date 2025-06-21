@@ -109,17 +109,22 @@ export function useAttendees() {
     }
   };
 
-  const updateRsvpStatus = async (id: string, status: RsvpStatus, plusOneStatus?: RsvpStatus) => {
+  const updateRsvpStatus = async (id: string, status: RsvpStatus) => {
     if (!user) return { success: false };
 
     try {
+      // Buscar el invitado para verificar si tiene acompañante
+      const attendee = attendees.find(a => a.id === id);
+      if (!attendee) throw new Error('Attendee not found');
+
       const updates: Partial<Attendee> = {
         rsvp_status: status,
         updated_at: new Date().toISOString(),
       };
 
-      if (plusOneStatus !== undefined) {
-        updates.plus_one_rsvp_status = plusOneStatus;
+      // Si el invitado tiene acompañante, el acompañante debe tener el mismo estado
+      if (attendee.has_plus_one) {
+        updates.plus_one_rsvp_status = status;
       }
 
       const { data, error } = await supabase

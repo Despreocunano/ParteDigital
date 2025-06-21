@@ -3,8 +3,7 @@ import type { RsvpStatus } from '../types/supabase';
 
 export async function updateRsvpStatus(
   attendeeId: string, 
-  status: RsvpStatus,
-  plusOneStatus?: RsvpStatus
+  status: RsvpStatus
 ) {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
@@ -22,7 +21,6 @@ export async function updateRsvpStatus(
       body: JSON.stringify({
         attendeeId,
         status,
-        ...(plusOneStatus && { plusOneStatus }),
       }),
     }
   );
