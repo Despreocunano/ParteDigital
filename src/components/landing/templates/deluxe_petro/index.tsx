@@ -81,8 +81,8 @@ export function DeluxePetroTemplate({
         />
       )}
 
-      <main className="font-['Cormorant_Garamond'] bg-[#1C2127]">
-        <div className="container mx-auto max-w-7xl drop-shadow-lg shadow-lg">
+      <main className="font-['Cormorant_Garamond'] bg-[#1a2027]">
+        <div className="container mx-auto max-w-7xl">
           <Hero
             groomName={groomName}
             brideName={brideName}

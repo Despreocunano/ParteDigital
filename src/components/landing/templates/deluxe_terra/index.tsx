@@ -80,8 +80,8 @@ export function DeluxeTerraTemplate({
         />
       )}
 
-      <main className="font-['Crimson_Text'] bg-[#46261F]">
-        <div className="container mx-auto max-w-7xl drop-shadow-lg shadow-lg">
+      <main className="font-['Crimson_Text'] bg-[#2f1914]">
+        <div className="container mx-auto max-w-7xl">
           <Hero
             groomName={groomName}
             brideName={brideName}

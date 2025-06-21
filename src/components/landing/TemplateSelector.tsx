@@ -25,7 +25,6 @@ export function TemplateSelector({
   setShowAllTemplates
 }: TemplateSelectorProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [selectedVariant, setSelectedVariant] = useState<string>('deluxe');
 
   const scrollToTemplate = (templateId: string) => {
     const container = scrollContainerRef.current;
@@ -44,7 +43,6 @@ export function TemplateSelector({
   };
 
   const handleVariantSelect = (variantId: string) => {
-    setSelectedVariant(variantId);
     onSelect(variantId);
   };
 

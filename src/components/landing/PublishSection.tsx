@@ -121,23 +121,17 @@ export function PublishSection({
     // If this is a manual check after timeout, reset the attempts
     if (isManualCheck && (paymentStatus === 'timeout' || paymentStatus === 'failed')) {
       setCheckAttempts(0);
-      console.log('🔄 Manual check after timeout/failure - resetting attempts');
     }
     
     // Increment check attempts
     setCheckAttempts(prev => prev + 1);
     
-    console.log('🔍 Checking payment status for:', preferenceId, `(attempt ${checkAttempts + 1}/${maxCheckAttempts})`);
-    
     try {
       setPaymentStatus('checking');
       const result = await checkPaymentStatus(preferenceId);
       
-      console.log('📊 Payment status result:', result);
-      
       if (result.success) {
         if (result.landingPage.isPublished) {
-          console.log('🎉 Payment successful! Landing page is published');
           // Track successful purchase
           trackPurchase(preferenceId);
           
@@ -150,7 +144,6 @@ export function PublishSection({
             window.location.reload();
           }, 1500);
         } else if (result.payment.status === 'approved') {
-          console.log('✅ Payment approved, processing publication...');
           setPaymentStatus('processing');
           setHasAlreadyPaid(true);
           toast.success('Pago aprobado, publicando invitación...');
@@ -159,24 +152,20 @@ export function PublishSection({
           // Check again in 3 seconds
           setTimeout(() => checkStatus(), 3000);
         } else if (result.payment.status === 'pending') {
-          console.log('⏳ Payment pending...');
           setPaymentStatus('pending');
           toast('Pago pendiente de confirmación', {
             icon: '⏳',
           });
         } else if (result.payment.status === 'rejected' || result.payment.status === 'cancelled') {
-          console.log('❌ Payment rejected or cancelled');
           setPaymentStatus('failed');
           toast.error('El pago fue rechazado o cancelado');
           // Stop checking for rejected payments - clear any pending intervals
           return;
         } else {
-          console.log('❌ Payment failed or not completed');
           setPaymentStatus('failed');
           toast.error('El pago no fue completado');
         }
       } else {
-        console.log('❌ Payment status check failed:', result.error);
         setPaymentStatus('failed');
         toast.error(result.error || 'Error al verificar el estado del pago');
       }
@@ -218,7 +207,6 @@ export function PublishSection({
       const interval = setInterval(() => {
         // Stop checking if we've reached max attempts
         if (checkAttempts >= maxCheckAttempts) {
-          console.log('⏰ Max check attempts reached, stopping automatic verification');
           clearInterval(interval);
           setPaymentStatus('timeout');
           toast.error('Tiempo de verificación agotado. Por favor verifica manualmente.');
@@ -227,7 +215,6 @@ export function PublishSection({
         
         // Don't check if payment status is already failed or timeout
         if (paymentStatus === 'failed' || paymentStatus === 'timeout') {
-          console.log('🛑 Stopping verification - payment already failed or timed out');
           clearInterval(interval);
           return;
         }
@@ -259,11 +246,9 @@ export function PublishSection({
   React.useEffect(() => {
     if (showPaymentModal && preferenceId && paymentStatus === 'initiated' && checkAttempts === 0) {
       // If user manually checked after timeout and reset attempts, restart automatic checking
-      console.log('🔄 Restarting automatic verification after manual check');
       
       const interval = setInterval(() => {
         if (checkAttempts >= maxCheckAttempts) {
-          console.log('⏰ Max check attempts reached, stopping automatic verification');
           clearInterval(interval);
           setPaymentStatus('timeout');
           toast.error('Tiempo de verificación agotado. Por favor verifica manualmente.');

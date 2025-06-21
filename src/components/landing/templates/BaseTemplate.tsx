@@ -13,14 +13,10 @@ interface BaseTemplateProps {
 }
 
 export function BaseTemplate({
-  groomName,
-  brideName,
-  weddingDate,
   children,
   musicEnabled = false,
   musicUrl,
   autoplayMusic = false,
-  onMusicToggle
 }: BaseTemplateProps) {
   return (
     <div className="min-h-screen">

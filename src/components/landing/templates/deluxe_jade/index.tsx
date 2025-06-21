@@ -81,8 +81,8 @@ export function DeluxeJadeTemplate({
         />
       )}
 
-      <main className="font-['Cormorant_Garamond'] bg-[#23342D]">
-        <div className="container mx-auto max-w-7xl drop-shadow-lg shadow-lg">
+      <main className="font-['Cormorant_Garamond'] bg-[#1b2a24]">
+        <div className="container mx-auto max-w-7xl">
           <Hero
             groomName={groomName}
             brideName={brideName}

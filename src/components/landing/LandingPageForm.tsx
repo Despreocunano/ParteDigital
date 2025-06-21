@@ -18,7 +18,7 @@ import { toast } from 'react-hot-toast';
 import { Button } from '../ui/Button';
 import { Grid } from 'lucide-react';
 import { Select } from '../ui/Select';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { trackEvent } from '../../lib/analytics';
 
 interface LandingPageFormData {
