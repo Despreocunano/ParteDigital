@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 200.8 1165.6">
+  <!-- Generator: Adobe Illustrator 29.5.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 141)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+      }
+
+      .st1 {
+        isolation: isolate;
+        opacity: .5;
+      }
+
+      .st2 {
+        fill: #f5fff5;
+      }
+
+      .st3 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="st0" x="35.6" width="165.2" height="1165.6"/>
+    </clipPath>
+  </defs>
+  <g class="st3">
+    <g>
+      <image class="st1" width="963" height="5238" transform="translate(4.6 -41.2) scale(.2)" xlink:href="curva_portada_vertical-1.png"/>
+      <path class="st2" d="M204.9.1h-122.4c41.9,62.1,95.7,190.5,72,424.7-27.6,273.6-127.5,544-72.6,740.7h123V.1Z"/>
+    </g>
+  </g>
+</svg>

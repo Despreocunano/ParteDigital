@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Heart, Menu, X, UserPlus, ListChecks, Grid, Settings, LogOut, Globe, Music, Send } from 'lucide-react';
+import { Heart, Menu, X, UserPlus, ListChecks, Grid, Settings, LogOut, Globe, Music, Send, MessageCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
 import logoMercadoPago from '../../assets/images/logo.svg';
+import logoDark from '../../assets/images/logo-dark.svg';
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -53,6 +54,11 @@ export function MobileNav() {
       name: 'Configuración',
       href: '/settings',
       icon: Settings
+    },
+    {
+      name: 'Contacto',
+      href: '/contact',
+      icon: MessageCircle
     }
   ];
 
@@ -60,14 +66,11 @@ export function MobileNav() {
     <div className="md:hidden">
       <div className="bg-white shadow-sm px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center hover:opacity-80 transition-opacity">
-          <div className="w-10 h-10 bg-rose-600 rounded-full flex items-center justify-center">
-            <Heart className="h-5 w-5 text-white" />
-          </div>
-          <div className="ml-3">
-            <h1 className="text-lg text-gray-900 leading-tight">
-              Tu Parte Digital
-            </h1>
-          </div>
+          <img 
+            src={logoDark} 
+            alt="Parte Digital" 
+            className="h-8 w-auto"
+          />
         </Link>
         <button onClick={toggleNav} className="text-gray-500 focus:outline-none">
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -78,12 +81,11 @@ export function MobileNav() {
         <div className="fixed inset-0 z-10 flex bg-black bg-opacity-50">
           <div className="w-64 bg-white h-full overflow-y-auto shadow-lg flex flex-col">
             <Link to="/" className="flex flex-col items-center px-4 py-6 border-b border-gray-200 hover:opacity-80 transition-opacity">
-              <div className="w-16 h-16 bg-rose-600 rounded-full flex items-center justify-center mb-3">
-                <Heart className="h-8 w-8 text-white" />
-              </div>
-              <h1 className="text-xl text-gray-900 text-center leading-tight">
-                Tu Parte Digital
-              </h1>
+              <img 
+                src={logoDark} 
+                alt="Parte Digital" 
+                className="h-12 w-auto mb-3"
+              />
             </Link>
             <nav className="mt-5 px-4 space-y-1 flex-1">
               {navigation.map((item) => {

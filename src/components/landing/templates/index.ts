@@ -8,6 +8,8 @@ import { BurdeosTemplate } from './burdeos';
 import { MinimalistaTemplate } from './minimalista';
 import { BlackRoseTemplate } from './black_rose';
 import { BarrocoTemplate } from './barroco';
+import { GirasolDiaTemplate } from './girasol_dia';
+import { GirasolNocheTemplate } from './girasol_noche';
 import type { TemplateProps, Template, TemplateVariantGroup } from './types';
 
 // Color variants for templates that are identical except for colors
@@ -39,6 +41,28 @@ export const templateVariants: Record<string, TemplateVariantGroup> = {
         colorValue: '#254636',
         component: DeluxeJadeTemplate,
         preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228168/jade_ed85lx.png'
+      }
+    ]
+  },
+  girasol: {
+    baseId: '550e8400-e29b-41d4-a716-4466554400011',
+    name: 'Girasol',
+    variants: [
+      {
+        id: '550e8400-e29b-41d4-a716-446655440011',
+        name: 'Dia',
+        color: 'dia',
+        colorValue: '#F5FFF5',
+        component: GirasolDiaTemplate,
+        preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749836790/deluxe_ixlksa.png'
+      },
+      {
+        id: '550e8400-e29b-41d4-a716-446655440012',
+        name: 'Noche',
+        color: 'noche',
+        colorValue: '#333',
+        component: GirasolNocheTemplate,
+        preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749836790/deluxe_ixlksa.png'
       }
     ]
   }
@@ -110,7 +134,23 @@ export const templates: Record<string, Template> = {
     name: 'Barroco',
     component: BarrocoTemplate,
     preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750439537/barroco_trm9ly.png'
-  }
+  },
+  // girasol_dia:{
+  //   id: '550e8400-e29b-41d4-a716-446655440011',
+  //   name: 'Girasol Día',
+  //   variantGroup: 'girasol',
+  //   hasVariants: true,
+  //   component: GirasolDiaTemplate,
+  //   preview: 'https://res.cloudinary.com/sorostica/image/upload/v1749841323/terra_y14f9j.png'
+  // },
+  // girasol_noche: {
+  //   id: '550e8400-e29b-41d4-a716-446655440012',
+  //   name: 'Girasol Noche',
+  //   component: GirasolNocheTemplate,
+  //   hasVariants: true,
+  //   variantGroup: 'girasol',
+  //   preview: 'https://res.cloudinary.com/sorostica/image/upload/v1750228168/jade_ed85lx.png'
+  // }
 };
 
 // Map template IDs to template keys for lookup
@@ -124,7 +164,9 @@ const templateIdMap: Record<string, string> = {
   '550e8400-e29b-41d4-a716-446655440007': 'minimalista',
   '550e8400-e29b-41d4-a716-446655440008': 'deluxe_jade',
   '550e8400-e29b-41d4-a716-446655440009': 'black_rose',
-  '550e8400-e29b-41d4-a716-446655440010': 'barroco'
+  '550e8400-e29b-41d4-a716-446655440010': 'barroco',
+  '550e8400-e29b-41d4-a716-446655440011': 'girasol_dia',
+  '550e8400-e29b-41d4-a716-446655440012': 'girasol_noche'
 };
 
 export function getTemplate(templateId: string): Template | null {

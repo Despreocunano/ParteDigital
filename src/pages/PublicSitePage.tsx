@@ -5,6 +5,7 @@ import { getTemplate } from '../components/landing/templates';
 import type { TemplateProps } from '../components/landing/templates/types';
 import { Heart } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import logoParte from '../assets/images/logo-parte.svg';
 
 interface LandingPageData {
   id: string;
@@ -110,7 +111,11 @@ export function PublicSitePage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-slate-50">
         <div className="max-w-md w-full mx-auto p-8 text-center">
           <div className="mb-8">
-            <Heart className="h-16 w-16 text-rose-500 mx-auto" />
+            <img 
+              src={logoParte} 
+              alt="Parte Digital" 
+              className="h-16 w-auto mx-auto"
+            />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-4">
             ¡Ups! Esta invitación ya no está disponible
@@ -132,6 +137,29 @@ export function PublicSitePage() {
   }
 
   const template = getTemplate(landingData.template_id);
+  
+  if (!template) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-slate-50">
+        <div className="max-w-md w-full mx-auto p-8 text-center">
+          <div className="mb-8">
+            <img 
+              src={logoParte} 
+              alt="Parte Digital" 
+              className="h-16 w-auto mx-auto"
+            />
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Template no encontrado
+          </h1>
+          <p className="text-gray-600 mb-8">
+            Lo sentimos, pero el template seleccionado no está disponible.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   const TemplateComponent = template.component;
 
   const templateProps: TemplateProps = {

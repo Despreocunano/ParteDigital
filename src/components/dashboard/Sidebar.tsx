@@ -1,8 +1,9 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Heart, UserPlus, ListChecks, Grid, Settings, LogOut, Globe, Music, Send } from 'lucide-react';
+import { Heart, UserPlus, ListChecks, Grid, Settings, LogOut, Globe, Music, Send, MessageCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useAuth } from '../../context/AuthContext';
 import logoMercadoPago from '../../assets/images/logo.svg';
+import logoDark from '../../assets/images/logo-dark.svg';
 
 export function Sidebar() {
   const { pathname } = useLocation();
@@ -49,6 +50,11 @@ export function Sidebar() {
       name: 'Configuración',
       href: '/settings',
       icon: Settings
+    },
+    {
+      name: 'Contacto',
+      href: '/contact',
+      icon: MessageCircle
     }
   ];
 
@@ -56,14 +62,11 @@ export function Sidebar() {
     <div className="hidden md:flex flex-col fixed inset-y-0 bg-white shadow-md w-64">
       <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
         <Link to="/" className="flex items-center flex-col px-4 mb-6 hover:opacity-80 transition-opacity">
-          <div className="w-16 h-16 bg-rose-600 rounded-full flex items-center justify-center mb-3">
-            <Heart className="h-8 w-8 text-white" />
-          </div>
-          <div className="text-center">
-            <h1 className="text-xl font-serif text-gray-900 leading-tight">
-              Tu Parte Digital
-            </h1>
-          </div>
+          <img 
+            src={logoDark} 
+            alt="Parte Digital" 
+            className="h-12 w-auto mb-3"
+          />
         </Link>
 
         <nav className="mt-4 flex-1 px-4 space-y-1">

@@ -16,6 +16,7 @@ import app2 from '../assets/images/app_compartir.png';
 import app3 from '../assets/images/app_invitados.png';
 import app5 from '../assets/images/app_mesas.png';
 import herobg from '../assets/images/hero_public.webp';
+import logoParte from '../assets/images/logo-parte.svg';
 
 const features = [
   {
@@ -178,8 +179,11 @@ export function PublicSite() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <Heart className="h-8 w-8 text-rose-500" />
-              <span className="ml-2 text-xl font-semibold text-white">Tu Parte Digital</span>
+              <img 
+                src={logoParte} 
+                alt="Parte Digital" 
+                className="h-12 w-auto"
+              />
             </div>
             <div>
               <div className="flex items-center gap-2">
@@ -731,7 +735,7 @@ export function PublicSite() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-b from-rose-50/30 to-white border-t border-rose-100/50 py-12">
+      <footer className="bg-slate-800 py-12">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -739,8 +743,12 @@ export function PublicSite() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <Heart className="h-8 w-8 text-rose-500 mx-auto mb-4" />
-            <p className="text-gray-600">
+            <img 
+              src={logoParte} 
+              alt="Parte Digital" 
+              className="h-12 w-auto mx-auto mb-4"
+            />
+            <p className="text-gray-200">
               © {new Date().getFullYear()} Tu Parte Digital. Todos los derechos reservados.
             </p>
           </motion.div>

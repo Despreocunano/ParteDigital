@@ -11,6 +11,10 @@ export default {
         poppins: ['Poppins', 'sans-serif'],
         rubik: ['Rubik', 'sans-serif'],
         surana: ['Suranna', 'serif'],
+        abril: ['Abril Fatface', 'serif'],
+        opensans: ['Open Sans', 'sans-serif'],
+        libre: ['Libre Baskerville', 'serif'],
+
       },
       colors: {
         primary: {

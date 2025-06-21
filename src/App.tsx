@@ -15,6 +15,7 @@ import { PublicSitePage } from './pages/PublicSitePage';
 import { PublicSite } from './pages/PublicSite';
 import { SongRecommendationsPage } from './pages/SongRecommendationsPage';
 import { RemindersPage } from './pages/RemindersPage';
+import { ContactPage } from './pages/ContactPage';
 import { RequireLandingPage } from './components/auth/RequireLandingPage';
 import { trackPageView } from './lib/analytics';
 import ExampleBurdeosPage from './pages/examples/ExampleBurdeosPage';
@@ -148,6 +149,16 @@ function AppRoutes() {
               }
             />
             <Route
+              path="/contact"
+              element={
+                <RequireAuth>
+                  <Layout>
+                    <ContactPage />
+                  </Layout>
+                </RequireAuth>
+              }
+            />
+            <Route
               path="/preview/:userId"
               element={
                 <RequireAuth>
@@ -169,6 +180,7 @@ function AppRoutes() {
           <>
             <Route path="/" element={<PublicSite />} />
             <Route path="/invitacion/:slug" element={<PublicSitePage />} />
+            <Route path="/contacto" element={<ContactPage />} />
             <Route path="/ejemplo/burdeos" element={<ExampleBurdeosPage />} />
             <Route path="/ejemplo/esmeralda" element={<ExampleEsmeraldaPage />} />
             <Route path="/ejemplo/minimalista" element={<ExampleMinimalistaPage />} />
