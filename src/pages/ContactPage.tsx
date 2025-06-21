@@ -6,6 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import logoDark from '../assets/images/logo-dark.svg';
+import { supabase } from '../lib/supabase';
 
 interface ContactFormData {
   name: string;
@@ -84,11 +85,20 @@ export function ContactPage() {
         throw new Error('VITE_SUPABASE_URL no está configurada');
       }
 
+      // Obtener token de sesión si existe
+      const { data: { session } } = await supabase.auth.getSession();
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      // Agregar token de autorización si existe
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`;
+      }
+
       const response = await fetch(`${supabaseUrl}/functions/v1/contact-form`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(formData),
       });
 
@@ -127,6 +137,8 @@ export function ContactPage() {
           errorMessage = 'Error de conexión. Verifica tu conexión a internet.';
         } else if (error.message.includes('VITE_SUPABASE_URL')) {
           errorMessage = 'Error de configuración. Contacta al administrador.';
+        } else if (error.message.includes('401')) {
+          errorMessage = 'Error de autenticación. La función requiere configuración adicional.';
         } else {
           errorMessage = error.message;
         }
@@ -182,6 +194,7 @@ export function ContactPage() {
               <Button
                 onClick={() => setIsSubmitted(false)}
                 variant="primary"
+                className='bg-primary text-primary-contrast hover:bg-primary-dark'
               >
                 Enviar otro mensaje
               </Button>
